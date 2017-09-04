@@ -27,10 +27,10 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.utils.GsonParser;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -40,43 +40,23 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(PersonalFeedFilter.Tokenizer.class)
 public class PersonalFeedFilter extends Filter {
-	
-	public interface Tokenizer extends Filter.Tokenizer {
-	}
 
 
 
-	public PersonalFeedFilter() {
-		super();
-	}
-
-	public PersonalFeedFilter(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaPersonalFeedFilter");
-		return kparams;
-	}
-
-
-    public static final Creator<PersonalFeedFilter> CREATOR = new Creator<PersonalFeedFilter>() {
-        @Override
-        public PersonalFeedFilter createFromParcel(Parcel source) {
-            return new PersonalFeedFilter(source);
-        }
-
-        @Override
-        public PersonalFeedFilter[] newArray(int size) {
-            return new PersonalFeedFilter[size];
-        }
-    };
-
-    public PersonalFeedFilter(Parcel in) {
-        super(in);
+    public PersonalFeedFilter() {
+       super();
     }
+
+    public PersonalFeedFilter(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaPersonalFeedFilter");
+        return kparams;
+    }
+
 }
 

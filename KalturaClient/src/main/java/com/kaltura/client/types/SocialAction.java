@@ -27,14 +27,13 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.enums.AssetType;
-import com.kaltura.client.enums.SocialActionType;
-import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.enums.SocialActionType;
+import com.kaltura.client.enums.AssetType;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -44,168 +43,99 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(SocialAction.Tokenizer.class)
 public class SocialAction extends ObjectBase {
-	
-	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String id();
-		String actionType();
-		String time();
-		String assetId();
-		String assetType();
-		String url();
-	}
 
 	/**  social action document id  */
-	private String id;
+    private String id;
 	/**  Action type  */
-	private SocialActionType actionType;
+    private SocialActionType actionType;
 	/**  EPOC based timestamp for when the action occurred  */
-	private Long time;
+    private Long time;
 	/**  ID of the asset that was acted upon  */
-	private Long assetId;
+    private Long assetId;
 	/**  Type of the asset that was acted upon, currently only VOD (media)  */
-	private AssetType assetType;
+    private AssetType assetType;
 	/**  The value of the url  */
-	private String url;
+    private String url;
 
-	// id:
-	public String getId(){
-		return this.id;
-	}
-	public void setId(String id){
-		this.id = id;
-	}
-
-	public void id(String multirequestToken){
-		setToken("id", multirequestToken);
-	}
-
-	// actionType:
-	public SocialActionType getActionType(){
-		return this.actionType;
-	}
-	public void setActionType(SocialActionType actionType){
-		this.actionType = actionType;
-	}
-
-	public void actionType(String multirequestToken){
-		setToken("actionType", multirequestToken);
-	}
-
-	// time:
-	public Long getTime(){
-		return this.time;
-	}
-	public void setTime(Long time){
-		this.time = time;
-	}
-
-	public void time(String multirequestToken){
-		setToken("time", multirequestToken);
-	}
-
-	// assetId:
-	public Long getAssetId(){
-		return this.assetId;
-	}
-	public void setAssetId(Long assetId){
-		this.assetId = assetId;
-	}
-
-	public void assetId(String multirequestToken){
-		setToken("assetId", multirequestToken);
-	}
-
-	// assetType:
-	public AssetType getAssetType(){
-		return this.assetType;
-	}
-	public void setAssetType(AssetType assetType){
-		this.assetType = assetType;
-	}
-
-	public void assetType(String multirequestToken){
-		setToken("assetType", multirequestToken);
-	}
-
-	// url:
-	public String getUrl(){
-		return this.url;
-	}
-	public void setUrl(String url){
-		this.url = url;
-	}
-
-	public void url(String multirequestToken){
-		setToken("url", multirequestToken);
-	}
-
-
-	public SocialAction() {
-		super();
-	}
-
-	public SocialAction(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		id = GsonParser.parseString(jsonObject.get("id"));
-		actionType = SocialActionType.get(GsonParser.parseString(jsonObject.get("actionType")));
-		time = GsonParser.parseLong(jsonObject.get("time"));
-		assetId = GsonParser.parseLong(jsonObject.get("assetId"));
-		assetType = AssetType.get(GsonParser.parseString(jsonObject.get("assetType")));
-		url = GsonParser.parseString(jsonObject.get("url"));
-
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaSocialAction");
-		kparams.add("actionType", this.actionType);
-		kparams.add("time", this.time);
-		kparams.add("assetId", this.assetId);
-		kparams.add("assetType", this.assetType);
-		kparams.add("url", this.url);
-		return kparams;
-	}
-
-
-    public static final Creator<SocialAction> CREATOR = new Creator<SocialAction>() {
-        @Override
-        public SocialAction createFromParcel(Parcel source) {
-            return new SocialAction(source);
-        }
-
-        @Override
-        public SocialAction[] newArray(int size) {
-            return new SocialAction[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeString(this.id);
-        dest.writeInt(this.actionType == null ? -1 : this.actionType.ordinal());
-        dest.writeValue(this.time);
-        dest.writeValue(this.assetId);
-        dest.writeInt(this.assetType == null ? -1 : this.assetType.ordinal());
-        dest.writeString(this.url);
+    // id:
+    public String getId(){
+        return this.id;
+    }
+    public void setId(String id){
+        this.id = id;
     }
 
-    public SocialAction(Parcel in) {
-        super(in);
-        this.id = in.readString();
-        int tmpActionType = in.readInt();
-        this.actionType = tmpActionType == -1 ? null : SocialActionType.values()[tmpActionType];
-        this.time = (Long)in.readValue(Long.class.getClassLoader());
-        this.assetId = (Long)in.readValue(Long.class.getClassLoader());
-        int tmpAssetType = in.readInt();
-        this.assetType = tmpAssetType == -1 ? null : AssetType.values()[tmpAssetType];
-        this.url = in.readString();
+    // actionType:
+    public SocialActionType getActionType(){
+        return this.actionType;
     }
+    public void setActionType(SocialActionType actionType){
+        this.actionType = actionType;
+    }
+
+    // time:
+    public Long getTime(){
+        return this.time;
+    }
+    public void setTime(Long time){
+        this.time = time;
+    }
+
+    // assetId:
+    public Long getAssetId(){
+        return this.assetId;
+    }
+    public void setAssetId(Long assetId){
+        this.assetId = assetId;
+    }
+
+    // assetType:
+    public AssetType getAssetType(){
+        return this.assetType;
+    }
+    public void setAssetType(AssetType assetType){
+        this.assetType = assetType;
+    }
+
+    // url:
+    public String getUrl(){
+        return this.url;
+    }
+    public void setUrl(String url){
+        this.url = url;
+    }
+
+
+    public SocialAction() {
+       super();
+    }
+
+    public SocialAction(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+
+        if(jsonObject == null) return;
+
+        // set members values:
+        id = GsonParser.parseString(jsonObject.get("id"));
+        actionType = SocialActionType.get(GsonParser.parseString(jsonObject.get("actionType")));
+        time = GsonParser.parseLong(jsonObject.get("time"));
+        assetId = GsonParser.parseLong(jsonObject.get("assetId"));
+        assetType = AssetType.get(GsonParser.parseString(jsonObject.get("assetType")));
+        url = GsonParser.parseString(jsonObject.get("url"));
+
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaSocialAction");
+        kparams.add("actionType", this.actionType);
+        kparams.add("time", this.time);
+        kparams.add("assetId", this.assetId);
+        kparams.add("assetType", this.assetType);
+        kparams.add("url", this.url);
+        return kparams;
+    }
+
 }
 

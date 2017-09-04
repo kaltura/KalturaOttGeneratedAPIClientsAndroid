@@ -27,14 +27,11 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
-import com.kaltura.client.utils.request.RequestBuilder;
-import java.util.ArrayList;
 import java.util.List;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -44,65 +41,40 @@ import java.util.List;
  */
 
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(BaseSearchAssetFilter.Tokenizer.class)
 public abstract class BaseSearchAssetFilter extends AssetFilter {
-	
-	public interface Tokenizer extends AssetFilter.Tokenizer {
-		RequestBuilder.ListTokenizer<AssetGroupBy.Tokenizer> groupBy();
-	}
 
 	/**  groupBy  */
-	private List<AssetGroupBy> groupBy;
+    private List<AssetGroupBy> groupBy;
 
-	// groupBy:
-	public List<AssetGroupBy> getGroupBy(){
-		return this.groupBy;
-	}
-	public void setGroupBy(List<AssetGroupBy> groupBy){
-		this.groupBy = groupBy;
-	}
-
-
-	public BaseSearchAssetFilter() {
-		super();
-	}
-
-	public BaseSearchAssetFilter(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		groupBy = GsonParser.parseArray(jsonObject.getAsJsonArray("groupBy"), AssetGroupBy.class);
-
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaBaseSearchAssetFilter");
-		kparams.add("groupBy", this.groupBy);
-		return kparams;
-	}
-
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        if(this.groupBy != null) {
-            dest.writeInt(this.groupBy.size());
-            dest.writeList(this.groupBy);
-        } else {
-            dest.writeInt(-1);
-        }
+    // groupBy:
+    public List<AssetGroupBy> getGroupBy(){
+        return this.groupBy;
+    }
+    public void setGroupBy(List<AssetGroupBy> groupBy){
+        this.groupBy = groupBy;
     }
 
-    public BaseSearchAssetFilter(Parcel in) {
-        super(in);
-        int groupBySize = in.readInt();
-        if( groupBySize > -1) {
-            this.groupBy = new ArrayList<>();
-            in.readList(this.groupBy, AssetGroupBy.class.getClassLoader());
-        }
+
+    public BaseSearchAssetFilter() {
+       super();
     }
+
+    public BaseSearchAssetFilter(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+
+        if(jsonObject == null) return;
+
+        // set members values:
+        groupBy = GsonParser.parseArray(jsonObject.getAsJsonArray("groupBy"), AssetGroupBy.class);
+
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaBaseSearchAssetFilter");
+        kparams.add("groupBy", this.groupBy);
+        return kparams;
+    }
+
 }
 

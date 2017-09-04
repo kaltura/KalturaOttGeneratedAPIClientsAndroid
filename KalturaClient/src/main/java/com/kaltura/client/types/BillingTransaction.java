@@ -27,17 +27,16 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.enums.BillingAction;
-import com.kaltura.client.enums.BillingItemsType;
-import com.kaltura.client.enums.BillingPriceType;
-import com.kaltura.client.enums.PaymentMethodType;
+import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.types.Price;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.enums.BillingItemsType;
+import com.kaltura.client.enums.BillingAction;
+import com.kaltura.client.enums.PaymentMethodType;
+import com.kaltura.client.enums.BillingPriceType;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -48,341 +47,204 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**  Billing Transaction  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(BillingTransaction.Tokenizer.class)
 public class BillingTransaction extends ObjectBase {
-	
-	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String recieptCode();
-		String purchasedItemName();
-		String purchasedItemCode();
-		String itemType();
-		String billingAction();
-		Price.Tokenizer price();
-		String actionDate();
-		String startDate();
-		String endDate();
-		String paymentMethod();
-		String paymentMethodExtraDetails();
-		String isRecurring();
-		String billingProviderRef();
-		String purchaseId();
-		String remarks();
-		String billingPriceType();
-	}
 
 	/**  Reciept Code  */
-	private String recieptCode;
+    private String recieptCode;
 	/**  Purchased Item Name  */
-	private String purchasedItemName;
+    private String purchasedItemName;
 	/**  Purchased Item Code  */
-	private String purchasedItemCode;
+    private String purchasedItemCode;
 	/**  Item Type  */
-	private BillingItemsType itemType;
+    private BillingItemsType itemType;
 	/**  Billing Action  */
-	private BillingAction billingAction;
+    private BillingAction billingAction;
 	/**  price  */
-	private Price price;
+    private Price price;
 	/**  Action Date  */
-	private Long actionDate;
+    private Long actionDate;
 	/**  Start Date  */
-	private Long startDate;
+    private Long startDate;
 	/**  End Date  */
-	private Long endDate;
+    private Long endDate;
 	/**  Payment Method  */
-	private PaymentMethodType paymentMethod;
+    private PaymentMethodType paymentMethod;
 	/**  Payment Method Extra Details  */
-	private String paymentMethodExtraDetails;
+    private String paymentMethodExtraDetails;
 	/**  Is Recurring  */
-	private Boolean isRecurring;
+    private Boolean isRecurring;
 	/**  Billing Provider Ref  */
-	private Integer billingProviderRef;
+    private Integer billingProviderRef;
 	/**  Purchase ID  */
-	private Integer purchaseId;
+    private Integer purchaseId;
 	/**  Remarks  */
-	private String remarks;
+    private String remarks;
 	/**  Billing Price Info  */
-	private BillingPriceType billingPriceType;
+    private BillingPriceType billingPriceType;
 
-	// recieptCode:
-	public String getRecieptCode(){
-		return this.recieptCode;
-	}
-	public void setRecieptCode(String recieptCode){
-		this.recieptCode = recieptCode;
-	}
-
-	public void recieptCode(String multirequestToken){
-		setToken("recieptCode", multirequestToken);
-	}
-
-	// purchasedItemName:
-	public String getPurchasedItemName(){
-		return this.purchasedItemName;
-	}
-	public void setPurchasedItemName(String purchasedItemName){
-		this.purchasedItemName = purchasedItemName;
-	}
-
-	public void purchasedItemName(String multirequestToken){
-		setToken("purchasedItemName", multirequestToken);
-	}
-
-	// purchasedItemCode:
-	public String getPurchasedItemCode(){
-		return this.purchasedItemCode;
-	}
-	public void setPurchasedItemCode(String purchasedItemCode){
-		this.purchasedItemCode = purchasedItemCode;
-	}
-
-	public void purchasedItemCode(String multirequestToken){
-		setToken("purchasedItemCode", multirequestToken);
-	}
-
-	// itemType:
-	public BillingItemsType getItemType(){
-		return this.itemType;
-	}
-	public void setItemType(BillingItemsType itemType){
-		this.itemType = itemType;
-	}
-
-	public void itemType(String multirequestToken){
-		setToken("itemType", multirequestToken);
-	}
-
-	// billingAction:
-	public BillingAction getBillingAction(){
-		return this.billingAction;
-	}
-	public void setBillingAction(BillingAction billingAction){
-		this.billingAction = billingAction;
-	}
-
-	public void billingAction(String multirequestToken){
-		setToken("billingAction", multirequestToken);
-	}
-
-	// price:
-	public Price getPrice(){
-		return this.price;
-	}
-	public void setPrice(Price price){
-		this.price = price;
-	}
-
-	// actionDate:
-	public Long getActionDate(){
-		return this.actionDate;
-	}
-	public void setActionDate(Long actionDate){
-		this.actionDate = actionDate;
-	}
-
-	public void actionDate(String multirequestToken){
-		setToken("actionDate", multirequestToken);
-	}
-
-	// startDate:
-	public Long getStartDate(){
-		return this.startDate;
-	}
-	public void setStartDate(Long startDate){
-		this.startDate = startDate;
-	}
-
-	public void startDate(String multirequestToken){
-		setToken("startDate", multirequestToken);
-	}
-
-	// endDate:
-	public Long getEndDate(){
-		return this.endDate;
-	}
-	public void setEndDate(Long endDate){
-		this.endDate = endDate;
-	}
-
-	public void endDate(String multirequestToken){
-		setToken("endDate", multirequestToken);
-	}
-
-	// paymentMethod:
-	public PaymentMethodType getPaymentMethod(){
-		return this.paymentMethod;
-	}
-	public void setPaymentMethod(PaymentMethodType paymentMethod){
-		this.paymentMethod = paymentMethod;
-	}
-
-	public void paymentMethod(String multirequestToken){
-		setToken("paymentMethod", multirequestToken);
-	}
-
-	// paymentMethodExtraDetails:
-	public String getPaymentMethodExtraDetails(){
-		return this.paymentMethodExtraDetails;
-	}
-	public void setPaymentMethodExtraDetails(String paymentMethodExtraDetails){
-		this.paymentMethodExtraDetails = paymentMethodExtraDetails;
-	}
-
-	public void paymentMethodExtraDetails(String multirequestToken){
-		setToken("paymentMethodExtraDetails", multirequestToken);
-	}
-
-	// isRecurring:
-	public Boolean getIsRecurring(){
-		return this.isRecurring;
-	}
-	public void setIsRecurring(Boolean isRecurring){
-		this.isRecurring = isRecurring;
-	}
-
-	public void isRecurring(String multirequestToken){
-		setToken("isRecurring", multirequestToken);
-	}
-
-	// billingProviderRef:
-	public Integer getBillingProviderRef(){
-		return this.billingProviderRef;
-	}
-	public void setBillingProviderRef(Integer billingProviderRef){
-		this.billingProviderRef = billingProviderRef;
-	}
-
-	public void billingProviderRef(String multirequestToken){
-		setToken("billingProviderRef", multirequestToken);
-	}
-
-	// purchaseId:
-	public Integer getPurchaseId(){
-		return this.purchaseId;
-	}
-	public void setPurchaseId(Integer purchaseId){
-		this.purchaseId = purchaseId;
-	}
-
-	public void purchaseId(String multirequestToken){
-		setToken("purchaseId", multirequestToken);
-	}
-
-	// remarks:
-	public String getRemarks(){
-		return this.remarks;
-	}
-	public void setRemarks(String remarks){
-		this.remarks = remarks;
-	}
-
-	public void remarks(String multirequestToken){
-		setToken("remarks", multirequestToken);
-	}
-
-	// billingPriceType:
-	public BillingPriceType getBillingPriceType(){
-		return this.billingPriceType;
-	}
-	public void setBillingPriceType(BillingPriceType billingPriceType){
-		this.billingPriceType = billingPriceType;
-	}
-
-	public void billingPriceType(String multirequestToken){
-		setToken("billingPriceType", multirequestToken);
-	}
-
-
-	public BillingTransaction() {
-		super();
-	}
-
-	public BillingTransaction(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		recieptCode = GsonParser.parseString(jsonObject.get("recieptCode"));
-		purchasedItemName = GsonParser.parseString(jsonObject.get("purchasedItemName"));
-		purchasedItemCode = GsonParser.parseString(jsonObject.get("purchasedItemCode"));
-		itemType = BillingItemsType.get(GsonParser.parseString(jsonObject.get("itemType")));
-		billingAction = BillingAction.get(GsonParser.parseString(jsonObject.get("billingAction")));
-		price = GsonParser.parseObject(jsonObject.getAsJsonObject("price"), Price.class);
-		actionDate = GsonParser.parseLong(jsonObject.get("actionDate"));
-		startDate = GsonParser.parseLong(jsonObject.get("startDate"));
-		endDate = GsonParser.parseLong(jsonObject.get("endDate"));
-		paymentMethod = PaymentMethodType.get(GsonParser.parseString(jsonObject.get("paymentMethod")));
-		paymentMethodExtraDetails = GsonParser.parseString(jsonObject.get("paymentMethodExtraDetails"));
-		isRecurring = GsonParser.parseBoolean(jsonObject.get("isRecurring"));
-		billingProviderRef = GsonParser.parseInt(jsonObject.get("billingProviderRef"));
-		purchaseId = GsonParser.parseInt(jsonObject.get("purchaseId"));
-		remarks = GsonParser.parseString(jsonObject.get("remarks"));
-		billingPriceType = BillingPriceType.get(GsonParser.parseString(jsonObject.get("billingPriceType")));
-
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaBillingTransaction");
-		return kparams;
-	}
-
-
-    public static final Creator<BillingTransaction> CREATOR = new Creator<BillingTransaction>() {
-        @Override
-        public BillingTransaction createFromParcel(Parcel source) {
-            return new BillingTransaction(source);
-        }
-
-        @Override
-        public BillingTransaction[] newArray(int size) {
-            return new BillingTransaction[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeString(this.recieptCode);
-        dest.writeString(this.purchasedItemName);
-        dest.writeString(this.purchasedItemCode);
-        dest.writeInt(this.itemType == null ? -1 : this.itemType.ordinal());
-        dest.writeInt(this.billingAction == null ? -1 : this.billingAction.ordinal());
-        dest.writeParcelable(this.price, flags);
-        dest.writeValue(this.actionDate);
-        dest.writeValue(this.startDate);
-        dest.writeValue(this.endDate);
-        dest.writeInt(this.paymentMethod == null ? -1 : this.paymentMethod.ordinal());
-        dest.writeString(this.paymentMethodExtraDetails);
-        dest.writeValue(this.isRecurring);
-        dest.writeValue(this.billingProviderRef);
-        dest.writeValue(this.purchaseId);
-        dest.writeString(this.remarks);
-        dest.writeInt(this.billingPriceType == null ? -1 : this.billingPriceType.ordinal());
+    // recieptCode:
+    public String getRecieptCode(){
+        return this.recieptCode;
+    }
+    public void setRecieptCode(String recieptCode){
+        this.recieptCode = recieptCode;
     }
 
-    public BillingTransaction(Parcel in) {
-        super(in);
-        this.recieptCode = in.readString();
-        this.purchasedItemName = in.readString();
-        this.purchasedItemCode = in.readString();
-        int tmpItemType = in.readInt();
-        this.itemType = tmpItemType == -1 ? null : BillingItemsType.values()[tmpItemType];
-        int tmpBillingAction = in.readInt();
-        this.billingAction = tmpBillingAction == -1 ? null : BillingAction.values()[tmpBillingAction];
-        this.price = in.readParcelable(Price.class.getClassLoader());
-        this.actionDate = (Long)in.readValue(Long.class.getClassLoader());
-        this.startDate = (Long)in.readValue(Long.class.getClassLoader());
-        this.endDate = (Long)in.readValue(Long.class.getClassLoader());
-        int tmpPaymentMethod = in.readInt();
-        this.paymentMethod = tmpPaymentMethod == -1 ? null : PaymentMethodType.values()[tmpPaymentMethod];
-        this.paymentMethodExtraDetails = in.readString();
-        this.isRecurring = (Boolean)in.readValue(Boolean.class.getClassLoader());
-        this.billingProviderRef = (Integer)in.readValue(Integer.class.getClassLoader());
-        this.purchaseId = (Integer)in.readValue(Integer.class.getClassLoader());
-        this.remarks = in.readString();
-        int tmpBillingPriceType = in.readInt();
-        this.billingPriceType = tmpBillingPriceType == -1 ? null : BillingPriceType.values()[tmpBillingPriceType];
+    // purchasedItemName:
+    public String getPurchasedItemName(){
+        return this.purchasedItemName;
     }
+    public void setPurchasedItemName(String purchasedItemName){
+        this.purchasedItemName = purchasedItemName;
+    }
+
+    // purchasedItemCode:
+    public String getPurchasedItemCode(){
+        return this.purchasedItemCode;
+    }
+    public void setPurchasedItemCode(String purchasedItemCode){
+        this.purchasedItemCode = purchasedItemCode;
+    }
+
+    // itemType:
+    public BillingItemsType getItemType(){
+        return this.itemType;
+    }
+    public void setItemType(BillingItemsType itemType){
+        this.itemType = itemType;
+    }
+
+    // billingAction:
+    public BillingAction getBillingAction(){
+        return this.billingAction;
+    }
+    public void setBillingAction(BillingAction billingAction){
+        this.billingAction = billingAction;
+    }
+
+    // price:
+    public Price getPrice(){
+        return this.price;
+    }
+    public void setPrice(Price price){
+        this.price = price;
+    }
+
+    // actionDate:
+    public Long getActionDate(){
+        return this.actionDate;
+    }
+    public void setActionDate(Long actionDate){
+        this.actionDate = actionDate;
+    }
+
+    // startDate:
+    public Long getStartDate(){
+        return this.startDate;
+    }
+    public void setStartDate(Long startDate){
+        this.startDate = startDate;
+    }
+
+    // endDate:
+    public Long getEndDate(){
+        return this.endDate;
+    }
+    public void setEndDate(Long endDate){
+        this.endDate = endDate;
+    }
+
+    // paymentMethod:
+    public PaymentMethodType getPaymentMethod(){
+        return this.paymentMethod;
+    }
+    public void setPaymentMethod(PaymentMethodType paymentMethod){
+        this.paymentMethod = paymentMethod;
+    }
+
+    // paymentMethodExtraDetails:
+    public String getPaymentMethodExtraDetails(){
+        return this.paymentMethodExtraDetails;
+    }
+    public void setPaymentMethodExtraDetails(String paymentMethodExtraDetails){
+        this.paymentMethodExtraDetails = paymentMethodExtraDetails;
+    }
+
+    // isRecurring:
+    public Boolean getIsRecurring(){
+        return this.isRecurring;
+    }
+    public void setIsRecurring(Boolean isRecurring){
+        this.isRecurring = isRecurring;
+    }
+
+    // billingProviderRef:
+    public Integer getBillingProviderRef(){
+        return this.billingProviderRef;
+    }
+    public void setBillingProviderRef(Integer billingProviderRef){
+        this.billingProviderRef = billingProviderRef;
+    }
+
+    // purchaseId:
+    public Integer getPurchaseId(){
+        return this.purchaseId;
+    }
+    public void setPurchaseId(Integer purchaseId){
+        this.purchaseId = purchaseId;
+    }
+
+    // remarks:
+    public String getRemarks(){
+        return this.remarks;
+    }
+    public void setRemarks(String remarks){
+        this.remarks = remarks;
+    }
+
+    // billingPriceType:
+    public BillingPriceType getBillingPriceType(){
+        return this.billingPriceType;
+    }
+    public void setBillingPriceType(BillingPriceType billingPriceType){
+        this.billingPriceType = billingPriceType;
+    }
+
+
+    public BillingTransaction() {
+       super();
+    }
+
+    public BillingTransaction(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+
+        if(jsonObject == null) return;
+
+        // set members values:
+        recieptCode = GsonParser.parseString(jsonObject.get("recieptCode"));
+        purchasedItemName = GsonParser.parseString(jsonObject.get("purchasedItemName"));
+        purchasedItemCode = GsonParser.parseString(jsonObject.get("purchasedItemCode"));
+        itemType = BillingItemsType.get(GsonParser.parseString(jsonObject.get("itemType")));
+        billingAction = BillingAction.get(GsonParser.parseString(jsonObject.get("billingAction")));
+        price = GsonParser.parseObject(jsonObject.getAsJsonObject("price"), Price.class);
+        actionDate = GsonParser.parseLong(jsonObject.get("actionDate"));
+        startDate = GsonParser.parseLong(jsonObject.get("startDate"));
+        endDate = GsonParser.parseLong(jsonObject.get("endDate"));
+        paymentMethod = PaymentMethodType.get(GsonParser.parseString(jsonObject.get("paymentMethod")));
+        paymentMethodExtraDetails = GsonParser.parseString(jsonObject.get("paymentMethodExtraDetails"));
+        isRecurring = GsonParser.parseBoolean(jsonObject.get("isRecurring"));
+        billingProviderRef = GsonParser.parseInt(jsonObject.get("billingProviderRef"));
+        purchaseId = GsonParser.parseInt(jsonObject.get("purchaseId"));
+        remarks = GsonParser.parseString(jsonObject.get("remarks"));
+        billingPriceType = BillingPriceType.get(GsonParser.parseString(jsonObject.get("billingPriceType")));
+
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaBillingTransaction");
+        return kparams;
+    }
+
 }
 

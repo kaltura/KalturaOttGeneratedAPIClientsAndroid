@@ -27,11 +27,10 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -41,72 +40,40 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(SubscriptionDependencySetFilter.Tokenizer.class)
 public class SubscriptionDependencySetFilter extends SubscriptionSetFilter {
-	
-	public interface Tokenizer extends SubscriptionSetFilter.Tokenizer {
-		String baseSubscriptionIdIn();
-	}
 
 	/**  Comma separated identifiers  */
-	private String baseSubscriptionIdIn;
+    private String baseSubscriptionIdIn;
 
-	// baseSubscriptionIdIn:
-	public String getBaseSubscriptionIdIn(){
-		return this.baseSubscriptionIdIn;
-	}
-	public void setBaseSubscriptionIdIn(String baseSubscriptionIdIn){
-		this.baseSubscriptionIdIn = baseSubscriptionIdIn;
-	}
-
-	public void baseSubscriptionIdIn(String multirequestToken){
-		setToken("baseSubscriptionIdIn", multirequestToken);
-	}
-
-
-	public SubscriptionDependencySetFilter() {
-		super();
-	}
-
-	public SubscriptionDependencySetFilter(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		baseSubscriptionIdIn = GsonParser.parseString(jsonObject.get("baseSubscriptionIdIn"));
-
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaSubscriptionDependencySetFilter");
-		kparams.add("baseSubscriptionIdIn", this.baseSubscriptionIdIn);
-		return kparams;
-	}
-
-
-    public static final Creator<SubscriptionDependencySetFilter> CREATOR = new Creator<SubscriptionDependencySetFilter>() {
-        @Override
-        public SubscriptionDependencySetFilter createFromParcel(Parcel source) {
-            return new SubscriptionDependencySetFilter(source);
-        }
-
-        @Override
-        public SubscriptionDependencySetFilter[] newArray(int size) {
-            return new SubscriptionDependencySetFilter[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeString(this.baseSubscriptionIdIn);
+    // baseSubscriptionIdIn:
+    public String getBaseSubscriptionIdIn(){
+        return this.baseSubscriptionIdIn;
+    }
+    public void setBaseSubscriptionIdIn(String baseSubscriptionIdIn){
+        this.baseSubscriptionIdIn = baseSubscriptionIdIn;
     }
 
-    public SubscriptionDependencySetFilter(Parcel in) {
-        super(in);
-        this.baseSubscriptionIdIn = in.readString();
+
+    public SubscriptionDependencySetFilter() {
+       super();
     }
+
+    public SubscriptionDependencySetFilter(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+
+        if(jsonObject == null) return;
+
+        // set members values:
+        baseSubscriptionIdIn = GsonParser.parseString(jsonObject.get("baseSubscriptionIdIn"));
+
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaSubscriptionDependencySetFilter");
+        kparams.add("baseSubscriptionIdIn", this.baseSubscriptionIdIn);
+        return kparams;
+    }
+
 }
 

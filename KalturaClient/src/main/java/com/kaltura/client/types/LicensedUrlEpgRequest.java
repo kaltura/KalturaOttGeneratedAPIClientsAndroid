@@ -27,12 +27,11 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.enums.StreamType;
 import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.enums.StreamType;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -42,92 +41,52 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(LicensedUrlEpgRequest.Tokenizer.class)
 public class LicensedUrlEpgRequest extends LicensedUrlMediaRequest {
-	
-	public interface Tokenizer extends LicensedUrlMediaRequest.Tokenizer {
-		String streamType();
-		String startDate();
-	}
 
 	/**  The stream type to get the URL for  */
-	private StreamType streamType;
+    private StreamType streamType;
 	/**  The start date of the stream (epoch)  */
-	private Long startDate;
+    private Long startDate;
 
-	// streamType:
-	public StreamType getStreamType(){
-		return this.streamType;
-	}
-	public void setStreamType(StreamType streamType){
-		this.streamType = streamType;
-	}
-
-	public void streamType(String multirequestToken){
-		setToken("streamType", multirequestToken);
-	}
-
-	// startDate:
-	public Long getStartDate(){
-		return this.startDate;
-	}
-	public void setStartDate(Long startDate){
-		this.startDate = startDate;
-	}
-
-	public void startDate(String multirequestToken){
-		setToken("startDate", multirequestToken);
-	}
-
-
-	public LicensedUrlEpgRequest() {
-		super();
-	}
-
-	public LicensedUrlEpgRequest(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		streamType = StreamType.get(GsonParser.parseString(jsonObject.get("streamType")));
-		startDate = GsonParser.parseLong(jsonObject.get("startDate"));
-
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaLicensedUrlEpgRequest");
-		kparams.add("streamType", this.streamType);
-		kparams.add("startDate", this.startDate);
-		return kparams;
-	}
-
-
-    public static final Creator<LicensedUrlEpgRequest> CREATOR = new Creator<LicensedUrlEpgRequest>() {
-        @Override
-        public LicensedUrlEpgRequest createFromParcel(Parcel source) {
-            return new LicensedUrlEpgRequest(source);
-        }
-
-        @Override
-        public LicensedUrlEpgRequest[] newArray(int size) {
-            return new LicensedUrlEpgRequest[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeInt(this.streamType == null ? -1 : this.streamType.ordinal());
-        dest.writeValue(this.startDate);
+    // streamType:
+    public StreamType getStreamType(){
+        return this.streamType;
+    }
+    public void setStreamType(StreamType streamType){
+        this.streamType = streamType;
     }
 
-    public LicensedUrlEpgRequest(Parcel in) {
-        super(in);
-        int tmpStreamType = in.readInt();
-        this.streamType = tmpStreamType == -1 ? null : StreamType.values()[tmpStreamType];
-        this.startDate = (Long)in.readValue(Long.class.getClassLoader());
+    // startDate:
+    public Long getStartDate(){
+        return this.startDate;
     }
+    public void setStartDate(Long startDate){
+        this.startDate = startDate;
+    }
+
+
+    public LicensedUrlEpgRequest() {
+       super();
+    }
+
+    public LicensedUrlEpgRequest(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+
+        if(jsonObject == null) return;
+
+        // set members values:
+        streamType = StreamType.get(GsonParser.parseString(jsonObject.get("streamType")));
+        startDate = GsonParser.parseLong(jsonObject.get("startDate"));
+
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaLicensedUrlEpgRequest");
+        kparams.add("streamType", this.streamType);
+        kparams.add("startDate", this.startDate);
+        return kparams;
+    }
+
 }
 

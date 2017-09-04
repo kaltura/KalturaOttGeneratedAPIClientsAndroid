@@ -27,11 +27,10 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -41,72 +40,40 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(PurchaseSession.Tokenizer.class)
 public class PurchaseSession extends Purchase {
-	
-	public interface Tokenizer extends Purchase.Tokenizer {
-		String previewModuleId();
-	}
 
 	/**  Preview module identifier (relevant only for subscription)  */
-	private Integer previewModuleId;
+    private Integer previewModuleId;
 
-	// previewModuleId:
-	public Integer getPreviewModuleId(){
-		return this.previewModuleId;
-	}
-	public void setPreviewModuleId(Integer previewModuleId){
-		this.previewModuleId = previewModuleId;
-	}
-
-	public void previewModuleId(String multirequestToken){
-		setToken("previewModuleId", multirequestToken);
-	}
-
-
-	public PurchaseSession() {
-		super();
-	}
-
-	public PurchaseSession(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		previewModuleId = GsonParser.parseInt(jsonObject.get("previewModuleId"));
-
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaPurchaseSession");
-		kparams.add("previewModuleId", this.previewModuleId);
-		return kparams;
-	}
-
-
-    public static final Creator<PurchaseSession> CREATOR = new Creator<PurchaseSession>() {
-        @Override
-        public PurchaseSession createFromParcel(Parcel source) {
-            return new PurchaseSession(source);
-        }
-
-        @Override
-        public PurchaseSession[] newArray(int size) {
-            return new PurchaseSession[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeValue(this.previewModuleId);
+    // previewModuleId:
+    public Integer getPreviewModuleId(){
+        return this.previewModuleId;
+    }
+    public void setPreviewModuleId(Integer previewModuleId){
+        this.previewModuleId = previewModuleId;
     }
 
-    public PurchaseSession(Parcel in) {
-        super(in);
-        this.previewModuleId = (Integer)in.readValue(Integer.class.getClassLoader());
+
+    public PurchaseSession() {
+       super();
     }
+
+    public PurchaseSession(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+
+        if(jsonObject == null) return;
+
+        // set members values:
+        previewModuleId = GsonParser.parseInt(jsonObject.get("previewModuleId"));
+
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaPurchaseSession");
+        kparams.add("previewModuleId", this.previewModuleId);
+        return kparams;
+    }
+
 }
 

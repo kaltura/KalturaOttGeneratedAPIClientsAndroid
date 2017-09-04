@@ -27,10 +27,10 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.utils.GsonParser;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -40,43 +40,23 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(AccessControlBlockAction.Tokenizer.class)
 public class AccessControlBlockAction extends RuleAction {
-	
-	public interface Tokenizer extends RuleAction.Tokenizer {
-	}
 
 
 
-	public AccessControlBlockAction() {
-		super();
-	}
-
-	public AccessControlBlockAction(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaAccessControlBlockAction");
-		return kparams;
-	}
-
-
-    public static final Creator<AccessControlBlockAction> CREATOR = new Creator<AccessControlBlockAction>() {
-        @Override
-        public AccessControlBlockAction createFromParcel(Parcel source) {
-            return new AccessControlBlockAction(source);
-        }
-
-        @Override
-        public AccessControlBlockAction[] newArray(int size) {
-            return new AccessControlBlockAction[size];
-        }
-    };
-
-    public AccessControlBlockAction(Parcel in) {
-        super(in);
+    public AccessControlBlockAction() {
+       super();
     }
+
+    public AccessControlBlockAction(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaAccessControlBlockAction");
+        return kparams;
+    }
+
 }
 

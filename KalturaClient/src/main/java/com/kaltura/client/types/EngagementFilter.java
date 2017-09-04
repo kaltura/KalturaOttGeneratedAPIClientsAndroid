@@ -27,11 +27,10 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -41,91 +40,52 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(EngagementFilter.Tokenizer.class)
 public class EngagementFilter extends Filter {
-	
-	public interface Tokenizer extends Filter.Tokenizer {
-		String typeIn();
-		String sendTimeGreaterThanOrEqual();
-	}
 
 	/**  List of inbox message types to search within.  */
-	private String typeIn;
+    private String typeIn;
 	/**  SendTime GreaterThanOrEqual  */
-	private Long sendTimeGreaterThanOrEqual;
+    private Long sendTimeGreaterThanOrEqual;
 
-	// typeIn:
-	public String getTypeIn(){
-		return this.typeIn;
-	}
-	public void setTypeIn(String typeIn){
-		this.typeIn = typeIn;
-	}
-
-	public void typeIn(String multirequestToken){
-		setToken("typeIn", multirequestToken);
-	}
-
-	// sendTimeGreaterThanOrEqual:
-	public Long getSendTimeGreaterThanOrEqual(){
-		return this.sendTimeGreaterThanOrEqual;
-	}
-	public void setSendTimeGreaterThanOrEqual(Long sendTimeGreaterThanOrEqual){
-		this.sendTimeGreaterThanOrEqual = sendTimeGreaterThanOrEqual;
-	}
-
-	public void sendTimeGreaterThanOrEqual(String multirequestToken){
-		setToken("sendTimeGreaterThanOrEqual", multirequestToken);
-	}
-
-
-	public EngagementFilter() {
-		super();
-	}
-
-	public EngagementFilter(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		typeIn = GsonParser.parseString(jsonObject.get("typeIn"));
-		sendTimeGreaterThanOrEqual = GsonParser.parseLong(jsonObject.get("sendTimeGreaterThanOrEqual"));
-
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaEngagementFilter");
-		kparams.add("typeIn", this.typeIn);
-		kparams.add("sendTimeGreaterThanOrEqual", this.sendTimeGreaterThanOrEqual);
-		return kparams;
-	}
-
-
-    public static final Creator<EngagementFilter> CREATOR = new Creator<EngagementFilter>() {
-        @Override
-        public EngagementFilter createFromParcel(Parcel source) {
-            return new EngagementFilter(source);
-        }
-
-        @Override
-        public EngagementFilter[] newArray(int size) {
-            return new EngagementFilter[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeString(this.typeIn);
-        dest.writeValue(this.sendTimeGreaterThanOrEqual);
+    // typeIn:
+    public String getTypeIn(){
+        return this.typeIn;
+    }
+    public void setTypeIn(String typeIn){
+        this.typeIn = typeIn;
     }
 
-    public EngagementFilter(Parcel in) {
-        super(in);
-        this.typeIn = in.readString();
-        this.sendTimeGreaterThanOrEqual = (Long)in.readValue(Long.class.getClassLoader());
+    // sendTimeGreaterThanOrEqual:
+    public Long getSendTimeGreaterThanOrEqual(){
+        return this.sendTimeGreaterThanOrEqual;
     }
+    public void setSendTimeGreaterThanOrEqual(Long sendTimeGreaterThanOrEqual){
+        this.sendTimeGreaterThanOrEqual = sendTimeGreaterThanOrEqual;
+    }
+
+
+    public EngagementFilter() {
+       super();
+    }
+
+    public EngagementFilter(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+
+        if(jsonObject == null) return;
+
+        // set members values:
+        typeIn = GsonParser.parseString(jsonObject.get("typeIn"));
+        sendTimeGreaterThanOrEqual = GsonParser.parseLong(jsonObject.get("sendTimeGreaterThanOrEqual"));
+
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaEngagementFilter");
+        kparams.add("typeIn", this.typeIn);
+        kparams.add("sendTimeGreaterThanOrEqual", this.sendTimeGreaterThanOrEqual);
+        return kparams;
+    }
+
 }
 

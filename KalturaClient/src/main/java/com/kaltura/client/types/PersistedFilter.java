@@ -27,11 +27,10 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -41,61 +40,41 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(PersistedFilter.Tokenizer.class)
 public abstract class PersistedFilter extends Filter {
-	
-	public interface Tokenizer extends Filter.Tokenizer {
-		String name();
-	}
 
 	/**  Name for the presisted filter. If empty, no action will be done. If has value,
 	  the filter will be saved and persisted in user&amp;#39;s search history.  */
-	private String name;
+    private String name;
 
-	// name:
-	public String getName(){
-		return this.name;
-	}
-	public void setName(String name){
-		this.name = name;
-	}
-
-	public void name(String multirequestToken){
-		setToken("name", multirequestToken);
-	}
-
-
-	public PersistedFilter() {
-		super();
-	}
-
-	public PersistedFilter(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		name = GsonParser.parseString(jsonObject.get("name"));
-
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaPersistedFilter");
-		kparams.add("name", this.name);
-		return kparams;
-	}
-
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeString(this.name);
+    // name:
+    public String getName(){
+        return this.name;
+    }
+    public void setName(String name){
+        this.name = name;
     }
 
-    public PersistedFilter(Parcel in) {
-        super(in);
-        this.name = in.readString();
+
+    public PersistedFilter() {
+       super();
     }
+
+    public PersistedFilter(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+
+        if(jsonObject == null) return;
+
+        // set members values:
+        name = GsonParser.parseString(jsonObject.get("name"));
+
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaPersistedFilter");
+        kparams.add("name", this.name);
+        return kparams;
+    }
+
 }
 

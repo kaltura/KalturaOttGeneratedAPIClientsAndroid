@@ -27,12 +27,11 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.enums.SubscriptionSetType;
 import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.enums.SubscriptionSetType;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -42,111 +41,64 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(SubscriptionSetFilter.Tokenizer.class)
 public class SubscriptionSetFilter extends Filter {
-	
-	public interface Tokenizer extends Filter.Tokenizer {
-		String idIn();
-		String subscriptionIdContains();
-		String typeEqual();
-	}
 
 	/**  Comma separated identifiers  */
-	private String idIn;
+    private String idIn;
 	/**  Comma separated subscription identifiers  */
-	private String subscriptionIdContains;
+    private String subscriptionIdContains;
 	/**  Subscription Type  */
-	private SubscriptionSetType typeEqual;
+    private SubscriptionSetType typeEqual;
 
-	// idIn:
-	public String getIdIn(){
-		return this.idIn;
-	}
-	public void setIdIn(String idIn){
-		this.idIn = idIn;
-	}
-
-	public void idIn(String multirequestToken){
-		setToken("idIn", multirequestToken);
-	}
-
-	// subscriptionIdContains:
-	public String getSubscriptionIdContains(){
-		return this.subscriptionIdContains;
-	}
-	public void setSubscriptionIdContains(String subscriptionIdContains){
-		this.subscriptionIdContains = subscriptionIdContains;
-	}
-
-	public void subscriptionIdContains(String multirequestToken){
-		setToken("subscriptionIdContains", multirequestToken);
-	}
-
-	// typeEqual:
-	public SubscriptionSetType getTypeEqual(){
-		return this.typeEqual;
-	}
-	public void setTypeEqual(SubscriptionSetType typeEqual){
-		this.typeEqual = typeEqual;
-	}
-
-	public void typeEqual(String multirequestToken){
-		setToken("typeEqual", multirequestToken);
-	}
-
-
-	public SubscriptionSetFilter() {
-		super();
-	}
-
-	public SubscriptionSetFilter(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		idIn = GsonParser.parseString(jsonObject.get("idIn"));
-		subscriptionIdContains = GsonParser.parseString(jsonObject.get("subscriptionIdContains"));
-		typeEqual = SubscriptionSetType.get(GsonParser.parseString(jsonObject.get("typeEqual")));
-
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaSubscriptionSetFilter");
-		kparams.add("idIn", this.idIn);
-		kparams.add("subscriptionIdContains", this.subscriptionIdContains);
-		kparams.add("typeEqual", this.typeEqual);
-		return kparams;
-	}
-
-
-    public static final Creator<SubscriptionSetFilter> CREATOR = new Creator<SubscriptionSetFilter>() {
-        @Override
-        public SubscriptionSetFilter createFromParcel(Parcel source) {
-            return new SubscriptionSetFilter(source);
-        }
-
-        @Override
-        public SubscriptionSetFilter[] newArray(int size) {
-            return new SubscriptionSetFilter[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeString(this.idIn);
-        dest.writeString(this.subscriptionIdContains);
-        dest.writeInt(this.typeEqual == null ? -1 : this.typeEqual.ordinal());
+    // idIn:
+    public String getIdIn(){
+        return this.idIn;
+    }
+    public void setIdIn(String idIn){
+        this.idIn = idIn;
     }
 
-    public SubscriptionSetFilter(Parcel in) {
-        super(in);
-        this.idIn = in.readString();
-        this.subscriptionIdContains = in.readString();
-        int tmpTypeEqual = in.readInt();
-        this.typeEqual = tmpTypeEqual == -1 ? null : SubscriptionSetType.values()[tmpTypeEqual];
+    // subscriptionIdContains:
+    public String getSubscriptionIdContains(){
+        return this.subscriptionIdContains;
     }
+    public void setSubscriptionIdContains(String subscriptionIdContains){
+        this.subscriptionIdContains = subscriptionIdContains;
+    }
+
+    // typeEqual:
+    public SubscriptionSetType getTypeEqual(){
+        return this.typeEqual;
+    }
+    public void setTypeEqual(SubscriptionSetType typeEqual){
+        this.typeEqual = typeEqual;
+    }
+
+
+    public SubscriptionSetFilter() {
+       super();
+    }
+
+    public SubscriptionSetFilter(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+
+        if(jsonObject == null) return;
+
+        // set members values:
+        idIn = GsonParser.parseString(jsonObject.get("idIn"));
+        subscriptionIdContains = GsonParser.parseString(jsonObject.get("subscriptionIdContains"));
+        typeEqual = SubscriptionSetType.get(GsonParser.parseString(jsonObject.get("typeEqual")));
+
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaSubscriptionSetFilter");
+        kparams.add("idIn", this.idIn);
+        kparams.add("subscriptionIdContains", this.subscriptionIdContains);
+        kparams.add("typeEqual", this.typeEqual);
+        return kparams;
+    }
+
 }
 

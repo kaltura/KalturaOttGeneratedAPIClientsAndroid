@@ -27,11 +27,10 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -42,72 +41,40 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**  A string representation to return an array of booleans  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(BooleanValue.Tokenizer.class)
 public class BooleanValue extends Value {
-	
-	public interface Tokenizer extends Value.Tokenizer {
-		String value();
-	}
 
 	/**  Value  */
-	private Boolean value;
+    private Boolean value;
 
-	// value:
-	public Boolean getValue(){
-		return this.value;
-	}
-	public void setValue(Boolean value){
-		this.value = value;
-	}
-
-	public void value(String multirequestToken){
-		setToken("value", multirequestToken);
-	}
-
-
-	public BooleanValue() {
-		super();
-	}
-
-	public BooleanValue(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		value = GsonParser.parseBoolean(jsonObject.get("value"));
-
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaBooleanValue");
-		kparams.add("value", this.value);
-		return kparams;
-	}
-
-
-    public static final Creator<BooleanValue> CREATOR = new Creator<BooleanValue>() {
-        @Override
-        public BooleanValue createFromParcel(Parcel source) {
-            return new BooleanValue(source);
-        }
-
-        @Override
-        public BooleanValue[] newArray(int size) {
-            return new BooleanValue[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeValue(this.value);
+    // value:
+    public Boolean getValue(){
+        return this.value;
+    }
+    public void setValue(Boolean value){
+        this.value = value;
     }
 
-    public BooleanValue(Parcel in) {
-        super(in);
-        this.value = (Boolean)in.readValue(Boolean.class.getClassLoader());
+
+    public BooleanValue() {
+       super();
     }
+
+    public BooleanValue(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+
+        if(jsonObject == null) return;
+
+        // set members values:
+        value = GsonParser.parseBoolean(jsonObject.get("value"));
+
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaBooleanValue");
+        kparams.add("value", this.value);
+        return kparams;
+    }
+
 }
 

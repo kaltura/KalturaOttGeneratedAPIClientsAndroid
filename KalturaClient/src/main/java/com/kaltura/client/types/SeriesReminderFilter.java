@@ -27,11 +27,10 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -41,91 +40,52 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(SeriesReminderFilter.Tokenizer.class)
 public class SeriesReminderFilter extends ReminderFilter {
-	
-	public interface Tokenizer extends ReminderFilter.Tokenizer {
-		String seriesIdIn();
-		String epgChannelIdEqual();
-	}
 
 	/**  Comma separated series IDs  */
-	private String seriesIdIn;
+    private String seriesIdIn;
 	/**  EPG channel ID  */
-	private Long epgChannelIdEqual;
+    private Long epgChannelIdEqual;
 
-	// seriesIdIn:
-	public String getSeriesIdIn(){
-		return this.seriesIdIn;
-	}
-	public void setSeriesIdIn(String seriesIdIn){
-		this.seriesIdIn = seriesIdIn;
-	}
-
-	public void seriesIdIn(String multirequestToken){
-		setToken("seriesIdIn", multirequestToken);
-	}
-
-	// epgChannelIdEqual:
-	public Long getEpgChannelIdEqual(){
-		return this.epgChannelIdEqual;
-	}
-	public void setEpgChannelIdEqual(Long epgChannelIdEqual){
-		this.epgChannelIdEqual = epgChannelIdEqual;
-	}
-
-	public void epgChannelIdEqual(String multirequestToken){
-		setToken("epgChannelIdEqual", multirequestToken);
-	}
-
-
-	public SeriesReminderFilter() {
-		super();
-	}
-
-	public SeriesReminderFilter(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		seriesIdIn = GsonParser.parseString(jsonObject.get("seriesIdIn"));
-		epgChannelIdEqual = GsonParser.parseLong(jsonObject.get("epgChannelIdEqual"));
-
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaSeriesReminderFilter");
-		kparams.add("seriesIdIn", this.seriesIdIn);
-		kparams.add("epgChannelIdEqual", this.epgChannelIdEqual);
-		return kparams;
-	}
-
-
-    public static final Creator<SeriesReminderFilter> CREATOR = new Creator<SeriesReminderFilter>() {
-        @Override
-        public SeriesReminderFilter createFromParcel(Parcel source) {
-            return new SeriesReminderFilter(source);
-        }
-
-        @Override
-        public SeriesReminderFilter[] newArray(int size) {
-            return new SeriesReminderFilter[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeString(this.seriesIdIn);
-        dest.writeValue(this.epgChannelIdEqual);
+    // seriesIdIn:
+    public String getSeriesIdIn(){
+        return this.seriesIdIn;
+    }
+    public void setSeriesIdIn(String seriesIdIn){
+        this.seriesIdIn = seriesIdIn;
     }
 
-    public SeriesReminderFilter(Parcel in) {
-        super(in);
-        this.seriesIdIn = in.readString();
-        this.epgChannelIdEqual = (Long)in.readValue(Long.class.getClassLoader());
+    // epgChannelIdEqual:
+    public Long getEpgChannelIdEqual(){
+        return this.epgChannelIdEqual;
     }
+    public void setEpgChannelIdEqual(Long epgChannelIdEqual){
+        this.epgChannelIdEqual = epgChannelIdEqual;
+    }
+
+
+    public SeriesReminderFilter() {
+       super();
+    }
+
+    public SeriesReminderFilter(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+
+        if(jsonObject == null) return;
+
+        // set members values:
+        seriesIdIn = GsonParser.parseString(jsonObject.get("seriesIdIn"));
+        epgChannelIdEqual = GsonParser.parseLong(jsonObject.get("epgChannelIdEqual"));
+
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaSeriesReminderFilter");
+        kparams.add("seriesIdIn", this.seriesIdIn);
+        kparams.add("epgChannelIdEqual", this.epgChannelIdEqual);
+        return kparams;
+    }
+
 }
 

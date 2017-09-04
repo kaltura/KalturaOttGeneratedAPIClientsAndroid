@@ -27,13 +27,12 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.enums.RuleType;
-import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.enums.RuleType;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -45,129 +44,75 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
 /**  User asset rule - representing different type of rules on an asset(Parental,
   Geo, User Type, Device)  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(UserAssetRule.Tokenizer.class)
 public class UserAssetRule extends ObjectBase {
-	
-	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String id();
-		String ruleType();
-		String name();
-		String description();
-	}
 
 	/**  Unique rule identifier  */
-	private Long id;
+    private Long id;
 	/**  Rule type - possible values: Rule type – Parental, Geo, UserType, Device  */
-	private RuleType ruleType;
+    private RuleType ruleType;
 	/**  Rule display name  */
-	private String name;
+    private String name;
 	/**  Additional description for the specific rule  */
-	private String description;
+    private String description;
 
-	// id:
-	public Long getId(){
-		return this.id;
-	}
-	public void setId(Long id){
-		this.id = id;
-	}
-
-	public void id(String multirequestToken){
-		setToken("id", multirequestToken);
-	}
-
-	// ruleType:
-	public RuleType getRuleType(){
-		return this.ruleType;
-	}
-	public void setRuleType(RuleType ruleType){
-		this.ruleType = ruleType;
-	}
-
-	public void ruleType(String multirequestToken){
-		setToken("ruleType", multirequestToken);
-	}
-
-	// name:
-	public String getName(){
-		return this.name;
-	}
-	public void setName(String name){
-		this.name = name;
-	}
-
-	public void name(String multirequestToken){
-		setToken("name", multirequestToken);
-	}
-
-	// description:
-	public String getDescription(){
-		return this.description;
-	}
-	public void setDescription(String description){
-		this.description = description;
-	}
-
-	public void description(String multirequestToken){
-		setToken("description", multirequestToken);
-	}
-
-
-	public UserAssetRule() {
-		super();
-	}
-
-	public UserAssetRule(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		id = GsonParser.parseLong(jsonObject.get("id"));
-		ruleType = RuleType.get(GsonParser.parseString(jsonObject.get("ruleType")));
-		name = GsonParser.parseString(jsonObject.get("name"));
-		description = GsonParser.parseString(jsonObject.get("description"));
-
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaUserAssetRule");
-		kparams.add("ruleType", this.ruleType);
-		kparams.add("name", this.name);
-		kparams.add("description", this.description);
-		return kparams;
-	}
-
-
-    public static final Creator<UserAssetRule> CREATOR = new Creator<UserAssetRule>() {
-        @Override
-        public UserAssetRule createFromParcel(Parcel source) {
-            return new UserAssetRule(source);
-        }
-
-        @Override
-        public UserAssetRule[] newArray(int size) {
-            return new UserAssetRule[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeValue(this.id);
-        dest.writeInt(this.ruleType == null ? -1 : this.ruleType.ordinal());
-        dest.writeString(this.name);
-        dest.writeString(this.description);
+    // id:
+    public Long getId(){
+        return this.id;
+    }
+    public void setId(Long id){
+        this.id = id;
     }
 
-    public UserAssetRule(Parcel in) {
-        super(in);
-        this.id = (Long)in.readValue(Long.class.getClassLoader());
-        int tmpRuleType = in.readInt();
-        this.ruleType = tmpRuleType == -1 ? null : RuleType.values()[tmpRuleType];
-        this.name = in.readString();
-        this.description = in.readString();
+    // ruleType:
+    public RuleType getRuleType(){
+        return this.ruleType;
     }
+    public void setRuleType(RuleType ruleType){
+        this.ruleType = ruleType;
+    }
+
+    // name:
+    public String getName(){
+        return this.name;
+    }
+    public void setName(String name){
+        this.name = name;
+    }
+
+    // description:
+    public String getDescription(){
+        return this.description;
+    }
+    public void setDescription(String description){
+        this.description = description;
+    }
+
+
+    public UserAssetRule() {
+       super();
+    }
+
+    public UserAssetRule(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+
+        if(jsonObject == null) return;
+
+        // set members values:
+        id = GsonParser.parseLong(jsonObject.get("id"));
+        ruleType = RuleType.get(GsonParser.parseString(jsonObject.get("ruleType")));
+        name = GsonParser.parseString(jsonObject.get("name"));
+        description = GsonParser.parseString(jsonObject.get("description"));
+
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaUserAssetRule");
+        kparams.add("ruleType", this.ruleType);
+        kparams.add("name", this.name);
+        kparams.add("description", this.description);
+        return kparams;
+    }
+
 }
 

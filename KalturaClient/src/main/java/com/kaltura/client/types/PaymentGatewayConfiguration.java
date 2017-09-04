@@ -27,15 +27,12 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
-import com.kaltura.client.utils.request.RequestBuilder;
-import java.util.ArrayList;
+import com.kaltura.client.types.ObjectBase;
 import java.util.List;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -45,77 +42,40 @@ import java.util.List;
  */
 
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(PaymentGatewayConfiguration.Tokenizer.class)
 public class PaymentGatewayConfiguration extends ObjectBase {
-	
-	public interface Tokenizer extends ObjectBase.Tokenizer {
-		RequestBuilder.ListTokenizer<KeyValue.Tokenizer> paymentGatewayConfiguration();
-	}
 
 	/**  Payment gateway configuration  */
-	private List<KeyValue> paymentGatewayConfiguration;
+    private List<KeyValue> paymentGatewayConfiguration;
 
-	// paymentGatewayConfiguration:
-	public List<KeyValue> getPaymentGatewayConfiguration(){
-		return this.paymentGatewayConfiguration;
-	}
-	public void setPaymentGatewayConfiguration(List<KeyValue> paymentGatewayConfiguration){
-		this.paymentGatewayConfiguration = paymentGatewayConfiguration;
-	}
-
-
-	public PaymentGatewayConfiguration() {
-		super();
-	}
-
-	public PaymentGatewayConfiguration(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		paymentGatewayConfiguration = GsonParser.parseArray(jsonObject.getAsJsonArray("paymentGatewayConfiguration"), KeyValue.class);
-
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaPaymentGatewayConfiguration");
-		kparams.add("paymentGatewayConfiguration", this.paymentGatewayConfiguration);
-		return kparams;
-	}
-
-
-    public static final Creator<PaymentGatewayConfiguration> CREATOR = new Creator<PaymentGatewayConfiguration>() {
-        @Override
-        public PaymentGatewayConfiguration createFromParcel(Parcel source) {
-            return new PaymentGatewayConfiguration(source);
-        }
-
-        @Override
-        public PaymentGatewayConfiguration[] newArray(int size) {
-            return new PaymentGatewayConfiguration[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        if(this.paymentGatewayConfiguration != null) {
-            dest.writeInt(this.paymentGatewayConfiguration.size());
-            dest.writeList(this.paymentGatewayConfiguration);
-        } else {
-            dest.writeInt(-1);
-        }
+    // paymentGatewayConfiguration:
+    public List<KeyValue> getPaymentGatewayConfiguration(){
+        return this.paymentGatewayConfiguration;
+    }
+    public void setPaymentGatewayConfiguration(List<KeyValue> paymentGatewayConfiguration){
+        this.paymentGatewayConfiguration = paymentGatewayConfiguration;
     }
 
-    public PaymentGatewayConfiguration(Parcel in) {
-        super(in);
-        int paymentGatewayConfigurationSize = in.readInt();
-        if( paymentGatewayConfigurationSize > -1) {
-            this.paymentGatewayConfiguration = new ArrayList<>();
-            in.readList(this.paymentGatewayConfiguration, KeyValue.class.getClassLoader());
-        }
+
+    public PaymentGatewayConfiguration() {
+       super();
     }
+
+    public PaymentGatewayConfiguration(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+
+        if(jsonObject == null) return;
+
+        // set members values:
+        paymentGatewayConfiguration = GsonParser.parseArray(jsonObject.getAsJsonArray("paymentGatewayConfiguration"), KeyValue.class);
+
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaPaymentGatewayConfiguration");
+        kparams.add("paymentGatewayConfiguration", this.paymentGatewayConfiguration);
+        return kparams;
+    }
+
 }
 

@@ -27,34 +27,28 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import java.io.Serializable;
+import java.util.Map;
 
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.response.ResponseType;
 
-import java.util.Map;
-
-
+/**
+ * Ancestor class for all of the generated classes in the com.kaltura.client.types package.
+ * 
+ * @author jpotts
+ *
+ */
 @SuppressWarnings("serial")
-public class ObjectBase implements Parcelable, ResponseType {
-
-    public interface Tokenizer<I> {
-    }
-
-    private Params params = null;
-
-    @SuppressWarnings("rawtypes")
+public class ObjectBase implements Serializable, ResponseType {
     protected Map<String, ListResponse> relatedObjects;
 
-    @SuppressWarnings("rawtypes")
     public Map<String, ListResponse> getRelatedObjects() {
         return relatedObjects;
     }
 
-    @SuppressWarnings("rawtypes")
     public void setRelatedObjects(Map<String, ListResponse> relatedObjects) {
         this.relatedObjects = relatedObjects;
     }
@@ -68,43 +62,9 @@ public class ObjectBase implements Parcelable, ResponseType {
         // set members values:
         relatedObjects = GsonParser.parseMap(jsonObject.getAsJsonObject("relatedObjects"), ListResponse.class);
     }
-
-    public void setToken(String key, String token) {
-        if(params == null) {
-            params = new Params();
-        }
-        params.add(key, token);
-    }
-
-    public Params toParams() {
-        if(params == null) {
-            params = new Params();
-        }
-        return params;
-    }
-
-    public static final Creator<ObjectBase> CREATOR = new Creator<ObjectBase>() {
-        @Override
-        public ObjectBase createFromParcel(Parcel in) {
-            return new ObjectBase(in);
-        }
-
-        @Override
-        public ObjectBase[] newArray(int size) {
-            return new ObjectBase[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-    }
-
-    protected ObjectBase(Parcel in) {
-    }
-
+    
+	public Params toParams() {
+		return new Params();
+	}
+	
 }

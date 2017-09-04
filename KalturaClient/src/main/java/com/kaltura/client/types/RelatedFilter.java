@@ -27,11 +27,10 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -41,14 +40,7 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(RelatedFilter.Tokenizer.class)
 public class RelatedFilter extends BaseSearchAssetFilter {
-	
-	public interface Tokenizer extends BaseSearchAssetFilter.Tokenizer {
-		String kSql();
-		String idEqual();
-		String typeIn();
-	}
 
 	/**  Search assets using dynamic criteria. Provided collection of nested expressions
 	  with key, comparison operators, value, and logical conjunction.             
@@ -70,102 +62,63 @@ public class RelatedFilter extends BaseSearchAssetFilter {
 	  ~ (like), !~, ^ (starts with), + (exists), !+ (not exists).              Logical
 	  conjunction: and, or.               Search values are limited to 20 characters
 	  each.              (maximum length of entire filter is 2048 characters)  */
-	private String kSql;
+    private String kSql;
 	/**  the ID of the asset for which to return related assets  */
-	private Integer idEqual;
+    private Integer idEqual;
 	/**  Comma separated list of asset types to search within.               Possible
 	  values: any media type ID (according to media type IDs defined dynamically in
 	  the system).              If omitted –   same type as the provided asset.  */
-	private String typeIn;
+    private String typeIn;
 
-	// kSql:
-	public String getKSql(){
-		return this.kSql;
-	}
-	public void setKSql(String kSql){
-		this.kSql = kSql;
-	}
-
-	public void kSql(String multirequestToken){
-		setToken("kSql", multirequestToken);
-	}
-
-	// idEqual:
-	public Integer getIdEqual(){
-		return this.idEqual;
-	}
-	public void setIdEqual(Integer idEqual){
-		this.idEqual = idEqual;
-	}
-
-	public void idEqual(String multirequestToken){
-		setToken("idEqual", multirequestToken);
-	}
-
-	// typeIn:
-	public String getTypeIn(){
-		return this.typeIn;
-	}
-	public void setTypeIn(String typeIn){
-		this.typeIn = typeIn;
-	}
-
-	public void typeIn(String multirequestToken){
-		setToken("typeIn", multirequestToken);
-	}
-
-
-	public RelatedFilter() {
-		super();
-	}
-
-	public RelatedFilter(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		kSql = GsonParser.parseString(jsonObject.get("kSql"));
-		idEqual = GsonParser.parseInt(jsonObject.get("idEqual"));
-		typeIn = GsonParser.parseString(jsonObject.get("typeIn"));
-
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaRelatedFilter");
-		kparams.add("kSql", this.kSql);
-		kparams.add("idEqual", this.idEqual);
-		kparams.add("typeIn", this.typeIn);
-		return kparams;
-	}
-
-
-    public static final Creator<RelatedFilter> CREATOR = new Creator<RelatedFilter>() {
-        @Override
-        public RelatedFilter createFromParcel(Parcel source) {
-            return new RelatedFilter(source);
-        }
-
-        @Override
-        public RelatedFilter[] newArray(int size) {
-            return new RelatedFilter[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeString(this.kSql);
-        dest.writeValue(this.idEqual);
-        dest.writeString(this.typeIn);
+    // kSql:
+    public String getKSql(){
+        return this.kSql;
+    }
+    public void setKSql(String kSql){
+        this.kSql = kSql;
     }
 
-    public RelatedFilter(Parcel in) {
-        super(in);
-        this.kSql = in.readString();
-        this.idEqual = (Integer)in.readValue(Integer.class.getClassLoader());
-        this.typeIn = in.readString();
+    // idEqual:
+    public Integer getIdEqual(){
+        return this.idEqual;
     }
+    public void setIdEqual(Integer idEqual){
+        this.idEqual = idEqual;
+    }
+
+    // typeIn:
+    public String getTypeIn(){
+        return this.typeIn;
+    }
+    public void setTypeIn(String typeIn){
+        this.typeIn = typeIn;
+    }
+
+
+    public RelatedFilter() {
+       super();
+    }
+
+    public RelatedFilter(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+
+        if(jsonObject == null) return;
+
+        // set members values:
+        kSql = GsonParser.parseString(jsonObject.get("kSql"));
+        idEqual = GsonParser.parseInt(jsonObject.get("idEqual"));
+        typeIn = GsonParser.parseString(jsonObject.get("typeIn"));
+
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaRelatedFilter");
+        kparams.add("kSql", this.kSql);
+        kparams.add("idEqual", this.idEqual);
+        kparams.add("typeIn", this.typeIn);
+        return kparams;
+    }
+
 }
 

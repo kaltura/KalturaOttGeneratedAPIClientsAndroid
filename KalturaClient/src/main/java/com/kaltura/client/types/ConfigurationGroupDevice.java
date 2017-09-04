@@ -27,12 +27,11 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.types.ObjectBase;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -42,109 +41,63 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(ConfigurationGroupDevice.Tokenizer.class)
 public class ConfigurationGroupDevice extends ObjectBase {
-	
-	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String configurationGroupId();
-		String partnerId();
-		String udid();
-	}
 
 	/**  Configuration group id  */
-	private String configurationGroupId;
+    private String configurationGroupId;
 	/**  Partner id  */
-	private Integer partnerId;
+    private Integer partnerId;
 	/**  Device UDID  */
-	private String udid;
+    private String udid;
 
-	// configurationGroupId:
-	public String getConfigurationGroupId(){
-		return this.configurationGroupId;
-	}
-	public void setConfigurationGroupId(String configurationGroupId){
-		this.configurationGroupId = configurationGroupId;
-	}
-
-	public void configurationGroupId(String multirequestToken){
-		setToken("configurationGroupId", multirequestToken);
-	}
-
-	// partnerId:
-	public Integer getPartnerId(){
-		return this.partnerId;
-	}
-	public void setPartnerId(Integer partnerId){
-		this.partnerId = partnerId;
-	}
-
-	public void partnerId(String multirequestToken){
-		setToken("partnerId", multirequestToken);
-	}
-
-	// udid:
-	public String getUdid(){
-		return this.udid;
-	}
-	public void setUdid(String udid){
-		this.udid = udid;
-	}
-
-	public void udid(String multirequestToken){
-		setToken("udid", multirequestToken);
-	}
-
-
-	public ConfigurationGroupDevice() {
-		super();
-	}
-
-	public ConfigurationGroupDevice(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		configurationGroupId = GsonParser.parseString(jsonObject.get("configurationGroupId"));
-		partnerId = GsonParser.parseInt(jsonObject.get("partnerId"));
-		udid = GsonParser.parseString(jsonObject.get("udid"));
-
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaConfigurationGroupDevice");
-		kparams.add("configurationGroupId", this.configurationGroupId);
-		kparams.add("udid", this.udid);
-		return kparams;
-	}
-
-
-    public static final Creator<ConfigurationGroupDevice> CREATOR = new Creator<ConfigurationGroupDevice>() {
-        @Override
-        public ConfigurationGroupDevice createFromParcel(Parcel source) {
-            return new ConfigurationGroupDevice(source);
-        }
-
-        @Override
-        public ConfigurationGroupDevice[] newArray(int size) {
-            return new ConfigurationGroupDevice[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeString(this.configurationGroupId);
-        dest.writeValue(this.partnerId);
-        dest.writeString(this.udid);
+    // configurationGroupId:
+    public String getConfigurationGroupId(){
+        return this.configurationGroupId;
+    }
+    public void setConfigurationGroupId(String configurationGroupId){
+        this.configurationGroupId = configurationGroupId;
     }
 
-    public ConfigurationGroupDevice(Parcel in) {
-        super(in);
-        this.configurationGroupId = in.readString();
-        this.partnerId = (Integer)in.readValue(Integer.class.getClassLoader());
-        this.udid = in.readString();
+    // partnerId:
+    public Integer getPartnerId(){
+        return this.partnerId;
     }
+    public void setPartnerId(Integer partnerId){
+        this.partnerId = partnerId;
+    }
+
+    // udid:
+    public String getUdid(){
+        return this.udid;
+    }
+    public void setUdid(String udid){
+        this.udid = udid;
+    }
+
+
+    public ConfigurationGroupDevice() {
+       super();
+    }
+
+    public ConfigurationGroupDevice(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+
+        if(jsonObject == null) return;
+
+        // set members values:
+        configurationGroupId = GsonParser.parseString(jsonObject.get("configurationGroupId"));
+        partnerId = GsonParser.parseInt(jsonObject.get("partnerId"));
+        udid = GsonParser.parseString(jsonObject.get("udid"));
+
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaConfigurationGroupDevice");
+        kparams.add("configurationGroupId", this.configurationGroupId);
+        kparams.add("udid", this.udid);
+        return kparams;
+    }
+
 }
 

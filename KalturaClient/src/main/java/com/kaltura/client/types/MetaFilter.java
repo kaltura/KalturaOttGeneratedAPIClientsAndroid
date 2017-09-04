@@ -27,14 +27,13 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.enums.AssetType;
+import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.enums.MetaFieldName;
 import com.kaltura.client.enums.MetaType;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.enums.AssetType;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -45,152 +44,88 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**  Meta filter  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(MetaFilter.Tokenizer.class)
 public class MetaFilter extends Filter {
-	
-	public interface Tokenizer extends Filter.Tokenizer {
-		String fieldNameEqual();
-		String fieldNameNotEqual();
-		String typeEqual();
-		String assetTypeEqual();
-		String featuresIn();
-	}
 
 	/**  Meta system field name to filter by  */
-	private MetaFieldName fieldNameEqual;
+    private MetaFieldName fieldNameEqual;
 	/**  Meta system field name to filter by  */
-	private MetaFieldName fieldNameNotEqual;
+    private MetaFieldName fieldNameNotEqual;
 	/**  Meta type to filter by  */
-	private MetaType typeEqual;
+    private MetaType typeEqual;
 	/**  Asset type to filter by  */
-	private AssetType assetTypeEqual;
+    private AssetType assetTypeEqual;
 	/**  Features  */
-	private String featuresIn;
+    private String featuresIn;
 
-	// fieldNameEqual:
-	public MetaFieldName getFieldNameEqual(){
-		return this.fieldNameEqual;
-	}
-	public void setFieldNameEqual(MetaFieldName fieldNameEqual){
-		this.fieldNameEqual = fieldNameEqual;
-	}
-
-	public void fieldNameEqual(String multirequestToken){
-		setToken("fieldNameEqual", multirequestToken);
-	}
-
-	// fieldNameNotEqual:
-	public MetaFieldName getFieldNameNotEqual(){
-		return this.fieldNameNotEqual;
-	}
-	public void setFieldNameNotEqual(MetaFieldName fieldNameNotEqual){
-		this.fieldNameNotEqual = fieldNameNotEqual;
-	}
-
-	public void fieldNameNotEqual(String multirequestToken){
-		setToken("fieldNameNotEqual", multirequestToken);
-	}
-
-	// typeEqual:
-	public MetaType getTypeEqual(){
-		return this.typeEqual;
-	}
-	public void setTypeEqual(MetaType typeEqual){
-		this.typeEqual = typeEqual;
-	}
-
-	public void typeEqual(String multirequestToken){
-		setToken("typeEqual", multirequestToken);
-	}
-
-	// assetTypeEqual:
-	public AssetType getAssetTypeEqual(){
-		return this.assetTypeEqual;
-	}
-	public void setAssetTypeEqual(AssetType assetTypeEqual){
-		this.assetTypeEqual = assetTypeEqual;
-	}
-
-	public void assetTypeEqual(String multirequestToken){
-		setToken("assetTypeEqual", multirequestToken);
-	}
-
-	// featuresIn:
-	public String getFeaturesIn(){
-		return this.featuresIn;
-	}
-	public void setFeaturesIn(String featuresIn){
-		this.featuresIn = featuresIn;
-	}
-
-	public void featuresIn(String multirequestToken){
-		setToken("featuresIn", multirequestToken);
-	}
-
-
-	public MetaFilter() {
-		super();
-	}
-
-	public MetaFilter(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		fieldNameEqual = MetaFieldName.get(GsonParser.parseString(jsonObject.get("fieldNameEqual")));
-		fieldNameNotEqual = MetaFieldName.get(GsonParser.parseString(jsonObject.get("fieldNameNotEqual")));
-		typeEqual = MetaType.get(GsonParser.parseString(jsonObject.get("typeEqual")));
-		assetTypeEqual = AssetType.get(GsonParser.parseString(jsonObject.get("assetTypeEqual")));
-		featuresIn = GsonParser.parseString(jsonObject.get("featuresIn"));
-
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaMetaFilter");
-		kparams.add("fieldNameEqual", this.fieldNameEqual);
-		kparams.add("fieldNameNotEqual", this.fieldNameNotEqual);
-		kparams.add("typeEqual", this.typeEqual);
-		kparams.add("assetTypeEqual", this.assetTypeEqual);
-		kparams.add("featuresIn", this.featuresIn);
-		return kparams;
-	}
-
-
-    public static final Creator<MetaFilter> CREATOR = new Creator<MetaFilter>() {
-        @Override
-        public MetaFilter createFromParcel(Parcel source) {
-            return new MetaFilter(source);
-        }
-
-        @Override
-        public MetaFilter[] newArray(int size) {
-            return new MetaFilter[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeInt(this.fieldNameEqual == null ? -1 : this.fieldNameEqual.ordinal());
-        dest.writeInt(this.fieldNameNotEqual == null ? -1 : this.fieldNameNotEqual.ordinal());
-        dest.writeInt(this.typeEqual == null ? -1 : this.typeEqual.ordinal());
-        dest.writeInt(this.assetTypeEqual == null ? -1 : this.assetTypeEqual.ordinal());
-        dest.writeString(this.featuresIn);
+    // fieldNameEqual:
+    public MetaFieldName getFieldNameEqual(){
+        return this.fieldNameEqual;
+    }
+    public void setFieldNameEqual(MetaFieldName fieldNameEqual){
+        this.fieldNameEqual = fieldNameEqual;
     }
 
-    public MetaFilter(Parcel in) {
-        super(in);
-        int tmpFieldNameEqual = in.readInt();
-        this.fieldNameEqual = tmpFieldNameEqual == -1 ? null : MetaFieldName.values()[tmpFieldNameEqual];
-        int tmpFieldNameNotEqual = in.readInt();
-        this.fieldNameNotEqual = tmpFieldNameNotEqual == -1 ? null : MetaFieldName.values()[tmpFieldNameNotEqual];
-        int tmpTypeEqual = in.readInt();
-        this.typeEqual = tmpTypeEqual == -1 ? null : MetaType.values()[tmpTypeEqual];
-        int tmpAssetTypeEqual = in.readInt();
-        this.assetTypeEqual = tmpAssetTypeEqual == -1 ? null : AssetType.values()[tmpAssetTypeEqual];
-        this.featuresIn = in.readString();
+    // fieldNameNotEqual:
+    public MetaFieldName getFieldNameNotEqual(){
+        return this.fieldNameNotEqual;
     }
+    public void setFieldNameNotEqual(MetaFieldName fieldNameNotEqual){
+        this.fieldNameNotEqual = fieldNameNotEqual;
+    }
+
+    // typeEqual:
+    public MetaType getTypeEqual(){
+        return this.typeEqual;
+    }
+    public void setTypeEqual(MetaType typeEqual){
+        this.typeEqual = typeEqual;
+    }
+
+    // assetTypeEqual:
+    public AssetType getAssetTypeEqual(){
+        return this.assetTypeEqual;
+    }
+    public void setAssetTypeEqual(AssetType assetTypeEqual){
+        this.assetTypeEqual = assetTypeEqual;
+    }
+
+    // featuresIn:
+    public String getFeaturesIn(){
+        return this.featuresIn;
+    }
+    public void setFeaturesIn(String featuresIn){
+        this.featuresIn = featuresIn;
+    }
+
+
+    public MetaFilter() {
+       super();
+    }
+
+    public MetaFilter(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+
+        if(jsonObject == null) return;
+
+        // set members values:
+        fieldNameEqual = MetaFieldName.get(GsonParser.parseString(jsonObject.get("fieldNameEqual")));
+        fieldNameNotEqual = MetaFieldName.get(GsonParser.parseString(jsonObject.get("fieldNameNotEqual")));
+        typeEqual = MetaType.get(GsonParser.parseString(jsonObject.get("typeEqual")));
+        assetTypeEqual = AssetType.get(GsonParser.parseString(jsonObject.get("assetTypeEqual")));
+        featuresIn = GsonParser.parseString(jsonObject.get("featuresIn"));
+
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaMetaFilter");
+        kparams.add("fieldNameEqual", this.fieldNameEqual);
+        kparams.add("fieldNameNotEqual", this.fieldNameNotEqual);
+        kparams.add("typeEqual", this.typeEqual);
+        kparams.add("assetTypeEqual", this.assetTypeEqual);
+        kparams.add("featuresIn", this.featuresIn);
+        return kparams;
+    }
+
 }
 

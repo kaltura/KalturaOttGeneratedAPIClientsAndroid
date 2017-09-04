@@ -27,12 +27,11 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.types.ObjectBase;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -42,143 +41,83 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(FollowDataBase.Tokenizer.class)
 public class FollowDataBase extends ObjectBase {
-	
-	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String announcementId();
-		String status();
-		String title();
-		String timestamp();
-		String followPhrase();
-	}
 
 	/**  Announcement Id  */
-	private Long announcementId;
+    private Long announcementId;
 	/**  Status  */
-	private Integer status;
+    private Integer status;
 	/**  Title  */
-	private String title;
+    private String title;
 	/**  Timestamp  */
-	private Long timestamp;
+    private Long timestamp;
 	/**  Follow Phrase  */
-	private String followPhrase;
+    private String followPhrase;
 
-	// announcementId:
-	public Long getAnnouncementId(){
-		return this.announcementId;
-	}
-	public void setAnnouncementId(Long announcementId){
-		this.announcementId = announcementId;
-	}
-
-	public void announcementId(String multirequestToken){
-		setToken("announcementId", multirequestToken);
-	}
-
-	// status:
-	public Integer getStatus(){
-		return this.status;
-	}
-	public void setStatus(Integer status){
-		this.status = status;
-	}
-
-	public void status(String multirequestToken){
-		setToken("status", multirequestToken);
-	}
-
-	// title:
-	public String getTitle(){
-		return this.title;
-	}
-	public void setTitle(String title){
-		this.title = title;
-	}
-
-	public void title(String multirequestToken){
-		setToken("title", multirequestToken);
-	}
-
-	// timestamp:
-	public Long getTimestamp(){
-		return this.timestamp;
-	}
-	public void setTimestamp(Long timestamp){
-		this.timestamp = timestamp;
-	}
-
-	public void timestamp(String multirequestToken){
-		setToken("timestamp", multirequestToken);
-	}
-
-	// followPhrase:
-	public String getFollowPhrase(){
-		return this.followPhrase;
-	}
-	public void setFollowPhrase(String followPhrase){
-		this.followPhrase = followPhrase;
-	}
-
-	public void followPhrase(String multirequestToken){
-		setToken("followPhrase", multirequestToken);
-	}
-
-
-	public FollowDataBase() {
-		super();
-	}
-
-	public FollowDataBase(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		announcementId = GsonParser.parseLong(jsonObject.get("announcementId"));
-		status = GsonParser.parseInt(jsonObject.get("status"));
-		title = GsonParser.parseString(jsonObject.get("title"));
-		timestamp = GsonParser.parseLong(jsonObject.get("timestamp"));
-		followPhrase = GsonParser.parseString(jsonObject.get("followPhrase"));
-
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaFollowDataBase");
-		return kparams;
-	}
-
-
-    public static final Creator<FollowDataBase> CREATOR = new Creator<FollowDataBase>() {
-        @Override
-        public FollowDataBase createFromParcel(Parcel source) {
-            return new FollowDataBase(source);
-        }
-
-        @Override
-        public FollowDataBase[] newArray(int size) {
-            return new FollowDataBase[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeValue(this.announcementId);
-        dest.writeValue(this.status);
-        dest.writeString(this.title);
-        dest.writeValue(this.timestamp);
-        dest.writeString(this.followPhrase);
+    // announcementId:
+    public Long getAnnouncementId(){
+        return this.announcementId;
+    }
+    public void setAnnouncementId(Long announcementId){
+        this.announcementId = announcementId;
     }
 
-    public FollowDataBase(Parcel in) {
-        super(in);
-        this.announcementId = (Long)in.readValue(Long.class.getClassLoader());
-        this.status = (Integer)in.readValue(Integer.class.getClassLoader());
-        this.title = in.readString();
-        this.timestamp = (Long)in.readValue(Long.class.getClassLoader());
-        this.followPhrase = in.readString();
+    // status:
+    public Integer getStatus(){
+        return this.status;
     }
+    public void setStatus(Integer status){
+        this.status = status;
+    }
+
+    // title:
+    public String getTitle(){
+        return this.title;
+    }
+    public void setTitle(String title){
+        this.title = title;
+    }
+
+    // timestamp:
+    public Long getTimestamp(){
+        return this.timestamp;
+    }
+    public void setTimestamp(Long timestamp){
+        this.timestamp = timestamp;
+    }
+
+    // followPhrase:
+    public String getFollowPhrase(){
+        return this.followPhrase;
+    }
+    public void setFollowPhrase(String followPhrase){
+        this.followPhrase = followPhrase;
+    }
+
+
+    public FollowDataBase() {
+       super();
+    }
+
+    public FollowDataBase(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+
+        if(jsonObject == null) return;
+
+        // set members values:
+        announcementId = GsonParser.parseLong(jsonObject.get("announcementId"));
+        status = GsonParser.parseInt(jsonObject.get("status"));
+        title = GsonParser.parseString(jsonObject.get("title"));
+        timestamp = GsonParser.parseLong(jsonObject.get("timestamp"));
+        followPhrase = GsonParser.parseString(jsonObject.get("followPhrase"));
+
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaFollowDataBase");
+        return kparams;
+    }
+
 }
 

@@ -27,13 +27,12 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.enums.ChannelEnrichment;
-import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.enums.ChannelEnrichment;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -44,73 +43,40 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**  Holder object for channel enrichment enum  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(ChannelEnrichmentHolder.Tokenizer.class)
 public class ChannelEnrichmentHolder extends ObjectBase {
-	
-	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String type();
-	}
 
 	/**  Enrichment type  */
-	private ChannelEnrichment type;
+    private ChannelEnrichment type;
 
-	// type:
-	public ChannelEnrichment getType(){
-		return this.type;
-	}
-	public void setType(ChannelEnrichment type){
-		this.type = type;
-	}
-
-	public void type(String multirequestToken){
-		setToken("type", multirequestToken);
-	}
-
-
-	public ChannelEnrichmentHolder() {
-		super();
-	}
-
-	public ChannelEnrichmentHolder(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		type = ChannelEnrichment.get(GsonParser.parseString(jsonObject.get("type")));
-
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaChannelEnrichmentHolder");
-		kparams.add("type", this.type);
-		return kparams;
-	}
-
-
-    public static final Creator<ChannelEnrichmentHolder> CREATOR = new Creator<ChannelEnrichmentHolder>() {
-        @Override
-        public ChannelEnrichmentHolder createFromParcel(Parcel source) {
-            return new ChannelEnrichmentHolder(source);
-        }
-
-        @Override
-        public ChannelEnrichmentHolder[] newArray(int size) {
-            return new ChannelEnrichmentHolder[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeInt(this.type == null ? -1 : this.type.ordinal());
+    // type:
+    public ChannelEnrichment getType(){
+        return this.type;
+    }
+    public void setType(ChannelEnrichment type){
+        this.type = type;
     }
 
-    public ChannelEnrichmentHolder(Parcel in) {
-        super(in);
-        int tmpType = in.readInt();
-        this.type = tmpType == -1 ? null : ChannelEnrichment.values()[tmpType];
+
+    public ChannelEnrichmentHolder() {
+       super();
     }
+
+    public ChannelEnrichmentHolder(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+
+        if(jsonObject == null) return;
+
+        // set members values:
+        type = ChannelEnrichment.get(GsonParser.parseString(jsonObject.get("type")));
+
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaChannelEnrichmentHolder");
+        kparams.add("type", this.type);
+        return kparams;
+    }
+
 }
 

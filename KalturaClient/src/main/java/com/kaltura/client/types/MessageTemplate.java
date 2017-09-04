@@ -27,13 +27,12 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.enums.MessageTemplateType;
-import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.enums.MessageTemplateType;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -43,169 +42,101 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(MessageTemplate.Tokenizer.class)
 public class MessageTemplate extends ObjectBase {
-	
-	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String message();
-		String dateFormat();
-		String messageType();
-		String sound();
-		String action();
-		String url();
-	}
 
 	/**  The message template with placeholders  */
-	private String message;
+    private String message;
 	/**  Default date format for the date &amp;amp; time entries used in the template  */
-	private String dateFormat;
+    private String dateFormat;
 	/**  Template type. Possible values: Series, Reminder,Churn, SeriesReminder  */
-	private MessageTemplateType messageType;
+    private MessageTemplateType messageType;
 	/**  Sound file name to play upon message arrival to the device (if supported by
 	  target device)  */
-	private String sound;
+    private String sound;
 	/**  an optional action  */
-	private String action;
+    private String action;
 	/**  URL template for deep linking. Example - /app/location/{mediaId}  */
-	private String url;
+    private String url;
 
-	// message:
-	public String getMessage(){
-		return this.message;
-	}
-	public void setMessage(String message){
-		this.message = message;
-	}
-
-	public void message(String multirequestToken){
-		setToken("message", multirequestToken);
-	}
-
-	// dateFormat:
-	public String getDateFormat(){
-		return this.dateFormat;
-	}
-	public void setDateFormat(String dateFormat){
-		this.dateFormat = dateFormat;
-	}
-
-	public void dateFormat(String multirequestToken){
-		setToken("dateFormat", multirequestToken);
-	}
-
-	// messageType:
-	public MessageTemplateType getMessageType(){
-		return this.messageType;
-	}
-	public void setMessageType(MessageTemplateType messageType){
-		this.messageType = messageType;
-	}
-
-	public void messageType(String multirequestToken){
-		setToken("messageType", multirequestToken);
-	}
-
-	// sound:
-	public String getSound(){
-		return this.sound;
-	}
-	public void setSound(String sound){
-		this.sound = sound;
-	}
-
-	public void sound(String multirequestToken){
-		setToken("sound", multirequestToken);
-	}
-
-	// action:
-	public String getAction(){
-		return this.action;
-	}
-	public void setAction(String action){
-		this.action = action;
-	}
-
-	public void action(String multirequestToken){
-		setToken("action", multirequestToken);
-	}
-
-	// url:
-	public String getUrl(){
-		return this.url;
-	}
-	public void setUrl(String url){
-		this.url = url;
-	}
-
-	public void url(String multirequestToken){
-		setToken("url", multirequestToken);
-	}
-
-
-	public MessageTemplate() {
-		super();
-	}
-
-	public MessageTemplate(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		message = GsonParser.parseString(jsonObject.get("message"));
-		dateFormat = GsonParser.parseString(jsonObject.get("dateFormat"));
-		messageType = MessageTemplateType.get(GsonParser.parseString(jsonObject.get("messageType")));
-		sound = GsonParser.parseString(jsonObject.get("sound"));
-		action = GsonParser.parseString(jsonObject.get("action"));
-		url = GsonParser.parseString(jsonObject.get("url"));
-
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaMessageTemplate");
-		kparams.add("message", this.message);
-		kparams.add("dateFormat", this.dateFormat);
-		kparams.add("messageType", this.messageType);
-		kparams.add("sound", this.sound);
-		kparams.add("action", this.action);
-		kparams.add("url", this.url);
-		return kparams;
-	}
-
-
-    public static final Creator<MessageTemplate> CREATOR = new Creator<MessageTemplate>() {
-        @Override
-        public MessageTemplate createFromParcel(Parcel source) {
-            return new MessageTemplate(source);
-        }
-
-        @Override
-        public MessageTemplate[] newArray(int size) {
-            return new MessageTemplate[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeString(this.message);
-        dest.writeString(this.dateFormat);
-        dest.writeInt(this.messageType == null ? -1 : this.messageType.ordinal());
-        dest.writeString(this.sound);
-        dest.writeString(this.action);
-        dest.writeString(this.url);
+    // message:
+    public String getMessage(){
+        return this.message;
+    }
+    public void setMessage(String message){
+        this.message = message;
     }
 
-    public MessageTemplate(Parcel in) {
-        super(in);
-        this.message = in.readString();
-        this.dateFormat = in.readString();
-        int tmpMessageType = in.readInt();
-        this.messageType = tmpMessageType == -1 ? null : MessageTemplateType.values()[tmpMessageType];
-        this.sound = in.readString();
-        this.action = in.readString();
-        this.url = in.readString();
+    // dateFormat:
+    public String getDateFormat(){
+        return this.dateFormat;
     }
+    public void setDateFormat(String dateFormat){
+        this.dateFormat = dateFormat;
+    }
+
+    // messageType:
+    public MessageTemplateType getMessageType(){
+        return this.messageType;
+    }
+    public void setMessageType(MessageTemplateType messageType){
+        this.messageType = messageType;
+    }
+
+    // sound:
+    public String getSound(){
+        return this.sound;
+    }
+    public void setSound(String sound){
+        this.sound = sound;
+    }
+
+    // action:
+    public String getAction(){
+        return this.action;
+    }
+    public void setAction(String action){
+        this.action = action;
+    }
+
+    // url:
+    public String getUrl(){
+        return this.url;
+    }
+    public void setUrl(String url){
+        this.url = url;
+    }
+
+
+    public MessageTemplate() {
+       super();
+    }
+
+    public MessageTemplate(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+
+        if(jsonObject == null) return;
+
+        // set members values:
+        message = GsonParser.parseString(jsonObject.get("message"));
+        dateFormat = GsonParser.parseString(jsonObject.get("dateFormat"));
+        messageType = MessageTemplateType.get(GsonParser.parseString(jsonObject.get("messageType")));
+        sound = GsonParser.parseString(jsonObject.get("sound"));
+        action = GsonParser.parseString(jsonObject.get("action"));
+        url = GsonParser.parseString(jsonObject.get("url"));
+
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaMessageTemplate");
+        kparams.add("message", this.message);
+        kparams.add("dateFormat", this.dateFormat);
+        kparams.add("messageType", this.messageType);
+        kparams.add("sound", this.sound);
+        kparams.add("action", this.action);
+        kparams.add("url", this.url);
+        return kparams;
+    }
+
 }
 

@@ -27,11 +27,11 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
+import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.types.ObjectBase;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -42,43 +42,23 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**  Returns social configuration for the partner  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(SocialConfig.Tokenizer.class)
 public class SocialConfig extends ObjectBase {
-	
-	public interface Tokenizer extends ObjectBase.Tokenizer {
-	}
 
 
 
-	public SocialConfig() {
-		super();
-	}
-
-	public SocialConfig(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaSocialConfig");
-		return kparams;
-	}
-
-
-    public static final Creator<SocialConfig> CREATOR = new Creator<SocialConfig>() {
-        @Override
-        public SocialConfig createFromParcel(Parcel source) {
-            return new SocialConfig(source);
-        }
-
-        @Override
-        public SocialConfig[] newArray(int size) {
-            return new SocialConfig[size];
-        }
-    };
-
-    public SocialConfig(Parcel in) {
-        super(in);
+    public SocialConfig() {
+       super();
     }
+
+    public SocialConfig(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaSocialConfig");
+        return kparams;
+    }
+
 }
 

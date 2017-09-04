@@ -27,10 +27,10 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.utils.GsonParser;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -41,43 +41,23 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**  order announcements  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(AnnouncementFilter.Tokenizer.class)
 public class AnnouncementFilter extends Filter {
-	
-	public interface Tokenizer extends Filter.Tokenizer {
-	}
 
 
 
-	public AnnouncementFilter() {
-		super();
-	}
-
-	public AnnouncementFilter(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaAnnouncementFilter");
-		return kparams;
-	}
-
-
-    public static final Creator<AnnouncementFilter> CREATOR = new Creator<AnnouncementFilter>() {
-        @Override
-        public AnnouncementFilter createFromParcel(Parcel source) {
-            return new AnnouncementFilter(source);
-        }
-
-        @Override
-        public AnnouncementFilter[] newArray(int size) {
-            return new AnnouncementFilter[size];
-        }
-    };
-
-    public AnnouncementFilter(Parcel in) {
-        super(in);
+    public AnnouncementFilter() {
+       super();
     }
+
+    public AnnouncementFilter(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaAnnouncementFilter");
+        return kparams;
+    }
+
 }
 

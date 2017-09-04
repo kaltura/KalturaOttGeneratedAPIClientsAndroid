@@ -27,10 +27,10 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.utils.GsonParser;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -40,43 +40,23 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(CollectionEntitlement.Tokenizer.class)
 public class CollectionEntitlement extends Entitlement {
-	
-	public interface Tokenizer extends Entitlement.Tokenizer {
-	}
 
 
 
-	public CollectionEntitlement() {
-		super();
-	}
-
-	public CollectionEntitlement(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaCollectionEntitlement");
-		return kparams;
-	}
-
-
-    public static final Creator<CollectionEntitlement> CREATOR = new Creator<CollectionEntitlement>() {
-        @Override
-        public CollectionEntitlement createFromParcel(Parcel source) {
-            return new CollectionEntitlement(source);
-        }
-
-        @Override
-        public CollectionEntitlement[] newArray(int size) {
-            return new CollectionEntitlement[size];
-        }
-    };
-
-    public CollectionEntitlement(Parcel in) {
-        super(in);
+    public CollectionEntitlement() {
+       super();
     }
+
+    public CollectionEntitlement(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaCollectionEntitlement");
+        return kparams;
+    }
+
 }
 

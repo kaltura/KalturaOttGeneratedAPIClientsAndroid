@@ -27,10 +27,10 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.utils.GsonParser;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -40,31 +40,23 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(ReminderFilter.Tokenizer.class)
 public abstract class ReminderFilter extends Filter {
-	
-	public interface Tokenizer extends Filter.Tokenizer {
-	}
 
 
 
-	public ReminderFilter() {
-		super();
-	}
-
-	public ReminderFilter(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaReminderFilter");
-		return kparams;
-	}
-
-
-    public ReminderFilter(Parcel in) {
-        super(in);
+    public ReminderFilter() {
+       super();
     }
+
+    public ReminderFilter(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaReminderFilter");
+        return kparams;
+    }
+
 }
 

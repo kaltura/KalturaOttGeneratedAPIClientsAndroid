@@ -27,12 +27,11 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.types.ObjectBase;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -42,91 +41,52 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(ConfigurationIdentifier.Tokenizer.class)
 public class ConfigurationIdentifier extends ObjectBase {
-	
-	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String id();
-		String name();
-	}
 
 	/**  Identifier  */
-	private String id;
+    private String id;
 	/**  Name  */
-	private String name;
+    private String name;
 
-	// id:
-	public String getId(){
-		return this.id;
-	}
-	public void setId(String id){
-		this.id = id;
-	}
-
-	public void id(String multirequestToken){
-		setToken("id", multirequestToken);
-	}
-
-	// name:
-	public String getName(){
-		return this.name;
-	}
-	public void setName(String name){
-		this.name = name;
-	}
-
-	public void name(String multirequestToken){
-		setToken("name", multirequestToken);
-	}
-
-
-	public ConfigurationIdentifier() {
-		super();
-	}
-
-	public ConfigurationIdentifier(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		id = GsonParser.parseString(jsonObject.get("id"));
-		name = GsonParser.parseString(jsonObject.get("name"));
-
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaConfigurationIdentifier");
-		kparams.add("id", this.id);
-		kparams.add("name", this.name);
-		return kparams;
-	}
-
-
-    public static final Creator<ConfigurationIdentifier> CREATOR = new Creator<ConfigurationIdentifier>() {
-        @Override
-        public ConfigurationIdentifier createFromParcel(Parcel source) {
-            return new ConfigurationIdentifier(source);
-        }
-
-        @Override
-        public ConfigurationIdentifier[] newArray(int size) {
-            return new ConfigurationIdentifier[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeString(this.id);
-        dest.writeString(this.name);
+    // id:
+    public String getId(){
+        return this.id;
+    }
+    public void setId(String id){
+        this.id = id;
     }
 
-    public ConfigurationIdentifier(Parcel in) {
-        super(in);
-        this.id = in.readString();
-        this.name = in.readString();
+    // name:
+    public String getName(){
+        return this.name;
     }
+    public void setName(String name){
+        this.name = name;
+    }
+
+
+    public ConfigurationIdentifier() {
+       super();
+    }
+
+    public ConfigurationIdentifier(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+
+        if(jsonObject == null) return;
+
+        // set members values:
+        id = GsonParser.parseString(jsonObject.get("id"));
+        name = GsonParser.parseString(jsonObject.get("name"));
+
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaConfigurationIdentifier");
+        kparams.add("id", this.id);
+        kparams.add("name", this.name);
+        return kparams;
+    }
+
 }
 

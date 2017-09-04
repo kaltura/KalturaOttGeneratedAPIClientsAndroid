@@ -27,11 +27,11 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
+import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.types.ObjectBase;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -41,43 +41,23 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(Report.Tokenizer.class)
 public class Report extends ObjectBase {
-	
-	public interface Tokenizer extends ObjectBase.Tokenizer {
-	}
 
 
 
-	public Report() {
-		super();
-	}
-
-	public Report(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaReport");
-		return kparams;
-	}
-
-
-    public static final Creator<Report> CREATOR = new Creator<Report>() {
-        @Override
-        public Report createFromParcel(Parcel source) {
-            return new Report(source);
-        }
-
-        @Override
-        public Report[] newArray(int size) {
-            return new Report[size];
-        }
-    };
-
-    public Report(Parcel in) {
-        super(in);
+    public Report() {
+       super();
     }
+
+    public Report(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaReport");
+        return kparams;
+    }
+
 }
 

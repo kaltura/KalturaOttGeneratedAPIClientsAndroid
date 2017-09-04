@@ -27,13 +27,12 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
+import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.types.SocialAction;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -43,106 +42,64 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(SocialFriendActivity.Tokenizer.class)
 public class SocialFriendActivity extends ObjectBase {
-	
-	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String userFullName();
-		String userPictureUrl();
-		SocialAction.Tokenizer socialAction();
-	}
 
 	/**  The full name of the user who did the social action  */
-	private String userFullName;
+    private String userFullName;
 	/**  The URL of the profile picture of the user who did the social action  */
-	private String userPictureUrl;
+    private String userPictureUrl;
 	/**  The social action  */
-	private SocialAction socialAction;
+    private SocialAction socialAction;
 
-	// userFullName:
-	public String getUserFullName(){
-		return this.userFullName;
-	}
-	public void setUserFullName(String userFullName){
-		this.userFullName = userFullName;
-	}
-
-	public void userFullName(String multirequestToken){
-		setToken("userFullName", multirequestToken);
-	}
-
-	// userPictureUrl:
-	public String getUserPictureUrl(){
-		return this.userPictureUrl;
-	}
-	public void setUserPictureUrl(String userPictureUrl){
-		this.userPictureUrl = userPictureUrl;
-	}
-
-	public void userPictureUrl(String multirequestToken){
-		setToken("userPictureUrl", multirequestToken);
-	}
-
-	// socialAction:
-	public SocialAction getSocialAction(){
-		return this.socialAction;
-	}
-	public void setSocialAction(SocialAction socialAction){
-		this.socialAction = socialAction;
-	}
-
-
-	public SocialFriendActivity() {
-		super();
-	}
-
-	public SocialFriendActivity(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		userFullName = GsonParser.parseString(jsonObject.get("userFullName"));
-		userPictureUrl = GsonParser.parseString(jsonObject.get("userPictureUrl"));
-		socialAction = GsonParser.parseObject(jsonObject.getAsJsonObject("socialAction"), SocialAction.class);
-
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaSocialFriendActivity");
-		kparams.add("userFullName", this.userFullName);
-		kparams.add("userPictureUrl", this.userPictureUrl);
-		kparams.add("socialAction", this.socialAction);
-		return kparams;
-	}
-
-
-    public static final Creator<SocialFriendActivity> CREATOR = new Creator<SocialFriendActivity>() {
-        @Override
-        public SocialFriendActivity createFromParcel(Parcel source) {
-            return new SocialFriendActivity(source);
-        }
-
-        @Override
-        public SocialFriendActivity[] newArray(int size) {
-            return new SocialFriendActivity[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeString(this.userFullName);
-        dest.writeString(this.userPictureUrl);
-        dest.writeParcelable(this.socialAction, flags);
+    // userFullName:
+    public String getUserFullName(){
+        return this.userFullName;
+    }
+    public void setUserFullName(String userFullName){
+        this.userFullName = userFullName;
     }
 
-    public SocialFriendActivity(Parcel in) {
-        super(in);
-        this.userFullName = in.readString();
-        this.userPictureUrl = in.readString();
-        this.socialAction = in.readParcelable(SocialAction.class.getClassLoader());
+    // userPictureUrl:
+    public String getUserPictureUrl(){
+        return this.userPictureUrl;
     }
+    public void setUserPictureUrl(String userPictureUrl){
+        this.userPictureUrl = userPictureUrl;
+    }
+
+    // socialAction:
+    public SocialAction getSocialAction(){
+        return this.socialAction;
+    }
+    public void setSocialAction(SocialAction socialAction){
+        this.socialAction = socialAction;
+    }
+
+
+    public SocialFriendActivity() {
+       super();
+    }
+
+    public SocialFriendActivity(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+
+        if(jsonObject == null) return;
+
+        // set members values:
+        userFullName = GsonParser.parseString(jsonObject.get("userFullName"));
+        userPictureUrl = GsonParser.parseString(jsonObject.get("userPictureUrl"));
+        socialAction = GsonParser.parseObject(jsonObject.getAsJsonObject("socialAction"), SocialAction.class);
+
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaSocialFriendActivity");
+        kparams.add("userFullName", this.userFullName);
+        kparams.add("userPictureUrl", this.userPictureUrl);
+        kparams.add("socialAction", this.socialAction);
+        return kparams;
+    }
+
 }
 

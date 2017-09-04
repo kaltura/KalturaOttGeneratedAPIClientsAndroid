@@ -27,11 +27,11 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
+import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.types.ObjectBase;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -42,31 +42,23 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**  Abstarct class - represents an asset parameter that can be used for grouping  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(AssetGroupBy.Tokenizer.class)
 public abstract class AssetGroupBy extends ObjectBase {
-	
-	public interface Tokenizer extends ObjectBase.Tokenizer {
-	}
 
 
 
-	public AssetGroupBy() {
-		super();
-	}
-
-	public AssetGroupBy(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaAssetGroupBy");
-		return kparams;
-	}
-
-
-    public AssetGroupBy(Parcel in) {
-        super(in);
+    public AssetGroupBy() {
+       super();
     }
+
+    public AssetGroupBy(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaAssetGroupBy");
+        return kparams;
+    }
+
 }
 

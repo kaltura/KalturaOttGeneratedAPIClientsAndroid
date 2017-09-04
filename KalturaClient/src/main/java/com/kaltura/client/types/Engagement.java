@@ -27,13 +27,12 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.enums.EngagementType;
-import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.enums.EngagementType;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -44,223 +43,134 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**  Engagement  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(Engagement.Tokenizer.class)
 public class Engagement extends ObjectBase {
-	
-	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String id();
-		String totalNumberOfRecipients();
-		String type();
-		String adapterId();
-		String adapterDynamicData();
-		String intervalSeconds();
-		String userList();
-		String sendTimeInSeconds();
-		String couponGroupId();
-	}
 
 	/**  Engagement id  */
-	private Integer id;
+    private Integer id;
 	/**  Total number of recipients  */
-	private Integer totalNumberOfRecipients;
+    private Integer totalNumberOfRecipients;
 	/**  Engagement type  */
-	private EngagementType type;
+    private EngagementType type;
 	/**  Engagement adapter id  */
-	private Integer adapterId;
+    private Integer adapterId;
 	/**  Engagement adapter dynamic data  */
-	private String adapterDynamicData;
+    private String adapterDynamicData;
 	/**  Interval (seconds)  */
-	private Integer intervalSeconds;
+    private Integer intervalSeconds;
 	/**  Manual User list  */
-	private String userList;
+    private String userList;
 	/**  Send time (seconds)  */
-	private Long sendTimeInSeconds;
+    private Long sendTimeInSeconds;
 	/**  Coupon GroupId  */
-	private Integer couponGroupId;
+    private Integer couponGroupId;
 
-	// id:
-	public Integer getId(){
-		return this.id;
-	}
-	public void setId(Integer id){
-		this.id = id;
-	}
-
-	public void id(String multirequestToken){
-		setToken("id", multirequestToken);
-	}
-
-	// totalNumberOfRecipients:
-	public Integer getTotalNumberOfRecipients(){
-		return this.totalNumberOfRecipients;
-	}
-	public void setTotalNumberOfRecipients(Integer totalNumberOfRecipients){
-		this.totalNumberOfRecipients = totalNumberOfRecipients;
-	}
-
-	public void totalNumberOfRecipients(String multirequestToken){
-		setToken("totalNumberOfRecipients", multirequestToken);
-	}
-
-	// type:
-	public EngagementType getType(){
-		return this.type;
-	}
-	public void setType(EngagementType type){
-		this.type = type;
-	}
-
-	public void type(String multirequestToken){
-		setToken("type", multirequestToken);
-	}
-
-	// adapterId:
-	public Integer getAdapterId(){
-		return this.adapterId;
-	}
-	public void setAdapterId(Integer adapterId){
-		this.adapterId = adapterId;
-	}
-
-	public void adapterId(String multirequestToken){
-		setToken("adapterId", multirequestToken);
-	}
-
-	// adapterDynamicData:
-	public String getAdapterDynamicData(){
-		return this.adapterDynamicData;
-	}
-	public void setAdapterDynamicData(String adapterDynamicData){
-		this.adapterDynamicData = adapterDynamicData;
-	}
-
-	public void adapterDynamicData(String multirequestToken){
-		setToken("adapterDynamicData", multirequestToken);
-	}
-
-	// intervalSeconds:
-	public Integer getIntervalSeconds(){
-		return this.intervalSeconds;
-	}
-	public void setIntervalSeconds(Integer intervalSeconds){
-		this.intervalSeconds = intervalSeconds;
-	}
-
-	public void intervalSeconds(String multirequestToken){
-		setToken("intervalSeconds", multirequestToken);
-	}
-
-	// userList:
-	public String getUserList(){
-		return this.userList;
-	}
-	public void setUserList(String userList){
-		this.userList = userList;
-	}
-
-	public void userList(String multirequestToken){
-		setToken("userList", multirequestToken);
-	}
-
-	// sendTimeInSeconds:
-	public Long getSendTimeInSeconds(){
-		return this.sendTimeInSeconds;
-	}
-	public void setSendTimeInSeconds(Long sendTimeInSeconds){
-		this.sendTimeInSeconds = sendTimeInSeconds;
-	}
-
-	public void sendTimeInSeconds(String multirequestToken){
-		setToken("sendTimeInSeconds", multirequestToken);
-	}
-
-	// couponGroupId:
-	public Integer getCouponGroupId(){
-		return this.couponGroupId;
-	}
-	public void setCouponGroupId(Integer couponGroupId){
-		this.couponGroupId = couponGroupId;
-	}
-
-	public void couponGroupId(String multirequestToken){
-		setToken("couponGroupId", multirequestToken);
-	}
-
-
-	public Engagement() {
-		super();
-	}
-
-	public Engagement(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		id = GsonParser.parseInt(jsonObject.get("id"));
-		totalNumberOfRecipients = GsonParser.parseInt(jsonObject.get("totalNumberOfRecipients"));
-		type = EngagementType.get(GsonParser.parseString(jsonObject.get("type")));
-		adapterId = GsonParser.parseInt(jsonObject.get("adapterId"));
-		adapterDynamicData = GsonParser.parseString(jsonObject.get("adapterDynamicData"));
-		intervalSeconds = GsonParser.parseInt(jsonObject.get("intervalSeconds"));
-		userList = GsonParser.parseString(jsonObject.get("userList"));
-		sendTimeInSeconds = GsonParser.parseLong(jsonObject.get("sendTimeInSeconds"));
-		couponGroupId = GsonParser.parseInt(jsonObject.get("couponGroupId"));
-
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaEngagement");
-		kparams.add("type", this.type);
-		kparams.add("adapterId", this.adapterId);
-		kparams.add("adapterDynamicData", this.adapterDynamicData);
-		kparams.add("intervalSeconds", this.intervalSeconds);
-		kparams.add("userList", this.userList);
-		kparams.add("sendTimeInSeconds", this.sendTimeInSeconds);
-		kparams.add("couponGroupId", this.couponGroupId);
-		return kparams;
-	}
-
-
-    public static final Creator<Engagement> CREATOR = new Creator<Engagement>() {
-        @Override
-        public Engagement createFromParcel(Parcel source) {
-            return new Engagement(source);
-        }
-
-        @Override
-        public Engagement[] newArray(int size) {
-            return new Engagement[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeValue(this.id);
-        dest.writeValue(this.totalNumberOfRecipients);
-        dest.writeInt(this.type == null ? -1 : this.type.ordinal());
-        dest.writeValue(this.adapterId);
-        dest.writeString(this.adapterDynamicData);
-        dest.writeValue(this.intervalSeconds);
-        dest.writeString(this.userList);
-        dest.writeValue(this.sendTimeInSeconds);
-        dest.writeValue(this.couponGroupId);
+    // id:
+    public Integer getId(){
+        return this.id;
+    }
+    public void setId(Integer id){
+        this.id = id;
     }
 
-    public Engagement(Parcel in) {
-        super(in);
-        this.id = (Integer)in.readValue(Integer.class.getClassLoader());
-        this.totalNumberOfRecipients = (Integer)in.readValue(Integer.class.getClassLoader());
-        int tmpType = in.readInt();
-        this.type = tmpType == -1 ? null : EngagementType.values()[tmpType];
-        this.adapterId = (Integer)in.readValue(Integer.class.getClassLoader());
-        this.adapterDynamicData = in.readString();
-        this.intervalSeconds = (Integer)in.readValue(Integer.class.getClassLoader());
-        this.userList = in.readString();
-        this.sendTimeInSeconds = (Long)in.readValue(Long.class.getClassLoader());
-        this.couponGroupId = (Integer)in.readValue(Integer.class.getClassLoader());
+    // totalNumberOfRecipients:
+    public Integer getTotalNumberOfRecipients(){
+        return this.totalNumberOfRecipients;
     }
+    public void setTotalNumberOfRecipients(Integer totalNumberOfRecipients){
+        this.totalNumberOfRecipients = totalNumberOfRecipients;
+    }
+
+    // type:
+    public EngagementType getType(){
+        return this.type;
+    }
+    public void setType(EngagementType type){
+        this.type = type;
+    }
+
+    // adapterId:
+    public Integer getAdapterId(){
+        return this.adapterId;
+    }
+    public void setAdapterId(Integer adapterId){
+        this.adapterId = adapterId;
+    }
+
+    // adapterDynamicData:
+    public String getAdapterDynamicData(){
+        return this.adapterDynamicData;
+    }
+    public void setAdapterDynamicData(String adapterDynamicData){
+        this.adapterDynamicData = adapterDynamicData;
+    }
+
+    // intervalSeconds:
+    public Integer getIntervalSeconds(){
+        return this.intervalSeconds;
+    }
+    public void setIntervalSeconds(Integer intervalSeconds){
+        this.intervalSeconds = intervalSeconds;
+    }
+
+    // userList:
+    public String getUserList(){
+        return this.userList;
+    }
+    public void setUserList(String userList){
+        this.userList = userList;
+    }
+
+    // sendTimeInSeconds:
+    public Long getSendTimeInSeconds(){
+        return this.sendTimeInSeconds;
+    }
+    public void setSendTimeInSeconds(Long sendTimeInSeconds){
+        this.sendTimeInSeconds = sendTimeInSeconds;
+    }
+
+    // couponGroupId:
+    public Integer getCouponGroupId(){
+        return this.couponGroupId;
+    }
+    public void setCouponGroupId(Integer couponGroupId){
+        this.couponGroupId = couponGroupId;
+    }
+
+
+    public Engagement() {
+       super();
+    }
+
+    public Engagement(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+
+        if(jsonObject == null) return;
+
+        // set members values:
+        id = GsonParser.parseInt(jsonObject.get("id"));
+        totalNumberOfRecipients = GsonParser.parseInt(jsonObject.get("totalNumberOfRecipients"));
+        type = EngagementType.get(GsonParser.parseString(jsonObject.get("type")));
+        adapterId = GsonParser.parseInt(jsonObject.get("adapterId"));
+        adapterDynamicData = GsonParser.parseString(jsonObject.get("adapterDynamicData"));
+        intervalSeconds = GsonParser.parseInt(jsonObject.get("intervalSeconds"));
+        userList = GsonParser.parseString(jsonObject.get("userList"));
+        sendTimeInSeconds = GsonParser.parseLong(jsonObject.get("sendTimeInSeconds"));
+        couponGroupId = GsonParser.parseInt(jsonObject.get("couponGroupId"));
+
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaEngagement");
+        kparams.add("type", this.type);
+        kparams.add("adapterId", this.adapterId);
+        kparams.add("adapterDynamicData", this.adapterDynamicData);
+        kparams.add("intervalSeconds", this.intervalSeconds);
+        kparams.add("userList", this.userList);
+        kparams.add("sendTimeInSeconds", this.sendTimeInSeconds);
+        kparams.add("couponGroupId", this.couponGroupId);
+        return kparams;
+    }
+
 }
 

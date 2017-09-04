@@ -27,11 +27,10 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -42,71 +41,39 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**  Npvr Premium Service  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(NpvrPremiumService.Tokenizer.class)
 public class NpvrPremiumService extends PremiumService {
-	
-	public interface Tokenizer extends PremiumService.Tokenizer {
-		String quotaInMinutes();
-	}
 
 	/**  Quota in minutes  */
-	private Long quotaInMinutes;
+    private Long quotaInMinutes;
 
-	// quotaInMinutes:
-	public Long getQuotaInMinutes(){
-		return this.quotaInMinutes;
-	}
-	public void setQuotaInMinutes(Long quotaInMinutes){
-		this.quotaInMinutes = quotaInMinutes;
-	}
-
-	public void quotaInMinutes(String multirequestToken){
-		setToken("quotaInMinutes", multirequestToken);
-	}
-
-
-	public NpvrPremiumService() {
-		super();
-	}
-
-	public NpvrPremiumService(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		quotaInMinutes = GsonParser.parseLong(jsonObject.get("quotaInMinutes"));
-
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaNpvrPremiumService");
-		return kparams;
-	}
-
-
-    public static final Creator<NpvrPremiumService> CREATOR = new Creator<NpvrPremiumService>() {
-        @Override
-        public NpvrPremiumService createFromParcel(Parcel source) {
-            return new NpvrPremiumService(source);
-        }
-
-        @Override
-        public NpvrPremiumService[] newArray(int size) {
-            return new NpvrPremiumService[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeValue(this.quotaInMinutes);
+    // quotaInMinutes:
+    public Long getQuotaInMinutes(){
+        return this.quotaInMinutes;
+    }
+    public void setQuotaInMinutes(Long quotaInMinutes){
+        this.quotaInMinutes = quotaInMinutes;
     }
 
-    public NpvrPremiumService(Parcel in) {
-        super(in);
-        this.quotaInMinutes = (Long)in.readValue(Long.class.getClassLoader());
+
+    public NpvrPremiumService() {
+       super();
     }
+
+    public NpvrPremiumService(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+
+        if(jsonObject == null) return;
+
+        // set members values:
+        quotaInMinutes = GsonParser.parseLong(jsonObject.get("quotaInMinutes"));
+
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaNpvrPremiumService");
+        return kparams;
+    }
+
 }
 

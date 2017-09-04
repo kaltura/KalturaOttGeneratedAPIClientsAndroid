@@ -27,14 +27,13 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.enums.PinType;
-import com.kaltura.client.enums.RuleLevel;
-import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.enums.RuleLevel;
+import com.kaltura.client.enums.PinType;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -45,112 +44,64 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**  PIN and its origin of definition  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(Pin.Tokenizer.class)
 public class Pin extends ObjectBase {
-	
-	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String pin();
-		String origin();
-		String type();
-	}
 
 	/**  PIN code  */
-	private String pin;
+    private String pin;
 	/**  Where the PIN was defined at – account, household or user  */
-	private RuleLevel origin;
+    private RuleLevel origin;
 	/**  PIN type  */
-	private PinType type;
+    private PinType type;
 
-	// pin:
-	public String getPin(){
-		return this.pin;
-	}
-	public void setPin(String pin){
-		this.pin = pin;
-	}
-
-	public void pin(String multirequestToken){
-		setToken("pin", multirequestToken);
-	}
-
-	// origin:
-	public RuleLevel getOrigin(){
-		return this.origin;
-	}
-	public void setOrigin(RuleLevel origin){
-		this.origin = origin;
-	}
-
-	public void origin(String multirequestToken){
-		setToken("origin", multirequestToken);
-	}
-
-	// type:
-	public PinType getType(){
-		return this.type;
-	}
-	public void setType(PinType type){
-		this.type = type;
-	}
-
-	public void type(String multirequestToken){
-		setToken("type", multirequestToken);
-	}
-
-
-	public Pin() {
-		super();
-	}
-
-	public Pin(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		pin = GsonParser.parseString(jsonObject.get("pin"));
-		origin = RuleLevel.get(GsonParser.parseString(jsonObject.get("origin")));
-		type = PinType.get(GsonParser.parseString(jsonObject.get("type")));
-
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaPin");
-		kparams.add("pin", this.pin);
-		kparams.add("origin", this.origin);
-		kparams.add("type", this.type);
-		return kparams;
-	}
-
-
-    public static final Creator<Pin> CREATOR = new Creator<Pin>() {
-        @Override
-        public Pin createFromParcel(Parcel source) {
-            return new Pin(source);
-        }
-
-        @Override
-        public Pin[] newArray(int size) {
-            return new Pin[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeString(this.pin);
-        dest.writeInt(this.origin == null ? -1 : this.origin.ordinal());
-        dest.writeInt(this.type == null ? -1 : this.type.ordinal());
+    // pin:
+    public String getPin(){
+        return this.pin;
+    }
+    public void setPin(String pin){
+        this.pin = pin;
     }
 
-    public Pin(Parcel in) {
-        super(in);
-        this.pin = in.readString();
-        int tmpOrigin = in.readInt();
-        this.origin = tmpOrigin == -1 ? null : RuleLevel.values()[tmpOrigin];
-        int tmpType = in.readInt();
-        this.type = tmpType == -1 ? null : PinType.values()[tmpType];
+    // origin:
+    public RuleLevel getOrigin(){
+        return this.origin;
     }
+    public void setOrigin(RuleLevel origin){
+        this.origin = origin;
+    }
+
+    // type:
+    public PinType getType(){
+        return this.type;
+    }
+    public void setType(PinType type){
+        this.type = type;
+    }
+
+
+    public Pin() {
+       super();
+    }
+
+    public Pin(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+
+        if(jsonObject == null) return;
+
+        // set members values:
+        pin = GsonParser.parseString(jsonObject.get("pin"));
+        origin = RuleLevel.get(GsonParser.parseString(jsonObject.get("origin")));
+        type = PinType.get(GsonParser.parseString(jsonObject.get("type")));
+
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaPin");
+        kparams.add("pin", this.pin);
+        kparams.add("origin", this.origin);
+        kparams.add("type", this.type);
+        return kparams;
+    }
+
 }
 

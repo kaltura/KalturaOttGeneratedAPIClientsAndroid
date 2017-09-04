@@ -27,12 +27,11 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.types.ObjectBase;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -42,72 +41,40 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(LicensedUrlBaseRequest.Tokenizer.class)
 public class LicensedUrlBaseRequest extends ObjectBase {
-	
-	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String assetId();
-	}
 
 	/**  Asset identifier  */
-	private String assetId;
+    private String assetId;
 
-	// assetId:
-	public String getAssetId(){
-		return this.assetId;
-	}
-	public void setAssetId(String assetId){
-		this.assetId = assetId;
-	}
-
-	public void assetId(String multirequestToken){
-		setToken("assetId", multirequestToken);
-	}
-
-
-	public LicensedUrlBaseRequest() {
-		super();
-	}
-
-	public LicensedUrlBaseRequest(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		assetId = GsonParser.parseString(jsonObject.get("assetId"));
-
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaLicensedUrlBaseRequest");
-		kparams.add("assetId", this.assetId);
-		return kparams;
-	}
-
-
-    public static final Creator<LicensedUrlBaseRequest> CREATOR = new Creator<LicensedUrlBaseRequest>() {
-        @Override
-        public LicensedUrlBaseRequest createFromParcel(Parcel source) {
-            return new LicensedUrlBaseRequest(source);
-        }
-
-        @Override
-        public LicensedUrlBaseRequest[] newArray(int size) {
-            return new LicensedUrlBaseRequest[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeString(this.assetId);
+    // assetId:
+    public String getAssetId(){
+        return this.assetId;
+    }
+    public void setAssetId(String assetId){
+        this.assetId = assetId;
     }
 
-    public LicensedUrlBaseRequest(Parcel in) {
-        super(in);
-        this.assetId = in.readString();
+
+    public LicensedUrlBaseRequest() {
+       super();
     }
+
+    public LicensedUrlBaseRequest(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+
+        if(jsonObject == null) return;
+
+        // set members values:
+        assetId = GsonParser.parseString(jsonObject.get("assetId"));
+
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaLicensedUrlBaseRequest");
+        kparams.add("assetId", this.assetId);
+        return kparams;
+    }
+
 }
 

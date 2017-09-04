@@ -27,11 +27,10 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -41,72 +40,40 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(RegionFilter.Tokenizer.class)
 public class RegionFilter extends Filter {
-	
-	public interface Tokenizer extends Filter.Tokenizer {
-		String externalIdIn();
-	}
 
 	/**  List of comma separated regions external identifiers  */
-	private String externalIdIn;
+    private String externalIdIn;
 
-	// externalIdIn:
-	public String getExternalIdIn(){
-		return this.externalIdIn;
-	}
-	public void setExternalIdIn(String externalIdIn){
-		this.externalIdIn = externalIdIn;
-	}
-
-	public void externalIdIn(String multirequestToken){
-		setToken("externalIdIn", multirequestToken);
-	}
-
-
-	public RegionFilter() {
-		super();
-	}
-
-	public RegionFilter(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		externalIdIn = GsonParser.parseString(jsonObject.get("externalIdIn"));
-
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaRegionFilter");
-		kparams.add("externalIdIn", this.externalIdIn);
-		return kparams;
-	}
-
-
-    public static final Creator<RegionFilter> CREATOR = new Creator<RegionFilter>() {
-        @Override
-        public RegionFilter createFromParcel(Parcel source) {
-            return new RegionFilter(source);
-        }
-
-        @Override
-        public RegionFilter[] newArray(int size) {
-            return new RegionFilter[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeString(this.externalIdIn);
+    // externalIdIn:
+    public String getExternalIdIn(){
+        return this.externalIdIn;
+    }
+    public void setExternalIdIn(String externalIdIn){
+        this.externalIdIn = externalIdIn;
     }
 
-    public RegionFilter(Parcel in) {
-        super(in);
-        this.externalIdIn = in.readString();
+
+    public RegionFilter() {
+       super();
     }
+
+    public RegionFilter(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+
+        if(jsonObject == null) return;
+
+        // set members values:
+        externalIdIn = GsonParser.parseString(jsonObject.get("externalIdIn"));
+
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaRegionFilter");
+        kparams.add("externalIdIn", this.externalIdIn);
+        return kparams;
+    }
+
 }
 

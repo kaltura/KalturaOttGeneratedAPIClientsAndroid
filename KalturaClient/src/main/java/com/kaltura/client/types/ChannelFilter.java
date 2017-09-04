@@ -27,11 +27,10 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -41,16 +40,10 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(ChannelFilter.Tokenizer.class)
 public class ChannelFilter extends AssetFilter {
-	
-	public interface Tokenizer extends AssetFilter.Tokenizer {
-		String idEqual();
-		String kSql();
-	}
 
 	/**  Channel Id  */
-	private Integer idEqual;
+    private Integer idEqual;
 	/**  Search assets using dynamic criteria. Provided collection of nested expressions
 	  with key, comparison operators, value, and logical conjunction.             
 	  Possible keys: any Tag or Meta defined in the system and the following reserved
@@ -71,80 +64,47 @@ public class ChannelFilter extends AssetFilter {
 	  ~ (like), !~, ^ (starts with), + (exists), !+ (not exists).              Logical
 	  conjunction: and, or.               Search values are limited to 20 characters
 	  each.              (maximum length of entire filter is 2048 characters)  */
-	private String kSql;
+    private String kSql;
 
-	// idEqual:
-	public Integer getIdEqual(){
-		return this.idEqual;
-	}
-	public void setIdEqual(Integer idEqual){
-		this.idEqual = idEqual;
-	}
-
-	public void idEqual(String multirequestToken){
-		setToken("idEqual", multirequestToken);
-	}
-
-	// kSql:
-	public String getKSql(){
-		return this.kSql;
-	}
-	public void setKSql(String kSql){
-		this.kSql = kSql;
-	}
-
-	public void kSql(String multirequestToken){
-		setToken("kSql", multirequestToken);
-	}
-
-
-	public ChannelFilter() {
-		super();
-	}
-
-	public ChannelFilter(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		idEqual = GsonParser.parseInt(jsonObject.get("idEqual"));
-		kSql = GsonParser.parseString(jsonObject.get("kSql"));
-
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaChannelFilter");
-		kparams.add("idEqual", this.idEqual);
-		kparams.add("kSql", this.kSql);
-		return kparams;
-	}
-
-
-    public static final Creator<ChannelFilter> CREATOR = new Creator<ChannelFilter>() {
-        @Override
-        public ChannelFilter createFromParcel(Parcel source) {
-            return new ChannelFilter(source);
-        }
-
-        @Override
-        public ChannelFilter[] newArray(int size) {
-            return new ChannelFilter[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeValue(this.idEqual);
-        dest.writeString(this.kSql);
+    // idEqual:
+    public Integer getIdEqual(){
+        return this.idEqual;
+    }
+    public void setIdEqual(Integer idEqual){
+        this.idEqual = idEqual;
     }
 
-    public ChannelFilter(Parcel in) {
-        super(in);
-        this.idEqual = (Integer)in.readValue(Integer.class.getClassLoader());
-        this.kSql = in.readString();
+    // kSql:
+    public String getKSql(){
+        return this.kSql;
     }
+    public void setKSql(String kSql){
+        this.kSql = kSql;
+    }
+
+
+    public ChannelFilter() {
+       super();
+    }
+
+    public ChannelFilter(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+
+        if(jsonObject == null) return;
+
+        // set members values:
+        idEqual = GsonParser.parseInt(jsonObject.get("idEqual"));
+        kSql = GsonParser.parseString(jsonObject.get("kSql"));
+
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaChannelFilter");
+        kparams.add("idEqual", this.idEqual);
+        kparams.add("kSql", this.kSql);
+        return kparams;
+    }
+
 }
 

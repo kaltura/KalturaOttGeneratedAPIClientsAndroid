@@ -27,12 +27,11 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.types.ObjectBase;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -43,90 +42,51 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**  User type  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(OTTUserType.Tokenizer.class)
 public class OTTUserType extends ObjectBase {
-	
-	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String id();
-		String description();
-	}
 
 	/**  User type identifier  */
-	private Integer id;
+    private Integer id;
 	/**  User type description  */
-	private String description;
+    private String description;
 
-	// id:
-	public Integer getId(){
-		return this.id;
-	}
-	public void setId(Integer id){
-		this.id = id;
-	}
-
-	public void id(String multirequestToken){
-		setToken("id", multirequestToken);
-	}
-
-	// description:
-	public String getDescription(){
-		return this.description;
-	}
-	public void setDescription(String description){
-		this.description = description;
-	}
-
-	public void description(String multirequestToken){
-		setToken("description", multirequestToken);
-	}
-
-
-	public OTTUserType() {
-		super();
-	}
-
-	public OTTUserType(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		id = GsonParser.parseInt(jsonObject.get("id"));
-		description = GsonParser.parseString(jsonObject.get("description"));
-
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaOTTUserType");
-		kparams.add("description", this.description);
-		return kparams;
-	}
-
-
-    public static final Creator<OTTUserType> CREATOR = new Creator<OTTUserType>() {
-        @Override
-        public OTTUserType createFromParcel(Parcel source) {
-            return new OTTUserType(source);
-        }
-
-        @Override
-        public OTTUserType[] newArray(int size) {
-            return new OTTUserType[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeValue(this.id);
-        dest.writeString(this.description);
+    // id:
+    public Integer getId(){
+        return this.id;
+    }
+    public void setId(Integer id){
+        this.id = id;
     }
 
-    public OTTUserType(Parcel in) {
-        super(in);
-        this.id = (Integer)in.readValue(Integer.class.getClassLoader());
-        this.description = in.readString();
+    // description:
+    public String getDescription(){
+        return this.description;
     }
+    public void setDescription(String description){
+        this.description = description;
+    }
+
+
+    public OTTUserType() {
+       super();
+    }
+
+    public OTTUserType(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+
+        if(jsonObject == null) return;
+
+        // set members values:
+        id = GsonParser.parseInt(jsonObject.get("id"));
+        description = GsonParser.parseString(jsonObject.get("description"));
+
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaOTTUserType");
+        kparams.add("description", this.description);
+        return kparams;
+    }
+
 }
 

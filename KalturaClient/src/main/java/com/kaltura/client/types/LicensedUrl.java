@@ -27,12 +27,11 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.types.ObjectBase;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -42,91 +41,52 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(LicensedUrl.Tokenizer.class)
 public class LicensedUrl extends ObjectBase {
-	
-	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String mainUrl();
-		String altUrl();
-	}
 
 	/**  Main licensed URL  */
-	private String mainUrl;
+    private String mainUrl;
 	/**  An alternate URL to use in case the main fails  */
-	private String altUrl;
+    private String altUrl;
 
-	// mainUrl:
-	public String getMainUrl(){
-		return this.mainUrl;
-	}
-	public void setMainUrl(String mainUrl){
-		this.mainUrl = mainUrl;
-	}
-
-	public void mainUrl(String multirequestToken){
-		setToken("mainUrl", multirequestToken);
-	}
-
-	// altUrl:
-	public String getAltUrl(){
-		return this.altUrl;
-	}
-	public void setAltUrl(String altUrl){
-		this.altUrl = altUrl;
-	}
-
-	public void altUrl(String multirequestToken){
-		setToken("altUrl", multirequestToken);
-	}
-
-
-	public LicensedUrl() {
-		super();
-	}
-
-	public LicensedUrl(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		mainUrl = GsonParser.parseString(jsonObject.get("mainUrl"));
-		altUrl = GsonParser.parseString(jsonObject.get("altUrl"));
-
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaLicensedUrl");
-		kparams.add("mainUrl", this.mainUrl);
-		kparams.add("altUrl", this.altUrl);
-		return kparams;
-	}
-
-
-    public static final Creator<LicensedUrl> CREATOR = new Creator<LicensedUrl>() {
-        @Override
-        public LicensedUrl createFromParcel(Parcel source) {
-            return new LicensedUrl(source);
-        }
-
-        @Override
-        public LicensedUrl[] newArray(int size) {
-            return new LicensedUrl[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeString(this.mainUrl);
-        dest.writeString(this.altUrl);
+    // mainUrl:
+    public String getMainUrl(){
+        return this.mainUrl;
+    }
+    public void setMainUrl(String mainUrl){
+        this.mainUrl = mainUrl;
     }
 
-    public LicensedUrl(Parcel in) {
-        super(in);
-        this.mainUrl = in.readString();
-        this.altUrl = in.readString();
+    // altUrl:
+    public String getAltUrl(){
+        return this.altUrl;
     }
+    public void setAltUrl(String altUrl){
+        this.altUrl = altUrl;
+    }
+
+
+    public LicensedUrl() {
+       super();
+    }
+
+    public LicensedUrl(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+
+        if(jsonObject == null) return;
+
+        // set members values:
+        mainUrl = GsonParser.parseString(jsonObject.get("mainUrl"));
+        altUrl = GsonParser.parseString(jsonObject.get("altUrl"));
+
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaLicensedUrl");
+        kparams.add("mainUrl", this.mainUrl);
+        kparams.add("altUrl", this.altUrl);
+        return kparams;
+    }
+
 }
 

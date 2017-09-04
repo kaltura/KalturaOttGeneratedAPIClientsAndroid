@@ -27,12 +27,11 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.types.ObjectBase;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -43,110 +42,64 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**  Discount module  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(DiscountModule.Tokenizer.class)
 public class DiscountModule extends ObjectBase {
-	
-	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String percent();
-		String startDate();
-		String endDate();
-	}
 
 	/**  The discount percentage  */
-	private Double percent;
+    private Double percent;
 	/**  The first date the discount is available  */
-	private Long startDate;
+    private Long startDate;
 	/**  The last date the discount is available  */
-	private Long endDate;
+    private Long endDate;
 
-	// percent:
-	public Double getPercent(){
-		return this.percent;
-	}
-	public void setPercent(Double percent){
-		this.percent = percent;
-	}
-
-	public void percent(String multirequestToken){
-		setToken("percent", multirequestToken);
-	}
-
-	// startDate:
-	public Long getStartDate(){
-		return this.startDate;
-	}
-	public void setStartDate(Long startDate){
-		this.startDate = startDate;
-	}
-
-	public void startDate(String multirequestToken){
-		setToken("startDate", multirequestToken);
-	}
-
-	// endDate:
-	public Long getEndDate(){
-		return this.endDate;
-	}
-	public void setEndDate(Long endDate){
-		this.endDate = endDate;
-	}
-
-	public void endDate(String multirequestToken){
-		setToken("endDate", multirequestToken);
-	}
-
-
-	public DiscountModule() {
-		super();
-	}
-
-	public DiscountModule(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		percent = GsonParser.parseDouble(jsonObject.get("percent"));
-		startDate = GsonParser.parseLong(jsonObject.get("startDate"));
-		endDate = GsonParser.parseLong(jsonObject.get("endDate"));
-
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaDiscountModule");
-		kparams.add("percent", this.percent);
-		kparams.add("startDate", this.startDate);
-		kparams.add("endDate", this.endDate);
-		return kparams;
-	}
-
-
-    public static final Creator<DiscountModule> CREATOR = new Creator<DiscountModule>() {
-        @Override
-        public DiscountModule createFromParcel(Parcel source) {
-            return new DiscountModule(source);
-        }
-
-        @Override
-        public DiscountModule[] newArray(int size) {
-            return new DiscountModule[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeValue(this.percent);
-        dest.writeValue(this.startDate);
-        dest.writeValue(this.endDate);
+    // percent:
+    public Double getPercent(){
+        return this.percent;
+    }
+    public void setPercent(Double percent){
+        this.percent = percent;
     }
 
-    public DiscountModule(Parcel in) {
-        super(in);
-        this.percent = (Double)in.readValue(Double.class.getClassLoader());
-        this.startDate = (Long)in.readValue(Long.class.getClassLoader());
-        this.endDate = (Long)in.readValue(Long.class.getClassLoader());
+    // startDate:
+    public Long getStartDate(){
+        return this.startDate;
     }
+    public void setStartDate(Long startDate){
+        this.startDate = startDate;
+    }
+
+    // endDate:
+    public Long getEndDate(){
+        return this.endDate;
+    }
+    public void setEndDate(Long endDate){
+        this.endDate = endDate;
+    }
+
+
+    public DiscountModule() {
+       super();
+    }
+
+    public DiscountModule(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+
+        if(jsonObject == null) return;
+
+        // set members values:
+        percent = GsonParser.parseDouble(jsonObject.get("percent"));
+        startDate = GsonParser.parseLong(jsonObject.get("startDate"));
+        endDate = GsonParser.parseLong(jsonObject.get("endDate"));
+
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaDiscountModule");
+        kparams.add("percent", this.percent);
+        kparams.add("startDate", this.startDate);
+        kparams.add("endDate", this.endDate);
+        return kparams;
+    }
+
 }
 

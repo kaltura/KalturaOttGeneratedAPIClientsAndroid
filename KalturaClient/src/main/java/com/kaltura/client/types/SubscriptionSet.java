@@ -27,13 +27,12 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.enums.SubscriptionSetType;
-import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.enums.SubscriptionSetType;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -44,117 +43,75 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**  Subscription details  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(SubscriptionSet.Tokenizer.class)
 public abstract class SubscriptionSet extends ObjectBase {
-	
-	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String id();
-		String name();
-		String type();
-		String subscriptionIds();
-	}
 
 	/**  SubscriptionSet identifier  */
-	private Long id;
+    private Long id;
 	/**  SubscriptionSet name  */
-	private String name;
+    private String name;
 	/**  Type of the Subscription Set  */
-	private SubscriptionSetType type;
+    private SubscriptionSetType type;
 	/**  A list of comma separated subscription ids associated with this set ordered by
 	  priority ascending  */
-	private String subscriptionIds;
+    private String subscriptionIds;
 
-	// id:
-	public Long getId(){
-		return this.id;
-	}
-	public void setId(Long id){
-		this.id = id;
-	}
-
-	public void id(String multirequestToken){
-		setToken("id", multirequestToken);
-	}
-
-	// name:
-	public String getName(){
-		return this.name;
-	}
-	public void setName(String name){
-		this.name = name;
-	}
-
-	public void name(String multirequestToken){
-		setToken("name", multirequestToken);
-	}
-
-	// type:
-	public SubscriptionSetType getType(){
-		return this.type;
-	}
-	public void setType(SubscriptionSetType type){
-		this.type = type;
-	}
-
-	public void type(String multirequestToken){
-		setToken("type", multirequestToken);
-	}
-
-	// subscriptionIds:
-	public String getSubscriptionIds(){
-		return this.subscriptionIds;
-	}
-	public void setSubscriptionIds(String subscriptionIds){
-		this.subscriptionIds = subscriptionIds;
-	}
-
-	public void subscriptionIds(String multirequestToken){
-		setToken("subscriptionIds", multirequestToken);
-	}
-
-
-	public SubscriptionSet() {
-		super();
-	}
-
-	public SubscriptionSet(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		id = GsonParser.parseLong(jsonObject.get("id"));
-		name = GsonParser.parseString(jsonObject.get("name"));
-		type = SubscriptionSetType.get(GsonParser.parseString(jsonObject.get("type")));
-		subscriptionIds = GsonParser.parseString(jsonObject.get("subscriptionIds"));
-
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaSubscriptionSet");
-		kparams.add("name", this.name);
-		kparams.add("subscriptionIds", this.subscriptionIds);
-		return kparams;
-	}
-
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeValue(this.id);
-        dest.writeString(this.name);
-        dest.writeInt(this.type == null ? -1 : this.type.ordinal());
-        dest.writeString(this.subscriptionIds);
+    // id:
+    public Long getId(){
+        return this.id;
+    }
+    public void setId(Long id){
+        this.id = id;
     }
 
-    public SubscriptionSet(Parcel in) {
-        super(in);
-        this.id = (Long)in.readValue(Long.class.getClassLoader());
-        this.name = in.readString();
-        int tmpType = in.readInt();
-        this.type = tmpType == -1 ? null : SubscriptionSetType.values()[tmpType];
-        this.subscriptionIds = in.readString();
+    // name:
+    public String getName(){
+        return this.name;
     }
+    public void setName(String name){
+        this.name = name;
+    }
+
+    // type:
+    public SubscriptionSetType getType(){
+        return this.type;
+    }
+    public void setType(SubscriptionSetType type){
+        this.type = type;
+    }
+
+    // subscriptionIds:
+    public String getSubscriptionIds(){
+        return this.subscriptionIds;
+    }
+    public void setSubscriptionIds(String subscriptionIds){
+        this.subscriptionIds = subscriptionIds;
+    }
+
+
+    public SubscriptionSet() {
+       super();
+    }
+
+    public SubscriptionSet(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+
+        if(jsonObject == null) return;
+
+        // set members values:
+        id = GsonParser.parseLong(jsonObject.get("id"));
+        name = GsonParser.parseString(jsonObject.get("name"));
+        type = SubscriptionSetType.get(GsonParser.parseString(jsonObject.get("type")));
+        subscriptionIds = GsonParser.parseString(jsonObject.get("subscriptionIds"));
+
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaSubscriptionSet");
+        kparams.add("name", this.name);
+        kparams.add("subscriptionIds", this.subscriptionIds);
+        return kparams;
+    }
+
 }
 

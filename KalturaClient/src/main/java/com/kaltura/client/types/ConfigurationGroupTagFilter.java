@@ -27,11 +27,10 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -42,73 +41,41 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**  Configuration group tag filter  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(ConfigurationGroupTagFilter.Tokenizer.class)
 public class ConfigurationGroupTagFilter extends Filter {
-	
-	public interface Tokenizer extends Filter.Tokenizer {
-		String configurationGroupIdEqual();
-	}
 
 	/**  the ID of the configuration group for which to return related configurations
 	  group tags  */
-	private String configurationGroupIdEqual;
+    private String configurationGroupIdEqual;
 
-	// configurationGroupIdEqual:
-	public String getConfigurationGroupIdEqual(){
-		return this.configurationGroupIdEqual;
-	}
-	public void setConfigurationGroupIdEqual(String configurationGroupIdEqual){
-		this.configurationGroupIdEqual = configurationGroupIdEqual;
-	}
-
-	public void configurationGroupIdEqual(String multirequestToken){
-		setToken("configurationGroupIdEqual", multirequestToken);
-	}
-
-
-	public ConfigurationGroupTagFilter() {
-		super();
-	}
-
-	public ConfigurationGroupTagFilter(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		configurationGroupIdEqual = GsonParser.parseString(jsonObject.get("configurationGroupIdEqual"));
-
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaConfigurationGroupTagFilter");
-		kparams.add("configurationGroupIdEqual", this.configurationGroupIdEqual);
-		return kparams;
-	}
-
-
-    public static final Creator<ConfigurationGroupTagFilter> CREATOR = new Creator<ConfigurationGroupTagFilter>() {
-        @Override
-        public ConfigurationGroupTagFilter createFromParcel(Parcel source) {
-            return new ConfigurationGroupTagFilter(source);
-        }
-
-        @Override
-        public ConfigurationGroupTagFilter[] newArray(int size) {
-            return new ConfigurationGroupTagFilter[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeString(this.configurationGroupIdEqual);
+    // configurationGroupIdEqual:
+    public String getConfigurationGroupIdEqual(){
+        return this.configurationGroupIdEqual;
+    }
+    public void setConfigurationGroupIdEqual(String configurationGroupIdEqual){
+        this.configurationGroupIdEqual = configurationGroupIdEqual;
     }
 
-    public ConfigurationGroupTagFilter(Parcel in) {
-        super(in);
-        this.configurationGroupIdEqual = in.readString();
+
+    public ConfigurationGroupTagFilter() {
+       super();
     }
+
+    public ConfigurationGroupTagFilter(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+
+        if(jsonObject == null) return;
+
+        // set members values:
+        configurationGroupIdEqual = GsonParser.parseString(jsonObject.get("configurationGroupIdEqual"));
+
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaConfigurationGroupTagFilter");
+        kparams.add("configurationGroupIdEqual", this.configurationGroupIdEqual);
+        return kparams;
+    }
+
 }
 

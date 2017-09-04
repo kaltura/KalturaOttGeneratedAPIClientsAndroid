@@ -27,12 +27,11 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.types.ObjectBase;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -42,91 +41,52 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(KeyValue.Tokenizer.class)
 public class KeyValue extends ObjectBase {
-	
-	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String key();
-		String value();
-	}
 
 	/**  Key  */
-	private String key;
+    private String key;
 	/**  Value  */
-	private String value;
+    private String value;
 
-	// key:
-	public String getKey(){
-		return this.key;
-	}
-	public void setKey(String key){
-		this.key = key;
-	}
-
-	public void key(String multirequestToken){
-		setToken("key", multirequestToken);
-	}
-
-	// value:
-	public String getValue(){
-		return this.value;
-	}
-	public void setValue(String value){
-		this.value = value;
-	}
-
-	public void value(String multirequestToken){
-		setToken("value", multirequestToken);
-	}
-
-
-	public KeyValue() {
-		super();
-	}
-
-	public KeyValue(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		key = GsonParser.parseString(jsonObject.get("key"));
-		value = GsonParser.parseString(jsonObject.get("value"));
-
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaKeyValue");
-		kparams.add("key", this.key);
-		kparams.add("value", this.value);
-		return kparams;
-	}
-
-
-    public static final Creator<KeyValue> CREATOR = new Creator<KeyValue>() {
-        @Override
-        public KeyValue createFromParcel(Parcel source) {
-            return new KeyValue(source);
-        }
-
-        @Override
-        public KeyValue[] newArray(int size) {
-            return new KeyValue[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeString(this.key);
-        dest.writeString(this.value);
+    // key:
+    public String getKey(){
+        return this.key;
+    }
+    public void setKey(String key){
+        this.key = key;
     }
 
-    public KeyValue(Parcel in) {
-        super(in);
-        this.key = in.readString();
-        this.value = in.readString();
+    // value:
+    public String getValue(){
+        return this.value;
     }
+    public void setValue(String value){
+        this.value = value;
+    }
+
+
+    public KeyValue() {
+       super();
+    }
+
+    public KeyValue(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+
+        if(jsonObject == null) return;
+
+        // set members values:
+        key = GsonParser.parseString(jsonObject.get("key"));
+        value = GsonParser.parseString(jsonObject.get("value"));
+
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaKeyValue");
+        kparams.add("key", this.key);
+        kparams.add("value", this.value);
+        return kparams;
+    }
+
 }
 

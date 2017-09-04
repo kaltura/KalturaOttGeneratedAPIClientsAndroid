@@ -27,11 +27,10 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -42,72 +41,40 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**  Language filter  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(LanguageFilter.Tokenizer.class)
 public class LanguageFilter extends Filter {
-	
-	public interface Tokenizer extends Filter.Tokenizer {
-		String codeIn();
-	}
 
 	/**  Language codes  */
-	private String codeIn;
+    private String codeIn;
 
-	// codeIn:
-	public String getCodeIn(){
-		return this.codeIn;
-	}
-	public void setCodeIn(String codeIn){
-		this.codeIn = codeIn;
-	}
-
-	public void codeIn(String multirequestToken){
-		setToken("codeIn", multirequestToken);
-	}
-
-
-	public LanguageFilter() {
-		super();
-	}
-
-	public LanguageFilter(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		codeIn = GsonParser.parseString(jsonObject.get("codeIn"));
-
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaLanguageFilter");
-		kparams.add("codeIn", this.codeIn);
-		return kparams;
-	}
-
-
-    public static final Creator<LanguageFilter> CREATOR = new Creator<LanguageFilter>() {
-        @Override
-        public LanguageFilter createFromParcel(Parcel source) {
-            return new LanguageFilter(source);
-        }
-
-        @Override
-        public LanguageFilter[] newArray(int size) {
-            return new LanguageFilter[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeString(this.codeIn);
+    // codeIn:
+    public String getCodeIn(){
+        return this.codeIn;
+    }
+    public void setCodeIn(String codeIn){
+        this.codeIn = codeIn;
     }
 
-    public LanguageFilter(Parcel in) {
-        super(in);
-        this.codeIn = in.readString();
+
+    public LanguageFilter() {
+       super();
     }
+
+    public LanguageFilter(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+
+        if(jsonObject == null) return;
+
+        // set members values:
+        codeIn = GsonParser.parseString(jsonObject.get("codeIn"));
+
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaLanguageFilter");
+        kparams.add("codeIn", this.codeIn);
+        return kparams;
+    }
+
 }
 

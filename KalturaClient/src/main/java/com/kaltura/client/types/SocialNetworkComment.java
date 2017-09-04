@@ -27,11 +27,10 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -41,91 +40,52 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(SocialNetworkComment.Tokenizer.class)
 public class SocialNetworkComment extends SocialComment {
-	
-	public interface Tokenizer extends SocialComment.Tokenizer {
-		String likeCounter();
-		String authorImageUrl();
-	}
 
 	/**  Number of likes  */
-	private String likeCounter;
+    private String likeCounter;
 	/**  The URL of the profile picture of the author of the comment  */
-	private String authorImageUrl;
+    private String authorImageUrl;
 
-	// likeCounter:
-	public String getLikeCounter(){
-		return this.likeCounter;
-	}
-	public void setLikeCounter(String likeCounter){
-		this.likeCounter = likeCounter;
-	}
-
-	public void likeCounter(String multirequestToken){
-		setToken("likeCounter", multirequestToken);
-	}
-
-	// authorImageUrl:
-	public String getAuthorImageUrl(){
-		return this.authorImageUrl;
-	}
-	public void setAuthorImageUrl(String authorImageUrl){
-		this.authorImageUrl = authorImageUrl;
-	}
-
-	public void authorImageUrl(String multirequestToken){
-		setToken("authorImageUrl", multirequestToken);
-	}
-
-
-	public SocialNetworkComment() {
-		super();
-	}
-
-	public SocialNetworkComment(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		likeCounter = GsonParser.parseString(jsonObject.get("likeCounter"));
-		authorImageUrl = GsonParser.parseString(jsonObject.get("authorImageUrl"));
-
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaSocialNetworkComment");
-		kparams.add("likeCounter", this.likeCounter);
-		kparams.add("authorImageUrl", this.authorImageUrl);
-		return kparams;
-	}
-
-
-    public static final Creator<SocialNetworkComment> CREATOR = new Creator<SocialNetworkComment>() {
-        @Override
-        public SocialNetworkComment createFromParcel(Parcel source) {
-            return new SocialNetworkComment(source);
-        }
-
-        @Override
-        public SocialNetworkComment[] newArray(int size) {
-            return new SocialNetworkComment[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeString(this.likeCounter);
-        dest.writeString(this.authorImageUrl);
+    // likeCounter:
+    public String getLikeCounter(){
+        return this.likeCounter;
+    }
+    public void setLikeCounter(String likeCounter){
+        this.likeCounter = likeCounter;
     }
 
-    public SocialNetworkComment(Parcel in) {
-        super(in);
-        this.likeCounter = in.readString();
-        this.authorImageUrl = in.readString();
+    // authorImageUrl:
+    public String getAuthorImageUrl(){
+        return this.authorImageUrl;
     }
+    public void setAuthorImageUrl(String authorImageUrl){
+        this.authorImageUrl = authorImageUrl;
+    }
+
+
+    public SocialNetworkComment() {
+       super();
+    }
+
+    public SocialNetworkComment(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+
+        if(jsonObject == null) return;
+
+        // set members values:
+        likeCounter = GsonParser.parseString(jsonObject.get("likeCounter"));
+        authorImageUrl = GsonParser.parseString(jsonObject.get("authorImageUrl"));
+
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaSocialNetworkComment");
+        kparams.add("likeCounter", this.likeCounter);
+        kparams.add("authorImageUrl", this.authorImageUrl);
+        return kparams;
+    }
+
 }
 

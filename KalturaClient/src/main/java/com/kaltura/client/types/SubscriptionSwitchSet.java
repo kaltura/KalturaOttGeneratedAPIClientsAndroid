@@ -27,10 +27,10 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.utils.GsonParser;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -41,43 +41,23 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**  Subscription details  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(SubscriptionSwitchSet.Tokenizer.class)
 public class SubscriptionSwitchSet extends SubscriptionSet {
-	
-	public interface Tokenizer extends SubscriptionSet.Tokenizer {
-	}
 
 
 
-	public SubscriptionSwitchSet() {
-		super();
-	}
-
-	public SubscriptionSwitchSet(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaSubscriptionSwitchSet");
-		return kparams;
-	}
-
-
-    public static final Creator<SubscriptionSwitchSet> CREATOR = new Creator<SubscriptionSwitchSet>() {
-        @Override
-        public SubscriptionSwitchSet createFromParcel(Parcel source) {
-            return new SubscriptionSwitchSet(source);
-        }
-
-        @Override
-        public SubscriptionSwitchSet[] newArray(int size) {
-            return new SubscriptionSwitchSet[size];
-        }
-    };
-
-    public SubscriptionSwitchSet(Parcel in) {
-        super(in);
+    public SubscriptionSwitchSet() {
+       super();
     }
+
+    public SubscriptionSwitchSet(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaSubscriptionSwitchSet");
+        return kparams;
+    }
+
 }
 

@@ -27,11 +27,10 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -42,72 +41,40 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**  A string representation to return an array of ints  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(IntegerValue.Tokenizer.class)
 public class IntegerValue extends Value {
-	
-	public interface Tokenizer extends Value.Tokenizer {
-		String value();
-	}
 
 	/**  Value  */
-	private Integer value;
+    private Integer value;
 
-	// value:
-	public Integer getValue(){
-		return this.value;
-	}
-	public void setValue(Integer value){
-		this.value = value;
-	}
-
-	public void value(String multirequestToken){
-		setToken("value", multirequestToken);
-	}
-
-
-	public IntegerValue() {
-		super();
-	}
-
-	public IntegerValue(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		value = GsonParser.parseInt(jsonObject.get("value"));
-
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaIntegerValue");
-		kparams.add("value", this.value);
-		return kparams;
-	}
-
-
-    public static final Creator<IntegerValue> CREATOR = new Creator<IntegerValue>() {
-        @Override
-        public IntegerValue createFromParcel(Parcel source) {
-            return new IntegerValue(source);
-        }
-
-        @Override
-        public IntegerValue[] newArray(int size) {
-            return new IntegerValue[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeValue(this.value);
+    // value:
+    public Integer getValue(){
+        return this.value;
+    }
+    public void setValue(Integer value){
+        this.value = value;
     }
 
-    public IntegerValue(Parcel in) {
-        super(in);
-        this.value = (Integer)in.readValue(Integer.class.getClassLoader());
+
+    public IntegerValue() {
+       super();
     }
+
+    public IntegerValue(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+
+        if(jsonObject == null) return;
+
+        // set members values:
+        value = GsonParser.parseInt(jsonObject.get("value"));
+
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaIntegerValue");
+        kparams.add("value", this.value);
+        return kparams;
+    }
+
 }
 

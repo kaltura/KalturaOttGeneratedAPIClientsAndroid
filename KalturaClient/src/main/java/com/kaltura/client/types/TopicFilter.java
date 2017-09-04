@@ -27,10 +27,10 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.utils.GsonParser;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -40,43 +40,23 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(TopicFilter.Tokenizer.class)
 public class TopicFilter extends Filter {
-	
-	public interface Tokenizer extends Filter.Tokenizer {
-	}
 
 
 
-	public TopicFilter() {
-		super();
-	}
-
-	public TopicFilter(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaTopicFilter");
-		return kparams;
-	}
-
-
-    public static final Creator<TopicFilter> CREATOR = new Creator<TopicFilter>() {
-        @Override
-        public TopicFilter createFromParcel(Parcel source) {
-            return new TopicFilter(source);
-        }
-
-        @Override
-        public TopicFilter[] newArray(int size) {
-            return new TopicFilter[size];
-        }
-    };
-
-    public TopicFilter(Parcel in) {
-        super(in);
+    public TopicFilter() {
+       super();
     }
+
+    public TopicFilter(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaTopicFilter");
+        return kparams;
+    }
+
 }
 

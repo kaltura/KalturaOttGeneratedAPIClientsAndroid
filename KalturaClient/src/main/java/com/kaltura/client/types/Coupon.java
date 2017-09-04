@@ -27,14 +27,13 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import android.os.Parcel;
-import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.enums.CouponStatus;
-import com.kaltura.client.types.CouponsGroup;
-import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.types.CouponsGroup;
+import com.kaltura.client.enums.CouponStatus;
+import com.google.gson.JsonObject;
+
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -45,86 +44,50 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**  Coupon details container  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(Coupon.Tokenizer.class)
 public class Coupon extends ObjectBase {
-	
-	public interface Tokenizer extends ObjectBase.Tokenizer {
-		CouponsGroup.Tokenizer couponsGroup();
-		String status();
-	}
 
 	/**  Coupons group details  */
-	private CouponsGroup couponsGroup;
+    private CouponsGroup couponsGroup;
 	/**  Coupon status  */
-	private CouponStatus status;
+    private CouponStatus status;
 
-	// couponsGroup:
-	public CouponsGroup getCouponsGroup(){
-		return this.couponsGroup;
-	}
-	public void setCouponsGroup(CouponsGroup couponsGroup){
-		this.couponsGroup = couponsGroup;
-	}
-
-	// status:
-	public CouponStatus getStatus(){
-		return this.status;
-	}
-	public void setStatus(CouponStatus status){
-		this.status = status;
-	}
-
-	public void status(String multirequestToken){
-		setToken("status", multirequestToken);
-	}
-
-
-	public Coupon() {
-		super();
-	}
-
-	public Coupon(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		couponsGroup = GsonParser.parseObject(jsonObject.getAsJsonObject("couponsGroup"), CouponsGroup.class);
-		status = CouponStatus.get(GsonParser.parseString(jsonObject.get("status")));
-
-	}
-
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaCoupon");
-		return kparams;
-	}
-
-
-    public static final Creator<Coupon> CREATOR = new Creator<Coupon>() {
-        @Override
-        public Coupon createFromParcel(Parcel source) {
-            return new Coupon(source);
-        }
-
-        @Override
-        public Coupon[] newArray(int size) {
-            return new Coupon[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeParcelable(this.couponsGroup, flags);
-        dest.writeInt(this.status == null ? -1 : this.status.ordinal());
+    // couponsGroup:
+    public CouponsGroup getCouponsGroup(){
+        return this.couponsGroup;
+    }
+    public void setCouponsGroup(CouponsGroup couponsGroup){
+        this.couponsGroup = couponsGroup;
     }
 
-    public Coupon(Parcel in) {
-        super(in);
-        this.couponsGroup = in.readParcelable(CouponsGroup.class.getClassLoader());
-        int tmpStatus = in.readInt();
-        this.status = tmpStatus == -1 ? null : CouponStatus.values()[tmpStatus];
+    // status:
+    public CouponStatus getStatus(){
+        return this.status;
     }
+    public void setStatus(CouponStatus status){
+        this.status = status;
+    }
+
+
+    public Coupon() {
+       super();
+    }
+
+    public Coupon(JsonObject jsonObject) throws APIException {
+        super(jsonObject);
+
+        if(jsonObject == null) return;
+
+        // set members values:
+        couponsGroup = GsonParser.parseObject(jsonObject.getAsJsonObject("couponsGroup"), CouponsGroup.class);
+        status = CouponStatus.get(GsonParser.parseString(jsonObject.get("status")));
+
+    }
+
+    public Params toParams() {
+        Params kparams = super.toParams();
+        kparams.add("objectType", "KalturaCoupon");
+        return kparams;
+    }
+
 }
 
