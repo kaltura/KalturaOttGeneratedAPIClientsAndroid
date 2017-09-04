@@ -27,12 +27,15 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.types.ObjectBase;
-import java.util.List;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.utils.request.RequestBuilder;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -42,88 +45,153 @@ import com.google.gson.JsonObject;
  */
 
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(Region.Tokenizer.class)
 public class Region extends ObjectBase {
+	
+	public interface Tokenizer extends ObjectBase.Tokenizer {
+		String id();
+		String name();
+		String externalId();
+		String isDefault();
+		RequestBuilder.ListTokenizer<RegionalChannel.Tokenizer> linearChannels();
+	}
 
 	/**  Region identifier  */
-    private Integer id;
+	private Integer id;
 	/**  Region name  */
-    private String name;
+	private String name;
 	/**  Region external identifier  */
-    private String externalId;
+	private String externalId;
 	/**  Indicates whether this is the default region for the partner  */
-    private Boolean isDefault;
+	private Boolean isDefault;
 	/**  List of associated linear channels  */
-    private List<RegionalChannel> linearChannels;
+	private List<RegionalChannel> linearChannels;
 
-    // id:
-    public Integer getId(){
-        return this.id;
-    }
-    public void setId(Integer id){
-        this.id = id;
+	// id:
+	public Integer getId(){
+		return this.id;
+	}
+	public void setId(Integer id){
+		this.id = id;
+	}
+
+	public void id(String multirequestToken){
+		setToken("id", multirequestToken);
+	}
+
+	// name:
+	public String getName(){
+		return this.name;
+	}
+	public void setName(String name){
+		this.name = name;
+	}
+
+	public void name(String multirequestToken){
+		setToken("name", multirequestToken);
+	}
+
+	// externalId:
+	public String getExternalId(){
+		return this.externalId;
+	}
+	public void setExternalId(String externalId){
+		this.externalId = externalId;
+	}
+
+	public void externalId(String multirequestToken){
+		setToken("externalId", multirequestToken);
+	}
+
+	// isDefault:
+	public Boolean getIsDefault(){
+		return this.isDefault;
+	}
+	public void setIsDefault(Boolean isDefault){
+		this.isDefault = isDefault;
+	}
+
+	public void isDefault(String multirequestToken){
+		setToken("isDefault", multirequestToken);
+	}
+
+	// linearChannels:
+	public List<RegionalChannel> getLinearChannels(){
+		return this.linearChannels;
+	}
+	public void setLinearChannels(List<RegionalChannel> linearChannels){
+		this.linearChannels = linearChannels;
+	}
+
+
+	public Region() {
+		super();
+	}
+
+	public Region(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		id = GsonParser.parseInt(jsonObject.get("id"));
+		name = GsonParser.parseString(jsonObject.get("name"));
+		externalId = GsonParser.parseString(jsonObject.get("externalId"));
+		isDefault = GsonParser.parseBoolean(jsonObject.get("isDefault"));
+		linearChannels = GsonParser.parseArray(jsonObject.getAsJsonArray("linearChannels"), RegionalChannel.class);
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaRegion");
+		kparams.add("id", this.id);
+		kparams.add("name", this.name);
+		kparams.add("externalId", this.externalId);
+		kparams.add("isDefault", this.isDefault);
+		kparams.add("linearChannels", this.linearChannels);
+		return kparams;
+	}
+
+
+    public static final Creator<Region> CREATOR = new Creator<Region>() {
+        @Override
+        public Region createFromParcel(Parcel source) {
+            return new Region(source);
+        }
+
+        @Override
+        public Region[] newArray(int size) {
+            return new Region[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeValue(this.id);
+        dest.writeString(this.name);
+        dest.writeString(this.externalId);
+        dest.writeValue(this.isDefault);
+        if(this.linearChannels != null) {
+            dest.writeInt(this.linearChannels.size());
+            dest.writeList(this.linearChannels);
+        } else {
+            dest.writeInt(-1);
+        }
     }
 
-    // name:
-    public String getName(){
-        return this.name;
+    public Region(Parcel in) {
+        super(in);
+        this.id = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.name = in.readString();
+        this.externalId = in.readString();
+        this.isDefault = (Boolean)in.readValue(Boolean.class.getClassLoader());
+        int linearChannelsSize = in.readInt();
+        if( linearChannelsSize > -1) {
+            this.linearChannels = new ArrayList<>();
+            in.readList(this.linearChannels, RegionalChannel.class.getClassLoader());
+        }
     }
-    public void setName(String name){
-        this.name = name;
-    }
-
-    // externalId:
-    public String getExternalId(){
-        return this.externalId;
-    }
-    public void setExternalId(String externalId){
-        this.externalId = externalId;
-    }
-
-    // isDefault:
-    public Boolean getIsDefault(){
-        return this.isDefault;
-    }
-    public void setIsDefault(Boolean isDefault){
-        this.isDefault = isDefault;
-    }
-
-    // linearChannels:
-    public List<RegionalChannel> getLinearChannels(){
-        return this.linearChannels;
-    }
-    public void setLinearChannels(List<RegionalChannel> linearChannels){
-        this.linearChannels = linearChannels;
-    }
-
-
-    public Region() {
-       super();
-    }
-
-    public Region(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        id = GsonParser.parseInt(jsonObject.get("id"));
-        name = GsonParser.parseString(jsonObject.get("name"));
-        externalId = GsonParser.parseString(jsonObject.get("externalId"));
-        isDefault = GsonParser.parseBoolean(jsonObject.get("isDefault"));
-        linearChannels = GsonParser.parseArray(jsonObject.getAsJsonArray("linearChannels"), RegionalChannel.class);
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaRegion");
-        kparams.add("id", this.id);
-        kparams.add("name", this.name);
-        kparams.add("externalId", this.externalId);
-        kparams.add("isDefault", this.isDefault);
-        kparams.add("linearChannels", this.linearChannels);
-        return kparams;
-    }
-
 }
 

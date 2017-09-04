@@ -27,11 +27,12 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.enums.ScheduledRecordingAssetType;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.enums.ScheduledRecordingAssetType;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -41,76 +42,130 @@ import com.google.gson.JsonObject;
  */
 
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(ScheduledRecordingProgramFilter.Tokenizer.class)
 public class ScheduledRecordingProgramFilter extends AssetFilter {
+	
+	public interface Tokenizer extends AssetFilter.Tokenizer {
+		String recordingTypeEqual();
+		String channelsIn();
+		String startDateGreaterThanOrNull();
+		String endDateLessThanOrNull();
+	}
 
 	/**  The type of recordings to return  */
-    private ScheduledRecordingAssetType recordingTypeEqual;
+	private ScheduledRecordingAssetType recordingTypeEqual;
 	/**  Channels to filter by  */
-    private String channelsIn;
+	private String channelsIn;
 	/**  start date  */
-    private Long startDateGreaterThanOrNull;
+	private Long startDateGreaterThanOrNull;
 	/**  end date  */
-    private Long endDateLessThanOrNull;
+	private Long endDateLessThanOrNull;
 
-    // recordingTypeEqual:
-    public ScheduledRecordingAssetType getRecordingTypeEqual(){
-        return this.recordingTypeEqual;
+	// recordingTypeEqual:
+	public ScheduledRecordingAssetType getRecordingTypeEqual(){
+		return this.recordingTypeEqual;
+	}
+	public void setRecordingTypeEqual(ScheduledRecordingAssetType recordingTypeEqual){
+		this.recordingTypeEqual = recordingTypeEqual;
+	}
+
+	public void recordingTypeEqual(String multirequestToken){
+		setToken("recordingTypeEqual", multirequestToken);
+	}
+
+	// channelsIn:
+	public String getChannelsIn(){
+		return this.channelsIn;
+	}
+	public void setChannelsIn(String channelsIn){
+		this.channelsIn = channelsIn;
+	}
+
+	public void channelsIn(String multirequestToken){
+		setToken("channelsIn", multirequestToken);
+	}
+
+	// startDateGreaterThanOrNull:
+	public Long getStartDateGreaterThanOrNull(){
+		return this.startDateGreaterThanOrNull;
+	}
+	public void setStartDateGreaterThanOrNull(Long startDateGreaterThanOrNull){
+		this.startDateGreaterThanOrNull = startDateGreaterThanOrNull;
+	}
+
+	public void startDateGreaterThanOrNull(String multirequestToken){
+		setToken("startDateGreaterThanOrNull", multirequestToken);
+	}
+
+	// endDateLessThanOrNull:
+	public Long getEndDateLessThanOrNull(){
+		return this.endDateLessThanOrNull;
+	}
+	public void setEndDateLessThanOrNull(Long endDateLessThanOrNull){
+		this.endDateLessThanOrNull = endDateLessThanOrNull;
+	}
+
+	public void endDateLessThanOrNull(String multirequestToken){
+		setToken("endDateLessThanOrNull", multirequestToken);
+	}
+
+
+	public ScheduledRecordingProgramFilter() {
+		super();
+	}
+
+	public ScheduledRecordingProgramFilter(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		recordingTypeEqual = ScheduledRecordingAssetType.get(GsonParser.parseString(jsonObject.get("recordingTypeEqual")));
+		channelsIn = GsonParser.parseString(jsonObject.get("channelsIn"));
+		startDateGreaterThanOrNull = GsonParser.parseLong(jsonObject.get("startDateGreaterThanOrNull"));
+		endDateLessThanOrNull = GsonParser.parseLong(jsonObject.get("endDateLessThanOrNull"));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaScheduledRecordingProgramFilter");
+		kparams.add("recordingTypeEqual", this.recordingTypeEqual);
+		kparams.add("channelsIn", this.channelsIn);
+		kparams.add("startDateGreaterThanOrNull", this.startDateGreaterThanOrNull);
+		kparams.add("endDateLessThanOrNull", this.endDateLessThanOrNull);
+		return kparams;
+	}
+
+
+    public static final Creator<ScheduledRecordingProgramFilter> CREATOR = new Creator<ScheduledRecordingProgramFilter>() {
+        @Override
+        public ScheduledRecordingProgramFilter createFromParcel(Parcel source) {
+            return new ScheduledRecordingProgramFilter(source);
+        }
+
+        @Override
+        public ScheduledRecordingProgramFilter[] newArray(int size) {
+            return new ScheduledRecordingProgramFilter[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeInt(this.recordingTypeEqual == null ? -1 : this.recordingTypeEqual.ordinal());
+        dest.writeString(this.channelsIn);
+        dest.writeValue(this.startDateGreaterThanOrNull);
+        dest.writeValue(this.endDateLessThanOrNull);
     }
-    public void setRecordingTypeEqual(ScheduledRecordingAssetType recordingTypeEqual){
-        this.recordingTypeEqual = recordingTypeEqual;
+
+    public ScheduledRecordingProgramFilter(Parcel in) {
+        super(in);
+        int tmpRecordingTypeEqual = in.readInt();
+        this.recordingTypeEqual = tmpRecordingTypeEqual == -1 ? null : ScheduledRecordingAssetType.values()[tmpRecordingTypeEqual];
+        this.channelsIn = in.readString();
+        this.startDateGreaterThanOrNull = (Long)in.readValue(Long.class.getClassLoader());
+        this.endDateLessThanOrNull = (Long)in.readValue(Long.class.getClassLoader());
     }
-
-    // channelsIn:
-    public String getChannelsIn(){
-        return this.channelsIn;
-    }
-    public void setChannelsIn(String channelsIn){
-        this.channelsIn = channelsIn;
-    }
-
-    // startDateGreaterThanOrNull:
-    public Long getStartDateGreaterThanOrNull(){
-        return this.startDateGreaterThanOrNull;
-    }
-    public void setStartDateGreaterThanOrNull(Long startDateGreaterThanOrNull){
-        this.startDateGreaterThanOrNull = startDateGreaterThanOrNull;
-    }
-
-    // endDateLessThanOrNull:
-    public Long getEndDateLessThanOrNull(){
-        return this.endDateLessThanOrNull;
-    }
-    public void setEndDateLessThanOrNull(Long endDateLessThanOrNull){
-        this.endDateLessThanOrNull = endDateLessThanOrNull;
-    }
-
-
-    public ScheduledRecordingProgramFilter() {
-       super();
-    }
-
-    public ScheduledRecordingProgramFilter(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        recordingTypeEqual = ScheduledRecordingAssetType.get(GsonParser.parseString(jsonObject.get("recordingTypeEqual")));
-        channelsIn = GsonParser.parseString(jsonObject.get("channelsIn"));
-        startDateGreaterThanOrNull = GsonParser.parseLong(jsonObject.get("startDateGreaterThanOrNull"));
-        endDateLessThanOrNull = GsonParser.parseLong(jsonObject.get("endDateLessThanOrNull"));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaScheduledRecordingProgramFilter");
-        kparams.add("recordingTypeEqual", this.recordingTypeEqual);
-        kparams.add("channelsIn", this.channelsIn);
-        kparams.add("startDateGreaterThanOrNull", this.startDateGreaterThanOrNull);
-        kparams.add("endDateLessThanOrNull", this.endDateLessThanOrNull);
-        return kparams;
-    }
-
 }
 

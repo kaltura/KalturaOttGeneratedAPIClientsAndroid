@@ -27,11 +27,12 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.types.ObjectBase;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -41,40 +42,60 @@ import com.google.gson.JsonObject;
  */
 
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(Filter.Tokenizer.class)
 public abstract class Filter extends ObjectBase {
+	
+	public interface Tokenizer extends ObjectBase.Tokenizer {
+		String orderBy();
+	}
 
 	/**  order by  */
-    private String orderBy;
+	private String orderBy;
 
-    // orderBy:
-    public String getOrderBy(){
-        return this.orderBy;
+	// orderBy:
+	public String getOrderBy(){
+		return this.orderBy;
+	}
+	public void setOrderBy(String orderBy){
+		this.orderBy = orderBy;
+	}
+
+	public void orderBy(String multirequestToken){
+		setToken("orderBy", multirequestToken);
+	}
+
+
+	public Filter() {
+		super();
+	}
+
+	public Filter(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		orderBy = GsonParser.parseString(jsonObject.get("orderBy"));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaFilter");
+		kparams.add("orderBy", this.orderBy);
+		return kparams;
+	}
+
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(this.orderBy);
     }
-    public void setOrderBy(String orderBy){
-        this.orderBy = orderBy;
+
+    public Filter(Parcel in) {
+        super(in);
+        this.orderBy = in.readString();
     }
-
-
-    public Filter() {
-       super();
-    }
-
-    public Filter(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        orderBy = GsonParser.parseString(jsonObject.get("orderBy"));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaFilter");
-        kparams.add("orderBy", this.orderBy);
-        return kparams;
-    }
-
 }
 

@@ -27,11 +27,12 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.types.MultilingualString;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.types.MultilingualString;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -42,52 +43,87 @@ import com.google.gson.JsonObject;
 
 /**  Array of translated strings  */
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(MultilingualStringValue.Tokenizer.class)
 public class MultilingualStringValue extends Value {
+	
+	public interface Tokenizer extends Value.Tokenizer {
+		String value();
+		MultilingualString.Tokenizer multilingualValue();
+	}
 
 	/**  Value  */
-    private String value;
+	private String value;
 	/**  Value  */
-    private MultilingualString multilingualValue;
+	private MultilingualString multilingualValue;
 
-    // value:
-    public String getValue(){
-        return this.value;
+	// value:
+	public String getValue(){
+		return this.value;
+	}
+	public void setValue(String value){
+		this.value = value;
+	}
+
+	public void value(String multirequestToken){
+		setToken("value", multirequestToken);
+	}
+
+	// multilingualValue:
+	public MultilingualString getMultilingualValue(){
+		return this.multilingualValue;
+	}
+	public void setMultilingualValue(MultilingualString multilingualValue){
+		this.multilingualValue = multilingualValue;
+	}
+
+
+	public MultilingualStringValue() {
+		super();
+	}
+
+	public MultilingualStringValue(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		value = GsonParser.parseString(jsonObject.get("value"));
+		multilingualValue = GsonParser.parseObject(jsonObject.getAsJsonObject("multilingualValue"), MultilingualString.class);
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaMultilingualStringValue");
+		kparams.add("value", this.value);
+		kparams.add("multilingualValue", this.multilingualValue);
+		return kparams;
+	}
+
+
+    public static final Creator<MultilingualStringValue> CREATOR = new Creator<MultilingualStringValue>() {
+        @Override
+        public MultilingualStringValue createFromParcel(Parcel source) {
+            return new MultilingualStringValue(source);
+        }
+
+        @Override
+        public MultilingualStringValue[] newArray(int size) {
+            return new MultilingualStringValue[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(this.value);
+        dest.writeParcelable(this.multilingualValue, flags);
     }
-    public void setValue(String value){
-        this.value = value;
+
+    public MultilingualStringValue(Parcel in) {
+        super(in);
+        this.value = in.readString();
+        this.multilingualValue = in.readParcelable(MultilingualString.class.getClassLoader());
     }
-
-    // multilingualValue:
-    public MultilingualString getMultilingualValue(){
-        return this.multilingualValue;
-    }
-    public void setMultilingualValue(MultilingualString multilingualValue){
-        this.multilingualValue = multilingualValue;
-    }
-
-
-    public MultilingualStringValue() {
-       super();
-    }
-
-    public MultilingualStringValue(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        value = GsonParser.parseString(jsonObject.get("value"));
-        multilingualValue = GsonParser.parseObject(jsonObject.getAsJsonObject("multilingualValue"), MultilingualString.class);
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaMultilingualStringValue");
-        kparams.add("value", this.value);
-        kparams.add("multilingualValue", this.multilingualValue);
-        return kparams;
-    }
-
 }
 

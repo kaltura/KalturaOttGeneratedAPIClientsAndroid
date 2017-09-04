@@ -27,11 +27,12 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.types.ObjectBase;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -41,52 +42,91 @@ import com.google.gson.JsonObject;
  */
 
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(AccessControlMessage.Tokenizer.class)
 public class AccessControlMessage extends ObjectBase {
+	
+	public interface Tokenizer extends ObjectBase.Tokenizer {
+		String message();
+		String code();
+	}
 
 	/**  Message  */
-    private String message;
+	private String message;
 	/**  Code  */
-    private String code;
+	private String code;
 
-    // message:
-    public String getMessage(){
-        return this.message;
+	// message:
+	public String getMessage(){
+		return this.message;
+	}
+	public void setMessage(String message){
+		this.message = message;
+	}
+
+	public void message(String multirequestToken){
+		setToken("message", multirequestToken);
+	}
+
+	// code:
+	public String getCode(){
+		return this.code;
+	}
+	public void setCode(String code){
+		this.code = code;
+	}
+
+	public void code(String multirequestToken){
+		setToken("code", multirequestToken);
+	}
+
+
+	public AccessControlMessage() {
+		super();
+	}
+
+	public AccessControlMessage(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		message = GsonParser.parseString(jsonObject.get("message"));
+		code = GsonParser.parseString(jsonObject.get("code"));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaAccessControlMessage");
+		kparams.add("message", this.message);
+		kparams.add("code", this.code);
+		return kparams;
+	}
+
+
+    public static final Creator<AccessControlMessage> CREATOR = new Creator<AccessControlMessage>() {
+        @Override
+        public AccessControlMessage createFromParcel(Parcel source) {
+            return new AccessControlMessage(source);
+        }
+
+        @Override
+        public AccessControlMessage[] newArray(int size) {
+            return new AccessControlMessage[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(this.message);
+        dest.writeString(this.code);
     }
-    public void setMessage(String message){
-        this.message = message;
+
+    public AccessControlMessage(Parcel in) {
+        super(in);
+        this.message = in.readString();
+        this.code = in.readString();
     }
-
-    // code:
-    public String getCode(){
-        return this.code;
-    }
-    public void setCode(String code){
-        this.code = code;
-    }
-
-
-    public AccessControlMessage() {
-       super();
-    }
-
-    public AccessControlMessage(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        message = GsonParser.parseString(jsonObject.get("message"));
-        code = GsonParser.parseString(jsonObject.get("code"));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaAccessControlMessage");
-        kparams.add("message", this.message);
-        kparams.add("code", this.code);
-        return kparams;
-    }
-
 }
 

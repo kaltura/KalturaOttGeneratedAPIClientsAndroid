@@ -27,12 +27,15 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.types.ObjectBase;
-import java.util.List;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.utils.request.RequestBuilder;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -42,40 +45,77 @@ import com.google.gson.JsonObject;
  */
 
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(StringValueArray.Tokenizer.class)
 public class StringValueArray extends ObjectBase {
+	
+	public interface Tokenizer extends ObjectBase.Tokenizer {
+		RequestBuilder.ListTokenizer<StringValue.Tokenizer> objects();
+	}
 
 	/**  List of string values  */
-    private List<StringValue> objects;
+	private List<StringValue> objects;
 
-    // objects:
-    public List<StringValue> getObjects(){
-        return this.objects;
+	// objects:
+	public List<StringValue> getObjects(){
+		return this.objects;
+	}
+	public void setObjects(List<StringValue> objects){
+		this.objects = objects;
+	}
+
+
+	public StringValueArray() {
+		super();
+	}
+
+	public StringValueArray(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		objects = GsonParser.parseArray(jsonObject.getAsJsonArray("objects"), StringValue.class);
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaStringValueArray");
+		kparams.add("objects", this.objects);
+		return kparams;
+	}
+
+
+    public static final Creator<StringValueArray> CREATOR = new Creator<StringValueArray>() {
+        @Override
+        public StringValueArray createFromParcel(Parcel source) {
+            return new StringValueArray(source);
+        }
+
+        @Override
+        public StringValueArray[] newArray(int size) {
+            return new StringValueArray[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        if(this.objects != null) {
+            dest.writeInt(this.objects.size());
+            dest.writeList(this.objects);
+        } else {
+            dest.writeInt(-1);
+        }
     }
-    public void setObjects(List<StringValue> objects){
-        this.objects = objects;
+
+    public StringValueArray(Parcel in) {
+        super(in);
+        int objectsSize = in.readInt();
+        if( objectsSize > -1) {
+            this.objects = new ArrayList<>();
+            in.readList(this.objects, StringValue.class.getClassLoader());
+        }
     }
-
-
-    public StringValueArray() {
-       super();
-    }
-
-    public StringValueArray(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        objects = GsonParser.parseArray(jsonObject.getAsJsonArray("objects"), StringValue.class);
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaStringValueArray");
-        kparams.add("objects", this.objects);
-        return kparams;
-    }
-
 }
 

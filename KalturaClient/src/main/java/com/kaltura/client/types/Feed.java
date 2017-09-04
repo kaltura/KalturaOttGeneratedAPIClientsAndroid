@@ -27,11 +27,12 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.types.ObjectBase;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -41,39 +42,71 @@ import com.google.gson.JsonObject;
  */
 
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(Feed.Tokenizer.class)
 public class Feed extends ObjectBase {
+	
+	public interface Tokenizer extends ObjectBase.Tokenizer {
+		String assetId();
+	}
 
 	/**  Asset identifier  */
-    private Long assetId;
+	private Long assetId;
 
-    // assetId:
-    public Long getAssetId(){
-        return this.assetId;
+	// assetId:
+	public Long getAssetId(){
+		return this.assetId;
+	}
+	public void setAssetId(Long assetId){
+		this.assetId = assetId;
+	}
+
+	public void assetId(String multirequestToken){
+		setToken("assetId", multirequestToken);
+	}
+
+
+	public Feed() {
+		super();
+	}
+
+	public Feed(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		assetId = GsonParser.parseLong(jsonObject.get("assetId"));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaFeed");
+		return kparams;
+	}
+
+
+    public static final Creator<Feed> CREATOR = new Creator<Feed>() {
+        @Override
+        public Feed createFromParcel(Parcel source) {
+            return new Feed(source);
+        }
+
+        @Override
+        public Feed[] newArray(int size) {
+            return new Feed[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeValue(this.assetId);
     }
-    public void setAssetId(Long assetId){
-        this.assetId = assetId;
+
+    public Feed(Parcel in) {
+        super(in);
+        this.assetId = (Long)in.readValue(Long.class.getClassLoader());
     }
-
-
-    public Feed() {
-       super();
-    }
-
-    public Feed(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        assetId = GsonParser.parseLong(jsonObject.get("assetId"));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaFeed");
-        return kparams;
-    }
-
 }
 

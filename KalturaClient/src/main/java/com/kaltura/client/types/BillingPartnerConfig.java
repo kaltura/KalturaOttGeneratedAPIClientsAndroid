@@ -27,11 +27,12 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.enums.PartnerConfigurationType;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.enums.PartnerConfigurationType;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -42,52 +43,92 @@ import com.google.gson.JsonObject;
 
 /**  Partner billing configuration  */
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(BillingPartnerConfig.Tokenizer.class)
 public class BillingPartnerConfig extends PartnerConfiguration {
+	
+	public interface Tokenizer extends PartnerConfiguration.Tokenizer {
+		String value();
+		String type();
+	}
 
 	/**  configuration value  */
-    private String value;
+	private String value;
 	/**  partner configuration type  */
-    private PartnerConfigurationType type;
+	private PartnerConfigurationType type;
 
-    // value:
-    public String getValue(){
-        return this.value;
+	// value:
+	public String getValue(){
+		return this.value;
+	}
+	public void setValue(String value){
+		this.value = value;
+	}
+
+	public void value(String multirequestToken){
+		setToken("value", multirequestToken);
+	}
+
+	// type:
+	public PartnerConfigurationType getType(){
+		return this.type;
+	}
+	public void setType(PartnerConfigurationType type){
+		this.type = type;
+	}
+
+	public void type(String multirequestToken){
+		setToken("type", multirequestToken);
+	}
+
+
+	public BillingPartnerConfig() {
+		super();
+	}
+
+	public BillingPartnerConfig(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		value = GsonParser.parseString(jsonObject.get("value"));
+		type = PartnerConfigurationType.get(GsonParser.parseString(jsonObject.get("type")));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaBillingPartnerConfig");
+		kparams.add("value", this.value);
+		kparams.add("type", this.type);
+		return kparams;
+	}
+
+
+    public static final Creator<BillingPartnerConfig> CREATOR = new Creator<BillingPartnerConfig>() {
+        @Override
+        public BillingPartnerConfig createFromParcel(Parcel source) {
+            return new BillingPartnerConfig(source);
+        }
+
+        @Override
+        public BillingPartnerConfig[] newArray(int size) {
+            return new BillingPartnerConfig[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(this.value);
+        dest.writeInt(this.type == null ? -1 : this.type.ordinal());
     }
-    public void setValue(String value){
-        this.value = value;
+
+    public BillingPartnerConfig(Parcel in) {
+        super(in);
+        this.value = in.readString();
+        int tmpType = in.readInt();
+        this.type = tmpType == -1 ? null : PartnerConfigurationType.values()[tmpType];
     }
-
-    // type:
-    public PartnerConfigurationType getType(){
-        return this.type;
-    }
-    public void setType(PartnerConfigurationType type){
-        this.type = type;
-    }
-
-
-    public BillingPartnerConfig() {
-       super();
-    }
-
-    public BillingPartnerConfig(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        value = GsonParser.parseString(jsonObject.get("value"));
-        type = PartnerConfigurationType.get(GsonParser.parseString(jsonObject.get("type")));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaBillingPartnerConfig");
-        kparams.add("value", this.value);
-        kparams.add("type", this.type);
-        return kparams;
-    }
-
 }
 

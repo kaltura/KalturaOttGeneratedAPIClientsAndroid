@@ -27,10 +27,11 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
+import android.os.Parcel;
+import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
-import com.google.gson.JsonObject;
-
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -41,64 +42,110 @@ import com.google.gson.JsonObject;
 
 /**  Device family limitations details  */
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(HouseholdDeviceFamilyLimitations.Tokenizer.class)
 public class HouseholdDeviceFamilyLimitations extends DeviceFamilyBase {
+	
+	public interface Tokenizer extends DeviceFamilyBase.Tokenizer {
+		String frequency();
+		String deviceLimit();
+		String concurrentLimit();
+	}
 
 	/**  Allowed device change frequency code  */
-    private Integer frequency;
+	private Integer frequency;
 	/**  Max number of devices allowed for this family  */
-    private Integer deviceLimit;
+	private Integer deviceLimit;
 	/**  Max number of streams allowed for this family  */
-    private Integer concurrentLimit;
+	private Integer concurrentLimit;
 
-    // frequency:
-    public Integer getFrequency(){
-        return this.frequency;
+	// frequency:
+	public Integer getFrequency(){
+		return this.frequency;
+	}
+	public void setFrequency(Integer frequency){
+		this.frequency = frequency;
+	}
+
+	public void frequency(String multirequestToken){
+		setToken("frequency", multirequestToken);
+	}
+
+	// deviceLimit:
+	public Integer getDeviceLimit(){
+		return this.deviceLimit;
+	}
+	public void setDeviceLimit(Integer deviceLimit){
+		this.deviceLimit = deviceLimit;
+	}
+
+	public void deviceLimit(String multirequestToken){
+		setToken("deviceLimit", multirequestToken);
+	}
+
+	// concurrentLimit:
+	public Integer getConcurrentLimit(){
+		return this.concurrentLimit;
+	}
+	public void setConcurrentLimit(Integer concurrentLimit){
+		this.concurrentLimit = concurrentLimit;
+	}
+
+	public void concurrentLimit(String multirequestToken){
+		setToken("concurrentLimit", multirequestToken);
+	}
+
+
+	public HouseholdDeviceFamilyLimitations() {
+		super();
+	}
+
+	public HouseholdDeviceFamilyLimitations(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		frequency = GsonParser.parseInt(jsonObject.get("frequency"));
+		deviceLimit = GsonParser.parseInt(jsonObject.get("deviceLimit"));
+		concurrentLimit = GsonParser.parseInt(jsonObject.get("concurrentLimit"));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaHouseholdDeviceFamilyLimitations");
+		kparams.add("frequency", this.frequency);
+		kparams.add("deviceLimit", this.deviceLimit);
+		kparams.add("concurrentLimit", this.concurrentLimit);
+		return kparams;
+	}
+
+
+    public static final Creator<HouseholdDeviceFamilyLimitations> CREATOR = new Creator<HouseholdDeviceFamilyLimitations>() {
+        @Override
+        public HouseholdDeviceFamilyLimitations createFromParcel(Parcel source) {
+            return new HouseholdDeviceFamilyLimitations(source);
+        }
+
+        @Override
+        public HouseholdDeviceFamilyLimitations[] newArray(int size) {
+            return new HouseholdDeviceFamilyLimitations[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeValue(this.frequency);
+        dest.writeValue(this.deviceLimit);
+        dest.writeValue(this.concurrentLimit);
     }
-    public void setFrequency(Integer frequency){
-        this.frequency = frequency;
+
+    public HouseholdDeviceFamilyLimitations(Parcel in) {
+        super(in);
+        this.frequency = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.deviceLimit = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.concurrentLimit = (Integer)in.readValue(Integer.class.getClassLoader());
     }
-
-    // deviceLimit:
-    public Integer getDeviceLimit(){
-        return this.deviceLimit;
-    }
-    public void setDeviceLimit(Integer deviceLimit){
-        this.deviceLimit = deviceLimit;
-    }
-
-    // concurrentLimit:
-    public Integer getConcurrentLimit(){
-        return this.concurrentLimit;
-    }
-    public void setConcurrentLimit(Integer concurrentLimit){
-        this.concurrentLimit = concurrentLimit;
-    }
-
-
-    public HouseholdDeviceFamilyLimitations() {
-       super();
-    }
-
-    public HouseholdDeviceFamilyLimitations(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        frequency = GsonParser.parseInt(jsonObject.get("frequency"));
-        deviceLimit = GsonParser.parseInt(jsonObject.get("deviceLimit"));
-        concurrentLimit = GsonParser.parseInt(jsonObject.get("concurrentLimit"));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaHouseholdDeviceFamilyLimitations");
-        kparams.add("frequency", this.frequency);
-        kparams.add("deviceLimit", this.deviceLimit);
-        kparams.add("concurrentLimit", this.concurrentLimit);
-        return kparams;
-    }
-
 }
 

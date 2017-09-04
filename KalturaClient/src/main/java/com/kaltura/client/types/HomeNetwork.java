@@ -27,11 +27,12 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.types.ObjectBase;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -42,76 +43,129 @@ import com.google.gson.JsonObject;
 
 /**  Home network details  */
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(HomeNetwork.Tokenizer.class)
 public class HomeNetwork extends ObjectBase {
+	
+	public interface Tokenizer extends ObjectBase.Tokenizer {
+		String externalId();
+		String name();
+		String description();
+		String isActive();
+	}
 
 	/**  Home network identifier  */
-    private String externalId;
+	private String externalId;
 	/**  Home network name  */
-    private String name;
+	private String name;
 	/**  Home network description  */
-    private String description;
+	private String description;
 	/**  Is home network is active  */
-    private Boolean isActive;
+	private Boolean isActive;
 
-    // externalId:
-    public String getExternalId(){
-        return this.externalId;
+	// externalId:
+	public String getExternalId(){
+		return this.externalId;
+	}
+	public void setExternalId(String externalId){
+		this.externalId = externalId;
+	}
+
+	public void externalId(String multirequestToken){
+		setToken("externalId", multirequestToken);
+	}
+
+	// name:
+	public String getName(){
+		return this.name;
+	}
+	public void setName(String name){
+		this.name = name;
+	}
+
+	public void name(String multirequestToken){
+		setToken("name", multirequestToken);
+	}
+
+	// description:
+	public String getDescription(){
+		return this.description;
+	}
+	public void setDescription(String description){
+		this.description = description;
+	}
+
+	public void description(String multirequestToken){
+		setToken("description", multirequestToken);
+	}
+
+	// isActive:
+	public Boolean getIsActive(){
+		return this.isActive;
+	}
+	public void setIsActive(Boolean isActive){
+		this.isActive = isActive;
+	}
+
+	public void isActive(String multirequestToken){
+		setToken("isActive", multirequestToken);
+	}
+
+
+	public HomeNetwork() {
+		super();
+	}
+
+	public HomeNetwork(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		externalId = GsonParser.parseString(jsonObject.get("externalId"));
+		name = GsonParser.parseString(jsonObject.get("name"));
+		description = GsonParser.parseString(jsonObject.get("description"));
+		isActive = GsonParser.parseBoolean(jsonObject.get("isActive"));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaHomeNetwork");
+		kparams.add("externalId", this.externalId);
+		kparams.add("name", this.name);
+		kparams.add("description", this.description);
+		kparams.add("isActive", this.isActive);
+		return kparams;
+	}
+
+
+    public static final Creator<HomeNetwork> CREATOR = new Creator<HomeNetwork>() {
+        @Override
+        public HomeNetwork createFromParcel(Parcel source) {
+            return new HomeNetwork(source);
+        }
+
+        @Override
+        public HomeNetwork[] newArray(int size) {
+            return new HomeNetwork[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(this.externalId);
+        dest.writeString(this.name);
+        dest.writeString(this.description);
+        dest.writeValue(this.isActive);
     }
-    public void setExternalId(String externalId){
-        this.externalId = externalId;
+
+    public HomeNetwork(Parcel in) {
+        super(in);
+        this.externalId = in.readString();
+        this.name = in.readString();
+        this.description = in.readString();
+        this.isActive = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
-
-    // name:
-    public String getName(){
-        return this.name;
-    }
-    public void setName(String name){
-        this.name = name;
-    }
-
-    // description:
-    public String getDescription(){
-        return this.description;
-    }
-    public void setDescription(String description){
-        this.description = description;
-    }
-
-    // isActive:
-    public Boolean getIsActive(){
-        return this.isActive;
-    }
-    public void setIsActive(Boolean isActive){
-        this.isActive = isActive;
-    }
-
-
-    public HomeNetwork() {
-       super();
-    }
-
-    public HomeNetwork(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        externalId = GsonParser.parseString(jsonObject.get("externalId"));
-        name = GsonParser.parseString(jsonObject.get("name"));
-        description = GsonParser.parseString(jsonObject.get("description"));
-        isActive = GsonParser.parseBoolean(jsonObject.get("isActive"));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaHomeNetwork");
-        kparams.add("externalId", this.externalId);
-        kparams.add("name", this.name);
-        kparams.add("description", this.description);
-        kparams.add("isActive", this.isActive);
-        return kparams;
-    }
-
 }
 

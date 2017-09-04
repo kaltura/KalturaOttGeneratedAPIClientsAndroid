@@ -27,10 +27,11 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
+import android.os.Parcel;
+import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
-import com.google.gson.JsonObject;
-
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -40,64 +41,110 @@ import com.google.gson.JsonObject;
  */
 
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(SeriesReminder.Tokenizer.class)
 public class SeriesReminder extends Reminder {
+	
+	public interface Tokenizer extends Reminder.Tokenizer {
+		String seriesId();
+		String seasonNumber();
+		String epgChannelId();
+	}
 
 	/**  Series identifier  */
-    private String seriesId;
+	private String seriesId;
 	/**  Season number  */
-    private Long seasonNumber;
+	private Long seasonNumber;
 	/**  EPG channel identifier  */
-    private Long epgChannelId;
+	private Long epgChannelId;
 
-    // seriesId:
-    public String getSeriesId(){
-        return this.seriesId;
+	// seriesId:
+	public String getSeriesId(){
+		return this.seriesId;
+	}
+	public void setSeriesId(String seriesId){
+		this.seriesId = seriesId;
+	}
+
+	public void seriesId(String multirequestToken){
+		setToken("seriesId", multirequestToken);
+	}
+
+	// seasonNumber:
+	public Long getSeasonNumber(){
+		return this.seasonNumber;
+	}
+	public void setSeasonNumber(Long seasonNumber){
+		this.seasonNumber = seasonNumber;
+	}
+
+	public void seasonNumber(String multirequestToken){
+		setToken("seasonNumber", multirequestToken);
+	}
+
+	// epgChannelId:
+	public Long getEpgChannelId(){
+		return this.epgChannelId;
+	}
+	public void setEpgChannelId(Long epgChannelId){
+		this.epgChannelId = epgChannelId;
+	}
+
+	public void epgChannelId(String multirequestToken){
+		setToken("epgChannelId", multirequestToken);
+	}
+
+
+	public SeriesReminder() {
+		super();
+	}
+
+	public SeriesReminder(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		seriesId = GsonParser.parseString(jsonObject.get("seriesId"));
+		seasonNumber = GsonParser.parseLong(jsonObject.get("seasonNumber"));
+		epgChannelId = GsonParser.parseLong(jsonObject.get("epgChannelId"));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaSeriesReminder");
+		kparams.add("seriesId", this.seriesId);
+		kparams.add("seasonNumber", this.seasonNumber);
+		kparams.add("epgChannelId", this.epgChannelId);
+		return kparams;
+	}
+
+
+    public static final Creator<SeriesReminder> CREATOR = new Creator<SeriesReminder>() {
+        @Override
+        public SeriesReminder createFromParcel(Parcel source) {
+            return new SeriesReminder(source);
+        }
+
+        @Override
+        public SeriesReminder[] newArray(int size) {
+            return new SeriesReminder[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(this.seriesId);
+        dest.writeValue(this.seasonNumber);
+        dest.writeValue(this.epgChannelId);
     }
-    public void setSeriesId(String seriesId){
-        this.seriesId = seriesId;
+
+    public SeriesReminder(Parcel in) {
+        super(in);
+        this.seriesId = in.readString();
+        this.seasonNumber = (Long)in.readValue(Long.class.getClassLoader());
+        this.epgChannelId = (Long)in.readValue(Long.class.getClassLoader());
     }
-
-    // seasonNumber:
-    public Long getSeasonNumber(){
-        return this.seasonNumber;
-    }
-    public void setSeasonNumber(Long seasonNumber){
-        this.seasonNumber = seasonNumber;
-    }
-
-    // epgChannelId:
-    public Long getEpgChannelId(){
-        return this.epgChannelId;
-    }
-    public void setEpgChannelId(Long epgChannelId){
-        this.epgChannelId = epgChannelId;
-    }
-
-
-    public SeriesReminder() {
-       super();
-    }
-
-    public SeriesReminder(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        seriesId = GsonParser.parseString(jsonObject.get("seriesId"));
-        seasonNumber = GsonParser.parseLong(jsonObject.get("seasonNumber"));
-        epgChannelId = GsonParser.parseLong(jsonObject.get("epgChannelId"));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaSeriesReminder");
-        kparams.add("seriesId", this.seriesId);
-        kparams.add("seasonNumber", this.seasonNumber);
-        kparams.add("epgChannelId", this.epgChannelId);
-        return kparams;
-    }
-
 }
 

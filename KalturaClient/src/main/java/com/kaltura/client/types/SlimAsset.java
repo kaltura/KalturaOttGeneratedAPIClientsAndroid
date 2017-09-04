@@ -27,12 +27,13 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.types.ObjectBase;
-import com.kaltura.client.enums.AssetType;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.enums.AssetType;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -43,52 +44,92 @@ import com.google.gson.JsonObject;
 
 /**  Slim Asset Details  */
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(SlimAsset.Tokenizer.class)
 public class SlimAsset extends ObjectBase {
+	
+	public interface Tokenizer extends ObjectBase.Tokenizer {
+		String id();
+		String type();
+	}
 
 	/**  Internal identifier of the asset  */
-    private String id;
+	private String id;
 	/**  The type of the asset. Possible values: media, recording, epg  */
-    private AssetType type;
+	private AssetType type;
 
-    // id:
-    public String getId(){
-        return this.id;
+	// id:
+	public String getId(){
+		return this.id;
+	}
+	public void setId(String id){
+		this.id = id;
+	}
+
+	public void id(String multirequestToken){
+		setToken("id", multirequestToken);
+	}
+
+	// type:
+	public AssetType getType(){
+		return this.type;
+	}
+	public void setType(AssetType type){
+		this.type = type;
+	}
+
+	public void type(String multirequestToken){
+		setToken("type", multirequestToken);
+	}
+
+
+	public SlimAsset() {
+		super();
+	}
+
+	public SlimAsset(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		id = GsonParser.parseString(jsonObject.get("id"));
+		type = AssetType.get(GsonParser.parseString(jsonObject.get("type")));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaSlimAsset");
+		kparams.add("id", this.id);
+		kparams.add("type", this.type);
+		return kparams;
+	}
+
+
+    public static final Creator<SlimAsset> CREATOR = new Creator<SlimAsset>() {
+        @Override
+        public SlimAsset createFromParcel(Parcel source) {
+            return new SlimAsset(source);
+        }
+
+        @Override
+        public SlimAsset[] newArray(int size) {
+            return new SlimAsset[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(this.id);
+        dest.writeInt(this.type == null ? -1 : this.type.ordinal());
     }
-    public void setId(String id){
-        this.id = id;
+
+    public SlimAsset(Parcel in) {
+        super(in);
+        this.id = in.readString();
+        int tmpType = in.readInt();
+        this.type = tmpType == -1 ? null : AssetType.values()[tmpType];
     }
-
-    // type:
-    public AssetType getType(){
-        return this.type;
-    }
-    public void setType(AssetType type){
-        this.type = type;
-    }
-
-
-    public SlimAsset() {
-       super();
-    }
-
-    public SlimAsset(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        id = GsonParser.parseString(jsonObject.get("id"));
-        type = AssetType.get(GsonParser.parseString(jsonObject.get("type")));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaSlimAsset");
-        kparams.add("id", this.id);
-        kparams.add("type", this.type);
-        return kparams;
-    }
-
 }
 

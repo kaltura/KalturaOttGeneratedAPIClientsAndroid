@@ -27,10 +27,11 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
+import android.os.Parcel;
+import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
-import com.google.gson.JsonObject;
-
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -40,40 +41,72 @@ import com.google.gson.JsonObject;
  */
 
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(AssetReminder.Tokenizer.class)
 public class AssetReminder extends Reminder {
+	
+	public interface Tokenizer extends Reminder.Tokenizer {
+		String assetId();
+	}
 
 	/**  Asset id  */
-    private Long assetId;
+	private Long assetId;
 
-    // assetId:
-    public Long getAssetId(){
-        return this.assetId;
+	// assetId:
+	public Long getAssetId(){
+		return this.assetId;
+	}
+	public void setAssetId(Long assetId){
+		this.assetId = assetId;
+	}
+
+	public void assetId(String multirequestToken){
+		setToken("assetId", multirequestToken);
+	}
+
+
+	public AssetReminder() {
+		super();
+	}
+
+	public AssetReminder(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		assetId = GsonParser.parseLong(jsonObject.get("assetId"));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaAssetReminder");
+		kparams.add("assetId", this.assetId);
+		return kparams;
+	}
+
+
+    public static final Creator<AssetReminder> CREATOR = new Creator<AssetReminder>() {
+        @Override
+        public AssetReminder createFromParcel(Parcel source) {
+            return new AssetReminder(source);
+        }
+
+        @Override
+        public AssetReminder[] newArray(int size) {
+            return new AssetReminder[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeValue(this.assetId);
     }
-    public void setAssetId(Long assetId){
-        this.assetId = assetId;
+
+    public AssetReminder(Parcel in) {
+        super(in);
+        this.assetId = (Long)in.readValue(Long.class.getClassLoader());
     }
-
-
-    public AssetReminder() {
-       super();
-    }
-
-    public AssetReminder(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        assetId = GsonParser.parseLong(jsonObject.get("assetId"));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaAssetReminder");
-        kparams.add("assetId", this.assetId);
-        return kparams;
-    }
-
 }
 

@@ -27,10 +27,11 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
+import android.os.Parcel;
+import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
-import com.google.gson.JsonObject;
-
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -40,40 +41,72 @@ import com.google.gson.JsonObject;
  */
 
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(HouseholdUserFilter.Tokenizer.class)
 public class HouseholdUserFilter extends Filter {
+	
+	public interface Tokenizer extends Filter.Tokenizer {
+		String householdIdEqual();
+	}
 
 	/**  The identifier of the household  */
-    private Integer householdIdEqual;
+	private Integer householdIdEqual;
 
-    // householdIdEqual:
-    public Integer getHouseholdIdEqual(){
-        return this.householdIdEqual;
+	// householdIdEqual:
+	public Integer getHouseholdIdEqual(){
+		return this.householdIdEqual;
+	}
+	public void setHouseholdIdEqual(Integer householdIdEqual){
+		this.householdIdEqual = householdIdEqual;
+	}
+
+	public void householdIdEqual(String multirequestToken){
+		setToken("householdIdEqual", multirequestToken);
+	}
+
+
+	public HouseholdUserFilter() {
+		super();
+	}
+
+	public HouseholdUserFilter(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		householdIdEqual = GsonParser.parseInt(jsonObject.get("householdIdEqual"));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaHouseholdUserFilter");
+		kparams.add("householdIdEqual", this.householdIdEqual);
+		return kparams;
+	}
+
+
+    public static final Creator<HouseholdUserFilter> CREATOR = new Creator<HouseholdUserFilter>() {
+        @Override
+        public HouseholdUserFilter createFromParcel(Parcel source) {
+            return new HouseholdUserFilter(source);
+        }
+
+        @Override
+        public HouseholdUserFilter[] newArray(int size) {
+            return new HouseholdUserFilter[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeValue(this.householdIdEqual);
     }
-    public void setHouseholdIdEqual(Integer householdIdEqual){
-        this.householdIdEqual = householdIdEqual;
+
+    public HouseholdUserFilter(Parcel in) {
+        super(in);
+        this.householdIdEqual = (Integer)in.readValue(Integer.class.getClassLoader());
     }
-
-
-    public HouseholdUserFilter() {
-       super();
-    }
-
-    public HouseholdUserFilter(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        householdIdEqual = GsonParser.parseInt(jsonObject.get("householdIdEqual"));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaHouseholdUserFilter");
-        kparams.add("householdIdEqual", this.householdIdEqual);
-        return kparams;
-    }
-
 }
 

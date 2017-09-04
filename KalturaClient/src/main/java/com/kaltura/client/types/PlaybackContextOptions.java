@@ -27,12 +27,13 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.types.ObjectBase;
-import com.kaltura.client.enums.PlaybackContextType;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.enums.PlaybackContextType;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -42,76 +43,130 @@ import com.google.gson.JsonObject;
  */
 
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(PlaybackContextOptions.Tokenizer.class)
 public class PlaybackContextOptions extends ObjectBase {
+	
+	public interface Tokenizer extends ObjectBase.Tokenizer {
+		String mediaProtocol();
+		String streamerType();
+		String assetFileIds();
+		String context();
+	}
 
 	/**  Protocol of the specific media object (http / https).  */
-    private String mediaProtocol;
+	private String mediaProtocol;
 	/**  Playback streamer type: applehttp, mpegdash, url.  */
-    private String streamerType;
+	private String streamerType;
 	/**  List of comma separated media file IDs  */
-    private String assetFileIds;
+	private String assetFileIds;
 	/**  Playback context type  */
-    private PlaybackContextType context;
+	private PlaybackContextType context;
 
-    // mediaProtocol:
-    public String getMediaProtocol(){
-        return this.mediaProtocol;
+	// mediaProtocol:
+	public String getMediaProtocol(){
+		return this.mediaProtocol;
+	}
+	public void setMediaProtocol(String mediaProtocol){
+		this.mediaProtocol = mediaProtocol;
+	}
+
+	public void mediaProtocol(String multirequestToken){
+		setToken("mediaProtocol", multirequestToken);
+	}
+
+	// streamerType:
+	public String getStreamerType(){
+		return this.streamerType;
+	}
+	public void setStreamerType(String streamerType){
+		this.streamerType = streamerType;
+	}
+
+	public void streamerType(String multirequestToken){
+		setToken("streamerType", multirequestToken);
+	}
+
+	// assetFileIds:
+	public String getAssetFileIds(){
+		return this.assetFileIds;
+	}
+	public void setAssetFileIds(String assetFileIds){
+		this.assetFileIds = assetFileIds;
+	}
+
+	public void assetFileIds(String multirequestToken){
+		setToken("assetFileIds", multirequestToken);
+	}
+
+	// context:
+	public PlaybackContextType getContext(){
+		return this.context;
+	}
+	public void setContext(PlaybackContextType context){
+		this.context = context;
+	}
+
+	public void context(String multirequestToken){
+		setToken("context", multirequestToken);
+	}
+
+
+	public PlaybackContextOptions() {
+		super();
+	}
+
+	public PlaybackContextOptions(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		mediaProtocol = GsonParser.parseString(jsonObject.get("mediaProtocol"));
+		streamerType = GsonParser.parseString(jsonObject.get("streamerType"));
+		assetFileIds = GsonParser.parseString(jsonObject.get("assetFileIds"));
+		context = PlaybackContextType.get(GsonParser.parseString(jsonObject.get("context")));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaPlaybackContextOptions");
+		kparams.add("mediaProtocol", this.mediaProtocol);
+		kparams.add("streamerType", this.streamerType);
+		kparams.add("assetFileIds", this.assetFileIds);
+		kparams.add("context", this.context);
+		return kparams;
+	}
+
+
+    public static final Creator<PlaybackContextOptions> CREATOR = new Creator<PlaybackContextOptions>() {
+        @Override
+        public PlaybackContextOptions createFromParcel(Parcel source) {
+            return new PlaybackContextOptions(source);
+        }
+
+        @Override
+        public PlaybackContextOptions[] newArray(int size) {
+            return new PlaybackContextOptions[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(this.mediaProtocol);
+        dest.writeString(this.streamerType);
+        dest.writeString(this.assetFileIds);
+        dest.writeInt(this.context == null ? -1 : this.context.ordinal());
     }
-    public void setMediaProtocol(String mediaProtocol){
-        this.mediaProtocol = mediaProtocol;
+
+    public PlaybackContextOptions(Parcel in) {
+        super(in);
+        this.mediaProtocol = in.readString();
+        this.streamerType = in.readString();
+        this.assetFileIds = in.readString();
+        int tmpContext = in.readInt();
+        this.context = tmpContext == -1 ? null : PlaybackContextType.values()[tmpContext];
     }
-
-    // streamerType:
-    public String getStreamerType(){
-        return this.streamerType;
-    }
-    public void setStreamerType(String streamerType){
-        this.streamerType = streamerType;
-    }
-
-    // assetFileIds:
-    public String getAssetFileIds(){
-        return this.assetFileIds;
-    }
-    public void setAssetFileIds(String assetFileIds){
-        this.assetFileIds = assetFileIds;
-    }
-
-    // context:
-    public PlaybackContextType getContext(){
-        return this.context;
-    }
-    public void setContext(PlaybackContextType context){
-        this.context = context;
-    }
-
-
-    public PlaybackContextOptions() {
-       super();
-    }
-
-    public PlaybackContextOptions(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        mediaProtocol = GsonParser.parseString(jsonObject.get("mediaProtocol"));
-        streamerType = GsonParser.parseString(jsonObject.get("streamerType"));
-        assetFileIds = GsonParser.parseString(jsonObject.get("assetFileIds"));
-        context = PlaybackContextType.get(GsonParser.parseString(jsonObject.get("context")));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaPlaybackContextOptions");
-        kparams.add("mediaProtocol", this.mediaProtocol);
-        kparams.add("streamerType", this.streamerType);
-        kparams.add("assetFileIds", this.assetFileIds);
-        kparams.add("context", this.context);
-        return kparams;
-    }
-
 }
 

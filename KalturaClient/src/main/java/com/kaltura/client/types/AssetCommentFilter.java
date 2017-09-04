@@ -27,11 +27,12 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.enums.AssetType;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.enums.AssetType;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -41,52 +42,92 @@ import com.google.gson.JsonObject;
  */
 
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(AssetCommentFilter.Tokenizer.class)
 public class AssetCommentFilter extends Filter {
+	
+	public interface Tokenizer extends Filter.Tokenizer {
+		String assetIdEqual();
+		String assetTypeEqual();
+	}
 
 	/**  Asset Id  */
-    private Integer assetIdEqual;
+	private Integer assetIdEqual;
 	/**  Asset Type  */
-    private AssetType assetTypeEqual;
+	private AssetType assetTypeEqual;
 
-    // assetIdEqual:
-    public Integer getAssetIdEqual(){
-        return this.assetIdEqual;
+	// assetIdEqual:
+	public Integer getAssetIdEqual(){
+		return this.assetIdEqual;
+	}
+	public void setAssetIdEqual(Integer assetIdEqual){
+		this.assetIdEqual = assetIdEqual;
+	}
+
+	public void assetIdEqual(String multirequestToken){
+		setToken("assetIdEqual", multirequestToken);
+	}
+
+	// assetTypeEqual:
+	public AssetType getAssetTypeEqual(){
+		return this.assetTypeEqual;
+	}
+	public void setAssetTypeEqual(AssetType assetTypeEqual){
+		this.assetTypeEqual = assetTypeEqual;
+	}
+
+	public void assetTypeEqual(String multirequestToken){
+		setToken("assetTypeEqual", multirequestToken);
+	}
+
+
+	public AssetCommentFilter() {
+		super();
+	}
+
+	public AssetCommentFilter(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		assetIdEqual = GsonParser.parseInt(jsonObject.get("assetIdEqual"));
+		assetTypeEqual = AssetType.get(GsonParser.parseString(jsonObject.get("assetTypeEqual")));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaAssetCommentFilter");
+		kparams.add("assetIdEqual", this.assetIdEqual);
+		kparams.add("assetTypeEqual", this.assetTypeEqual);
+		return kparams;
+	}
+
+
+    public static final Creator<AssetCommentFilter> CREATOR = new Creator<AssetCommentFilter>() {
+        @Override
+        public AssetCommentFilter createFromParcel(Parcel source) {
+            return new AssetCommentFilter(source);
+        }
+
+        @Override
+        public AssetCommentFilter[] newArray(int size) {
+            return new AssetCommentFilter[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeValue(this.assetIdEqual);
+        dest.writeInt(this.assetTypeEqual == null ? -1 : this.assetTypeEqual.ordinal());
     }
-    public void setAssetIdEqual(Integer assetIdEqual){
-        this.assetIdEqual = assetIdEqual;
+
+    public AssetCommentFilter(Parcel in) {
+        super(in);
+        this.assetIdEqual = (Integer)in.readValue(Integer.class.getClassLoader());
+        int tmpAssetTypeEqual = in.readInt();
+        this.assetTypeEqual = tmpAssetTypeEqual == -1 ? null : AssetType.values()[tmpAssetTypeEqual];
     }
-
-    // assetTypeEqual:
-    public AssetType getAssetTypeEqual(){
-        return this.assetTypeEqual;
-    }
-    public void setAssetTypeEqual(AssetType assetTypeEqual){
-        this.assetTypeEqual = assetTypeEqual;
-    }
-
-
-    public AssetCommentFilter() {
-       super();
-    }
-
-    public AssetCommentFilter(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        assetIdEqual = GsonParser.parseInt(jsonObject.get("assetIdEqual"));
-        assetTypeEqual = AssetType.get(GsonParser.parseString(jsonObject.get("assetTypeEqual")));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaAssetCommentFilter");
-        kparams.add("assetIdEqual", this.assetIdEqual);
-        kparams.add("assetTypeEqual", this.assetTypeEqual);
-        return kparams;
-    }
-
 }
 

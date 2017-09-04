@@ -27,12 +27,13 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.types.ObjectBase;
-import com.kaltura.client.enums.MetaTagOrderBy;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.enums.MetaTagOrderBy;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -43,52 +44,92 @@ import com.google.gson.JsonObject;
 
 /**  Kaltura Asset Order  */
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(DynamicOrderBy.Tokenizer.class)
 public class DynamicOrderBy extends ObjectBase {
+	
+	public interface Tokenizer extends ObjectBase.Tokenizer {
+		String name();
+		String orderBy();
+	}
 
 	/**  order by name  */
-    private String name;
+	private String name;
 	/**  order by meta asc/desc  */
-    private MetaTagOrderBy orderBy;
+	private MetaTagOrderBy orderBy;
 
-    // name:
-    public String getName(){
-        return this.name;
+	// name:
+	public String getName(){
+		return this.name;
+	}
+	public void setName(String name){
+		this.name = name;
+	}
+
+	public void name(String multirequestToken){
+		setToken("name", multirequestToken);
+	}
+
+	// orderBy:
+	public MetaTagOrderBy getOrderBy(){
+		return this.orderBy;
+	}
+	public void setOrderBy(MetaTagOrderBy orderBy){
+		this.orderBy = orderBy;
+	}
+
+	public void orderBy(String multirequestToken){
+		setToken("orderBy", multirequestToken);
+	}
+
+
+	public DynamicOrderBy() {
+		super();
+	}
+
+	public DynamicOrderBy(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		name = GsonParser.parseString(jsonObject.get("name"));
+		orderBy = MetaTagOrderBy.get(GsonParser.parseString(jsonObject.get("orderBy")));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaDynamicOrderBy");
+		kparams.add("name", this.name);
+		kparams.add("orderBy", this.orderBy);
+		return kparams;
+	}
+
+
+    public static final Creator<DynamicOrderBy> CREATOR = new Creator<DynamicOrderBy>() {
+        @Override
+        public DynamicOrderBy createFromParcel(Parcel source) {
+            return new DynamicOrderBy(source);
+        }
+
+        @Override
+        public DynamicOrderBy[] newArray(int size) {
+            return new DynamicOrderBy[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(this.name);
+        dest.writeInt(this.orderBy == null ? -1 : this.orderBy.ordinal());
     }
-    public void setName(String name){
-        this.name = name;
+
+    public DynamicOrderBy(Parcel in) {
+        super(in);
+        this.name = in.readString();
+        int tmpOrderBy = in.readInt();
+        this.orderBy = tmpOrderBy == -1 ? null : MetaTagOrderBy.values()[tmpOrderBy];
     }
-
-    // orderBy:
-    public MetaTagOrderBy getOrderBy(){
-        return this.orderBy;
-    }
-    public void setOrderBy(MetaTagOrderBy orderBy){
-        this.orderBy = orderBy;
-    }
-
-
-    public DynamicOrderBy() {
-       super();
-    }
-
-    public DynamicOrderBy(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        name = GsonParser.parseString(jsonObject.get("name"));
-        orderBy = MetaTagOrderBy.get(GsonParser.parseString(jsonObject.get("orderBy")));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaDynamicOrderBy");
-        kparams.add("name", this.name);
-        kparams.add("orderBy", this.orderBy);
-        return kparams;
-    }
-
 }
 

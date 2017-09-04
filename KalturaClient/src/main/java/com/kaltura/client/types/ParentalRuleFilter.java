@@ -27,11 +27,12 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.enums.EntityReferenceBy;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.enums.EntityReferenceBy;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -41,40 +42,73 @@ import com.google.gson.JsonObject;
  */
 
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(ParentalRuleFilter.Tokenizer.class)
 public class ParentalRuleFilter extends Filter {
+	
+	public interface Tokenizer extends Filter.Tokenizer {
+		String entityReferenceEqual();
+	}
 
 	/**  Reference type to filter by  */
-    private EntityReferenceBy entityReferenceEqual;
+	private EntityReferenceBy entityReferenceEqual;
 
-    // entityReferenceEqual:
-    public EntityReferenceBy getEntityReferenceEqual(){
-        return this.entityReferenceEqual;
+	// entityReferenceEqual:
+	public EntityReferenceBy getEntityReferenceEqual(){
+		return this.entityReferenceEqual;
+	}
+	public void setEntityReferenceEqual(EntityReferenceBy entityReferenceEqual){
+		this.entityReferenceEqual = entityReferenceEqual;
+	}
+
+	public void entityReferenceEqual(String multirequestToken){
+		setToken("entityReferenceEqual", multirequestToken);
+	}
+
+
+	public ParentalRuleFilter() {
+		super();
+	}
+
+	public ParentalRuleFilter(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		entityReferenceEqual = EntityReferenceBy.get(GsonParser.parseString(jsonObject.get("entityReferenceEqual")));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaParentalRuleFilter");
+		kparams.add("entityReferenceEqual", this.entityReferenceEqual);
+		return kparams;
+	}
+
+
+    public static final Creator<ParentalRuleFilter> CREATOR = new Creator<ParentalRuleFilter>() {
+        @Override
+        public ParentalRuleFilter createFromParcel(Parcel source) {
+            return new ParentalRuleFilter(source);
+        }
+
+        @Override
+        public ParentalRuleFilter[] newArray(int size) {
+            return new ParentalRuleFilter[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeInt(this.entityReferenceEqual == null ? -1 : this.entityReferenceEqual.ordinal());
     }
-    public void setEntityReferenceEqual(EntityReferenceBy entityReferenceEqual){
-        this.entityReferenceEqual = entityReferenceEqual;
+
+    public ParentalRuleFilter(Parcel in) {
+        super(in);
+        int tmpEntityReferenceEqual = in.readInt();
+        this.entityReferenceEqual = tmpEntityReferenceEqual == -1 ? null : EntityReferenceBy.values()[tmpEntityReferenceEqual];
     }
-
-
-    public ParentalRuleFilter() {
-       super();
-    }
-
-    public ParentalRuleFilter(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        entityReferenceEqual = EntityReferenceBy.get(GsonParser.parseString(jsonObject.get("entityReferenceEqual")));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaParentalRuleFilter");
-        kparams.add("entityReferenceEqual", this.entityReferenceEqual);
-        return kparams;
-    }
-
 }
 

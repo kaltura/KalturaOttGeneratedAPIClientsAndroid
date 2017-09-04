@@ -27,11 +27,12 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.types.ObjectBase;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -42,76 +43,129 @@ import com.google.gson.JsonObject;
 
 /**  Currency details  */
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(Currency.Tokenizer.class)
 public class Currency extends ObjectBase {
+	
+	public interface Tokenizer extends ObjectBase.Tokenizer {
+		String name();
+		String code();
+		String sign();
+		String isDefault();
+	}
 
 	/**  Currency name  */
-    private String name;
+	private String name;
 	/**  Currency code  */
-    private String code;
+	private String code;
 	/**  Currency Sign  */
-    private String sign;
+	private String sign;
 	/**  Is the default Currency of the account  */
-    private Boolean isDefault;
+	private Boolean isDefault;
 
-    // name:
-    public String getName(){
-        return this.name;
+	// name:
+	public String getName(){
+		return this.name;
+	}
+	public void setName(String name){
+		this.name = name;
+	}
+
+	public void name(String multirequestToken){
+		setToken("name", multirequestToken);
+	}
+
+	// code:
+	public String getCode(){
+		return this.code;
+	}
+	public void setCode(String code){
+		this.code = code;
+	}
+
+	public void code(String multirequestToken){
+		setToken("code", multirequestToken);
+	}
+
+	// sign:
+	public String getSign(){
+		return this.sign;
+	}
+	public void setSign(String sign){
+		this.sign = sign;
+	}
+
+	public void sign(String multirequestToken){
+		setToken("sign", multirequestToken);
+	}
+
+	// isDefault:
+	public Boolean getIsDefault(){
+		return this.isDefault;
+	}
+	public void setIsDefault(Boolean isDefault){
+		this.isDefault = isDefault;
+	}
+
+	public void isDefault(String multirequestToken){
+		setToken("isDefault", multirequestToken);
+	}
+
+
+	public Currency() {
+		super();
+	}
+
+	public Currency(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		name = GsonParser.parseString(jsonObject.get("name"));
+		code = GsonParser.parseString(jsonObject.get("code"));
+		sign = GsonParser.parseString(jsonObject.get("sign"));
+		isDefault = GsonParser.parseBoolean(jsonObject.get("isDefault"));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaCurrency");
+		kparams.add("name", this.name);
+		kparams.add("code", this.code);
+		kparams.add("sign", this.sign);
+		kparams.add("isDefault", this.isDefault);
+		return kparams;
+	}
+
+
+    public static final Creator<Currency> CREATOR = new Creator<Currency>() {
+        @Override
+        public Currency createFromParcel(Parcel source) {
+            return new Currency(source);
+        }
+
+        @Override
+        public Currency[] newArray(int size) {
+            return new Currency[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(this.name);
+        dest.writeString(this.code);
+        dest.writeString(this.sign);
+        dest.writeValue(this.isDefault);
     }
-    public void setName(String name){
-        this.name = name;
+
+    public Currency(Parcel in) {
+        super(in);
+        this.name = in.readString();
+        this.code = in.readString();
+        this.sign = in.readString();
+        this.isDefault = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
-
-    // code:
-    public String getCode(){
-        return this.code;
-    }
-    public void setCode(String code){
-        this.code = code;
-    }
-
-    // sign:
-    public String getSign(){
-        return this.sign;
-    }
-    public void setSign(String sign){
-        this.sign = sign;
-    }
-
-    // isDefault:
-    public Boolean getIsDefault(){
-        return this.isDefault;
-    }
-    public void setIsDefault(Boolean isDefault){
-        this.isDefault = isDefault;
-    }
-
-
-    public Currency() {
-       super();
-    }
-
-    public Currency(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        name = GsonParser.parseString(jsonObject.get("name"));
-        code = GsonParser.parseString(jsonObject.get("code"));
-        sign = GsonParser.parseString(jsonObject.get("sign"));
-        isDefault = GsonParser.parseBoolean(jsonObject.get("isDefault"));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaCurrency");
-        kparams.add("name", this.name);
-        kparams.add("code", this.code);
-        kparams.add("sign", this.sign);
-        kparams.add("isDefault", this.isDefault);
-        return kparams;
-    }
-
 }
 

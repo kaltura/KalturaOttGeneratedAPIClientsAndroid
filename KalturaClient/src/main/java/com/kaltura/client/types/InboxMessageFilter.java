@@ -27,10 +27,11 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
+import android.os.Parcel;
+import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
-import com.google.gson.JsonObject;
-
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -40,64 +41,110 @@ import com.google.gson.JsonObject;
  */
 
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(InboxMessageFilter.Tokenizer.class)
 public class InboxMessageFilter extends Filter {
+	
+	public interface Tokenizer extends Filter.Tokenizer {
+		String typeIn();
+		String createdAtGreaterThanOrEqual();
+		String createdAtLessThanOrEqual();
+	}
 
 	/**  List of inbox message types to search within.  */
-    private String typeIn;
+	private String typeIn;
 	/**  createdAtGreaterThanOrEqual  */
-    private Long createdAtGreaterThanOrEqual;
+	private Long createdAtGreaterThanOrEqual;
 	/**  createdAtLessThanOrEqual  */
-    private Long createdAtLessThanOrEqual;
+	private Long createdAtLessThanOrEqual;
 
-    // typeIn:
-    public String getTypeIn(){
-        return this.typeIn;
+	// typeIn:
+	public String getTypeIn(){
+		return this.typeIn;
+	}
+	public void setTypeIn(String typeIn){
+		this.typeIn = typeIn;
+	}
+
+	public void typeIn(String multirequestToken){
+		setToken("typeIn", multirequestToken);
+	}
+
+	// createdAtGreaterThanOrEqual:
+	public Long getCreatedAtGreaterThanOrEqual(){
+		return this.createdAtGreaterThanOrEqual;
+	}
+	public void setCreatedAtGreaterThanOrEqual(Long createdAtGreaterThanOrEqual){
+		this.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual;
+	}
+
+	public void createdAtGreaterThanOrEqual(String multirequestToken){
+		setToken("createdAtGreaterThanOrEqual", multirequestToken);
+	}
+
+	// createdAtLessThanOrEqual:
+	public Long getCreatedAtLessThanOrEqual(){
+		return this.createdAtLessThanOrEqual;
+	}
+	public void setCreatedAtLessThanOrEqual(Long createdAtLessThanOrEqual){
+		this.createdAtLessThanOrEqual = createdAtLessThanOrEqual;
+	}
+
+	public void createdAtLessThanOrEqual(String multirequestToken){
+		setToken("createdAtLessThanOrEqual", multirequestToken);
+	}
+
+
+	public InboxMessageFilter() {
+		super();
+	}
+
+	public InboxMessageFilter(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		typeIn = GsonParser.parseString(jsonObject.get("typeIn"));
+		createdAtGreaterThanOrEqual = GsonParser.parseLong(jsonObject.get("createdAtGreaterThanOrEqual"));
+		createdAtLessThanOrEqual = GsonParser.parseLong(jsonObject.get("createdAtLessThanOrEqual"));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaInboxMessageFilter");
+		kparams.add("typeIn", this.typeIn);
+		kparams.add("createdAtGreaterThanOrEqual", this.createdAtGreaterThanOrEqual);
+		kparams.add("createdAtLessThanOrEqual", this.createdAtLessThanOrEqual);
+		return kparams;
+	}
+
+
+    public static final Creator<InboxMessageFilter> CREATOR = new Creator<InboxMessageFilter>() {
+        @Override
+        public InboxMessageFilter createFromParcel(Parcel source) {
+            return new InboxMessageFilter(source);
+        }
+
+        @Override
+        public InboxMessageFilter[] newArray(int size) {
+            return new InboxMessageFilter[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(this.typeIn);
+        dest.writeValue(this.createdAtGreaterThanOrEqual);
+        dest.writeValue(this.createdAtLessThanOrEqual);
     }
-    public void setTypeIn(String typeIn){
-        this.typeIn = typeIn;
+
+    public InboxMessageFilter(Parcel in) {
+        super(in);
+        this.typeIn = in.readString();
+        this.createdAtGreaterThanOrEqual = (Long)in.readValue(Long.class.getClassLoader());
+        this.createdAtLessThanOrEqual = (Long)in.readValue(Long.class.getClassLoader());
     }
-
-    // createdAtGreaterThanOrEqual:
-    public Long getCreatedAtGreaterThanOrEqual(){
-        return this.createdAtGreaterThanOrEqual;
-    }
-    public void setCreatedAtGreaterThanOrEqual(Long createdAtGreaterThanOrEqual){
-        this.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual;
-    }
-
-    // createdAtLessThanOrEqual:
-    public Long getCreatedAtLessThanOrEqual(){
-        return this.createdAtLessThanOrEqual;
-    }
-    public void setCreatedAtLessThanOrEqual(Long createdAtLessThanOrEqual){
-        this.createdAtLessThanOrEqual = createdAtLessThanOrEqual;
-    }
-
-
-    public InboxMessageFilter() {
-       super();
-    }
-
-    public InboxMessageFilter(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        typeIn = GsonParser.parseString(jsonObject.get("typeIn"));
-        createdAtGreaterThanOrEqual = GsonParser.parseLong(jsonObject.get("createdAtGreaterThanOrEqual"));
-        createdAtLessThanOrEqual = GsonParser.parseLong(jsonObject.get("createdAtLessThanOrEqual"));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaInboxMessageFilter");
-        kparams.add("typeIn", this.typeIn);
-        kparams.add("createdAtGreaterThanOrEqual", this.createdAtGreaterThanOrEqual);
-        kparams.add("createdAtLessThanOrEqual", this.createdAtLessThanOrEqual);
-        return kparams;
-    }
-
 }
 

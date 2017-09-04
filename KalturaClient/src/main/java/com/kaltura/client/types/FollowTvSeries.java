@@ -27,10 +27,11 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
+import android.os.Parcel;
+import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
-import com.google.gson.JsonObject;
-
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -40,40 +41,72 @@ import com.google.gson.JsonObject;
  */
 
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(FollowTvSeries.Tokenizer.class)
 public class FollowTvSeries extends FollowDataBase {
+	
+	public interface Tokenizer extends FollowDataBase.Tokenizer {
+		String assetId();
+	}
 
 	/**  Asset Id  */
-    private Integer assetId;
+	private Integer assetId;
 
-    // assetId:
-    public Integer getAssetId(){
-        return this.assetId;
+	// assetId:
+	public Integer getAssetId(){
+		return this.assetId;
+	}
+	public void setAssetId(Integer assetId){
+		this.assetId = assetId;
+	}
+
+	public void assetId(String multirequestToken){
+		setToken("assetId", multirequestToken);
+	}
+
+
+	public FollowTvSeries() {
+		super();
+	}
+
+	public FollowTvSeries(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		assetId = GsonParser.parseInt(jsonObject.get("assetId"));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaFollowTvSeries");
+		kparams.add("assetId", this.assetId);
+		return kparams;
+	}
+
+
+    public static final Creator<FollowTvSeries> CREATOR = new Creator<FollowTvSeries>() {
+        @Override
+        public FollowTvSeries createFromParcel(Parcel source) {
+            return new FollowTvSeries(source);
+        }
+
+        @Override
+        public FollowTvSeries[] newArray(int size) {
+            return new FollowTvSeries[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeValue(this.assetId);
     }
-    public void setAssetId(Integer assetId){
-        this.assetId = assetId;
+
+    public FollowTvSeries(Parcel in) {
+        super(in);
+        this.assetId = (Integer)in.readValue(Integer.class.getClassLoader());
     }
-
-
-    public FollowTvSeries() {
-       super();
-    }
-
-    public FollowTvSeries(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        assetId = GsonParser.parseInt(jsonObject.get("assetId"));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaFollowTvSeries");
-        kparams.add("assetId", this.assetId);
-        return kparams;
-    }
-
 }
 

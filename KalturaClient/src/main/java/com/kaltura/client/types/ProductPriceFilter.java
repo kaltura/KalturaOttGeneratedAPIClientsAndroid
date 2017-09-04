@@ -27,10 +27,11 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
+import android.os.Parcel;
+import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
-import com.google.gson.JsonObject;
-
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -40,76 +41,129 @@ import com.google.gson.JsonObject;
  */
 
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(ProductPriceFilter.Tokenizer.class)
 public class ProductPriceFilter extends Filter {
+	
+	public interface Tokenizer extends Filter.Tokenizer {
+		String subscriptionIdIn();
+		String fileIdIn();
+		String isLowest();
+		String couponCodeEqual();
+	}
 
 	/**  Comma separated subscriptions identifiers  */
-    private String subscriptionIdIn;
+	private String subscriptionIdIn;
 	/**  Comma separated media files identifiers  */
-    private String fileIdIn;
+	private String fileIdIn;
 	/**  A flag that indicates if only the lowest price of an item should return  */
-    private Boolean isLowest;
+	private Boolean isLowest;
 	/**  Discount coupon code  */
-    private String couponCodeEqual;
+	private String couponCodeEqual;
 
-    // subscriptionIdIn:
-    public String getSubscriptionIdIn(){
-        return this.subscriptionIdIn;
+	// subscriptionIdIn:
+	public String getSubscriptionIdIn(){
+		return this.subscriptionIdIn;
+	}
+	public void setSubscriptionIdIn(String subscriptionIdIn){
+		this.subscriptionIdIn = subscriptionIdIn;
+	}
+
+	public void subscriptionIdIn(String multirequestToken){
+		setToken("subscriptionIdIn", multirequestToken);
+	}
+
+	// fileIdIn:
+	public String getFileIdIn(){
+		return this.fileIdIn;
+	}
+	public void setFileIdIn(String fileIdIn){
+		this.fileIdIn = fileIdIn;
+	}
+
+	public void fileIdIn(String multirequestToken){
+		setToken("fileIdIn", multirequestToken);
+	}
+
+	// isLowest:
+	public Boolean getIsLowest(){
+		return this.isLowest;
+	}
+	public void setIsLowest(Boolean isLowest){
+		this.isLowest = isLowest;
+	}
+
+	public void isLowest(String multirequestToken){
+		setToken("isLowest", multirequestToken);
+	}
+
+	// couponCodeEqual:
+	public String getCouponCodeEqual(){
+		return this.couponCodeEqual;
+	}
+	public void setCouponCodeEqual(String couponCodeEqual){
+		this.couponCodeEqual = couponCodeEqual;
+	}
+
+	public void couponCodeEqual(String multirequestToken){
+		setToken("couponCodeEqual", multirequestToken);
+	}
+
+
+	public ProductPriceFilter() {
+		super();
+	}
+
+	public ProductPriceFilter(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		subscriptionIdIn = GsonParser.parseString(jsonObject.get("subscriptionIdIn"));
+		fileIdIn = GsonParser.parseString(jsonObject.get("fileIdIn"));
+		isLowest = GsonParser.parseBoolean(jsonObject.get("isLowest"));
+		couponCodeEqual = GsonParser.parseString(jsonObject.get("couponCodeEqual"));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaProductPriceFilter");
+		kparams.add("subscriptionIdIn", this.subscriptionIdIn);
+		kparams.add("fileIdIn", this.fileIdIn);
+		kparams.add("isLowest", this.isLowest);
+		kparams.add("couponCodeEqual", this.couponCodeEqual);
+		return kparams;
+	}
+
+
+    public static final Creator<ProductPriceFilter> CREATOR = new Creator<ProductPriceFilter>() {
+        @Override
+        public ProductPriceFilter createFromParcel(Parcel source) {
+            return new ProductPriceFilter(source);
+        }
+
+        @Override
+        public ProductPriceFilter[] newArray(int size) {
+            return new ProductPriceFilter[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(this.subscriptionIdIn);
+        dest.writeString(this.fileIdIn);
+        dest.writeValue(this.isLowest);
+        dest.writeString(this.couponCodeEqual);
     }
-    public void setSubscriptionIdIn(String subscriptionIdIn){
-        this.subscriptionIdIn = subscriptionIdIn;
+
+    public ProductPriceFilter(Parcel in) {
+        super(in);
+        this.subscriptionIdIn = in.readString();
+        this.fileIdIn = in.readString();
+        this.isLowest = (Boolean)in.readValue(Boolean.class.getClassLoader());
+        this.couponCodeEqual = in.readString();
     }
-
-    // fileIdIn:
-    public String getFileIdIn(){
-        return this.fileIdIn;
-    }
-    public void setFileIdIn(String fileIdIn){
-        this.fileIdIn = fileIdIn;
-    }
-
-    // isLowest:
-    public Boolean getIsLowest(){
-        return this.isLowest;
-    }
-    public void setIsLowest(Boolean isLowest){
-        this.isLowest = isLowest;
-    }
-
-    // couponCodeEqual:
-    public String getCouponCodeEqual(){
-        return this.couponCodeEqual;
-    }
-    public void setCouponCodeEqual(String couponCodeEqual){
-        this.couponCodeEqual = couponCodeEqual;
-    }
-
-
-    public ProductPriceFilter() {
-       super();
-    }
-
-    public ProductPriceFilter(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        subscriptionIdIn = GsonParser.parseString(jsonObject.get("subscriptionIdIn"));
-        fileIdIn = GsonParser.parseString(jsonObject.get("fileIdIn"));
-        isLowest = GsonParser.parseBoolean(jsonObject.get("isLowest"));
-        couponCodeEqual = GsonParser.parseString(jsonObject.get("couponCodeEqual"));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaProductPriceFilter");
-        kparams.add("subscriptionIdIn", this.subscriptionIdIn);
-        kparams.add("fileIdIn", this.fileIdIn);
-        kparams.add("isLowest", this.isLowest);
-        kparams.add("couponCodeEqual", this.couponCodeEqual);
-        return kparams;
-    }
-
 }
 

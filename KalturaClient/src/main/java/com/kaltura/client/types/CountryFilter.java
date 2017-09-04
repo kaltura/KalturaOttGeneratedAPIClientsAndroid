@@ -27,10 +27,11 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
+import android.os.Parcel;
+import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
-import com.google.gson.JsonObject;
-
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -41,64 +42,110 @@ import com.google.gson.JsonObject;
 
 /**  Country filter  */
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(CountryFilter.Tokenizer.class)
 public class CountryFilter extends Filter {
+	
+	public interface Tokenizer extends Filter.Tokenizer {
+		String idIn();
+		String ipEqual();
+		String ipEqualCurrent();
+	}
 
 	/**  Country identifiers  */
-    private String idIn;
+	private String idIn;
 	/**  Ip to identify the country  */
-    private String ipEqual;
+	private String ipEqual;
 	/**  Indicates if to get the IP from the request  */
-    private Boolean ipEqualCurrent;
+	private Boolean ipEqualCurrent;
 
-    // idIn:
-    public String getIdIn(){
-        return this.idIn;
+	// idIn:
+	public String getIdIn(){
+		return this.idIn;
+	}
+	public void setIdIn(String idIn){
+		this.idIn = idIn;
+	}
+
+	public void idIn(String multirequestToken){
+		setToken("idIn", multirequestToken);
+	}
+
+	// ipEqual:
+	public String getIpEqual(){
+		return this.ipEqual;
+	}
+	public void setIpEqual(String ipEqual){
+		this.ipEqual = ipEqual;
+	}
+
+	public void ipEqual(String multirequestToken){
+		setToken("ipEqual", multirequestToken);
+	}
+
+	// ipEqualCurrent:
+	public Boolean getIpEqualCurrent(){
+		return this.ipEqualCurrent;
+	}
+	public void setIpEqualCurrent(Boolean ipEqualCurrent){
+		this.ipEqualCurrent = ipEqualCurrent;
+	}
+
+	public void ipEqualCurrent(String multirequestToken){
+		setToken("ipEqualCurrent", multirequestToken);
+	}
+
+
+	public CountryFilter() {
+		super();
+	}
+
+	public CountryFilter(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		idIn = GsonParser.parseString(jsonObject.get("idIn"));
+		ipEqual = GsonParser.parseString(jsonObject.get("ipEqual"));
+		ipEqualCurrent = GsonParser.parseBoolean(jsonObject.get("ipEqualCurrent"));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaCountryFilter");
+		kparams.add("idIn", this.idIn);
+		kparams.add("ipEqual", this.ipEqual);
+		kparams.add("ipEqualCurrent", this.ipEqualCurrent);
+		return kparams;
+	}
+
+
+    public static final Creator<CountryFilter> CREATOR = new Creator<CountryFilter>() {
+        @Override
+        public CountryFilter createFromParcel(Parcel source) {
+            return new CountryFilter(source);
+        }
+
+        @Override
+        public CountryFilter[] newArray(int size) {
+            return new CountryFilter[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(this.idIn);
+        dest.writeString(this.ipEqual);
+        dest.writeValue(this.ipEqualCurrent);
     }
-    public void setIdIn(String idIn){
-        this.idIn = idIn;
+
+    public CountryFilter(Parcel in) {
+        super(in);
+        this.idIn = in.readString();
+        this.ipEqual = in.readString();
+        this.ipEqualCurrent = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
-
-    // ipEqual:
-    public String getIpEqual(){
-        return this.ipEqual;
-    }
-    public void setIpEqual(String ipEqual){
-        this.ipEqual = ipEqual;
-    }
-
-    // ipEqualCurrent:
-    public Boolean getIpEqualCurrent(){
-        return this.ipEqualCurrent;
-    }
-    public void setIpEqualCurrent(Boolean ipEqualCurrent){
-        this.ipEqualCurrent = ipEqualCurrent;
-    }
-
-
-    public CountryFilter() {
-       super();
-    }
-
-    public CountryFilter(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        idIn = GsonParser.parseString(jsonObject.get("idIn"));
-        ipEqual = GsonParser.parseString(jsonObject.get("ipEqual"));
-        ipEqualCurrent = GsonParser.parseBoolean(jsonObject.get("ipEqualCurrent"));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaCountryFilter");
-        kparams.add("idIn", this.idIn);
-        kparams.add("ipEqual", this.ipEqual);
-        kparams.add("ipEqualCurrent", this.ipEqualCurrent);
-        return kparams;
-    }
-
 }
 

@@ -27,11 +27,12 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.types.DynamicOrderBy;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.types.DynamicOrderBy;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -41,40 +42,68 @@ import com.google.gson.JsonObject;
  */
 
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(AssetFilter.Tokenizer.class)
 public class AssetFilter extends PersistedFilter {
+	
+	public interface Tokenizer extends PersistedFilter.Tokenizer {
+		DynamicOrderBy.Tokenizer dynamicOrderBy();
+	}
 
 	/**  dynamicOrderBy - order by Meta  */
-    private DynamicOrderBy dynamicOrderBy;
+	private DynamicOrderBy dynamicOrderBy;
 
-    // dynamicOrderBy:
-    public DynamicOrderBy getDynamicOrderBy(){
-        return this.dynamicOrderBy;
+	// dynamicOrderBy:
+	public DynamicOrderBy getDynamicOrderBy(){
+		return this.dynamicOrderBy;
+	}
+	public void setDynamicOrderBy(DynamicOrderBy dynamicOrderBy){
+		this.dynamicOrderBy = dynamicOrderBy;
+	}
+
+
+	public AssetFilter() {
+		super();
+	}
+
+	public AssetFilter(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		dynamicOrderBy = GsonParser.parseObject(jsonObject.getAsJsonObject("dynamicOrderBy"), DynamicOrderBy.class);
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaAssetFilter");
+		kparams.add("dynamicOrderBy", this.dynamicOrderBy);
+		return kparams;
+	}
+
+
+    public static final Creator<AssetFilter> CREATOR = new Creator<AssetFilter>() {
+        @Override
+        public AssetFilter createFromParcel(Parcel source) {
+            return new AssetFilter(source);
+        }
+
+        @Override
+        public AssetFilter[] newArray(int size) {
+            return new AssetFilter[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeParcelable(this.dynamicOrderBy, flags);
     }
-    public void setDynamicOrderBy(DynamicOrderBy dynamicOrderBy){
-        this.dynamicOrderBy = dynamicOrderBy;
+
+    public AssetFilter(Parcel in) {
+        super(in);
+        this.dynamicOrderBy = in.readParcelable(DynamicOrderBy.class.getClassLoader());
     }
-
-
-    public AssetFilter() {
-       super();
-    }
-
-    public AssetFilter(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        dynamicOrderBy = GsonParser.parseObject(jsonObject.getAsJsonObject("dynamicOrderBy"), DynamicOrderBy.class);
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaAssetFilter");
-        kparams.add("dynamicOrderBy", this.dynamicOrderBy);
-        return kparams;
-    }
-
 }
 

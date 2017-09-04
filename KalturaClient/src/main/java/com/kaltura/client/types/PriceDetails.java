@@ -27,13 +27,16 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
+import android.os.Parcel;
+import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.types.Price;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.utils.request.RequestBuilder;
+import java.util.ArrayList;
 import java.util.List;
-import com.google.gson.JsonObject;
-
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -44,87 +47,153 @@ import com.google.gson.JsonObject;
 
 /**  Price details  */
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(PriceDetails.Tokenizer.class)
 public class PriceDetails extends ObjectBase {
+	
+	public interface Tokenizer extends ObjectBase.Tokenizer {
+		String id();
+		String name();
+		Price.Tokenizer price();
+		RequestBuilder.ListTokenizer<Price.Tokenizer> multiCurrencyPrice();
+		RequestBuilder.ListTokenizer<TranslationToken.Tokenizer> descriptions();
+	}
 
 	/**  The price code identifier  */
-    private Integer id;
+	private Integer id;
 	/**  The price code name  */
-    private String name;
+	private String name;
 	/**  The price  */
-    private Price price;
+	private Price price;
 	/**  Multi currency prices for all countries and currencies  */
-    private List<Price> multiCurrencyPrice;
+	private List<Price> multiCurrencyPrice;
 	/**  A list of the descriptions for this price on different languages (language code
 	  and translation)  */
-    private List<TranslationToken> descriptions;
+	private List<TranslationToken> descriptions;
 
-    // id:
-    public Integer getId(){
-        return this.id;
-    }
-    public void setId(Integer id){
-        this.id = id;
+	// id:
+	public Integer getId(){
+		return this.id;
+	}
+	public void setId(Integer id){
+		this.id = id;
+	}
+
+	public void id(String multirequestToken){
+		setToken("id", multirequestToken);
+	}
+
+	// name:
+	public String getName(){
+		return this.name;
+	}
+	public void setName(String name){
+		this.name = name;
+	}
+
+	public void name(String multirequestToken){
+		setToken("name", multirequestToken);
+	}
+
+	// price:
+	public Price getPrice(){
+		return this.price;
+	}
+	public void setPrice(Price price){
+		this.price = price;
+	}
+
+	// multiCurrencyPrice:
+	public List<Price> getMultiCurrencyPrice(){
+		return this.multiCurrencyPrice;
+	}
+	public void setMultiCurrencyPrice(List<Price> multiCurrencyPrice){
+		this.multiCurrencyPrice = multiCurrencyPrice;
+	}
+
+	// descriptions:
+	public List<TranslationToken> getDescriptions(){
+		return this.descriptions;
+	}
+	public void setDescriptions(List<TranslationToken> descriptions){
+		this.descriptions = descriptions;
+	}
+
+
+	public PriceDetails() {
+		super();
+	}
+
+	public PriceDetails(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		id = GsonParser.parseInt(jsonObject.get("id"));
+		name = GsonParser.parseString(jsonObject.get("name"));
+		price = GsonParser.parseObject(jsonObject.getAsJsonObject("price"), Price.class);
+		multiCurrencyPrice = GsonParser.parseArray(jsonObject.getAsJsonArray("multiCurrencyPrice"), Price.class);
+		descriptions = GsonParser.parseArray(jsonObject.getAsJsonArray("descriptions"), TranslationToken.class);
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaPriceDetails");
+		kparams.add("name", this.name);
+		kparams.add("multiCurrencyPrice", this.multiCurrencyPrice);
+		kparams.add("descriptions", this.descriptions);
+		return kparams;
+	}
+
+
+    public static final Creator<PriceDetails> CREATOR = new Creator<PriceDetails>() {
+        @Override
+        public PriceDetails createFromParcel(Parcel source) {
+            return new PriceDetails(source);
+        }
+
+        @Override
+        public PriceDetails[] newArray(int size) {
+            return new PriceDetails[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeValue(this.id);
+        dest.writeString(this.name);
+        dest.writeParcelable(this.price, flags);
+        if(this.multiCurrencyPrice != null) {
+            dest.writeInt(this.multiCurrencyPrice.size());
+            dest.writeList(this.multiCurrencyPrice);
+        } else {
+            dest.writeInt(-1);
+        }
+        if(this.descriptions != null) {
+            dest.writeInt(this.descriptions.size());
+            dest.writeList(this.descriptions);
+        } else {
+            dest.writeInt(-1);
+        }
     }
 
-    // name:
-    public String getName(){
-        return this.name;
+    public PriceDetails(Parcel in) {
+        super(in);
+        this.id = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.name = in.readString();
+        this.price = in.readParcelable(Price.class.getClassLoader());
+        int multiCurrencyPriceSize = in.readInt();
+        if( multiCurrencyPriceSize > -1) {
+            this.multiCurrencyPrice = new ArrayList<>();
+            in.readList(this.multiCurrencyPrice, Price.class.getClassLoader());
+        }
+        int descriptionsSize = in.readInt();
+        if( descriptionsSize > -1) {
+            this.descriptions = new ArrayList<>();
+            in.readList(this.descriptions, TranslationToken.class.getClassLoader());
+        }
     }
-    public void setName(String name){
-        this.name = name;
-    }
-
-    // price:
-    public Price getPrice(){
-        return this.price;
-    }
-    public void setPrice(Price price){
-        this.price = price;
-    }
-
-    // multiCurrencyPrice:
-    public List<Price> getMultiCurrencyPrice(){
-        return this.multiCurrencyPrice;
-    }
-    public void setMultiCurrencyPrice(List<Price> multiCurrencyPrice){
-        this.multiCurrencyPrice = multiCurrencyPrice;
-    }
-
-    // descriptions:
-    public List<TranslationToken> getDescriptions(){
-        return this.descriptions;
-    }
-    public void setDescriptions(List<TranslationToken> descriptions){
-        this.descriptions = descriptions;
-    }
-
-
-    public PriceDetails() {
-       super();
-    }
-
-    public PriceDetails(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        id = GsonParser.parseInt(jsonObject.get("id"));
-        name = GsonParser.parseString(jsonObject.get("name"));
-        price = GsonParser.parseObject(jsonObject.getAsJsonObject("price"), Price.class);
-        multiCurrencyPrice = GsonParser.parseArray(jsonObject.getAsJsonArray("multiCurrencyPrice"), Price.class);
-        descriptions = GsonParser.parseArray(jsonObject.getAsJsonArray("descriptions"), TranslationToken.class);
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaPriceDetails");
-        kparams.add("name", this.name);
-        kparams.add("multiCurrencyPrice", this.multiCurrencyPrice);
-        kparams.add("descriptions", this.descriptions);
-        return kparams;
-    }
-
 }
 

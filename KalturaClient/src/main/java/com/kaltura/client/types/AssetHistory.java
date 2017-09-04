@@ -27,12 +27,13 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.types.ObjectBase;
-import com.kaltura.client.enums.AssetType;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.enums.AssetType;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -43,94 +44,162 @@ import com.google.gson.JsonObject;
 
 /**  Watch history asset info  */
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(AssetHistory.Tokenizer.class)
 public class AssetHistory extends ObjectBase {
+	
+	public interface Tokenizer extends ObjectBase.Tokenizer {
+		String assetId();
+		String assetType();
+		String position();
+		String duration();
+		String watchedDate();
+		String finishedWatching();
+	}
 
 	/**  Asset identifier  */
-    private Long assetId;
+	private Long assetId;
 	/**  Asset identifier  */
-    private AssetType assetType;
+	private AssetType assetType;
 	/**  Position in seconds of the relevant asset  */
-    private Integer position;
+	private Integer position;
 	/**  Duration in seconds of the relevant asset  */
-    private Integer duration;
+	private Integer duration;
 	/**  The date when the media was last watched  */
-    private Long watchedDate;
+	private Long watchedDate;
 	/**  Boolean which specifies whether the user finished watching the movie or not  */
-    private Boolean finishedWatching;
+	private Boolean finishedWatching;
 
-    // assetId:
-    public Long getAssetId(){
-        return this.assetId;
-    }
-    public void setAssetId(Long assetId){
-        this.assetId = assetId;
+	// assetId:
+	public Long getAssetId(){
+		return this.assetId;
+	}
+	public void setAssetId(Long assetId){
+		this.assetId = assetId;
+	}
+
+	public void assetId(String multirequestToken){
+		setToken("assetId", multirequestToken);
+	}
+
+	// assetType:
+	public AssetType getAssetType(){
+		return this.assetType;
+	}
+	public void setAssetType(AssetType assetType){
+		this.assetType = assetType;
+	}
+
+	public void assetType(String multirequestToken){
+		setToken("assetType", multirequestToken);
+	}
+
+	// position:
+	public Integer getPosition(){
+		return this.position;
+	}
+	public void setPosition(Integer position){
+		this.position = position;
+	}
+
+	public void position(String multirequestToken){
+		setToken("position", multirequestToken);
+	}
+
+	// duration:
+	public Integer getDuration(){
+		return this.duration;
+	}
+	public void setDuration(Integer duration){
+		this.duration = duration;
+	}
+
+	public void duration(String multirequestToken){
+		setToken("duration", multirequestToken);
+	}
+
+	// watchedDate:
+	public Long getWatchedDate(){
+		return this.watchedDate;
+	}
+	public void setWatchedDate(Long watchedDate){
+		this.watchedDate = watchedDate;
+	}
+
+	public void watchedDate(String multirequestToken){
+		setToken("watchedDate", multirequestToken);
+	}
+
+	// finishedWatching:
+	public Boolean getFinishedWatching(){
+		return this.finishedWatching;
+	}
+	public void setFinishedWatching(Boolean finishedWatching){
+		this.finishedWatching = finishedWatching;
+	}
+
+	public void finishedWatching(String multirequestToken){
+		setToken("finishedWatching", multirequestToken);
+	}
+
+
+	public AssetHistory() {
+		super();
+	}
+
+	public AssetHistory(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		assetId = GsonParser.parseLong(jsonObject.get("assetId"));
+		assetType = AssetType.get(GsonParser.parseString(jsonObject.get("assetType")));
+		position = GsonParser.parseInt(jsonObject.get("position"));
+		duration = GsonParser.parseInt(jsonObject.get("duration"));
+		watchedDate = GsonParser.parseLong(jsonObject.get("watchedDate"));
+		finishedWatching = GsonParser.parseBoolean(jsonObject.get("finishedWatching"));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaAssetHistory");
+		return kparams;
+	}
+
+
+    public static final Creator<AssetHistory> CREATOR = new Creator<AssetHistory>() {
+        @Override
+        public AssetHistory createFromParcel(Parcel source) {
+            return new AssetHistory(source);
+        }
+
+        @Override
+        public AssetHistory[] newArray(int size) {
+            return new AssetHistory[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeValue(this.assetId);
+        dest.writeInt(this.assetType == null ? -1 : this.assetType.ordinal());
+        dest.writeValue(this.position);
+        dest.writeValue(this.duration);
+        dest.writeValue(this.watchedDate);
+        dest.writeValue(this.finishedWatching);
     }
 
-    // assetType:
-    public AssetType getAssetType(){
-        return this.assetType;
+    public AssetHistory(Parcel in) {
+        super(in);
+        this.assetId = (Long)in.readValue(Long.class.getClassLoader());
+        int tmpAssetType = in.readInt();
+        this.assetType = tmpAssetType == -1 ? null : AssetType.values()[tmpAssetType];
+        this.position = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.duration = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.watchedDate = (Long)in.readValue(Long.class.getClassLoader());
+        this.finishedWatching = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
-    public void setAssetType(AssetType assetType){
-        this.assetType = assetType;
-    }
-
-    // position:
-    public Integer getPosition(){
-        return this.position;
-    }
-    public void setPosition(Integer position){
-        this.position = position;
-    }
-
-    // duration:
-    public Integer getDuration(){
-        return this.duration;
-    }
-    public void setDuration(Integer duration){
-        this.duration = duration;
-    }
-
-    // watchedDate:
-    public Long getWatchedDate(){
-        return this.watchedDate;
-    }
-    public void setWatchedDate(Long watchedDate){
-        this.watchedDate = watchedDate;
-    }
-
-    // finishedWatching:
-    public Boolean getFinishedWatching(){
-        return this.finishedWatching;
-    }
-    public void setFinishedWatching(Boolean finishedWatching){
-        this.finishedWatching = finishedWatching;
-    }
-
-
-    public AssetHistory() {
-       super();
-    }
-
-    public AssetHistory(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        assetId = GsonParser.parseLong(jsonObject.get("assetId"));
-        assetType = AssetType.get(GsonParser.parseString(jsonObject.get("assetType")));
-        position = GsonParser.parseInt(jsonObject.get("position"));
-        duration = GsonParser.parseInt(jsonObject.get("duration"));
-        watchedDate = GsonParser.parseLong(jsonObject.get("watchedDate"));
-        finishedWatching = GsonParser.parseBoolean(jsonObject.get("finishedWatching"));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaAssetHistory");
-        return kparams;
-    }
-
 }
 
