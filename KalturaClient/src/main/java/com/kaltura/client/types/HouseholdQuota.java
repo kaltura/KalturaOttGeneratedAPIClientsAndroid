@@ -27,11 +27,12 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.types.ObjectBase;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -41,61 +42,107 @@ import com.google.gson.JsonObject;
  */
 
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(HouseholdQuota.Tokenizer.class)
 public class HouseholdQuota extends ObjectBase {
+	
+	public interface Tokenizer extends ObjectBase.Tokenizer {
+		String householdId();
+		String totalQuota();
+		String availableQuota();
+	}
 
 	/**  Household identifier  */
-    private Long householdId;
+	private Long householdId;
 	/**  Total quota that is allocated to the household  */
-    private Integer totalQuota;
+	private Integer totalQuota;
 	/**  Available quota that household has remaining  */
-    private Integer availableQuota;
+	private Integer availableQuota;
 
-    // householdId:
-    public Long getHouseholdId(){
-        return this.householdId;
+	// householdId:
+	public Long getHouseholdId(){
+		return this.householdId;
+	}
+	public void setHouseholdId(Long householdId){
+		this.householdId = householdId;
+	}
+
+	public void householdId(String multirequestToken){
+		setToken("householdId", multirequestToken);
+	}
+
+	// totalQuota:
+	public Integer getTotalQuota(){
+		return this.totalQuota;
+	}
+	public void setTotalQuota(Integer totalQuota){
+		this.totalQuota = totalQuota;
+	}
+
+	public void totalQuota(String multirequestToken){
+		setToken("totalQuota", multirequestToken);
+	}
+
+	// availableQuota:
+	public Integer getAvailableQuota(){
+		return this.availableQuota;
+	}
+	public void setAvailableQuota(Integer availableQuota){
+		this.availableQuota = availableQuota;
+	}
+
+	public void availableQuota(String multirequestToken){
+		setToken("availableQuota", multirequestToken);
+	}
+
+
+	public HouseholdQuota() {
+		super();
+	}
+
+	public HouseholdQuota(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		householdId = GsonParser.parseLong(jsonObject.get("householdId"));
+		totalQuota = GsonParser.parseInt(jsonObject.get("totalQuota"));
+		availableQuota = GsonParser.parseInt(jsonObject.get("availableQuota"));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaHouseholdQuota");
+		return kparams;
+	}
+
+
+    public static final Creator<HouseholdQuota> CREATOR = new Creator<HouseholdQuota>() {
+        @Override
+        public HouseholdQuota createFromParcel(Parcel source) {
+            return new HouseholdQuota(source);
+        }
+
+        @Override
+        public HouseholdQuota[] newArray(int size) {
+            return new HouseholdQuota[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeValue(this.householdId);
+        dest.writeValue(this.totalQuota);
+        dest.writeValue(this.availableQuota);
     }
-    public void setHouseholdId(Long householdId){
-        this.householdId = householdId;
+
+    public HouseholdQuota(Parcel in) {
+        super(in);
+        this.householdId = (Long)in.readValue(Long.class.getClassLoader());
+        this.totalQuota = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.availableQuota = (Integer)in.readValue(Integer.class.getClassLoader());
     }
-
-    // totalQuota:
-    public Integer getTotalQuota(){
-        return this.totalQuota;
-    }
-    public void setTotalQuota(Integer totalQuota){
-        this.totalQuota = totalQuota;
-    }
-
-    // availableQuota:
-    public Integer getAvailableQuota(){
-        return this.availableQuota;
-    }
-    public void setAvailableQuota(Integer availableQuota){
-        this.availableQuota = availableQuota;
-    }
-
-
-    public HouseholdQuota() {
-       super();
-    }
-
-    public HouseholdQuota(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        householdId = GsonParser.parseLong(jsonObject.get("householdId"));
-        totalQuota = GsonParser.parseInt(jsonObject.get("totalQuota"));
-        availableQuota = GsonParser.parseInt(jsonObject.get("availableQuota"));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaHouseholdQuota");
-        return kparams;
-    }
-
 }
 

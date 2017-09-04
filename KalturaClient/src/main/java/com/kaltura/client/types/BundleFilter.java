@@ -27,11 +27,12 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.enums.BundleType;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.enums.BundleType;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -41,67 +42,114 @@ import com.google.gson.JsonObject;
  */
 
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(BundleFilter.Tokenizer.class)
 public class BundleFilter extends AssetFilter {
+	
+	public interface Tokenizer extends AssetFilter.Tokenizer {
+		String idEqual();
+		String typeIn();
+		String bundleTypeEqual();
+	}
 
 	/**  Bundle Id.  */
-    private Integer idEqual;
+	private Integer idEqual;
 	/**  Comma separated list of asset types to search within.               Possible
 	  values: 0 – EPG linear programs entries, any media type ID (according to media
 	  type IDs defined dynamically in the system).              If omitted – all
 	  types should be included.  */
-    private String typeIn;
+	private String typeIn;
 	/**  bundleType - possible values: Subscription or Collection  */
-    private BundleType bundleTypeEqual;
+	private BundleType bundleTypeEqual;
 
-    // idEqual:
-    public Integer getIdEqual(){
-        return this.idEqual;
+	// idEqual:
+	public Integer getIdEqual(){
+		return this.idEqual;
+	}
+	public void setIdEqual(Integer idEqual){
+		this.idEqual = idEqual;
+	}
+
+	public void idEqual(String multirequestToken){
+		setToken("idEqual", multirequestToken);
+	}
+
+	// typeIn:
+	public String getTypeIn(){
+		return this.typeIn;
+	}
+	public void setTypeIn(String typeIn){
+		this.typeIn = typeIn;
+	}
+
+	public void typeIn(String multirequestToken){
+		setToken("typeIn", multirequestToken);
+	}
+
+	// bundleTypeEqual:
+	public BundleType getBundleTypeEqual(){
+		return this.bundleTypeEqual;
+	}
+	public void setBundleTypeEqual(BundleType bundleTypeEqual){
+		this.bundleTypeEqual = bundleTypeEqual;
+	}
+
+	public void bundleTypeEqual(String multirequestToken){
+		setToken("bundleTypeEqual", multirequestToken);
+	}
+
+
+	public BundleFilter() {
+		super();
+	}
+
+	public BundleFilter(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		idEqual = GsonParser.parseInt(jsonObject.get("idEqual"));
+		typeIn = GsonParser.parseString(jsonObject.get("typeIn"));
+		bundleTypeEqual = BundleType.get(GsonParser.parseString(jsonObject.get("bundleTypeEqual")));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaBundleFilter");
+		kparams.add("idEqual", this.idEqual);
+		kparams.add("typeIn", this.typeIn);
+		kparams.add("bundleTypeEqual", this.bundleTypeEqual);
+		return kparams;
+	}
+
+
+    public static final Creator<BundleFilter> CREATOR = new Creator<BundleFilter>() {
+        @Override
+        public BundleFilter createFromParcel(Parcel source) {
+            return new BundleFilter(source);
+        }
+
+        @Override
+        public BundleFilter[] newArray(int size) {
+            return new BundleFilter[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeValue(this.idEqual);
+        dest.writeString(this.typeIn);
+        dest.writeInt(this.bundleTypeEqual == null ? -1 : this.bundleTypeEqual.ordinal());
     }
-    public void setIdEqual(Integer idEqual){
-        this.idEqual = idEqual;
+
+    public BundleFilter(Parcel in) {
+        super(in);
+        this.idEqual = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.typeIn = in.readString();
+        int tmpBundleTypeEqual = in.readInt();
+        this.bundleTypeEqual = tmpBundleTypeEqual == -1 ? null : BundleType.values()[tmpBundleTypeEqual];
     }
-
-    // typeIn:
-    public String getTypeIn(){
-        return this.typeIn;
-    }
-    public void setTypeIn(String typeIn){
-        this.typeIn = typeIn;
-    }
-
-    // bundleTypeEqual:
-    public BundleType getBundleTypeEqual(){
-        return this.bundleTypeEqual;
-    }
-    public void setBundleTypeEqual(BundleType bundleTypeEqual){
-        this.bundleTypeEqual = bundleTypeEqual;
-    }
-
-
-    public BundleFilter() {
-       super();
-    }
-
-    public BundleFilter(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        idEqual = GsonParser.parseInt(jsonObject.get("idEqual"));
-        typeIn = GsonParser.parseString(jsonObject.get("typeIn"));
-        bundleTypeEqual = BundleType.get(GsonParser.parseString(jsonObject.get("bundleTypeEqual")));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaBundleFilter");
-        kparams.add("idEqual", this.idEqual);
-        kparams.add("typeIn", this.typeIn);
-        kparams.add("bundleTypeEqual", this.bundleTypeEqual);
-        return kparams;
-    }
-
 }
 

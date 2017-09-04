@@ -27,11 +27,12 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.enums.EntityReferenceBy;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.enums.EntityReferenceBy;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -42,64 +43,111 @@ import com.google.gson.JsonObject;
 
 /**  Transactions filter  */
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(TransactionHistoryFilter.Tokenizer.class)
 public class TransactionHistoryFilter extends Filter {
+	
+	public interface Tokenizer extends Filter.Tokenizer {
+		String entityReferenceEqual();
+		String startDateGreaterThanOrEqual();
+		String endDateLessThanOrEqual();
+	}
 
 	/**  Reference type to filter by  */
-    private EntityReferenceBy entityReferenceEqual;
+	private EntityReferenceBy entityReferenceEqual;
 	/**  Filter transactions later than specific date  */
-    private Integer startDateGreaterThanOrEqual;
+	private Integer startDateGreaterThanOrEqual;
 	/**  Filter transactions earlier than specific date  */
-    private Integer endDateLessThanOrEqual;
+	private Integer endDateLessThanOrEqual;
 
-    // entityReferenceEqual:
-    public EntityReferenceBy getEntityReferenceEqual(){
-        return this.entityReferenceEqual;
+	// entityReferenceEqual:
+	public EntityReferenceBy getEntityReferenceEqual(){
+		return this.entityReferenceEqual;
+	}
+	public void setEntityReferenceEqual(EntityReferenceBy entityReferenceEqual){
+		this.entityReferenceEqual = entityReferenceEqual;
+	}
+
+	public void entityReferenceEqual(String multirequestToken){
+		setToken("entityReferenceEqual", multirequestToken);
+	}
+
+	// startDateGreaterThanOrEqual:
+	public Integer getStartDateGreaterThanOrEqual(){
+		return this.startDateGreaterThanOrEqual;
+	}
+	public void setStartDateGreaterThanOrEqual(Integer startDateGreaterThanOrEqual){
+		this.startDateGreaterThanOrEqual = startDateGreaterThanOrEqual;
+	}
+
+	public void startDateGreaterThanOrEqual(String multirequestToken){
+		setToken("startDateGreaterThanOrEqual", multirequestToken);
+	}
+
+	// endDateLessThanOrEqual:
+	public Integer getEndDateLessThanOrEqual(){
+		return this.endDateLessThanOrEqual;
+	}
+	public void setEndDateLessThanOrEqual(Integer endDateLessThanOrEqual){
+		this.endDateLessThanOrEqual = endDateLessThanOrEqual;
+	}
+
+	public void endDateLessThanOrEqual(String multirequestToken){
+		setToken("endDateLessThanOrEqual", multirequestToken);
+	}
+
+
+	public TransactionHistoryFilter() {
+		super();
+	}
+
+	public TransactionHistoryFilter(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		entityReferenceEqual = EntityReferenceBy.get(GsonParser.parseString(jsonObject.get("entityReferenceEqual")));
+		startDateGreaterThanOrEqual = GsonParser.parseInt(jsonObject.get("startDateGreaterThanOrEqual"));
+		endDateLessThanOrEqual = GsonParser.parseInt(jsonObject.get("endDateLessThanOrEqual"));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaTransactionHistoryFilter");
+		kparams.add("entityReferenceEqual", this.entityReferenceEqual);
+		kparams.add("startDateGreaterThanOrEqual", this.startDateGreaterThanOrEqual);
+		kparams.add("endDateLessThanOrEqual", this.endDateLessThanOrEqual);
+		return kparams;
+	}
+
+
+    public static final Creator<TransactionHistoryFilter> CREATOR = new Creator<TransactionHistoryFilter>() {
+        @Override
+        public TransactionHistoryFilter createFromParcel(Parcel source) {
+            return new TransactionHistoryFilter(source);
+        }
+
+        @Override
+        public TransactionHistoryFilter[] newArray(int size) {
+            return new TransactionHistoryFilter[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeInt(this.entityReferenceEqual == null ? -1 : this.entityReferenceEqual.ordinal());
+        dest.writeValue(this.startDateGreaterThanOrEqual);
+        dest.writeValue(this.endDateLessThanOrEqual);
     }
-    public void setEntityReferenceEqual(EntityReferenceBy entityReferenceEqual){
-        this.entityReferenceEqual = entityReferenceEqual;
+
+    public TransactionHistoryFilter(Parcel in) {
+        super(in);
+        int tmpEntityReferenceEqual = in.readInt();
+        this.entityReferenceEqual = tmpEntityReferenceEqual == -1 ? null : EntityReferenceBy.values()[tmpEntityReferenceEqual];
+        this.startDateGreaterThanOrEqual = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.endDateLessThanOrEqual = (Integer)in.readValue(Integer.class.getClassLoader());
     }
-
-    // startDateGreaterThanOrEqual:
-    public Integer getStartDateGreaterThanOrEqual(){
-        return this.startDateGreaterThanOrEqual;
-    }
-    public void setStartDateGreaterThanOrEqual(Integer startDateGreaterThanOrEqual){
-        this.startDateGreaterThanOrEqual = startDateGreaterThanOrEqual;
-    }
-
-    // endDateLessThanOrEqual:
-    public Integer getEndDateLessThanOrEqual(){
-        return this.endDateLessThanOrEqual;
-    }
-    public void setEndDateLessThanOrEqual(Integer endDateLessThanOrEqual){
-        this.endDateLessThanOrEqual = endDateLessThanOrEqual;
-    }
-
-
-    public TransactionHistoryFilter() {
-       super();
-    }
-
-    public TransactionHistoryFilter(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        entityReferenceEqual = EntityReferenceBy.get(GsonParser.parseString(jsonObject.get("entityReferenceEqual")));
-        startDateGreaterThanOrEqual = GsonParser.parseInt(jsonObject.get("startDateGreaterThanOrEqual"));
-        endDateLessThanOrEqual = GsonParser.parseInt(jsonObject.get("endDateLessThanOrEqual"));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaTransactionHistoryFilter");
-        kparams.add("entityReferenceEqual", this.entityReferenceEqual);
-        kparams.add("startDateGreaterThanOrEqual", this.startDateGreaterThanOrEqual);
-        kparams.add("endDateLessThanOrEqual", this.endDateLessThanOrEqual);
-        return kparams;
-    }
-
 }
 

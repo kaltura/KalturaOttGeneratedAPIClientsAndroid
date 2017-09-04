@@ -27,12 +27,13 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.types.ObjectBase;
-import com.kaltura.client.types.BaseResponseProfile;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.types.BaseResponseProfile;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -43,88 +44,144 @@ import com.google.gson.JsonObject;
 
 /**  Define client request optional configurations  */
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(RequestConfiguration.Tokenizer.class)
 public class RequestConfiguration extends ObjectBase {
+	
+	public interface Tokenizer extends ObjectBase.Tokenizer {
+		String partnerId();
+		String userId();
+		String language();
+		String ks();
+		BaseResponseProfile.Tokenizer responseProfile();
+	}
 
 	/**  Impersonated partner id  */
-    private Integer partnerId;
+	private Integer partnerId;
 	/**  Impersonated user id  */
-    private Integer userId;
+	private Integer userId;
 	/**  Content language  */
-    private String language;
+	private String language;
 	/**  Kaltura API session  */
-    private String ks;
+	private String ks;
 	/**  Kaltura response profile object  */
-    private BaseResponseProfile responseProfile;
+	private BaseResponseProfile responseProfile;
 
-    // partnerId:
-    public Integer getPartnerId(){
-        return this.partnerId;
-    }
-    public void setPartnerId(Integer partnerId){
-        this.partnerId = partnerId;
+	// partnerId:
+	public Integer getPartnerId(){
+		return this.partnerId;
+	}
+	public void setPartnerId(Integer partnerId){
+		this.partnerId = partnerId;
+	}
+
+	public void partnerId(String multirequestToken){
+		setToken("partnerId", multirequestToken);
+	}
+
+	// userId:
+	public Integer getUserId(){
+		return this.userId;
+	}
+	public void setUserId(Integer userId){
+		this.userId = userId;
+	}
+
+	public void userId(String multirequestToken){
+		setToken("userId", multirequestToken);
+	}
+
+	// language:
+	public String getLanguage(){
+		return this.language;
+	}
+	public void setLanguage(String language){
+		this.language = language;
+	}
+
+	public void language(String multirequestToken){
+		setToken("language", multirequestToken);
+	}
+
+	// ks:
+	public String getKs(){
+		return this.ks;
+	}
+	public void setKs(String ks){
+		this.ks = ks;
+	}
+
+	public void ks(String multirequestToken){
+		setToken("ks", multirequestToken);
+	}
+
+	// responseProfile:
+	public BaseResponseProfile getResponseProfile(){
+		return this.responseProfile;
+	}
+	public void setResponseProfile(BaseResponseProfile responseProfile){
+		this.responseProfile = responseProfile;
+	}
+
+
+	public RequestConfiguration() {
+		super();
+	}
+
+	public RequestConfiguration(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		partnerId = GsonParser.parseInt(jsonObject.get("partnerId"));
+		userId = GsonParser.parseInt(jsonObject.get("userId"));
+		language = GsonParser.parseString(jsonObject.get("language"));
+		ks = GsonParser.parseString(jsonObject.get("ks"));
+		responseProfile = GsonParser.parseObject(jsonObject.getAsJsonObject("responseProfile"), BaseResponseProfile.class);
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaRequestConfiguration");
+		kparams.add("partnerId", this.partnerId);
+		kparams.add("userId", this.userId);
+		kparams.add("language", this.language);
+		kparams.add("ks", this.ks);
+		kparams.add("responseProfile", this.responseProfile);
+		return kparams;
+	}
+
+
+    public static final Creator<RequestConfiguration> CREATOR = new Creator<RequestConfiguration>() {
+        @Override
+        public RequestConfiguration createFromParcel(Parcel source) {
+            return new RequestConfiguration(source);
+        }
+
+        @Override
+        public RequestConfiguration[] newArray(int size) {
+            return new RequestConfiguration[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeValue(this.partnerId);
+        dest.writeValue(this.userId);
+        dest.writeString(this.language);
+        dest.writeString(this.ks);
+        dest.writeParcelable(this.responseProfile, flags);
     }
 
-    // userId:
-    public Integer getUserId(){
-        return this.userId;
+    public RequestConfiguration(Parcel in) {
+        super(in);
+        this.partnerId = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.userId = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.language = in.readString();
+        this.ks = in.readString();
+        this.responseProfile = in.readParcelable(BaseResponseProfile.class.getClassLoader());
     }
-    public void setUserId(Integer userId){
-        this.userId = userId;
-    }
-
-    // language:
-    public String getLanguage(){
-        return this.language;
-    }
-    public void setLanguage(String language){
-        this.language = language;
-    }
-
-    // ks:
-    public String getKs(){
-        return this.ks;
-    }
-    public void setKs(String ks){
-        this.ks = ks;
-    }
-
-    // responseProfile:
-    public BaseResponseProfile getResponseProfile(){
-        return this.responseProfile;
-    }
-    public void setResponseProfile(BaseResponseProfile responseProfile){
-        this.responseProfile = responseProfile;
-    }
-
-
-    public RequestConfiguration() {
-       super();
-    }
-
-    public RequestConfiguration(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        partnerId = GsonParser.parseInt(jsonObject.get("partnerId"));
-        userId = GsonParser.parseInt(jsonObject.get("userId"));
-        language = GsonParser.parseString(jsonObject.get("language"));
-        ks = GsonParser.parseString(jsonObject.get("ks"));
-        responseProfile = GsonParser.parseObject(jsonObject.getAsJsonObject("responseProfile"), BaseResponseProfile.class);
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaRequestConfiguration");
-        kparams.add("partnerId", this.partnerId);
-        kparams.add("userId", this.userId);
-        kparams.add("language", this.language);
-        kparams.add("ks", this.ks);
-        kparams.add("responseProfile", this.responseProfile);
-        return kparams;
-    }
-
 }
 

@@ -27,10 +27,10 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -41,23 +41,43 @@ import com.google.gson.JsonObject;
 
 /**  Device family details  */
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(DeviceFamily.Tokenizer.class)
 public class DeviceFamily extends DeviceFamilyBase {
+	
+	public interface Tokenizer extends DeviceFamilyBase.Tokenizer {
+	}
 
 
 
-    public DeviceFamily() {
-       super();
+	public DeviceFamily() {
+		super();
+	}
+
+	public DeviceFamily(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaDeviceFamily");
+		return kparams;
+	}
+
+
+    public static final Creator<DeviceFamily> CREATOR = new Creator<DeviceFamily>() {
+        @Override
+        public DeviceFamily createFromParcel(Parcel source) {
+            return new DeviceFamily(source);
+        }
+
+        @Override
+        public DeviceFamily[] newArray(int size) {
+            return new DeviceFamily[size];
+        }
+    };
+
+    public DeviceFamily(Parcel in) {
+        super(in);
     }
-
-    public DeviceFamily(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaDeviceFamily");
-        return kparams;
-    }
-
 }
 

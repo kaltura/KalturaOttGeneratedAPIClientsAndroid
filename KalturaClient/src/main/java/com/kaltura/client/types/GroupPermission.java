@@ -27,10 +27,11 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
+import android.os.Parcel;
+import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
-import com.google.gson.JsonObject;
-
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -40,40 +41,72 @@ import com.google.gson.JsonObject;
  */
 
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(GroupPermission.Tokenizer.class)
 public class GroupPermission extends Permission {
+	
+	public interface Tokenizer extends Permission.Tokenizer {
+		String group();
+	}
 
 	/**  Permission identifier  */
-    private String group;
+	private String group;
 
-    // group:
-    public String getGroup(){
-        return this.group;
+	// group:
+	public String getGroup(){
+		return this.group;
+	}
+	public void setGroup(String group){
+		this.group = group;
+	}
+
+	public void group(String multirequestToken){
+		setToken("group", multirequestToken);
+	}
+
+
+	public GroupPermission() {
+		super();
+	}
+
+	public GroupPermission(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		group = GsonParser.parseString(jsonObject.get("group"));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaGroupPermission");
+		kparams.add("group", this.group);
+		return kparams;
+	}
+
+
+    public static final Creator<GroupPermission> CREATOR = new Creator<GroupPermission>() {
+        @Override
+        public GroupPermission createFromParcel(Parcel source) {
+            return new GroupPermission(source);
+        }
+
+        @Override
+        public GroupPermission[] newArray(int size) {
+            return new GroupPermission[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(this.group);
     }
-    public void setGroup(String group){
-        this.group = group;
+
+    public GroupPermission(Parcel in) {
+        super(in);
+        this.group = in.readString();
     }
-
-
-    public GroupPermission() {
-       super();
-    }
-
-    public GroupPermission(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        group = GsonParser.parseString(jsonObject.get("group"));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaGroupPermission");
-        kparams.add("group", this.group);
-        return kparams;
-    }
-
 }
 

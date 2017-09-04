@@ -27,11 +27,12 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.enums.GroupByField;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.enums.GroupByField;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -42,40 +43,73 @@ import com.google.gson.JsonObject;
 
 /**  Group by a field that is defined in enum  */
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(AssetFieldGroupBy.Tokenizer.class)
 public class AssetFieldGroupBy extends AssetGroupBy {
+	
+	public interface Tokenizer extends AssetGroupBy.Tokenizer {
+		String value();
+	}
 
 	/**  Group by a specific field that is defined in enum  */
-    private GroupByField value;
+	private GroupByField value;
 
-    // value:
-    public GroupByField getValue(){
-        return this.value;
+	// value:
+	public GroupByField getValue(){
+		return this.value;
+	}
+	public void setValue(GroupByField value){
+		this.value = value;
+	}
+
+	public void value(String multirequestToken){
+		setToken("value", multirequestToken);
+	}
+
+
+	public AssetFieldGroupBy() {
+		super();
+	}
+
+	public AssetFieldGroupBy(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		value = GroupByField.get(GsonParser.parseString(jsonObject.get("value")));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaAssetFieldGroupBy");
+		kparams.add("value", this.value);
+		return kparams;
+	}
+
+
+    public static final Creator<AssetFieldGroupBy> CREATOR = new Creator<AssetFieldGroupBy>() {
+        @Override
+        public AssetFieldGroupBy createFromParcel(Parcel source) {
+            return new AssetFieldGroupBy(source);
+        }
+
+        @Override
+        public AssetFieldGroupBy[] newArray(int size) {
+            return new AssetFieldGroupBy[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeInt(this.value == null ? -1 : this.value.ordinal());
     }
-    public void setValue(GroupByField value){
-        this.value = value;
+
+    public AssetFieldGroupBy(Parcel in) {
+        super(in);
+        int tmpValue = in.readInt();
+        this.value = tmpValue == -1 ? null : GroupByField.values()[tmpValue];
     }
-
-
-    public AssetFieldGroupBy() {
-       super();
-    }
-
-    public AssetFieldGroupBy(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        value = GroupByField.get(GsonParser.parseString(jsonObject.get("value")));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaAssetFieldGroupBy");
-        kparams.add("value", this.value);
-        return kparams;
-    }
-
 }
 

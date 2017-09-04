@@ -27,12 +27,15 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.types.ObjectBase;
-import java.util.List;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.utils.request.RequestBuilder;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -43,40 +46,77 @@ import com.google.gson.JsonObject;
 
 /**  Translated string  */
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(MultilingualString.Tokenizer.class)
 public class MultilingualString extends ObjectBase {
+	
+	public interface Tokenizer extends ObjectBase.Tokenizer {
+		RequestBuilder.ListTokenizer<TranslationToken.Tokenizer> values();
+	}
 
 	/**  All values in different languages  */
-    private List<TranslationToken> values;
+	private List<TranslationToken> values;
 
-    // values:
-    public List<TranslationToken> getValues(){
-        return this.values;
+	// values:
+	public List<TranslationToken> getValues(){
+		return this.values;
+	}
+	public void setValues(List<TranslationToken> values){
+		this.values = values;
+	}
+
+
+	public MultilingualString() {
+		super();
+	}
+
+	public MultilingualString(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		values = GsonParser.parseArray(jsonObject.getAsJsonArray("values"), TranslationToken.class);
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaMultilingualString");
+		kparams.add("values", this.values);
+		return kparams;
+	}
+
+
+    public static final Creator<MultilingualString> CREATOR = new Creator<MultilingualString>() {
+        @Override
+        public MultilingualString createFromParcel(Parcel source) {
+            return new MultilingualString(source);
+        }
+
+        @Override
+        public MultilingualString[] newArray(int size) {
+            return new MultilingualString[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        if(this.values != null) {
+            dest.writeInt(this.values.size());
+            dest.writeList(this.values);
+        } else {
+            dest.writeInt(-1);
+        }
     }
-    public void setValues(List<TranslationToken> values){
-        this.values = values;
+
+    public MultilingualString(Parcel in) {
+        super(in);
+        int valuesSize = in.readInt();
+        if( valuesSize > -1) {
+            this.values = new ArrayList<>();
+            in.readList(this.values, TranslationToken.class.getClassLoader());
+        }
     }
-
-
-    public MultilingualString() {
-       super();
-    }
-
-    public MultilingualString(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        values = GsonParser.parseArray(jsonObject.getAsJsonArray("values"), TranslationToken.class);
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaMultilingualString");
-        kparams.add("values", this.values);
-        return kparams;
-    }
-
 }
 

@@ -27,10 +27,11 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
+import android.os.Parcel;
+import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
-import com.google.gson.JsonObject;
-
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -40,40 +41,72 @@ import com.google.gson.JsonObject;
  */
 
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(LicensedUrlRecordingRequest.Tokenizer.class)
 public class LicensedUrlRecordingRequest extends LicensedUrlBaseRequest {
+	
+	public interface Tokenizer extends LicensedUrlBaseRequest.Tokenizer {
+		String fileType();
+	}
 
 	/**  The file type for the URL  */
-    private String fileType;
+	private String fileType;
 
-    // fileType:
-    public String getFileType(){
-        return this.fileType;
+	// fileType:
+	public String getFileType(){
+		return this.fileType;
+	}
+	public void setFileType(String fileType){
+		this.fileType = fileType;
+	}
+
+	public void fileType(String multirequestToken){
+		setToken("fileType", multirequestToken);
+	}
+
+
+	public LicensedUrlRecordingRequest() {
+		super();
+	}
+
+	public LicensedUrlRecordingRequest(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		fileType = GsonParser.parseString(jsonObject.get("fileType"));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaLicensedUrlRecordingRequest");
+		kparams.add("fileType", this.fileType);
+		return kparams;
+	}
+
+
+    public static final Creator<LicensedUrlRecordingRequest> CREATOR = new Creator<LicensedUrlRecordingRequest>() {
+        @Override
+        public LicensedUrlRecordingRequest createFromParcel(Parcel source) {
+            return new LicensedUrlRecordingRequest(source);
+        }
+
+        @Override
+        public LicensedUrlRecordingRequest[] newArray(int size) {
+            return new LicensedUrlRecordingRequest[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(this.fileType);
     }
-    public void setFileType(String fileType){
-        this.fileType = fileType;
+
+    public LicensedUrlRecordingRequest(Parcel in) {
+        super(in);
+        this.fileType = in.readString();
     }
-
-
-    public LicensedUrlRecordingRequest() {
-       super();
-    }
-
-    public LicensedUrlRecordingRequest(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        fileType = GsonParser.parseString(jsonObject.get("fileType"));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaLicensedUrlRecordingRequest");
-        kparams.add("fileType", this.fileType);
-        return kparams;
-    }
-
 }
 

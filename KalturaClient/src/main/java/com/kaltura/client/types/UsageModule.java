@@ -27,11 +27,12 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.types.ObjectBase;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -42,130 +43,218 @@ import com.google.gson.JsonObject;
 
 /**  Pricing usage module  */
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(UsageModule.Tokenizer.class)
 public class UsageModule extends ObjectBase {
+	
+	public interface Tokenizer extends ObjectBase.Tokenizer {
+		String id();
+		String name();
+		String maxViewsNumber();
+		String viewLifeCycle();
+		String fullLifeCycle();
+		String couponId();
+		String waiverPeriod();
+		String isWaiverEnabled();
+		String isOfflinePlayback();
+	}
 
 	/**  Usage module identifier  */
-    private Long id;
+	private Long id;
 	/**  Usage module name  */
-    private String name;
+	private String name;
 	/**  The maximum number of times an item in this usage module can be viewed  */
-    private Integer maxViewsNumber;
+	private Integer maxViewsNumber;
 	/**  The amount time an item is available for viewing since a user started watching
 	  the item  */
-    private Integer viewLifeCycle;
+	private Integer viewLifeCycle;
 	/**  The amount time an item is available for viewing  */
-    private Integer fullLifeCycle;
+	private Integer fullLifeCycle;
 	/**  Identifies a specific coupon linked to this object  */
-    private Integer couponId;
+	private Integer couponId;
 	/**  Time period during which the end user can waive his rights to cancel a purchase.
 	  When the time period is passed, the purchase can no longer be cancelled  */
-    private Integer waiverPeriod;
+	private Integer waiverPeriod;
 	/**  Indicates whether or not the end user has the right to waive his rights to
 	  cancel a purchase  */
-    private Boolean isWaiverEnabled;
+	private Boolean isWaiverEnabled;
 	/**  Indicates that usage is targeted for offline playback  */
-    private Boolean isOfflinePlayback;
+	private Boolean isOfflinePlayback;
 
-    // id:
-    public Long getId(){
-        return this.id;
-    }
-    public void setId(Long id){
-        this.id = id;
+	// id:
+	public Long getId(){
+		return this.id;
+	}
+	public void setId(Long id){
+		this.id = id;
+	}
+
+	public void id(String multirequestToken){
+		setToken("id", multirequestToken);
+	}
+
+	// name:
+	public String getName(){
+		return this.name;
+	}
+	public void setName(String name){
+		this.name = name;
+	}
+
+	public void name(String multirequestToken){
+		setToken("name", multirequestToken);
+	}
+
+	// maxViewsNumber:
+	public Integer getMaxViewsNumber(){
+		return this.maxViewsNumber;
+	}
+	public void setMaxViewsNumber(Integer maxViewsNumber){
+		this.maxViewsNumber = maxViewsNumber;
+	}
+
+	public void maxViewsNumber(String multirequestToken){
+		setToken("maxViewsNumber", multirequestToken);
+	}
+
+	// viewLifeCycle:
+	public Integer getViewLifeCycle(){
+		return this.viewLifeCycle;
+	}
+	public void setViewLifeCycle(Integer viewLifeCycle){
+		this.viewLifeCycle = viewLifeCycle;
+	}
+
+	public void viewLifeCycle(String multirequestToken){
+		setToken("viewLifeCycle", multirequestToken);
+	}
+
+	// fullLifeCycle:
+	public Integer getFullLifeCycle(){
+		return this.fullLifeCycle;
+	}
+	public void setFullLifeCycle(Integer fullLifeCycle){
+		this.fullLifeCycle = fullLifeCycle;
+	}
+
+	public void fullLifeCycle(String multirequestToken){
+		setToken("fullLifeCycle", multirequestToken);
+	}
+
+	// couponId:
+	public Integer getCouponId(){
+		return this.couponId;
+	}
+	public void setCouponId(Integer couponId){
+		this.couponId = couponId;
+	}
+
+	public void couponId(String multirequestToken){
+		setToken("couponId", multirequestToken);
+	}
+
+	// waiverPeriod:
+	public Integer getWaiverPeriod(){
+		return this.waiverPeriod;
+	}
+	public void setWaiverPeriod(Integer waiverPeriod){
+		this.waiverPeriod = waiverPeriod;
+	}
+
+	public void waiverPeriod(String multirequestToken){
+		setToken("waiverPeriod", multirequestToken);
+	}
+
+	// isWaiverEnabled:
+	public Boolean getIsWaiverEnabled(){
+		return this.isWaiverEnabled;
+	}
+	public void setIsWaiverEnabled(Boolean isWaiverEnabled){
+		this.isWaiverEnabled = isWaiverEnabled;
+	}
+
+	public void isWaiverEnabled(String multirequestToken){
+		setToken("isWaiverEnabled", multirequestToken);
+	}
+
+	// isOfflinePlayback:
+	public Boolean getIsOfflinePlayback(){
+		return this.isOfflinePlayback;
+	}
+	public void setIsOfflinePlayback(Boolean isOfflinePlayback){
+		this.isOfflinePlayback = isOfflinePlayback;
+	}
+
+	public void isOfflinePlayback(String multirequestToken){
+		setToken("isOfflinePlayback", multirequestToken);
+	}
+
+
+	public UsageModule() {
+		super();
+	}
+
+	public UsageModule(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		id = GsonParser.parseLong(jsonObject.get("id"));
+		name = GsonParser.parseString(jsonObject.get("name"));
+		maxViewsNumber = GsonParser.parseInt(jsonObject.get("maxViewsNumber"));
+		viewLifeCycle = GsonParser.parseInt(jsonObject.get("viewLifeCycle"));
+		fullLifeCycle = GsonParser.parseInt(jsonObject.get("fullLifeCycle"));
+		couponId = GsonParser.parseInt(jsonObject.get("couponId"));
+		waiverPeriod = GsonParser.parseInt(jsonObject.get("waiverPeriod"));
+		isWaiverEnabled = GsonParser.parseBoolean(jsonObject.get("isWaiverEnabled"));
+		isOfflinePlayback = GsonParser.parseBoolean(jsonObject.get("isOfflinePlayback"));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaUsageModule");
+		return kparams;
+	}
+
+
+    public static final Creator<UsageModule> CREATOR = new Creator<UsageModule>() {
+        @Override
+        public UsageModule createFromParcel(Parcel source) {
+            return new UsageModule(source);
+        }
+
+        @Override
+        public UsageModule[] newArray(int size) {
+            return new UsageModule[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeValue(this.id);
+        dest.writeString(this.name);
+        dest.writeValue(this.maxViewsNumber);
+        dest.writeValue(this.viewLifeCycle);
+        dest.writeValue(this.fullLifeCycle);
+        dest.writeValue(this.couponId);
+        dest.writeValue(this.waiverPeriod);
+        dest.writeValue(this.isWaiverEnabled);
+        dest.writeValue(this.isOfflinePlayback);
     }
 
-    // name:
-    public String getName(){
-        return this.name;
+    public UsageModule(Parcel in) {
+        super(in);
+        this.id = (Long)in.readValue(Long.class.getClassLoader());
+        this.name = in.readString();
+        this.maxViewsNumber = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.viewLifeCycle = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.fullLifeCycle = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.couponId = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.waiverPeriod = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.isWaiverEnabled = (Boolean)in.readValue(Boolean.class.getClassLoader());
+        this.isOfflinePlayback = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
-    public void setName(String name){
-        this.name = name;
-    }
-
-    // maxViewsNumber:
-    public Integer getMaxViewsNumber(){
-        return this.maxViewsNumber;
-    }
-    public void setMaxViewsNumber(Integer maxViewsNumber){
-        this.maxViewsNumber = maxViewsNumber;
-    }
-
-    // viewLifeCycle:
-    public Integer getViewLifeCycle(){
-        return this.viewLifeCycle;
-    }
-    public void setViewLifeCycle(Integer viewLifeCycle){
-        this.viewLifeCycle = viewLifeCycle;
-    }
-
-    // fullLifeCycle:
-    public Integer getFullLifeCycle(){
-        return this.fullLifeCycle;
-    }
-    public void setFullLifeCycle(Integer fullLifeCycle){
-        this.fullLifeCycle = fullLifeCycle;
-    }
-
-    // couponId:
-    public Integer getCouponId(){
-        return this.couponId;
-    }
-    public void setCouponId(Integer couponId){
-        this.couponId = couponId;
-    }
-
-    // waiverPeriod:
-    public Integer getWaiverPeriod(){
-        return this.waiverPeriod;
-    }
-    public void setWaiverPeriod(Integer waiverPeriod){
-        this.waiverPeriod = waiverPeriod;
-    }
-
-    // isWaiverEnabled:
-    public Boolean getIsWaiverEnabled(){
-        return this.isWaiverEnabled;
-    }
-    public void setIsWaiverEnabled(Boolean isWaiverEnabled){
-        this.isWaiverEnabled = isWaiverEnabled;
-    }
-
-    // isOfflinePlayback:
-    public Boolean getIsOfflinePlayback(){
-        return this.isOfflinePlayback;
-    }
-    public void setIsOfflinePlayback(Boolean isOfflinePlayback){
-        this.isOfflinePlayback = isOfflinePlayback;
-    }
-
-
-    public UsageModule() {
-       super();
-    }
-
-    public UsageModule(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        id = GsonParser.parseLong(jsonObject.get("id"));
-        name = GsonParser.parseString(jsonObject.get("name"));
-        maxViewsNumber = GsonParser.parseInt(jsonObject.get("maxViewsNumber"));
-        viewLifeCycle = GsonParser.parseInt(jsonObject.get("viewLifeCycle"));
-        fullLifeCycle = GsonParser.parseInt(jsonObject.get("fullLifeCycle"));
-        couponId = GsonParser.parseInt(jsonObject.get("couponId"));
-        waiverPeriod = GsonParser.parseInt(jsonObject.get("waiverPeriod"));
-        isWaiverEnabled = GsonParser.parseBoolean(jsonObject.get("isWaiverEnabled"));
-        isOfflinePlayback = GsonParser.parseBoolean(jsonObject.get("isOfflinePlayback"));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaUsageModule");
-        return kparams;
-    }
-
 }
 

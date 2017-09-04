@@ -27,12 +27,13 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.types.ObjectBase;
-import com.kaltura.client.enums.BookmarkActionType;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.enums.BookmarkActionType;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -42,88 +43,149 @@ import com.google.gson.JsonObject;
  */
 
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(BookmarkPlayerData.Tokenizer.class)
 public class BookmarkPlayerData extends ObjectBase {
+	
+	public interface Tokenizer extends ObjectBase.Tokenizer {
+		String action();
+		String averageBitrate();
+		String totalBitrate();
+		String currentBitrate();
+		String fileId();
+	}
 
 	/**  Action  */
-    private BookmarkActionType action;
+	private BookmarkActionType action;
 	/**  Average Bitrate  */
-    private Integer averageBitrate;
+	private Integer averageBitrate;
 	/**  Total Bitrate  */
-    private Integer totalBitrate;
+	private Integer totalBitrate;
 	/**  Current Bitrate  */
-    private Integer currentBitrate;
+	private Integer currentBitrate;
 	/**  Identifier of the file  */
-    private Long fileId;
+	private Long fileId;
 
-    // action:
-    public BookmarkActionType getAction(){
-        return this.action;
-    }
-    public void setAction(BookmarkActionType action){
-        this.action = action;
+	// action:
+	public BookmarkActionType getAction(){
+		return this.action;
+	}
+	public void setAction(BookmarkActionType action){
+		this.action = action;
+	}
+
+	public void action(String multirequestToken){
+		setToken("action", multirequestToken);
+	}
+
+	// averageBitrate:
+	public Integer getAverageBitrate(){
+		return this.averageBitrate;
+	}
+	public void setAverageBitrate(Integer averageBitrate){
+		this.averageBitrate = averageBitrate;
+	}
+
+	public void averageBitrate(String multirequestToken){
+		setToken("averageBitrate", multirequestToken);
+	}
+
+	// totalBitrate:
+	public Integer getTotalBitrate(){
+		return this.totalBitrate;
+	}
+	public void setTotalBitrate(Integer totalBitrate){
+		this.totalBitrate = totalBitrate;
+	}
+
+	public void totalBitrate(String multirequestToken){
+		setToken("totalBitrate", multirequestToken);
+	}
+
+	// currentBitrate:
+	public Integer getCurrentBitrate(){
+		return this.currentBitrate;
+	}
+	public void setCurrentBitrate(Integer currentBitrate){
+		this.currentBitrate = currentBitrate;
+	}
+
+	public void currentBitrate(String multirequestToken){
+		setToken("currentBitrate", multirequestToken);
+	}
+
+	// fileId:
+	public Long getFileId(){
+		return this.fileId;
+	}
+	public void setFileId(Long fileId){
+		this.fileId = fileId;
+	}
+
+	public void fileId(String multirequestToken){
+		setToken("fileId", multirequestToken);
+	}
+
+
+	public BookmarkPlayerData() {
+		super();
+	}
+
+	public BookmarkPlayerData(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		action = BookmarkActionType.get(GsonParser.parseString(jsonObject.get("action")));
+		averageBitrate = GsonParser.parseInt(jsonObject.get("averageBitrate"));
+		totalBitrate = GsonParser.parseInt(jsonObject.get("totalBitrate"));
+		currentBitrate = GsonParser.parseInt(jsonObject.get("currentBitrate"));
+		fileId = GsonParser.parseLong(jsonObject.get("fileId"));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaBookmarkPlayerData");
+		kparams.add("action", this.action);
+		kparams.add("averageBitrate", this.averageBitrate);
+		kparams.add("totalBitrate", this.totalBitrate);
+		kparams.add("currentBitrate", this.currentBitrate);
+		kparams.add("fileId", this.fileId);
+		return kparams;
+	}
+
+
+    public static final Creator<BookmarkPlayerData> CREATOR = new Creator<BookmarkPlayerData>() {
+        @Override
+        public BookmarkPlayerData createFromParcel(Parcel source) {
+            return new BookmarkPlayerData(source);
+        }
+
+        @Override
+        public BookmarkPlayerData[] newArray(int size) {
+            return new BookmarkPlayerData[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeInt(this.action == null ? -1 : this.action.ordinal());
+        dest.writeValue(this.averageBitrate);
+        dest.writeValue(this.totalBitrate);
+        dest.writeValue(this.currentBitrate);
+        dest.writeValue(this.fileId);
     }
 
-    // averageBitrate:
-    public Integer getAverageBitrate(){
-        return this.averageBitrate;
+    public BookmarkPlayerData(Parcel in) {
+        super(in);
+        int tmpAction = in.readInt();
+        this.action = tmpAction == -1 ? null : BookmarkActionType.values()[tmpAction];
+        this.averageBitrate = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.totalBitrate = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.currentBitrate = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.fileId = (Long)in.readValue(Long.class.getClassLoader());
     }
-    public void setAverageBitrate(Integer averageBitrate){
-        this.averageBitrate = averageBitrate;
-    }
-
-    // totalBitrate:
-    public Integer getTotalBitrate(){
-        return this.totalBitrate;
-    }
-    public void setTotalBitrate(Integer totalBitrate){
-        this.totalBitrate = totalBitrate;
-    }
-
-    // currentBitrate:
-    public Integer getCurrentBitrate(){
-        return this.currentBitrate;
-    }
-    public void setCurrentBitrate(Integer currentBitrate){
-        this.currentBitrate = currentBitrate;
-    }
-
-    // fileId:
-    public Long getFileId(){
-        return this.fileId;
-    }
-    public void setFileId(Long fileId){
-        this.fileId = fileId;
-    }
-
-
-    public BookmarkPlayerData() {
-       super();
-    }
-
-    public BookmarkPlayerData(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        action = BookmarkActionType.get(GsonParser.parseString(jsonObject.get("action")));
-        averageBitrate = GsonParser.parseInt(jsonObject.get("averageBitrate"));
-        totalBitrate = GsonParser.parseInt(jsonObject.get("totalBitrate"));
-        currentBitrate = GsonParser.parseInt(jsonObject.get("currentBitrate"));
-        fileId = GsonParser.parseLong(jsonObject.get("fileId"));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaBookmarkPlayerData");
-        kparams.add("action", this.action);
-        kparams.add("averageBitrate", this.averageBitrate);
-        kparams.add("totalBitrate", this.totalBitrate);
-        kparams.add("currentBitrate", this.currentBitrate);
-        kparams.add("fileId", this.fileId);
-        return kparams;
-    }
-
 }
 

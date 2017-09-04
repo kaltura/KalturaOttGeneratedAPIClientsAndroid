@@ -27,11 +27,12 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.types.ObjectBase;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -41,64 +42,110 @@ import com.google.gson.JsonObject;
  */
 
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(RegistryResponse.Tokenizer.class)
 public class RegistryResponse extends ObjectBase {
+	
+	public interface Tokenizer extends ObjectBase.Tokenizer {
+		String announcementId();
+		String key();
+		String url();
+	}
 
 	/**  Announcement Id  */
-    private Long announcementId;
+	private Long announcementId;
 	/**  Key  */
-    private String key;
+	private String key;
 	/**  URL  */
-    private String url;
+	private String url;
 
-    // announcementId:
-    public Long getAnnouncementId(){
-        return this.announcementId;
+	// announcementId:
+	public Long getAnnouncementId(){
+		return this.announcementId;
+	}
+	public void setAnnouncementId(Long announcementId){
+		this.announcementId = announcementId;
+	}
+
+	public void announcementId(String multirequestToken){
+		setToken("announcementId", multirequestToken);
+	}
+
+	// key:
+	public String getKey(){
+		return this.key;
+	}
+	public void setKey(String key){
+		this.key = key;
+	}
+
+	public void key(String multirequestToken){
+		setToken("key", multirequestToken);
+	}
+
+	// url:
+	public String getUrl(){
+		return this.url;
+	}
+	public void setUrl(String url){
+		this.url = url;
+	}
+
+	public void url(String multirequestToken){
+		setToken("url", multirequestToken);
+	}
+
+
+	public RegistryResponse() {
+		super();
+	}
+
+	public RegistryResponse(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		announcementId = GsonParser.parseLong(jsonObject.get("announcementId"));
+		key = GsonParser.parseString(jsonObject.get("key"));
+		url = GsonParser.parseString(jsonObject.get("url"));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaRegistryResponse");
+		kparams.add("announcementId", this.announcementId);
+		kparams.add("key", this.key);
+		kparams.add("url", this.url);
+		return kparams;
+	}
+
+
+    public static final Creator<RegistryResponse> CREATOR = new Creator<RegistryResponse>() {
+        @Override
+        public RegistryResponse createFromParcel(Parcel source) {
+            return new RegistryResponse(source);
+        }
+
+        @Override
+        public RegistryResponse[] newArray(int size) {
+            return new RegistryResponse[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeValue(this.announcementId);
+        dest.writeString(this.key);
+        dest.writeString(this.url);
     }
-    public void setAnnouncementId(Long announcementId){
-        this.announcementId = announcementId;
+
+    public RegistryResponse(Parcel in) {
+        super(in);
+        this.announcementId = (Long)in.readValue(Long.class.getClassLoader());
+        this.key = in.readString();
+        this.url = in.readString();
     }
-
-    // key:
-    public String getKey(){
-        return this.key;
-    }
-    public void setKey(String key){
-        this.key = key;
-    }
-
-    // url:
-    public String getUrl(){
-        return this.url;
-    }
-    public void setUrl(String url){
-        this.url = url;
-    }
-
-
-    public RegistryResponse() {
-       super();
-    }
-
-    public RegistryResponse(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        announcementId = GsonParser.parseLong(jsonObject.get("announcementId"));
-        key = GsonParser.parseString(jsonObject.get("key"));
-        url = GsonParser.parseString(jsonObject.get("url"));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaRegistryResponse");
-        kparams.add("announcementId", this.announcementId);
-        kparams.add("key", this.key);
-        kparams.add("url", this.url);
-        return kparams;
-    }
-
 }
 

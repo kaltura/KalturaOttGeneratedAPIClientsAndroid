@@ -27,10 +27,10 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -40,23 +40,43 @@ import com.google.gson.JsonObject;
  */
 
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(SearchHistoryFilter.Tokenizer.class)
 public class SearchHistoryFilter extends Filter {
+	
+	public interface Tokenizer extends Filter.Tokenizer {
+	}
 
 
 
-    public SearchHistoryFilter() {
-       super();
+	public SearchHistoryFilter() {
+		super();
+	}
+
+	public SearchHistoryFilter(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaSearchHistoryFilter");
+		return kparams;
+	}
+
+
+    public static final Creator<SearchHistoryFilter> CREATOR = new Creator<SearchHistoryFilter>() {
+        @Override
+        public SearchHistoryFilter createFromParcel(Parcel source) {
+            return new SearchHistoryFilter(source);
+        }
+
+        @Override
+        public SearchHistoryFilter[] newArray(int size) {
+            return new SearchHistoryFilter[size];
+        }
+    };
+
+    public SearchHistoryFilter(Parcel in) {
+        super(in);
     }
-
-    public SearchHistoryFilter(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaSearchHistoryFilter");
-        return kparams;
-    }
-
 }
 

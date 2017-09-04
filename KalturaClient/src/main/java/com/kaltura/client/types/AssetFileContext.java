@@ -27,11 +27,12 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.types.ObjectBase;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -41,61 +42,107 @@ import com.google.gson.JsonObject;
  */
 
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(AssetFileContext.Tokenizer.class)
 public class AssetFileContext extends ObjectBase {
+	
+	public interface Tokenizer extends ObjectBase.Tokenizer {
+		String viewLifeCycle();
+		String fullLifeCycle();
+		String isOfflinePlayBack();
+	}
 
 	/**  viewLifeCycle  */
-    private String viewLifeCycle;
+	private String viewLifeCycle;
 	/**  fullLifeCycle  */
-    private String fullLifeCycle;
+	private String fullLifeCycle;
 	/**  isOfflinePlayBack  */
-    private Boolean isOfflinePlayBack;
+	private Boolean isOfflinePlayBack;
 
-    // viewLifeCycle:
-    public String getViewLifeCycle(){
-        return this.viewLifeCycle;
+	// viewLifeCycle:
+	public String getViewLifeCycle(){
+		return this.viewLifeCycle;
+	}
+	public void setViewLifeCycle(String viewLifeCycle){
+		this.viewLifeCycle = viewLifeCycle;
+	}
+
+	public void viewLifeCycle(String multirequestToken){
+		setToken("viewLifeCycle", multirequestToken);
+	}
+
+	// fullLifeCycle:
+	public String getFullLifeCycle(){
+		return this.fullLifeCycle;
+	}
+	public void setFullLifeCycle(String fullLifeCycle){
+		this.fullLifeCycle = fullLifeCycle;
+	}
+
+	public void fullLifeCycle(String multirequestToken){
+		setToken("fullLifeCycle", multirequestToken);
+	}
+
+	// isOfflinePlayBack:
+	public Boolean getIsOfflinePlayBack(){
+		return this.isOfflinePlayBack;
+	}
+	public void setIsOfflinePlayBack(Boolean isOfflinePlayBack){
+		this.isOfflinePlayBack = isOfflinePlayBack;
+	}
+
+	public void isOfflinePlayBack(String multirequestToken){
+		setToken("isOfflinePlayBack", multirequestToken);
+	}
+
+
+	public AssetFileContext() {
+		super();
+	}
+
+	public AssetFileContext(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		viewLifeCycle = GsonParser.parseString(jsonObject.get("viewLifeCycle"));
+		fullLifeCycle = GsonParser.parseString(jsonObject.get("fullLifeCycle"));
+		isOfflinePlayBack = GsonParser.parseBoolean(jsonObject.get("isOfflinePlayBack"));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaAssetFileContext");
+		return kparams;
+	}
+
+
+    public static final Creator<AssetFileContext> CREATOR = new Creator<AssetFileContext>() {
+        @Override
+        public AssetFileContext createFromParcel(Parcel source) {
+            return new AssetFileContext(source);
+        }
+
+        @Override
+        public AssetFileContext[] newArray(int size) {
+            return new AssetFileContext[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(this.viewLifeCycle);
+        dest.writeString(this.fullLifeCycle);
+        dest.writeValue(this.isOfflinePlayBack);
     }
-    public void setViewLifeCycle(String viewLifeCycle){
-        this.viewLifeCycle = viewLifeCycle;
+
+    public AssetFileContext(Parcel in) {
+        super(in);
+        this.viewLifeCycle = in.readString();
+        this.fullLifeCycle = in.readString();
+        this.isOfflinePlayBack = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
-
-    // fullLifeCycle:
-    public String getFullLifeCycle(){
-        return this.fullLifeCycle;
-    }
-    public void setFullLifeCycle(String fullLifeCycle){
-        this.fullLifeCycle = fullLifeCycle;
-    }
-
-    // isOfflinePlayBack:
-    public Boolean getIsOfflinePlayBack(){
-        return this.isOfflinePlayBack;
-    }
-    public void setIsOfflinePlayBack(Boolean isOfflinePlayBack){
-        this.isOfflinePlayBack = isOfflinePlayBack;
-    }
-
-
-    public AssetFileContext() {
-       super();
-    }
-
-    public AssetFileContext(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        viewLifeCycle = GsonParser.parseString(jsonObject.get("viewLifeCycle"));
-        fullLifeCycle = GsonParser.parseString(jsonObject.get("fullLifeCycle"));
-        isOfflinePlayBack = GsonParser.parseBoolean(jsonObject.get("isOfflinePlayBack"));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaAssetFileContext");
-        return kparams;
-    }
-
 }
 

@@ -27,11 +27,12 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.types.ObjectBase;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -42,63 +43,109 @@ import com.google.gson.JsonObject;
 
 /**  Log in pin code details  */
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(UserLoginPin.Tokenizer.class)
 public class UserLoginPin extends ObjectBase {
+	
+	public interface Tokenizer extends ObjectBase.Tokenizer {
+		String pinCode();
+		String expirationTime();
+		String userId();
+	}
 
 	/**  Generated login pin code  */
-    private String pinCode;
+	private String pinCode;
 	/**  Login pin expiration time (epoch)  */
-    private Long expirationTime;
+	private Long expirationTime;
 	/**  User Identifier  */
-    private String userId;
+	private String userId;
 
-    // pinCode:
-    public String getPinCode(){
-        return this.pinCode;
+	// pinCode:
+	public String getPinCode(){
+		return this.pinCode;
+	}
+	public void setPinCode(String pinCode){
+		this.pinCode = pinCode;
+	}
+
+	public void pinCode(String multirequestToken){
+		setToken("pinCode", multirequestToken);
+	}
+
+	// expirationTime:
+	public Long getExpirationTime(){
+		return this.expirationTime;
+	}
+	public void setExpirationTime(Long expirationTime){
+		this.expirationTime = expirationTime;
+	}
+
+	public void expirationTime(String multirequestToken){
+		setToken("expirationTime", multirequestToken);
+	}
+
+	// userId:
+	public String getUserId(){
+		return this.userId;
+	}
+	public void setUserId(String userId){
+		this.userId = userId;
+	}
+
+	public void userId(String multirequestToken){
+		setToken("userId", multirequestToken);
+	}
+
+
+	public UserLoginPin() {
+		super();
+	}
+
+	public UserLoginPin(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		pinCode = GsonParser.parseString(jsonObject.get("pinCode"));
+		expirationTime = GsonParser.parseLong(jsonObject.get("expirationTime"));
+		userId = GsonParser.parseString(jsonObject.get("userId"));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaUserLoginPin");
+		kparams.add("pinCode", this.pinCode);
+		kparams.add("expirationTime", this.expirationTime);
+		return kparams;
+	}
+
+
+    public static final Creator<UserLoginPin> CREATOR = new Creator<UserLoginPin>() {
+        @Override
+        public UserLoginPin createFromParcel(Parcel source) {
+            return new UserLoginPin(source);
+        }
+
+        @Override
+        public UserLoginPin[] newArray(int size) {
+            return new UserLoginPin[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(this.pinCode);
+        dest.writeValue(this.expirationTime);
+        dest.writeString(this.userId);
     }
-    public void setPinCode(String pinCode){
-        this.pinCode = pinCode;
+
+    public UserLoginPin(Parcel in) {
+        super(in);
+        this.pinCode = in.readString();
+        this.expirationTime = (Long)in.readValue(Long.class.getClassLoader());
+        this.userId = in.readString();
     }
-
-    // expirationTime:
-    public Long getExpirationTime(){
-        return this.expirationTime;
-    }
-    public void setExpirationTime(Long expirationTime){
-        this.expirationTime = expirationTime;
-    }
-
-    // userId:
-    public String getUserId(){
-        return this.userId;
-    }
-    public void setUserId(String userId){
-        this.userId = userId;
-    }
-
-
-    public UserLoginPin() {
-       super();
-    }
-
-    public UserLoginPin(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        pinCode = GsonParser.parseString(jsonObject.get("pinCode"));
-        expirationTime = GsonParser.parseLong(jsonObject.get("expirationTime"));
-        userId = GsonParser.parseString(jsonObject.get("userId"));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaUserLoginPin");
-        kparams.add("pinCode", this.pinCode);
-        kparams.add("expirationTime", this.expirationTime);
-        return kparams;
-    }
-
 }
 

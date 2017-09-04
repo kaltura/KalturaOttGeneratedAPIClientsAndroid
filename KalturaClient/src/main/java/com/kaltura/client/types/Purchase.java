@@ -27,10 +27,11 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
+import android.os.Parcel;
+import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
-import com.google.gson.JsonObject;
-
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -40,103 +41,170 @@ import com.google.gson.JsonObject;
  */
 
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(Purchase.Tokenizer.class)
 public class Purchase extends PurchaseBase {
+	
+	public interface Tokenizer extends PurchaseBase.Tokenizer {
+		String currency();
+		String price();
+		String paymentMethodId();
+		String paymentGatewayId();
+		String coupon();
+		String adapterData();
+	}
 
 	/**  Identifier for paying currency, according to ISO 4217  */
-    private String currency;
+	private String currency;
 	/**  Net sum to charge – as a one-time transaction. Price must match the previously
 	  provided price for the specified content.  */
-    private Double price;
+	private Double price;
 	/**  Identifier for a pre-entered payment method. If not provided – the
 	  household’s default payment method is used  */
-    private Integer paymentMethodId;
+	private Integer paymentMethodId;
 	/**  Identifier for a pre-associated payment gateway. If not provided – the
 	  account’s default payment gateway is used  */
-    private Integer paymentGatewayId;
+	private Integer paymentGatewayId;
 	/**  Coupon code  */
-    private String coupon;
+	private String coupon;
 	/**  Additional data for the adapter  */
-    private String adapterData;
+	private String adapterData;
 
-    // currency:
-    public String getCurrency(){
-        return this.currency;
-    }
-    public void setCurrency(String currency){
-        this.currency = currency;
+	// currency:
+	public String getCurrency(){
+		return this.currency;
+	}
+	public void setCurrency(String currency){
+		this.currency = currency;
+	}
+
+	public void currency(String multirequestToken){
+		setToken("currency", multirequestToken);
+	}
+
+	// price:
+	public Double getPrice(){
+		return this.price;
+	}
+	public void setPrice(Double price){
+		this.price = price;
+	}
+
+	public void price(String multirequestToken){
+		setToken("price", multirequestToken);
+	}
+
+	// paymentMethodId:
+	public Integer getPaymentMethodId(){
+		return this.paymentMethodId;
+	}
+	public void setPaymentMethodId(Integer paymentMethodId){
+		this.paymentMethodId = paymentMethodId;
+	}
+
+	public void paymentMethodId(String multirequestToken){
+		setToken("paymentMethodId", multirequestToken);
+	}
+
+	// paymentGatewayId:
+	public Integer getPaymentGatewayId(){
+		return this.paymentGatewayId;
+	}
+	public void setPaymentGatewayId(Integer paymentGatewayId){
+		this.paymentGatewayId = paymentGatewayId;
+	}
+
+	public void paymentGatewayId(String multirequestToken){
+		setToken("paymentGatewayId", multirequestToken);
+	}
+
+	// coupon:
+	public String getCoupon(){
+		return this.coupon;
+	}
+	public void setCoupon(String coupon){
+		this.coupon = coupon;
+	}
+
+	public void coupon(String multirequestToken){
+		setToken("coupon", multirequestToken);
+	}
+
+	// adapterData:
+	public String getAdapterData(){
+		return this.adapterData;
+	}
+	public void setAdapterData(String adapterData){
+		this.adapterData = adapterData;
+	}
+
+	public void adapterData(String multirequestToken){
+		setToken("adapterData", multirequestToken);
+	}
+
+
+	public Purchase() {
+		super();
+	}
+
+	public Purchase(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		currency = GsonParser.parseString(jsonObject.get("currency"));
+		price = GsonParser.parseDouble(jsonObject.get("price"));
+		paymentMethodId = GsonParser.parseInt(jsonObject.get("paymentMethodId"));
+		paymentGatewayId = GsonParser.parseInt(jsonObject.get("paymentGatewayId"));
+		coupon = GsonParser.parseString(jsonObject.get("coupon"));
+		adapterData = GsonParser.parseString(jsonObject.get("adapterData"));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaPurchase");
+		kparams.add("currency", this.currency);
+		kparams.add("price", this.price);
+		kparams.add("paymentMethodId", this.paymentMethodId);
+		kparams.add("paymentGatewayId", this.paymentGatewayId);
+		kparams.add("coupon", this.coupon);
+		kparams.add("adapterData", this.adapterData);
+		return kparams;
+	}
+
+
+    public static final Creator<Purchase> CREATOR = new Creator<Purchase>() {
+        @Override
+        public Purchase createFromParcel(Parcel source) {
+            return new Purchase(source);
+        }
+
+        @Override
+        public Purchase[] newArray(int size) {
+            return new Purchase[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(this.currency);
+        dest.writeValue(this.price);
+        dest.writeValue(this.paymentMethodId);
+        dest.writeValue(this.paymentGatewayId);
+        dest.writeString(this.coupon);
+        dest.writeString(this.adapterData);
     }
 
-    // price:
-    public Double getPrice(){
-        return this.price;
+    public Purchase(Parcel in) {
+        super(in);
+        this.currency = in.readString();
+        this.price = (Double)in.readValue(Double.class.getClassLoader());
+        this.paymentMethodId = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.paymentGatewayId = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.coupon = in.readString();
+        this.adapterData = in.readString();
     }
-    public void setPrice(Double price){
-        this.price = price;
-    }
-
-    // paymentMethodId:
-    public Integer getPaymentMethodId(){
-        return this.paymentMethodId;
-    }
-    public void setPaymentMethodId(Integer paymentMethodId){
-        this.paymentMethodId = paymentMethodId;
-    }
-
-    // paymentGatewayId:
-    public Integer getPaymentGatewayId(){
-        return this.paymentGatewayId;
-    }
-    public void setPaymentGatewayId(Integer paymentGatewayId){
-        this.paymentGatewayId = paymentGatewayId;
-    }
-
-    // coupon:
-    public String getCoupon(){
-        return this.coupon;
-    }
-    public void setCoupon(String coupon){
-        this.coupon = coupon;
-    }
-
-    // adapterData:
-    public String getAdapterData(){
-        return this.adapterData;
-    }
-    public void setAdapterData(String adapterData){
-        this.adapterData = adapterData;
-    }
-
-
-    public Purchase() {
-       super();
-    }
-
-    public Purchase(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        currency = GsonParser.parseString(jsonObject.get("currency"));
-        price = GsonParser.parseDouble(jsonObject.get("price"));
-        paymentMethodId = GsonParser.parseInt(jsonObject.get("paymentMethodId"));
-        paymentGatewayId = GsonParser.parseInt(jsonObject.get("paymentGatewayId"));
-        coupon = GsonParser.parseString(jsonObject.get("coupon"));
-        adapterData = GsonParser.parseString(jsonObject.get("adapterData"));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaPurchase");
-        kparams.add("currency", this.currency);
-        kparams.add("price", this.price);
-        kparams.add("paymentMethodId", this.paymentMethodId);
-        kparams.add("paymentGatewayId", this.paymentGatewayId);
-        kparams.add("coupon", this.coupon);
-        kparams.add("adapterData", this.adapterData);
-        return kparams;
-    }
-
 }
 

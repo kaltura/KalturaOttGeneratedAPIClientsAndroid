@@ -27,12 +27,15 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.types.ObjectBase;
-import java.util.List;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.utils.request.RequestBuilder;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -42,40 +45,77 @@ import com.google.gson.JsonObject;
  */
 
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(AdsContext.Tokenizer.class)
 public class AdsContext extends ObjectBase {
+	
+	public interface Tokenizer extends ObjectBase.Tokenizer {
+		RequestBuilder.ListTokenizer<AdsSource.Tokenizer> sources();
+	}
 
 	/**  Sources  */
-    private List<AdsSource> sources;
+	private List<AdsSource> sources;
 
-    // sources:
-    public List<AdsSource> getSources(){
-        return this.sources;
+	// sources:
+	public List<AdsSource> getSources(){
+		return this.sources;
+	}
+	public void setSources(List<AdsSource> sources){
+		this.sources = sources;
+	}
+
+
+	public AdsContext() {
+		super();
+	}
+
+	public AdsContext(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		sources = GsonParser.parseArray(jsonObject.getAsJsonArray("sources"), AdsSource.class);
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaAdsContext");
+		kparams.add("sources", this.sources);
+		return kparams;
+	}
+
+
+    public static final Creator<AdsContext> CREATOR = new Creator<AdsContext>() {
+        @Override
+        public AdsContext createFromParcel(Parcel source) {
+            return new AdsContext(source);
+        }
+
+        @Override
+        public AdsContext[] newArray(int size) {
+            return new AdsContext[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        if(this.sources != null) {
+            dest.writeInt(this.sources.size());
+            dest.writeList(this.sources);
+        } else {
+            dest.writeInt(-1);
+        }
     }
-    public void setSources(List<AdsSource> sources){
-        this.sources = sources;
+
+    public AdsContext(Parcel in) {
+        super(in);
+        int sourcesSize = in.readInt();
+        if( sourcesSize > -1) {
+            this.sources = new ArrayList<>();
+            in.readList(this.sources, AdsSource.class.getClassLoader());
+        }
     }
-
-
-    public AdsContext() {
-       super();
-    }
-
-    public AdsContext(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        sources = GsonParser.parseArray(jsonObject.getAsJsonArray("sources"), AdsSource.class);
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaAdsContext");
-        kparams.add("sources", this.sources);
-        return kparams;
-    }
-
 }
 

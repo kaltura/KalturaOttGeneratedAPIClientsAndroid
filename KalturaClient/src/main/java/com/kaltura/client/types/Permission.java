@@ -27,12 +27,15 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.types.ObjectBase;
-import java.util.List;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.utils.request.RequestBuilder;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -42,63 +45,114 @@ import com.google.gson.JsonObject;
  */
 
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(Permission.Tokenizer.class)
 public class Permission extends ObjectBase {
+	
+	public interface Tokenizer extends ObjectBase.Tokenizer {
+		String id();
+		String name();
+		RequestBuilder.ListTokenizer<PermissionItem.Tokenizer> permissionItems();
+	}
 
 	/**  Permission identifier  */
-    private Long id;
+	private Long id;
 	/**  Permission name  */
-    private String name;
+	private String name;
 	/**  List of permission items associated with the permission  */
-    private List<PermissionItem> permissionItems;
+	private List<PermissionItem> permissionItems;
 
-    // id:
-    public Long getId(){
-        return this.id;
+	// id:
+	public Long getId(){
+		return this.id;
+	}
+	public void setId(Long id){
+		this.id = id;
+	}
+
+	public void id(String multirequestToken){
+		setToken("id", multirequestToken);
+	}
+
+	// name:
+	public String getName(){
+		return this.name;
+	}
+	public void setName(String name){
+		this.name = name;
+	}
+
+	public void name(String multirequestToken){
+		setToken("name", multirequestToken);
+	}
+
+	// permissionItems:
+	public List<PermissionItem> getPermissionItems(){
+		return this.permissionItems;
+	}
+	public void setPermissionItems(List<PermissionItem> permissionItems){
+		this.permissionItems = permissionItems;
+	}
+
+
+	public Permission() {
+		super();
+	}
+
+	public Permission(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		id = GsonParser.parseLong(jsonObject.get("id"));
+		name = GsonParser.parseString(jsonObject.get("name"));
+		permissionItems = GsonParser.parseArray(jsonObject.getAsJsonArray("permissionItems"), PermissionItem.class);
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaPermission");
+		kparams.add("name", this.name);
+		kparams.add("permissionItems", this.permissionItems);
+		return kparams;
+	}
+
+
+    public static final Creator<Permission> CREATOR = new Creator<Permission>() {
+        @Override
+        public Permission createFromParcel(Parcel source) {
+            return new Permission(source);
+        }
+
+        @Override
+        public Permission[] newArray(int size) {
+            return new Permission[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeValue(this.id);
+        dest.writeString(this.name);
+        if(this.permissionItems != null) {
+            dest.writeInt(this.permissionItems.size());
+            dest.writeList(this.permissionItems);
+        } else {
+            dest.writeInt(-1);
+        }
     }
-    public void setId(Long id){
-        this.id = id;
+
+    public Permission(Parcel in) {
+        super(in);
+        this.id = (Long)in.readValue(Long.class.getClassLoader());
+        this.name = in.readString();
+        int permissionItemsSize = in.readInt();
+        if( permissionItemsSize > -1) {
+            this.permissionItems = new ArrayList<>();
+            in.readList(this.permissionItems, PermissionItem.class.getClassLoader());
+        }
     }
-
-    // name:
-    public String getName(){
-        return this.name;
-    }
-    public void setName(String name){
-        this.name = name;
-    }
-
-    // permissionItems:
-    public List<PermissionItem> getPermissionItems(){
-        return this.permissionItems;
-    }
-    public void setPermissionItems(List<PermissionItem> permissionItems){
-        this.permissionItems = permissionItems;
-    }
-
-
-    public Permission() {
-       super();
-    }
-
-    public Permission(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        id = GsonParser.parseLong(jsonObject.get("id"));
-        name = GsonParser.parseString(jsonObject.get("name"));
-        permissionItems = GsonParser.parseArray(jsonObject.getAsJsonArray("permissionItems"), PermissionItem.class);
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaPermission");
-        kparams.add("name", this.name);
-        kparams.add("permissionItems", this.permissionItems);
-        return kparams;
-    }
-
 }
 

@@ -27,11 +27,12 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.types.ObjectBase;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -42,76 +43,129 @@ import com.google.gson.JsonObject;
 
 /**  Price  */
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(Price.Tokenizer.class)
 public class Price extends ObjectBase {
+	
+	public interface Tokenizer extends ObjectBase.Tokenizer {
+		String amount();
+		String currency();
+		String currencySign();
+		String countryId();
+	}
 
 	/**  Price  */
-    private Double amount;
+	private Double amount;
 	/**  Currency  */
-    private String currency;
+	private String currency;
 	/**  Currency Sign  */
-    private String currencySign;
+	private String currencySign;
 	/**  Currency  */
-    private Long countryId;
+	private Long countryId;
 
-    // amount:
-    public Double getAmount(){
-        return this.amount;
+	// amount:
+	public Double getAmount(){
+		return this.amount;
+	}
+	public void setAmount(Double amount){
+		this.amount = amount;
+	}
+
+	public void amount(String multirequestToken){
+		setToken("amount", multirequestToken);
+	}
+
+	// currency:
+	public String getCurrency(){
+		return this.currency;
+	}
+	public void setCurrency(String currency){
+		this.currency = currency;
+	}
+
+	public void currency(String multirequestToken){
+		setToken("currency", multirequestToken);
+	}
+
+	// currencySign:
+	public String getCurrencySign(){
+		return this.currencySign;
+	}
+	public void setCurrencySign(String currencySign){
+		this.currencySign = currencySign;
+	}
+
+	public void currencySign(String multirequestToken){
+		setToken("currencySign", multirequestToken);
+	}
+
+	// countryId:
+	public Long getCountryId(){
+		return this.countryId;
+	}
+	public void setCountryId(Long countryId){
+		this.countryId = countryId;
+	}
+
+	public void countryId(String multirequestToken){
+		setToken("countryId", multirequestToken);
+	}
+
+
+	public Price() {
+		super();
+	}
+
+	public Price(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		amount = GsonParser.parseDouble(jsonObject.get("amount"));
+		currency = GsonParser.parseString(jsonObject.get("currency"));
+		currencySign = GsonParser.parseString(jsonObject.get("currencySign"));
+		countryId = GsonParser.parseLong(jsonObject.get("countryId"));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaPrice");
+		kparams.add("amount", this.amount);
+		kparams.add("currency", this.currency);
+		kparams.add("currencySign", this.currencySign);
+		kparams.add("countryId", this.countryId);
+		return kparams;
+	}
+
+
+    public static final Creator<Price> CREATOR = new Creator<Price>() {
+        @Override
+        public Price createFromParcel(Parcel source) {
+            return new Price(source);
+        }
+
+        @Override
+        public Price[] newArray(int size) {
+            return new Price[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeValue(this.amount);
+        dest.writeString(this.currency);
+        dest.writeString(this.currencySign);
+        dest.writeValue(this.countryId);
     }
-    public void setAmount(Double amount){
-        this.amount = amount;
+
+    public Price(Parcel in) {
+        super(in);
+        this.amount = (Double)in.readValue(Double.class.getClassLoader());
+        this.currency = in.readString();
+        this.currencySign = in.readString();
+        this.countryId = (Long)in.readValue(Long.class.getClassLoader());
     }
-
-    // currency:
-    public String getCurrency(){
-        return this.currency;
-    }
-    public void setCurrency(String currency){
-        this.currency = currency;
-    }
-
-    // currencySign:
-    public String getCurrencySign(){
-        return this.currencySign;
-    }
-    public void setCurrencySign(String currencySign){
-        this.currencySign = currencySign;
-    }
-
-    // countryId:
-    public Long getCountryId(){
-        return this.countryId;
-    }
-    public void setCountryId(Long countryId){
-        this.countryId = countryId;
-    }
-
-
-    public Price() {
-       super();
-    }
-
-    public Price(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        amount = GsonParser.parseDouble(jsonObject.get("amount"));
-        currency = GsonParser.parseString(jsonObject.get("currency"));
-        currencySign = GsonParser.parseString(jsonObject.get("currencySign"));
-        countryId = GsonParser.parseLong(jsonObject.get("countryId"));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaPrice");
-        kparams.add("amount", this.amount);
-        kparams.add("currency", this.currency);
-        kparams.add("currencySign", this.currencySign);
-        kparams.add("countryId", this.countryId);
-        return kparams;
-    }
-
 }
 

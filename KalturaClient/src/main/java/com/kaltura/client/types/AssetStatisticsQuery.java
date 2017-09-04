@@ -27,12 +27,13 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.types.ObjectBase;
-import com.kaltura.client.enums.AssetType;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.enums.AssetType;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -42,76 +43,130 @@ import com.google.gson.JsonObject;
  */
 
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(AssetStatisticsQuery.Tokenizer.class)
 public class AssetStatisticsQuery extends ObjectBase {
+	
+	public interface Tokenizer extends ObjectBase.Tokenizer {
+		String assetIdIn();
+		String assetTypeEqual();
+		String startDateGreaterThanOrEqual();
+		String endDateGreaterThanOrEqual();
+	}
 
 	/**  Comma separated list of asset identifiers.  */
-    private String assetIdIn;
+	private String assetIdIn;
 	/**  Asset type  */
-    private AssetType assetTypeEqual;
+	private AssetType assetTypeEqual;
 	/**  The beginning of the time window to get the statistics for (in epoch).  */
-    private Long startDateGreaterThanOrEqual;
+	private Long startDateGreaterThanOrEqual;
 	/**  /// The end of the time window to get the statistics for (in epoch).  */
-    private Long endDateGreaterThanOrEqual;
+	private Long endDateGreaterThanOrEqual;
 
-    // assetIdIn:
-    public String getAssetIdIn(){
-        return this.assetIdIn;
+	// assetIdIn:
+	public String getAssetIdIn(){
+		return this.assetIdIn;
+	}
+	public void setAssetIdIn(String assetIdIn){
+		this.assetIdIn = assetIdIn;
+	}
+
+	public void assetIdIn(String multirequestToken){
+		setToken("assetIdIn", multirequestToken);
+	}
+
+	// assetTypeEqual:
+	public AssetType getAssetTypeEqual(){
+		return this.assetTypeEqual;
+	}
+	public void setAssetTypeEqual(AssetType assetTypeEqual){
+		this.assetTypeEqual = assetTypeEqual;
+	}
+
+	public void assetTypeEqual(String multirequestToken){
+		setToken("assetTypeEqual", multirequestToken);
+	}
+
+	// startDateGreaterThanOrEqual:
+	public Long getStartDateGreaterThanOrEqual(){
+		return this.startDateGreaterThanOrEqual;
+	}
+	public void setStartDateGreaterThanOrEqual(Long startDateGreaterThanOrEqual){
+		this.startDateGreaterThanOrEqual = startDateGreaterThanOrEqual;
+	}
+
+	public void startDateGreaterThanOrEqual(String multirequestToken){
+		setToken("startDateGreaterThanOrEqual", multirequestToken);
+	}
+
+	// endDateGreaterThanOrEqual:
+	public Long getEndDateGreaterThanOrEqual(){
+		return this.endDateGreaterThanOrEqual;
+	}
+	public void setEndDateGreaterThanOrEqual(Long endDateGreaterThanOrEqual){
+		this.endDateGreaterThanOrEqual = endDateGreaterThanOrEqual;
+	}
+
+	public void endDateGreaterThanOrEqual(String multirequestToken){
+		setToken("endDateGreaterThanOrEqual", multirequestToken);
+	}
+
+
+	public AssetStatisticsQuery() {
+		super();
+	}
+
+	public AssetStatisticsQuery(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		assetIdIn = GsonParser.parseString(jsonObject.get("assetIdIn"));
+		assetTypeEqual = AssetType.get(GsonParser.parseString(jsonObject.get("assetTypeEqual")));
+		startDateGreaterThanOrEqual = GsonParser.parseLong(jsonObject.get("startDateGreaterThanOrEqual"));
+		endDateGreaterThanOrEqual = GsonParser.parseLong(jsonObject.get("endDateGreaterThanOrEqual"));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaAssetStatisticsQuery");
+		kparams.add("assetIdIn", this.assetIdIn);
+		kparams.add("assetTypeEqual", this.assetTypeEqual);
+		kparams.add("startDateGreaterThanOrEqual", this.startDateGreaterThanOrEqual);
+		kparams.add("endDateGreaterThanOrEqual", this.endDateGreaterThanOrEqual);
+		return kparams;
+	}
+
+
+    public static final Creator<AssetStatisticsQuery> CREATOR = new Creator<AssetStatisticsQuery>() {
+        @Override
+        public AssetStatisticsQuery createFromParcel(Parcel source) {
+            return new AssetStatisticsQuery(source);
+        }
+
+        @Override
+        public AssetStatisticsQuery[] newArray(int size) {
+            return new AssetStatisticsQuery[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(this.assetIdIn);
+        dest.writeInt(this.assetTypeEqual == null ? -1 : this.assetTypeEqual.ordinal());
+        dest.writeValue(this.startDateGreaterThanOrEqual);
+        dest.writeValue(this.endDateGreaterThanOrEqual);
     }
-    public void setAssetIdIn(String assetIdIn){
-        this.assetIdIn = assetIdIn;
+
+    public AssetStatisticsQuery(Parcel in) {
+        super(in);
+        this.assetIdIn = in.readString();
+        int tmpAssetTypeEqual = in.readInt();
+        this.assetTypeEqual = tmpAssetTypeEqual == -1 ? null : AssetType.values()[tmpAssetTypeEqual];
+        this.startDateGreaterThanOrEqual = (Long)in.readValue(Long.class.getClassLoader());
+        this.endDateGreaterThanOrEqual = (Long)in.readValue(Long.class.getClassLoader());
     }
-
-    // assetTypeEqual:
-    public AssetType getAssetTypeEqual(){
-        return this.assetTypeEqual;
-    }
-    public void setAssetTypeEqual(AssetType assetTypeEqual){
-        this.assetTypeEqual = assetTypeEqual;
-    }
-
-    // startDateGreaterThanOrEqual:
-    public Long getStartDateGreaterThanOrEqual(){
-        return this.startDateGreaterThanOrEqual;
-    }
-    public void setStartDateGreaterThanOrEqual(Long startDateGreaterThanOrEqual){
-        this.startDateGreaterThanOrEqual = startDateGreaterThanOrEqual;
-    }
-
-    // endDateGreaterThanOrEqual:
-    public Long getEndDateGreaterThanOrEqual(){
-        return this.endDateGreaterThanOrEqual;
-    }
-    public void setEndDateGreaterThanOrEqual(Long endDateGreaterThanOrEqual){
-        this.endDateGreaterThanOrEqual = endDateGreaterThanOrEqual;
-    }
-
-
-    public AssetStatisticsQuery() {
-       super();
-    }
-
-    public AssetStatisticsQuery(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        assetIdIn = GsonParser.parseString(jsonObject.get("assetIdIn"));
-        assetTypeEqual = AssetType.get(GsonParser.parseString(jsonObject.get("assetTypeEqual")));
-        startDateGreaterThanOrEqual = GsonParser.parseLong(jsonObject.get("startDateGreaterThanOrEqual"));
-        endDateGreaterThanOrEqual = GsonParser.parseLong(jsonObject.get("endDateGreaterThanOrEqual"));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaAssetStatisticsQuery");
-        kparams.add("assetIdIn", this.assetIdIn);
-        kparams.add("assetTypeEqual", this.assetTypeEqual);
-        kparams.add("startDateGreaterThanOrEqual", this.startDateGreaterThanOrEqual);
-        kparams.add("endDateGreaterThanOrEqual", this.endDateGreaterThanOrEqual);
-        return kparams;
-    }
-
 }
 

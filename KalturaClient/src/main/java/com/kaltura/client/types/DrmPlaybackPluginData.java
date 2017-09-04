@@ -27,11 +27,12 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.enums.DrmSchemeName;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.enums.DrmSchemeName;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -41,52 +42,92 @@ import com.google.gson.JsonObject;
  */
 
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(DrmPlaybackPluginData.Tokenizer.class)
 public class DrmPlaybackPluginData extends PluginData {
+	
+	public interface Tokenizer extends PluginData.Tokenizer {
+		String scheme();
+		String licenseURL();
+	}
 
 	/**  Scheme  */
-    private DrmSchemeName scheme;
+	private DrmSchemeName scheme;
 	/**  License URL  */
-    private String licenseURL;
+	private String licenseURL;
 
-    // scheme:
-    public DrmSchemeName getScheme(){
-        return this.scheme;
+	// scheme:
+	public DrmSchemeName getScheme(){
+		return this.scheme;
+	}
+	public void setScheme(DrmSchemeName scheme){
+		this.scheme = scheme;
+	}
+
+	public void scheme(String multirequestToken){
+		setToken("scheme", multirequestToken);
+	}
+
+	// licenseURL:
+	public String getLicenseURL(){
+		return this.licenseURL;
+	}
+	public void setLicenseURL(String licenseURL){
+		this.licenseURL = licenseURL;
+	}
+
+	public void licenseURL(String multirequestToken){
+		setToken("licenseURL", multirequestToken);
+	}
+
+
+	public DrmPlaybackPluginData() {
+		super();
+	}
+
+	public DrmPlaybackPluginData(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		scheme = DrmSchemeName.get(GsonParser.parseString(jsonObject.get("scheme")));
+		licenseURL = GsonParser.parseString(jsonObject.get("licenseURL"));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaDrmPlaybackPluginData");
+		kparams.add("scheme", this.scheme);
+		kparams.add("licenseURL", this.licenseURL);
+		return kparams;
+	}
+
+
+    public static final Creator<DrmPlaybackPluginData> CREATOR = new Creator<DrmPlaybackPluginData>() {
+        @Override
+        public DrmPlaybackPluginData createFromParcel(Parcel source) {
+            return new DrmPlaybackPluginData(source);
+        }
+
+        @Override
+        public DrmPlaybackPluginData[] newArray(int size) {
+            return new DrmPlaybackPluginData[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeInt(this.scheme == null ? -1 : this.scheme.ordinal());
+        dest.writeString(this.licenseURL);
     }
-    public void setScheme(DrmSchemeName scheme){
-        this.scheme = scheme;
+
+    public DrmPlaybackPluginData(Parcel in) {
+        super(in);
+        int tmpScheme = in.readInt();
+        this.scheme = tmpScheme == -1 ? null : DrmSchemeName.values()[tmpScheme];
+        this.licenseURL = in.readString();
     }
-
-    // licenseURL:
-    public String getLicenseURL(){
-        return this.licenseURL;
-    }
-    public void setLicenseURL(String licenseURL){
-        this.licenseURL = licenseURL;
-    }
-
-
-    public DrmPlaybackPluginData() {
-       super();
-    }
-
-    public DrmPlaybackPluginData(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        scheme = DrmSchemeName.get(GsonParser.parseString(jsonObject.get("scheme")));
-        licenseURL = GsonParser.parseString(jsonObject.get("licenseURL"));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaDrmPlaybackPluginData");
-        kparams.add("scheme", this.scheme);
-        kparams.add("licenseURL", this.licenseURL);
-        return kparams;
-    }
-
 }
 

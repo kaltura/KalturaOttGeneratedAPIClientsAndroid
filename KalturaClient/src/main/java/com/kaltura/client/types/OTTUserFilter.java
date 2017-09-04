@@ -27,10 +27,11 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
+import android.os.Parcel;
+import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
-import com.google.gson.JsonObject;
-
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -41,64 +42,110 @@ import com.google.gson.JsonObject;
 
 /**  OTT User filter  */
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(OTTUserFilter.Tokenizer.class)
 public class OTTUserFilter extends Filter {
+	
+	public interface Tokenizer extends Filter.Tokenizer {
+		String usernameEqual();
+		String externalIdEqual();
+		String idIn();
+	}
 
 	/**  Username  */
-    private String usernameEqual;
+	private String usernameEqual;
 	/**  User external identifier  */
-    private String externalIdEqual;
+	private String externalIdEqual;
 	/**  List of user identifiers separated by &amp;#39;,&amp;#39;  */
-    private String idIn;
+	private String idIn;
 
-    // usernameEqual:
-    public String getUsernameEqual(){
-        return this.usernameEqual;
+	// usernameEqual:
+	public String getUsernameEqual(){
+		return this.usernameEqual;
+	}
+	public void setUsernameEqual(String usernameEqual){
+		this.usernameEqual = usernameEqual;
+	}
+
+	public void usernameEqual(String multirequestToken){
+		setToken("usernameEqual", multirequestToken);
+	}
+
+	// externalIdEqual:
+	public String getExternalIdEqual(){
+		return this.externalIdEqual;
+	}
+	public void setExternalIdEqual(String externalIdEqual){
+		this.externalIdEqual = externalIdEqual;
+	}
+
+	public void externalIdEqual(String multirequestToken){
+		setToken("externalIdEqual", multirequestToken);
+	}
+
+	// idIn:
+	public String getIdIn(){
+		return this.idIn;
+	}
+	public void setIdIn(String idIn){
+		this.idIn = idIn;
+	}
+
+	public void idIn(String multirequestToken){
+		setToken("idIn", multirequestToken);
+	}
+
+
+	public OTTUserFilter() {
+		super();
+	}
+
+	public OTTUserFilter(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		usernameEqual = GsonParser.parseString(jsonObject.get("usernameEqual"));
+		externalIdEqual = GsonParser.parseString(jsonObject.get("externalIdEqual"));
+		idIn = GsonParser.parseString(jsonObject.get("idIn"));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaOTTUserFilter");
+		kparams.add("usernameEqual", this.usernameEqual);
+		kparams.add("externalIdEqual", this.externalIdEqual);
+		kparams.add("idIn", this.idIn);
+		return kparams;
+	}
+
+
+    public static final Creator<OTTUserFilter> CREATOR = new Creator<OTTUserFilter>() {
+        @Override
+        public OTTUserFilter createFromParcel(Parcel source) {
+            return new OTTUserFilter(source);
+        }
+
+        @Override
+        public OTTUserFilter[] newArray(int size) {
+            return new OTTUserFilter[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(this.usernameEqual);
+        dest.writeString(this.externalIdEqual);
+        dest.writeString(this.idIn);
     }
-    public void setUsernameEqual(String usernameEqual){
-        this.usernameEqual = usernameEqual;
+
+    public OTTUserFilter(Parcel in) {
+        super(in);
+        this.usernameEqual = in.readString();
+        this.externalIdEqual = in.readString();
+        this.idIn = in.readString();
     }
-
-    // externalIdEqual:
-    public String getExternalIdEqual(){
-        return this.externalIdEqual;
-    }
-    public void setExternalIdEqual(String externalIdEqual){
-        this.externalIdEqual = externalIdEqual;
-    }
-
-    // idIn:
-    public String getIdIn(){
-        return this.idIn;
-    }
-    public void setIdIn(String idIn){
-        this.idIn = idIn;
-    }
-
-
-    public OTTUserFilter() {
-       super();
-    }
-
-    public OTTUserFilter(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        usernameEqual = GsonParser.parseString(jsonObject.get("usernameEqual"));
-        externalIdEqual = GsonParser.parseString(jsonObject.get("externalIdEqual"));
-        idIn = GsonParser.parseString(jsonObject.get("idIn"));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaOTTUserFilter");
-        kparams.add("usernameEqual", this.usernameEqual);
-        kparams.add("externalIdEqual", this.externalIdEqual);
-        kparams.add("idIn", this.idIn);
-        return kparams;
-    }
-
 }
 

@@ -27,11 +27,14 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
+import android.os.Parcel;
+import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.utils.request.RequestBuilder;
+import java.util.ArrayList;
 import java.util.List;
-import com.google.gson.JsonObject;
-
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -41,66 +44,117 @@ import com.google.gson.JsonObject;
  */
 
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(PlaybackSource.Tokenizer.class)
 public class PlaybackSource extends MediaFile {
+	
+	public interface Tokenizer extends MediaFile.Tokenizer {
+		String format();
+		String protocols();
+		RequestBuilder.ListTokenizer<DrmPlaybackPluginData.Tokenizer> drm();
+	}
 
 	/**  Source format according to delivery profile streamer type (applehttp, mpegdash
 	  etc.)  */
-    private String format;
+	private String format;
 	/**  Comma separated string according to deliveryProfile media protocols
 	  (&amp;#39;http,https&amp;#39; etc.)  */
-    private String protocols;
+	private String protocols;
 	/**  DRM data object containing relevant license URL ,scheme name and certificate  */
-    private List<DrmPlaybackPluginData> drm;
+	private List<DrmPlaybackPluginData> drm;
 
-    // format:
-    public String getFormat(){
-        return this.format;
+	// format:
+	public String getFormat(){
+		return this.format;
+	}
+	public void setFormat(String format){
+		this.format = format;
+	}
+
+	public void format(String multirequestToken){
+		setToken("format", multirequestToken);
+	}
+
+	// protocols:
+	public String getProtocols(){
+		return this.protocols;
+	}
+	public void setProtocols(String protocols){
+		this.protocols = protocols;
+	}
+
+	public void protocols(String multirequestToken){
+		setToken("protocols", multirequestToken);
+	}
+
+	// drm:
+	public List<DrmPlaybackPluginData> getDrm(){
+		return this.drm;
+	}
+	public void setDrm(List<DrmPlaybackPluginData> drm){
+		this.drm = drm;
+	}
+
+
+	public PlaybackSource() {
+		super();
+	}
+
+	public PlaybackSource(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		format = GsonParser.parseString(jsonObject.get("format"));
+		protocols = GsonParser.parseString(jsonObject.get("protocols"));
+		drm = GsonParser.parseArray(jsonObject.getAsJsonArray("drm"), DrmPlaybackPluginData.class);
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaPlaybackSource");
+		kparams.add("format", this.format);
+		kparams.add("protocols", this.protocols);
+		kparams.add("drm", this.drm);
+		return kparams;
+	}
+
+
+    public static final Creator<PlaybackSource> CREATOR = new Creator<PlaybackSource>() {
+        @Override
+        public PlaybackSource createFromParcel(Parcel source) {
+            return new PlaybackSource(source);
+        }
+
+        @Override
+        public PlaybackSource[] newArray(int size) {
+            return new PlaybackSource[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(this.format);
+        dest.writeString(this.protocols);
+        if(this.drm != null) {
+            dest.writeInt(this.drm.size());
+            dest.writeList(this.drm);
+        } else {
+            dest.writeInt(-1);
+        }
     }
-    public void setFormat(String format){
-        this.format = format;
+
+    public PlaybackSource(Parcel in) {
+        super(in);
+        this.format = in.readString();
+        this.protocols = in.readString();
+        int drmSize = in.readInt();
+        if( drmSize > -1) {
+            this.drm = new ArrayList<>();
+            in.readList(this.drm, DrmPlaybackPluginData.class.getClassLoader());
+        }
     }
-
-    // protocols:
-    public String getProtocols(){
-        return this.protocols;
-    }
-    public void setProtocols(String protocols){
-        this.protocols = protocols;
-    }
-
-    // drm:
-    public List<DrmPlaybackPluginData> getDrm(){
-        return this.drm;
-    }
-    public void setDrm(List<DrmPlaybackPluginData> drm){
-        this.drm = drm;
-    }
-
-
-    public PlaybackSource() {
-       super();
-    }
-
-    public PlaybackSource(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        format = GsonParser.parseString(jsonObject.get("format"));
-        protocols = GsonParser.parseString(jsonObject.get("protocols"));
-        drm = GsonParser.parseArray(jsonObject.getAsJsonArray("drm"), DrmPlaybackPluginData.class);
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaPlaybackSource");
-        kparams.add("format", this.format);
-        kparams.add("protocols", this.protocols);
-        kparams.add("drm", this.drm);
-        return kparams;
-    }
-
 }
 

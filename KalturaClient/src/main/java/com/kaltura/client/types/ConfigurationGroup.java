@@ -27,12 +27,15 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.types.ObjectBase;
-import java.util.List;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.utils.request.RequestBuilder;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -42,107 +45,191 @@ import com.google.gson.JsonObject;
  */
 
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(ConfigurationGroup.Tokenizer.class)
 public class ConfigurationGroup extends ObjectBase {
+	
+	public interface Tokenizer extends ObjectBase.Tokenizer {
+		String id();
+		String name();
+		String partnerId();
+		String isDefault();
+		RequestBuilder.ListTokenizer<StringValue.Tokenizer> tags();
+		String numberOfDevices();
+		RequestBuilder.ListTokenizer<ConfigurationIdentifier.Tokenizer> configurationIdentifiers();
+	}
 
 	/**  Configuration group identifier  */
-    private String id;
+	private String id;
 	/**  Configuration group name  */
-    private String name;
+	private String name;
 	/**  Partner id  */
-    private Integer partnerId;
+	private Integer partnerId;
 	/**  Is default  */
-    private Boolean isDefault;
+	private Boolean isDefault;
 	/**  tags  */
-    private List<StringValue> tags;
+	private List<StringValue> tags;
 	/**  Number of devices  */
-    private Long numberOfDevices;
+	private Long numberOfDevices;
 	/**  Configuration identifiers  */
-    private List<ConfigurationIdentifier> configurationIdentifiers;
+	private List<ConfigurationIdentifier> configurationIdentifiers;
 
-    // id:
-    public String getId(){
-        return this.id;
-    }
-    public void setId(String id){
-        this.id = id;
+	// id:
+	public String getId(){
+		return this.id;
+	}
+	public void setId(String id){
+		this.id = id;
+	}
+
+	public void id(String multirequestToken){
+		setToken("id", multirequestToken);
+	}
+
+	// name:
+	public String getName(){
+		return this.name;
+	}
+	public void setName(String name){
+		this.name = name;
+	}
+
+	public void name(String multirequestToken){
+		setToken("name", multirequestToken);
+	}
+
+	// partnerId:
+	public Integer getPartnerId(){
+		return this.partnerId;
+	}
+	public void setPartnerId(Integer partnerId){
+		this.partnerId = partnerId;
+	}
+
+	public void partnerId(String multirequestToken){
+		setToken("partnerId", multirequestToken);
+	}
+
+	// isDefault:
+	public Boolean getIsDefault(){
+		return this.isDefault;
+	}
+	public void setIsDefault(Boolean isDefault){
+		this.isDefault = isDefault;
+	}
+
+	public void isDefault(String multirequestToken){
+		setToken("isDefault", multirequestToken);
+	}
+
+	// tags:
+	public List<StringValue> getTags(){
+		return this.tags;
+	}
+	public void setTags(List<StringValue> tags){
+		this.tags = tags;
+	}
+
+	// numberOfDevices:
+	public Long getNumberOfDevices(){
+		return this.numberOfDevices;
+	}
+	public void setNumberOfDevices(Long numberOfDevices){
+		this.numberOfDevices = numberOfDevices;
+	}
+
+	public void numberOfDevices(String multirequestToken){
+		setToken("numberOfDevices", multirequestToken);
+	}
+
+	// configurationIdentifiers:
+	public List<ConfigurationIdentifier> getConfigurationIdentifiers(){
+		return this.configurationIdentifiers;
+	}
+	public void setConfigurationIdentifiers(List<ConfigurationIdentifier> configurationIdentifiers){
+		this.configurationIdentifiers = configurationIdentifiers;
+	}
+
+
+	public ConfigurationGroup() {
+		super();
+	}
+
+	public ConfigurationGroup(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		id = GsonParser.parseString(jsonObject.get("id"));
+		name = GsonParser.parseString(jsonObject.get("name"));
+		partnerId = GsonParser.parseInt(jsonObject.get("partnerId"));
+		isDefault = GsonParser.parseBoolean(jsonObject.get("isDefault"));
+		tags = GsonParser.parseArray(jsonObject.getAsJsonArray("tags"), StringValue.class);
+		numberOfDevices = GsonParser.parseLong(jsonObject.get("numberOfDevices"));
+		configurationIdentifiers = GsonParser.parseArray(jsonObject.getAsJsonArray("configurationIdentifiers"), ConfigurationIdentifier.class);
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaConfigurationGroup");
+		kparams.add("name", this.name);
+		kparams.add("isDefault", this.isDefault);
+		return kparams;
+	}
+
+
+    public static final Creator<ConfigurationGroup> CREATOR = new Creator<ConfigurationGroup>() {
+        @Override
+        public ConfigurationGroup createFromParcel(Parcel source) {
+            return new ConfigurationGroup(source);
+        }
+
+        @Override
+        public ConfigurationGroup[] newArray(int size) {
+            return new ConfigurationGroup[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(this.id);
+        dest.writeString(this.name);
+        dest.writeValue(this.partnerId);
+        dest.writeValue(this.isDefault);
+        if(this.tags != null) {
+            dest.writeInt(this.tags.size());
+            dest.writeList(this.tags);
+        } else {
+            dest.writeInt(-1);
+        }
+        dest.writeValue(this.numberOfDevices);
+        if(this.configurationIdentifiers != null) {
+            dest.writeInt(this.configurationIdentifiers.size());
+            dest.writeList(this.configurationIdentifiers);
+        } else {
+            dest.writeInt(-1);
+        }
     }
 
-    // name:
-    public String getName(){
-        return this.name;
+    public ConfigurationGroup(Parcel in) {
+        super(in);
+        this.id = in.readString();
+        this.name = in.readString();
+        this.partnerId = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.isDefault = (Boolean)in.readValue(Boolean.class.getClassLoader());
+        int tagsSize = in.readInt();
+        if( tagsSize > -1) {
+            this.tags = new ArrayList<>();
+            in.readList(this.tags, StringValue.class.getClassLoader());
+        }
+        this.numberOfDevices = (Long)in.readValue(Long.class.getClassLoader());
+        int configurationIdentifiersSize = in.readInt();
+        if( configurationIdentifiersSize > -1) {
+            this.configurationIdentifiers = new ArrayList<>();
+            in.readList(this.configurationIdentifiers, ConfigurationIdentifier.class.getClassLoader());
+        }
     }
-    public void setName(String name){
-        this.name = name;
-    }
-
-    // partnerId:
-    public Integer getPartnerId(){
-        return this.partnerId;
-    }
-    public void setPartnerId(Integer partnerId){
-        this.partnerId = partnerId;
-    }
-
-    // isDefault:
-    public Boolean getIsDefault(){
-        return this.isDefault;
-    }
-    public void setIsDefault(Boolean isDefault){
-        this.isDefault = isDefault;
-    }
-
-    // tags:
-    public List<StringValue> getTags(){
-        return this.tags;
-    }
-    public void setTags(List<StringValue> tags){
-        this.tags = tags;
-    }
-
-    // numberOfDevices:
-    public Long getNumberOfDevices(){
-        return this.numberOfDevices;
-    }
-    public void setNumberOfDevices(Long numberOfDevices){
-        this.numberOfDevices = numberOfDevices;
-    }
-
-    // configurationIdentifiers:
-    public List<ConfigurationIdentifier> getConfigurationIdentifiers(){
-        return this.configurationIdentifiers;
-    }
-    public void setConfigurationIdentifiers(List<ConfigurationIdentifier> configurationIdentifiers){
-        this.configurationIdentifiers = configurationIdentifiers;
-    }
-
-
-    public ConfigurationGroup() {
-       super();
-    }
-
-    public ConfigurationGroup(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        id = GsonParser.parseString(jsonObject.get("id"));
-        name = GsonParser.parseString(jsonObject.get("name"));
-        partnerId = GsonParser.parseInt(jsonObject.get("partnerId"));
-        isDefault = GsonParser.parseBoolean(jsonObject.get("isDefault"));
-        tags = GsonParser.parseArray(jsonObject.getAsJsonArray("tags"), StringValue.class);
-        numberOfDevices = GsonParser.parseLong(jsonObject.get("numberOfDevices"));
-        configurationIdentifiers = GsonParser.parseArray(jsonObject.getAsJsonArray("configurationIdentifiers"), ConfigurationIdentifier.class);
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaConfigurationGroup");
-        kparams.add("name", this.name);
-        kparams.add("isDefault", this.isDefault);
-        return kparams;
-    }
-
 }
 

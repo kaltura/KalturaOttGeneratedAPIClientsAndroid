@@ -27,11 +27,12 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.types.ObjectBase;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -42,52 +43,91 @@ import com.google.gson.JsonObject;
 
 /**  Product Code  */
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(ProductCode.Tokenizer.class)
 public class ProductCode extends ObjectBase {
+	
+	public interface Tokenizer extends ObjectBase.Tokenizer {
+		String inappProvider();
+		String code();
+	}
 
 	/**  Provider Name  */
-    private String inappProvider;
+	private String inappProvider;
 	/**  Product Code  */
-    private String code;
+	private String code;
 
-    // inappProvider:
-    public String getInappProvider(){
-        return this.inappProvider;
+	// inappProvider:
+	public String getInappProvider(){
+		return this.inappProvider;
+	}
+	public void setInappProvider(String inappProvider){
+		this.inappProvider = inappProvider;
+	}
+
+	public void inappProvider(String multirequestToken){
+		setToken("inappProvider", multirequestToken);
+	}
+
+	// code:
+	public String getCode(){
+		return this.code;
+	}
+	public void setCode(String code){
+		this.code = code;
+	}
+
+	public void code(String multirequestToken){
+		setToken("code", multirequestToken);
+	}
+
+
+	public ProductCode() {
+		super();
+	}
+
+	public ProductCode(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		inappProvider = GsonParser.parseString(jsonObject.get("inappProvider"));
+		code = GsonParser.parseString(jsonObject.get("code"));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaProductCode");
+		kparams.add("inappProvider", this.inappProvider);
+		kparams.add("code", this.code);
+		return kparams;
+	}
+
+
+    public static final Creator<ProductCode> CREATOR = new Creator<ProductCode>() {
+        @Override
+        public ProductCode createFromParcel(Parcel source) {
+            return new ProductCode(source);
+        }
+
+        @Override
+        public ProductCode[] newArray(int size) {
+            return new ProductCode[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(this.inappProvider);
+        dest.writeString(this.code);
     }
-    public void setInappProvider(String inappProvider){
-        this.inappProvider = inappProvider;
+
+    public ProductCode(Parcel in) {
+        super(in);
+        this.inappProvider = in.readString();
+        this.code = in.readString();
     }
-
-    // code:
-    public String getCode(){
-        return this.code;
-    }
-    public void setCode(String code){
-        this.code = code;
-    }
-
-
-    public ProductCode() {
-       super();
-    }
-
-    public ProductCode(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        inappProvider = GsonParser.parseString(jsonObject.get("inappProvider"));
-        code = GsonParser.parseString(jsonObject.get("code"));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaProductCode");
-        kparams.add("inappProvider", this.inappProvider);
-        kparams.add("code", this.code);
-        return kparams;
-    }
-
 }
 

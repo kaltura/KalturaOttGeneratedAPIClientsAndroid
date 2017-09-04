@@ -27,12 +27,13 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.types.ObjectBase;
-import com.kaltura.client.enums.RuleActionType;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.enums.RuleActionType;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -42,40 +43,73 @@ import com.google.gson.JsonObject;
  */
 
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(RuleAction.Tokenizer.class)
 public class RuleAction extends ObjectBase {
+	
+	public interface Tokenizer extends ObjectBase.Tokenizer {
+		String type();
+	}
 
 	/**  The type of the action  */
-    private RuleActionType type;
+	private RuleActionType type;
 
-    // type:
-    public RuleActionType getType(){
-        return this.type;
+	// type:
+	public RuleActionType getType(){
+		return this.type;
+	}
+	public void setType(RuleActionType type){
+		this.type = type;
+	}
+
+	public void type(String multirequestToken){
+		setToken("type", multirequestToken);
+	}
+
+
+	public RuleAction() {
+		super();
+	}
+
+	public RuleAction(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		type = RuleActionType.get(GsonParser.parseString(jsonObject.get("type")));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaRuleAction");
+		kparams.add("type", this.type);
+		return kparams;
+	}
+
+
+    public static final Creator<RuleAction> CREATOR = new Creator<RuleAction>() {
+        @Override
+        public RuleAction createFromParcel(Parcel source) {
+            return new RuleAction(source);
+        }
+
+        @Override
+        public RuleAction[] newArray(int size) {
+            return new RuleAction[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeInt(this.type == null ? -1 : this.type.ordinal());
     }
-    public void setType(RuleActionType type){
-        this.type = type;
+
+    public RuleAction(Parcel in) {
+        super(in);
+        int tmpType = in.readInt();
+        this.type = tmpType == -1 ? null : RuleActionType.values()[tmpType];
     }
-
-
-    public RuleAction() {
-       super();
-    }
-
-    public RuleAction(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        type = RuleActionType.get(GsonParser.parseString(jsonObject.get("type")));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaRuleAction");
-        kparams.add("type", this.type);
-        return kparams;
-    }
-
 }
 

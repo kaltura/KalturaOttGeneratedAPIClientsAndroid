@@ -27,11 +27,12 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.types.ObjectBase;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -42,51 +43,90 @@ import com.google.gson.JsonObject;
 
 /**  Device family details  */
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(DeviceFamilyBase.Tokenizer.class)
 public class DeviceFamilyBase extends ObjectBase {
+	
+	public interface Tokenizer extends ObjectBase.Tokenizer {
+		String id();
+		String name();
+	}
 
 	/**  Device family identifier  */
-    private Long id;
+	private Long id;
 	/**  Device family name  */
-    private String name;
+	private String name;
 
-    // id:
-    public Long getId(){
-        return this.id;
+	// id:
+	public Long getId(){
+		return this.id;
+	}
+	public void setId(Long id){
+		this.id = id;
+	}
+
+	public void id(String multirequestToken){
+		setToken("id", multirequestToken);
+	}
+
+	// name:
+	public String getName(){
+		return this.name;
+	}
+	public void setName(String name){
+		this.name = name;
+	}
+
+	public void name(String multirequestToken){
+		setToken("name", multirequestToken);
+	}
+
+
+	public DeviceFamilyBase() {
+		super();
+	}
+
+	public DeviceFamilyBase(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		id = GsonParser.parseLong(jsonObject.get("id"));
+		name = GsonParser.parseString(jsonObject.get("name"));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaDeviceFamilyBase");
+		kparams.add("name", this.name);
+		return kparams;
+	}
+
+
+    public static final Creator<DeviceFamilyBase> CREATOR = new Creator<DeviceFamilyBase>() {
+        @Override
+        public DeviceFamilyBase createFromParcel(Parcel source) {
+            return new DeviceFamilyBase(source);
+        }
+
+        @Override
+        public DeviceFamilyBase[] newArray(int size) {
+            return new DeviceFamilyBase[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeValue(this.id);
+        dest.writeString(this.name);
     }
-    public void setId(Long id){
-        this.id = id;
+
+    public DeviceFamilyBase(Parcel in) {
+        super(in);
+        this.id = (Long)in.readValue(Long.class.getClassLoader());
+        this.name = in.readString();
     }
-
-    // name:
-    public String getName(){
-        return this.name;
-    }
-    public void setName(String name){
-        this.name = name;
-    }
-
-
-    public DeviceFamilyBase() {
-       super();
-    }
-
-    public DeviceFamilyBase(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        id = GsonParser.parseLong(jsonObject.get("id"));
-        name = GsonParser.parseString(jsonObject.get("name"));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaDeviceFamilyBase");
-        kparams.add("name", this.name);
-        return kparams;
-    }
-
 }
 

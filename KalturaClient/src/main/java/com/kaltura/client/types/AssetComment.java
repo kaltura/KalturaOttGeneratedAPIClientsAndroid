@@ -27,11 +27,12 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.enums.AssetType;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.enums.AssetType;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -42,76 +43,130 @@ import com.google.gson.JsonObject;
 
 /**  Asset Comment  */
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(AssetComment.Tokenizer.class)
 public class AssetComment extends SocialComment {
+	
+	public interface Tokenizer extends SocialComment.Tokenizer {
+		String id();
+		String assetId();
+		String assetType();
+		String subHeader();
+	}
 
 	/**  Comment ID  */
-    private Integer id;
+	private Integer id;
 	/**  Asset identifier  */
-    private Integer assetId;
+	private Integer assetId;
 	/**  Asset Type  */
-    private AssetType assetType;
+	private AssetType assetType;
 	/**  Sub Header  */
-    private String subHeader;
+	private String subHeader;
 
-    // id:
-    public Integer getId(){
-        return this.id;
+	// id:
+	public Integer getId(){
+		return this.id;
+	}
+	public void setId(Integer id){
+		this.id = id;
+	}
+
+	public void id(String multirequestToken){
+		setToken("id", multirequestToken);
+	}
+
+	// assetId:
+	public Integer getAssetId(){
+		return this.assetId;
+	}
+	public void setAssetId(Integer assetId){
+		this.assetId = assetId;
+	}
+
+	public void assetId(String multirequestToken){
+		setToken("assetId", multirequestToken);
+	}
+
+	// assetType:
+	public AssetType getAssetType(){
+		return this.assetType;
+	}
+	public void setAssetType(AssetType assetType){
+		this.assetType = assetType;
+	}
+
+	public void assetType(String multirequestToken){
+		setToken("assetType", multirequestToken);
+	}
+
+	// subHeader:
+	public String getSubHeader(){
+		return this.subHeader;
+	}
+	public void setSubHeader(String subHeader){
+		this.subHeader = subHeader;
+	}
+
+	public void subHeader(String multirequestToken){
+		setToken("subHeader", multirequestToken);
+	}
+
+
+	public AssetComment() {
+		super();
+	}
+
+	public AssetComment(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		id = GsonParser.parseInt(jsonObject.get("id"));
+		assetId = GsonParser.parseInt(jsonObject.get("assetId"));
+		assetType = AssetType.get(GsonParser.parseString(jsonObject.get("assetType")));
+		subHeader = GsonParser.parseString(jsonObject.get("subHeader"));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaAssetComment");
+		kparams.add("id", this.id);
+		kparams.add("assetId", this.assetId);
+		kparams.add("assetType", this.assetType);
+		kparams.add("subHeader", this.subHeader);
+		return kparams;
+	}
+
+
+    public static final Creator<AssetComment> CREATOR = new Creator<AssetComment>() {
+        @Override
+        public AssetComment createFromParcel(Parcel source) {
+            return new AssetComment(source);
+        }
+
+        @Override
+        public AssetComment[] newArray(int size) {
+            return new AssetComment[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeValue(this.id);
+        dest.writeValue(this.assetId);
+        dest.writeInt(this.assetType == null ? -1 : this.assetType.ordinal());
+        dest.writeString(this.subHeader);
     }
-    public void setId(Integer id){
-        this.id = id;
+
+    public AssetComment(Parcel in) {
+        super(in);
+        this.id = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.assetId = (Integer)in.readValue(Integer.class.getClassLoader());
+        int tmpAssetType = in.readInt();
+        this.assetType = tmpAssetType == -1 ? null : AssetType.values()[tmpAssetType];
+        this.subHeader = in.readString();
     }
-
-    // assetId:
-    public Integer getAssetId(){
-        return this.assetId;
-    }
-    public void setAssetId(Integer assetId){
-        this.assetId = assetId;
-    }
-
-    // assetType:
-    public AssetType getAssetType(){
-        return this.assetType;
-    }
-    public void setAssetType(AssetType assetType){
-        this.assetType = assetType;
-    }
-
-    // subHeader:
-    public String getSubHeader(){
-        return this.subHeader;
-    }
-    public void setSubHeader(String subHeader){
-        this.subHeader = subHeader;
-    }
-
-
-    public AssetComment() {
-       super();
-    }
-
-    public AssetComment(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        id = GsonParser.parseInt(jsonObject.get("id"));
-        assetId = GsonParser.parseInt(jsonObject.get("assetId"));
-        assetType = AssetType.get(GsonParser.parseString(jsonObject.get("assetType")));
-        subHeader = GsonParser.parseString(jsonObject.get("subHeader"));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaAssetComment");
-        kparams.add("id", this.id);
-        kparams.add("assetId", this.assetId);
-        kparams.add("assetType", this.assetType);
-        kparams.add("subHeader", this.subHeader);
-        return kparams;
-    }
-
 }
 

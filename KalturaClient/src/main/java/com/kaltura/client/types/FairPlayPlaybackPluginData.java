@@ -27,10 +27,11 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
+import android.os.Parcel;
+import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
-import com.google.gson.JsonObject;
-
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -40,40 +41,72 @@ import com.google.gson.JsonObject;
  */
 
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(FairPlayPlaybackPluginData.Tokenizer.class)
 public class FairPlayPlaybackPluginData extends DrmPlaybackPluginData {
+	
+	public interface Tokenizer extends DrmPlaybackPluginData.Tokenizer {
+		String certificate();
+	}
 
 	/**  Custom data string  */
-    private String certificate;
+	private String certificate;
 
-    // certificate:
-    public String getCertificate(){
-        return this.certificate;
+	// certificate:
+	public String getCertificate(){
+		return this.certificate;
+	}
+	public void setCertificate(String certificate){
+		this.certificate = certificate;
+	}
+
+	public void certificate(String multirequestToken){
+		setToken("certificate", multirequestToken);
+	}
+
+
+	public FairPlayPlaybackPluginData() {
+		super();
+	}
+
+	public FairPlayPlaybackPluginData(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		certificate = GsonParser.parseString(jsonObject.get("certificate"));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaFairPlayPlaybackPluginData");
+		kparams.add("certificate", this.certificate);
+		return kparams;
+	}
+
+
+    public static final Creator<FairPlayPlaybackPluginData> CREATOR = new Creator<FairPlayPlaybackPluginData>() {
+        @Override
+        public FairPlayPlaybackPluginData createFromParcel(Parcel source) {
+            return new FairPlayPlaybackPluginData(source);
+        }
+
+        @Override
+        public FairPlayPlaybackPluginData[] newArray(int size) {
+            return new FairPlayPlaybackPluginData[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(this.certificate);
     }
-    public void setCertificate(String certificate){
-        this.certificate = certificate;
+
+    public FairPlayPlaybackPluginData(Parcel in) {
+        super(in);
+        this.certificate = in.readString();
     }
-
-
-    public FairPlayPlaybackPluginData() {
-       super();
-    }
-
-    public FairPlayPlaybackPluginData(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        certificate = GsonParser.parseString(jsonObject.get("certificate"));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaFairPlayPlaybackPluginData");
-        kparams.add("certificate", this.certificate);
-        return kparams;
-    }
-
 }
 

@@ -27,10 +27,11 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
+import android.os.Parcel;
+import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
-import com.google.gson.JsonObject;
-
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -40,7 +41,14 @@ import com.google.gson.JsonObject;
  */
 
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(SearchAssetFilter.Tokenizer.class)
 public class SearchAssetFilter extends BaseSearchAssetFilter {
+	
+	public interface Tokenizer extends BaseSearchAssetFilter.Tokenizer {
+		String kSql();
+		String typeIn();
+		String idIn();
+	}
 
 	/**  Search assets using dynamic criteria. Provided collection of nested expressions
 	  with key, comparison operators, value, and logical conjunction.             
@@ -62,64 +70,103 @@ public class SearchAssetFilter extends BaseSearchAssetFilter {
 	  ~ (like), !~, ^ (starts with), + (exists), !+ (not exists).              Logical
 	  conjunction: and, or.               Search values are limited to 20 characters
 	  each.              (maximum length of entire filter is 2048 characters)  */
-    private String kSql;
+	private String kSql;
 	/**  Comma separated list of asset types to search within.               Possible
 	  values: 0 – EPG linear programs entries; 1 - Recordings; Any media type ID
 	  (according to media type IDs defined dynamically in the system).              If
 	  omitted – all types should be included.  */
-    private String typeIn;
+	private String typeIn;
 	/**  Comma separated list of EPG channel ids to search within.  */
-    private String idIn;
+	private String idIn;
 
-    // kSql:
-    public String getKSql(){
-        return this.kSql;
+	// kSql:
+	public String getKSql(){
+		return this.kSql;
+	}
+	public void setKSql(String kSql){
+		this.kSql = kSql;
+	}
+
+	public void kSql(String multirequestToken){
+		setToken("kSql", multirequestToken);
+	}
+
+	// typeIn:
+	public String getTypeIn(){
+		return this.typeIn;
+	}
+	public void setTypeIn(String typeIn){
+		this.typeIn = typeIn;
+	}
+
+	public void typeIn(String multirequestToken){
+		setToken("typeIn", multirequestToken);
+	}
+
+	// idIn:
+	public String getIdIn(){
+		return this.idIn;
+	}
+	public void setIdIn(String idIn){
+		this.idIn = idIn;
+	}
+
+	public void idIn(String multirequestToken){
+		setToken("idIn", multirequestToken);
+	}
+
+
+	public SearchAssetFilter() {
+		super();
+	}
+
+	public SearchAssetFilter(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		kSql = GsonParser.parseString(jsonObject.get("kSql"));
+		typeIn = GsonParser.parseString(jsonObject.get("typeIn"));
+		idIn = GsonParser.parseString(jsonObject.get("idIn"));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaSearchAssetFilter");
+		kparams.add("kSql", this.kSql);
+		kparams.add("typeIn", this.typeIn);
+		kparams.add("idIn", this.idIn);
+		return kparams;
+	}
+
+
+    public static final Creator<SearchAssetFilter> CREATOR = new Creator<SearchAssetFilter>() {
+        @Override
+        public SearchAssetFilter createFromParcel(Parcel source) {
+            return new SearchAssetFilter(source);
+        }
+
+        @Override
+        public SearchAssetFilter[] newArray(int size) {
+            return new SearchAssetFilter[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(this.kSql);
+        dest.writeString(this.typeIn);
+        dest.writeString(this.idIn);
     }
-    public void setKSql(String kSql){
-        this.kSql = kSql;
+
+    public SearchAssetFilter(Parcel in) {
+        super(in);
+        this.kSql = in.readString();
+        this.typeIn = in.readString();
+        this.idIn = in.readString();
     }
-
-    // typeIn:
-    public String getTypeIn(){
-        return this.typeIn;
-    }
-    public void setTypeIn(String typeIn){
-        this.typeIn = typeIn;
-    }
-
-    // idIn:
-    public String getIdIn(){
-        return this.idIn;
-    }
-    public void setIdIn(String idIn){
-        this.idIn = idIn;
-    }
-
-
-    public SearchAssetFilter() {
-       super();
-    }
-
-    public SearchAssetFilter(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        kSql = GsonParser.parseString(jsonObject.get("kSql"));
-        typeIn = GsonParser.parseString(jsonObject.get("typeIn"));
-        idIn = GsonParser.parseString(jsonObject.get("idIn"));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaSearchAssetFilter");
-        kparams.add("kSql", this.kSql);
-        kparams.add("typeIn", this.typeIn);
-        kparams.add("idIn", this.idIn);
-        return kparams;
-    }
-
 }
 

@@ -27,10 +27,11 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
+import android.os.Parcel;
+import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
-import com.google.gson.JsonObject;
-
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -41,40 +42,72 @@ import com.google.gson.JsonObject;
 
 /**  Currency filter  */
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(CurrencyFilter.Tokenizer.class)
 public class CurrencyFilter extends Filter {
+	
+	public interface Tokenizer extends Filter.Tokenizer {
+		String codeIn();
+	}
 
 	/**  Currency codes  */
-    private String codeIn;
+	private String codeIn;
 
-    // codeIn:
-    public String getCodeIn(){
-        return this.codeIn;
+	// codeIn:
+	public String getCodeIn(){
+		return this.codeIn;
+	}
+	public void setCodeIn(String codeIn){
+		this.codeIn = codeIn;
+	}
+
+	public void codeIn(String multirequestToken){
+		setToken("codeIn", multirequestToken);
+	}
+
+
+	public CurrencyFilter() {
+		super();
+	}
+
+	public CurrencyFilter(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		codeIn = GsonParser.parseString(jsonObject.get("codeIn"));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaCurrencyFilter");
+		kparams.add("codeIn", this.codeIn);
+		return kparams;
+	}
+
+
+    public static final Creator<CurrencyFilter> CREATOR = new Creator<CurrencyFilter>() {
+        @Override
+        public CurrencyFilter createFromParcel(Parcel source) {
+            return new CurrencyFilter(source);
+        }
+
+        @Override
+        public CurrencyFilter[] newArray(int size) {
+            return new CurrencyFilter[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(this.codeIn);
     }
-    public void setCodeIn(String codeIn){
-        this.codeIn = codeIn;
+
+    public CurrencyFilter(Parcel in) {
+        super(in);
+        this.codeIn = in.readString();
     }
-
-
-    public CurrencyFilter() {
-       super();
-    }
-
-    public CurrencyFilter(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        codeIn = GsonParser.parseString(jsonObject.get("codeIn"));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaCurrencyFilter");
-        kparams.add("codeIn", this.codeIn);
-        return kparams;
-    }
-
 }
 

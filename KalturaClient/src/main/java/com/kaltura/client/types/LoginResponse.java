@@ -27,13 +27,14 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.types.ObjectBase;
-import com.kaltura.client.types.OTTUser;
-import com.kaltura.client.types.LoginSession;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.types.LoginSession;
+import com.kaltura.client.types.OTTUser;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -43,52 +44,83 @@ import com.google.gson.JsonObject;
  */
 
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(LoginResponse.Tokenizer.class)
 public class LoginResponse extends ObjectBase {
+	
+	public interface Tokenizer extends ObjectBase.Tokenizer {
+		OTTUser.Tokenizer user();
+		LoginSession.Tokenizer loginSession();
+	}
 
 	/**  User  */
-    private OTTUser user;
+	private OTTUser user;
 	/**  Kaltura login session details  */
-    private LoginSession loginSession;
+	private LoginSession loginSession;
 
-    // user:
-    public OTTUser getUser(){
-        return this.user;
+	// user:
+	public OTTUser getUser(){
+		return this.user;
+	}
+	public void setUser(OTTUser user){
+		this.user = user;
+	}
+
+	// loginSession:
+	public LoginSession getLoginSession(){
+		return this.loginSession;
+	}
+	public void setLoginSession(LoginSession loginSession){
+		this.loginSession = loginSession;
+	}
+
+
+	public LoginResponse() {
+		super();
+	}
+
+	public LoginResponse(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		user = GsonParser.parseObject(jsonObject.getAsJsonObject("user"), OTTUser.class);
+		loginSession = GsonParser.parseObject(jsonObject.getAsJsonObject("loginSession"), LoginSession.class);
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaLoginResponse");
+		kparams.add("user", this.user);
+		kparams.add("loginSession", this.loginSession);
+		return kparams;
+	}
+
+
+    public static final Creator<LoginResponse> CREATOR = new Creator<LoginResponse>() {
+        @Override
+        public LoginResponse createFromParcel(Parcel source) {
+            return new LoginResponse(source);
+        }
+
+        @Override
+        public LoginResponse[] newArray(int size) {
+            return new LoginResponse[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeParcelable(this.user, flags);
+        dest.writeParcelable(this.loginSession, flags);
     }
-    public void setUser(OTTUser user){
-        this.user = user;
+
+    public LoginResponse(Parcel in) {
+        super(in);
+        this.user = in.readParcelable(OTTUser.class.getClassLoader());
+        this.loginSession = in.readParcelable(LoginSession.class.getClassLoader());
     }
-
-    // loginSession:
-    public LoginSession getLoginSession(){
-        return this.loginSession;
-    }
-    public void setLoginSession(LoginSession loginSession){
-        this.loginSession = loginSession;
-    }
-
-
-    public LoginResponse() {
-       super();
-    }
-
-    public LoginResponse(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        user = GsonParser.parseObject(jsonObject.getAsJsonObject("user"), OTTUser.class);
-        loginSession = GsonParser.parseObject(jsonObject.getAsJsonObject("loginSession"), LoginSession.class);
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaLoginResponse");
-        kparams.add("user", this.user);
-        kparams.add("loginSession", this.loginSession);
-        return kparams;
-    }
-
 }
 

@@ -27,11 +27,12 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
-import com.kaltura.client.types.ObjectBase;
+import android.os.Parcel;
 import com.google.gson.JsonObject;
-
+import com.kaltura.client.Params;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -42,51 +43,90 @@ import com.google.gson.JsonObject;
 
 /**  Engagement adapter basic  */
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(EngagementAdapterBase.Tokenizer.class)
 public class EngagementAdapterBase extends ObjectBase {
+	
+	public interface Tokenizer extends ObjectBase.Tokenizer {
+		String id();
+		String name();
+	}
 
 	/**  Engagement adapter id  */
-    private Integer id;
+	private Integer id;
 	/**  Engagement adapter name  */
-    private String name;
+	private String name;
 
-    // id:
-    public Integer getId(){
-        return this.id;
+	// id:
+	public Integer getId(){
+		return this.id;
+	}
+	public void setId(Integer id){
+		this.id = id;
+	}
+
+	public void id(String multirequestToken){
+		setToken("id", multirequestToken);
+	}
+
+	// name:
+	public String getName(){
+		return this.name;
+	}
+	public void setName(String name){
+		this.name = name;
+	}
+
+	public void name(String multirequestToken){
+		setToken("name", multirequestToken);
+	}
+
+
+	public EngagementAdapterBase() {
+		super();
+	}
+
+	public EngagementAdapterBase(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		id = GsonParser.parseInt(jsonObject.get("id"));
+		name = GsonParser.parseString(jsonObject.get("name"));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaEngagementAdapterBase");
+		kparams.add("name", this.name);
+		return kparams;
+	}
+
+
+    public static final Creator<EngagementAdapterBase> CREATOR = new Creator<EngagementAdapterBase>() {
+        @Override
+        public EngagementAdapterBase createFromParcel(Parcel source) {
+            return new EngagementAdapterBase(source);
+        }
+
+        @Override
+        public EngagementAdapterBase[] newArray(int size) {
+            return new EngagementAdapterBase[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeValue(this.id);
+        dest.writeString(this.name);
     }
-    public void setId(Integer id){
-        this.id = id;
+
+    public EngagementAdapterBase(Parcel in) {
+        super(in);
+        this.id = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.name = in.readString();
     }
-
-    // name:
-    public String getName(){
-        return this.name;
-    }
-    public void setName(String name){
-        this.name = name;
-    }
-
-
-    public EngagementAdapterBase() {
-       super();
-    }
-
-    public EngagementAdapterBase(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        id = GsonParser.parseInt(jsonObject.get("id"));
-        name = GsonParser.parseString(jsonObject.get("name"));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaEngagementAdapterBase");
-        kparams.add("name", this.name);
-        return kparams;
-    }
-
 }
 

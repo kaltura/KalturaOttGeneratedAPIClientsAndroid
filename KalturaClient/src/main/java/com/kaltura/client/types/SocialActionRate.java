@@ -27,10 +27,11 @@
 // ===================================================================================================
 package com.kaltura.client.types;
 
+import android.os.Parcel;
+import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
-import com.google.gson.JsonObject;
-
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -40,40 +41,72 @@ import com.google.gson.JsonObject;
  */
 
 @SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(SocialActionRate.Tokenizer.class)
 public class SocialActionRate extends SocialAction {
+	
+	public interface Tokenizer extends SocialAction.Tokenizer {
+		String rate();
+	}
 
 	/**  The value of the rating  */
-    private Integer rate;
+	private Integer rate;
 
-    // rate:
-    public Integer getRate(){
-        return this.rate;
+	// rate:
+	public Integer getRate(){
+		return this.rate;
+	}
+	public void setRate(Integer rate){
+		this.rate = rate;
+	}
+
+	public void rate(String multirequestToken){
+		setToken("rate", multirequestToken);
+	}
+
+
+	public SocialActionRate() {
+		super();
+	}
+
+	public SocialActionRate(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		rate = GsonParser.parseInt(jsonObject.get("rate"));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaSocialActionRate");
+		kparams.add("rate", this.rate);
+		return kparams;
+	}
+
+
+    public static final Creator<SocialActionRate> CREATOR = new Creator<SocialActionRate>() {
+        @Override
+        public SocialActionRate createFromParcel(Parcel source) {
+            return new SocialActionRate(source);
+        }
+
+        @Override
+        public SocialActionRate[] newArray(int size) {
+            return new SocialActionRate[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeValue(this.rate);
     }
-    public void setRate(Integer rate){
-        this.rate = rate;
+
+    public SocialActionRate(Parcel in) {
+        super(in);
+        this.rate = (Integer)in.readValue(Integer.class.getClassLoader());
     }
-
-
-    public SocialActionRate() {
-       super();
-    }
-
-    public SocialActionRate(JsonObject jsonObject) throws APIException {
-        super(jsonObject);
-
-        if(jsonObject == null) return;
-
-        // set members values:
-        rate = GsonParser.parseInt(jsonObject.get("rate"));
-
-    }
-
-    public Params toParams() {
-        Params kparams = super.toParams();
-        kparams.add("objectType", "KalturaSocialActionRate");
-        kparams.add("rate", this.rate);
-        return kparams;
-    }
-
 }
 
