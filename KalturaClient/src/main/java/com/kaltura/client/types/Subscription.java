@@ -85,6 +85,7 @@ public class Subscription extends ObjectBase {
 		RequestBuilder.ListTokenizer<ProductCode.Tokenizer> productCodes();
 		String dependencyType();
 		String externalId();
+		String isCancellationBlocked();
 	}
 
 	/**  Subscription identifier  */
@@ -150,6 +151,8 @@ public class Subscription extends ObjectBase {
 	private SubscriptionDependencyType dependencyType;
 	/**  External ID  */
 	private String externalId;
+	/**  Is cancellation blocked for the subscription  */
+	private Boolean isCancellationBlocked;
 
 	// id:
 	public String getId(){
@@ -467,6 +470,18 @@ public class Subscription extends ObjectBase {
 		setToken("externalId", multirequestToken);
 	}
 
+	// isCancellationBlocked:
+	public Boolean getIsCancellationBlocked(){
+		return this.isCancellationBlocked;
+	}
+	public void setIsCancellationBlocked(Boolean isCancellationBlocked){
+		this.isCancellationBlocked = isCancellationBlocked;
+	}
+
+	public void isCancellationBlocked(String multirequestToken){
+		setToken("isCancellationBlocked", multirequestToken);
+	}
+
 
 	public Subscription() {
 		super();
@@ -508,6 +523,7 @@ public class Subscription extends ObjectBase {
 		productCodes = GsonParser.parseArray(jsonObject.getAsJsonArray("productCodes"), ProductCode.class);
 		dependencyType = SubscriptionDependencyType.get(GsonParser.parseString(jsonObject.get("dependencyType")));
 		externalId = GsonParser.parseString(jsonObject.get("externalId"));
+		isCancellationBlocked = GsonParser.parseBoolean(jsonObject.get("isCancellationBlocked"));
 
 	}
 
@@ -544,6 +560,7 @@ public class Subscription extends ObjectBase {
 		kparams.add("productCodes", this.productCodes);
 		kparams.add("dependencyType", this.dependencyType);
 		kparams.add("externalId", this.externalId);
+		kparams.add("isCancellationBlocked", this.isCancellationBlocked);
 		return kparams;
 	}
 
@@ -623,6 +640,7 @@ public class Subscription extends ObjectBase {
         }
         dest.writeInt(this.dependencyType == null ? -1 : this.dependencyType.ordinal());
         dest.writeString(this.externalId);
+        dest.writeValue(this.isCancellationBlocked);
     }
 
     public Subscription(Parcel in) {
@@ -682,6 +700,7 @@ public class Subscription extends ObjectBase {
         int tmpDependencyType = in.readInt();
         this.dependencyType = tmpDependencyType == -1 ? null : SubscriptionDependencyType.values()[tmpDependencyType];
         this.externalId = in.readString();
+        this.isCancellationBlocked = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
 
