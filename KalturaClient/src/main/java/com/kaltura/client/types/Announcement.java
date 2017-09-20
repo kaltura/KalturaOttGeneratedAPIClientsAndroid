@@ -56,6 +56,7 @@ public class Announcement extends ObjectBase {
 		String status();
 		String recipients();
 		String id();
+		String imageUrl();
 	}
 
 	/**  Announcement name  */
@@ -74,6 +75,8 @@ public class Announcement extends ObjectBase {
 	private AnnouncementRecipientsType recipients;
 	/**  Announcement id  */
 	private Integer id;
+	/**  Announcement image URL, relevant for system announcements  */
+	private String imageUrl;
 
 	// name:
 	public String getName(){
@@ -171,6 +174,18 @@ public class Announcement extends ObjectBase {
 		setToken("id", multirequestToken);
 	}
 
+	// imageUrl:
+	public String getImageUrl(){
+		return this.imageUrl;
+	}
+	public void setImageUrl(String imageUrl){
+		this.imageUrl = imageUrl;
+	}
+
+	public void imageUrl(String multirequestToken){
+		setToken("imageUrl", multirequestToken);
+	}
+
 
 	public Announcement() {
 		super();
@@ -190,6 +205,7 @@ public class Announcement extends ObjectBase {
 		status = AnnouncementStatus.get(GsonParser.parseString(jsonObject.get("status")));
 		recipients = AnnouncementRecipientsType.get(GsonParser.parseString(jsonObject.get("recipients")));
 		id = GsonParser.parseInt(jsonObject.get("id"));
+		imageUrl = GsonParser.parseString(jsonObject.get("imageUrl"));
 
 	}
 
@@ -202,6 +218,7 @@ public class Announcement extends ObjectBase {
 		kparams.add("startTime", this.startTime);
 		kparams.add("timezone", this.timezone);
 		kparams.add("recipients", this.recipients);
+		kparams.add("imageUrl", this.imageUrl);
 		return kparams;
 	}
 
@@ -229,6 +246,7 @@ public class Announcement extends ObjectBase {
         dest.writeInt(this.status == null ? -1 : this.status.ordinal());
         dest.writeInt(this.recipients == null ? -1 : this.recipients.ordinal());
         dest.writeValue(this.id);
+        dest.writeString(this.imageUrl);
     }
 
     public Announcement(Parcel in) {
@@ -243,6 +261,7 @@ public class Announcement extends ObjectBase {
         int tmpRecipients = in.readInt();
         this.recipients = tmpRecipients == -1 ? null : AnnouncementRecipientsType.values()[tmpRecipients];
         this.id = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.imageUrl = in.readString();
     }
 }
 
