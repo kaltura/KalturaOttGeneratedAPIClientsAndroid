@@ -33,9 +33,6 @@ import com.kaltura.client.Params;
 import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
-import com.kaltura.client.utils.request.RequestBuilder;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -51,15 +48,18 @@ public class UserRole extends ObjectBase {
 	public interface Tokenizer extends ObjectBase.Tokenizer {
 		String id();
 		String name();
-		RequestBuilder.ListTokenizer<Permission.Tokenizer> permissions();
+		String permissionNames();
+		String excludedPermissionNames();
 	}
 
 	/**  User role identifier  */
 	private Long id;
 	/**  User role name  */
 	private String name;
-	/**  List of permissions associated with the user role  */
-	private List<Permission> permissions;
+	/**  permissions associated with the user role  */
+	private String permissionNames;
+	/**  permissions associated with the user role in is_exclueded = true  */
+	private String excludedPermissionNames;
 
 	// id:
 	public Long getId(){
@@ -85,12 +85,28 @@ public class UserRole extends ObjectBase {
 		setToken("name", multirequestToken);
 	}
 
-	// permissions:
-	public List<Permission> getPermissions(){
-		return this.permissions;
+	// permissionNames:
+	public String getPermissionNames(){
+		return this.permissionNames;
 	}
-	public void setPermissions(List<Permission> permissions){
-		this.permissions = permissions;
+	public void setPermissionNames(String permissionNames){
+		this.permissionNames = permissionNames;
+	}
+
+	public void permissionNames(String multirequestToken){
+		setToken("permissionNames", multirequestToken);
+	}
+
+	// excludedPermissionNames:
+	public String getExcludedPermissionNames(){
+		return this.excludedPermissionNames;
+	}
+	public void setExcludedPermissionNames(String excludedPermissionNames){
+		this.excludedPermissionNames = excludedPermissionNames;
+	}
+
+	public void excludedPermissionNames(String multirequestToken){
+		setToken("excludedPermissionNames", multirequestToken);
 	}
 
 
@@ -106,7 +122,8 @@ public class UserRole extends ObjectBase {
 		// set members values:
 		id = GsonParser.parseLong(jsonObject.get("id"));
 		name = GsonParser.parseString(jsonObject.get("name"));
-		permissions = GsonParser.parseArray(jsonObject.getAsJsonArray("permissions"), Permission.class);
+		permissionNames = GsonParser.parseString(jsonObject.get("permissionNames"));
+		excludedPermissionNames = GsonParser.parseString(jsonObject.get("excludedPermissionNames"));
 
 	}
 
@@ -114,7 +131,8 @@ public class UserRole extends ObjectBase {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaUserRole");
 		kparams.add("name", this.name);
-		kparams.add("permissions", this.permissions);
+		kparams.add("permissionNames", this.permissionNames);
+		kparams.add("excludedPermissionNames", this.excludedPermissionNames);
 		return kparams;
 	}
 
@@ -136,23 +154,16 @@ public class UserRole extends ObjectBase {
         super.writeToParcel(dest, flags);
         dest.writeValue(this.id);
         dest.writeString(this.name);
-        if(this.permissions != null) {
-            dest.writeInt(this.permissions.size());
-            dest.writeList(this.permissions);
-        } else {
-            dest.writeInt(-1);
-        }
+        dest.writeString(this.permissionNames);
+        dest.writeString(this.excludedPermissionNames);
     }
 
     public UserRole(Parcel in) {
         super(in);
         this.id = (Long)in.readValue(Long.class.getClassLoader());
         this.name = in.readString();
-        int permissionsSize = in.readInt();
-        if( permissionsSize > -1) {
-            this.permissions = new ArrayList<>();
-            in.readList(this.permissions, Permission.class.getClassLoader());
-        }
+        this.permissionNames = in.readString();
+        this.excludedPermissionNames = in.readString();
     }
 }
 

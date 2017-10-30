@@ -63,6 +63,7 @@ public class Household extends ObjectBase {
 		String frequencyNextDeviceAction();
 		String frequencyNextUserAction();
 		String restriction();
+		String roleId();
 	}
 
 	/**  Household identifier  */
@@ -93,6 +94,8 @@ public class Household extends ObjectBase {
 	private Long frequencyNextUserAction;
 	/**  Household restriction  */
 	private HouseholdRestriction restriction;
+	/**  suspended roleId  */
+	private Integer roleId;
 
 	// id:
 	public Long getId(){
@@ -262,6 +265,18 @@ public class Household extends ObjectBase {
 		setToken("restriction", multirequestToken);
 	}
 
+	// roleId:
+	public Integer getRoleId(){
+		return this.roleId;
+	}
+	public void setRoleId(Integer roleId){
+		this.roleId = roleId;
+	}
+
+	public void roleId(String multirequestToken){
+		setToken("roleId", multirequestToken);
+	}
+
 
 	public Household() {
 		super();
@@ -287,6 +302,7 @@ public class Household extends ObjectBase {
 		frequencyNextDeviceAction = GsonParser.parseLong(jsonObject.get("frequencyNextDeviceAction"));
 		frequencyNextUserAction = GsonParser.parseLong(jsonObject.get("frequencyNextUserAction"));
 		restriction = HouseholdRestriction.get(GsonParser.parseString(jsonObject.get("restriction")));
+		roleId = GsonParser.parseInt(jsonObject.get("roleId"));
 
 	}
 
@@ -329,6 +345,7 @@ public class Household extends ObjectBase {
         dest.writeValue(this.frequencyNextDeviceAction);
         dest.writeValue(this.frequencyNextUserAction);
         dest.writeInt(this.restriction == null ? -1 : this.restriction.ordinal());
+        dest.writeValue(this.roleId);
     }
 
     public Household(Parcel in) {
@@ -349,6 +366,7 @@ public class Household extends ObjectBase {
         this.frequencyNextUserAction = (Long)in.readValue(Long.class.getClassLoader());
         int tmpRestriction = in.readInt();
         this.restriction = tmpRestriction == -1 ? null : HouseholdRestriction.values()[tmpRestriction];
+        this.roleId = (Integer)in.readValue(Integer.class.getClassLoader());
     }
 }
 
