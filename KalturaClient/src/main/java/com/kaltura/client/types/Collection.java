@@ -34,6 +34,7 @@ import com.kaltura.client.types.DiscountModule;
 import com.kaltura.client.types.MultilingualString;
 import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.types.PriceDetails;
+import com.kaltura.client.types.UsageModule;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 import com.kaltura.client.utils.request.RequestBuilder;
@@ -63,9 +64,10 @@ public class Collection extends ObjectBase {
 		MultilingualString.Tokenizer multilingualName();
 		String description();
 		MultilingualString.Tokenizer multilingualDescription();
-		String pricePlanIds();
+		UsageModule.Tokenizer usageModule();
 		RequestBuilder.ListTokenizer<CouponsGroup.Tokenizer> couponsGroups();
 		String externalId();
+		RequestBuilder.ListTokenizer<ProductCode.Tokenizer> productCodes();
 	}
 
 	/**  Collection identifier  */
@@ -88,12 +90,14 @@ public class Collection extends ObjectBase {
 	private String description;
 	/**  description of the subscription  */
 	private MultilingualString multilingualDescription;
-	/**  Comma separated subscription price plan IDs  */
-	private String pricePlanIds;
+	/**  Collection usage module  */
+	private UsageModule usageModule;
 	/**  List of Coupons group  */
 	private List<CouponsGroup> couponsGroups;
 	/**  External ID  */
 	private String externalId;
+	/**  List of Collection product codes  */
+	private List<ProductCode> productCodes;
 
 	// id:
 	public String getId(){
@@ -195,16 +199,12 @@ public class Collection extends ObjectBase {
 		this.multilingualDescription = multilingualDescription;
 	}
 
-	// pricePlanIds:
-	public String getPricePlanIds(){
-		return this.pricePlanIds;
+	// usageModule:
+	public UsageModule getUsageModule(){
+		return this.usageModule;
 	}
-	public void setPricePlanIds(String pricePlanIds){
-		this.pricePlanIds = pricePlanIds;
-	}
-
-	public void pricePlanIds(String multirequestToken){
-		setToken("pricePlanIds", multirequestToken);
+	public void setUsageModule(UsageModule usageModule){
+		this.usageModule = usageModule;
 	}
 
 	// couponsGroups:
@@ -225,6 +225,14 @@ public class Collection extends ObjectBase {
 
 	public void externalId(String multirequestToken){
 		setToken("externalId", multirequestToken);
+	}
+
+	// productCodes:
+	public List<ProductCode> getProductCodes(){
+		return this.productCodes;
+	}
+	public void setProductCodes(List<ProductCode> productCodes){
+		this.productCodes = productCodes;
 	}
 
 
@@ -248,9 +256,10 @@ public class Collection extends ObjectBase {
 		multilingualName = GsonParser.parseObject(jsonObject.getAsJsonObject("multilingualName"), MultilingualString.class);
 		description = GsonParser.parseString(jsonObject.get("description"));
 		multilingualDescription = GsonParser.parseObject(jsonObject.getAsJsonObject("multilingualDescription"), MultilingualString.class);
-		pricePlanIds = GsonParser.parseString(jsonObject.get("pricePlanIds"));
+		usageModule = GsonParser.parseObject(jsonObject.getAsJsonObject("usageModule"), UsageModule.class);
 		couponsGroups = GsonParser.parseArray(jsonObject.getAsJsonArray("couponsGroups"), CouponsGroup.class);
 		externalId = GsonParser.parseString(jsonObject.get("externalId"));
+		productCodes = GsonParser.parseArray(jsonObject.getAsJsonArray("productCodes"), ProductCode.class);
 
 	}
 
@@ -267,9 +276,10 @@ public class Collection extends ObjectBase {
 		kparams.add("multilingualName", this.multilingualName);
 		kparams.add("description", this.description);
 		kparams.add("multilingualDescription", this.multilingualDescription);
-		kparams.add("pricePlanIds", this.pricePlanIds);
+		kparams.add("usageModule", this.usageModule);
 		kparams.add("couponsGroups", this.couponsGroups);
 		kparams.add("externalId", this.externalId);
+		kparams.add("productCodes", this.productCodes);
 		return kparams;
 	}
 
@@ -304,7 +314,7 @@ public class Collection extends ObjectBase {
         dest.writeParcelable(this.multilingualName, flags);
         dest.writeString(this.description);
         dest.writeParcelable(this.multilingualDescription, flags);
-        dest.writeString(this.pricePlanIds);
+        dest.writeParcelable(this.usageModule, flags);
         if(this.couponsGroups != null) {
             dest.writeInt(this.couponsGroups.size());
             dest.writeList(this.couponsGroups);
@@ -312,6 +322,12 @@ public class Collection extends ObjectBase {
             dest.writeInt(-1);
         }
         dest.writeString(this.externalId);
+        if(this.productCodes != null) {
+            dest.writeInt(this.productCodes.size());
+            dest.writeList(this.productCodes);
+        } else {
+            dest.writeInt(-1);
+        }
     }
 
     public Collection(Parcel in) {
@@ -330,13 +346,18 @@ public class Collection extends ObjectBase {
         this.multilingualName = in.readParcelable(MultilingualString.class.getClassLoader());
         this.description = in.readString();
         this.multilingualDescription = in.readParcelable(MultilingualString.class.getClassLoader());
-        this.pricePlanIds = in.readString();
+        this.usageModule = in.readParcelable(UsageModule.class.getClassLoader());
         int couponsGroupsSize = in.readInt();
         if( couponsGroupsSize > -1) {
             this.couponsGroups = new ArrayList<>();
             in.readList(this.couponsGroups, CouponsGroup.class.getClassLoader());
         }
         this.externalId = in.readString();
+        int productCodesSize = in.readInt();
+        if( productCodesSize > -1) {
+            this.productCodes = new ArrayList<>();
+            in.readList(this.productCodes, ProductCode.class.getClassLoader());
+        }
     }
 }
 
