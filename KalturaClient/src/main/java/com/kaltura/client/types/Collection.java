@@ -33,7 +33,6 @@ import com.kaltura.client.Params;
 import com.kaltura.client.types.DiscountModule;
 import com.kaltura.client.types.MultilingualString;
 import com.kaltura.client.types.ObjectBase;
-import com.kaltura.client.types.PriceDetails;
 import com.kaltura.client.types.UsageModule;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
@@ -58,7 +57,6 @@ public class Collection extends ObjectBase {
 		RequestBuilder.ListTokenizer<BaseChannel.Tokenizer> channels();
 		String startDate();
 		String endDate();
-		PriceDetails.Tokenizer price();
 		DiscountModule.Tokenizer discountModule();
 		String name();
 		MultilingualString.Tokenizer multilingualName();
@@ -68,6 +66,7 @@ public class Collection extends ObjectBase {
 		RequestBuilder.ListTokenizer<CouponsGroup.Tokenizer> couponsGroups();
 		String externalId();
 		RequestBuilder.ListTokenizer<ProductCode.Tokenizer> productCodes();
+		String priceDetailsId();
 	}
 
 	/**  Collection identifier  */
@@ -78,8 +77,6 @@ public class Collection extends ObjectBase {
 	private Long startDate;
 	/**  The last date the collection is available for purchasing  */
 	private Long endDate;
-	/**  The price of the subscription  */
-	private PriceDetails price;
 	/**  The internal discount module for the subscription  */
 	private DiscountModule discountModule;
 	/**  Name of the subscription  */
@@ -98,6 +95,8 @@ public class Collection extends ObjectBase {
 	private String externalId;
 	/**  List of Collection product codes  */
 	private List<ProductCode> productCodes;
+	/**  The ID of the price details associated with this collection  */
+	private Long priceDetailsId;
 
 	// id:
 	public String getId(){
@@ -141,14 +140,6 @@ public class Collection extends ObjectBase {
 
 	public void endDate(String multirequestToken){
 		setToken("endDate", multirequestToken);
-	}
-
-	// price:
-	public PriceDetails getPrice(){
-		return this.price;
-	}
-	public void setPrice(PriceDetails price){
-		this.price = price;
 	}
 
 	// discountModule:
@@ -235,6 +226,18 @@ public class Collection extends ObjectBase {
 		this.productCodes = productCodes;
 	}
 
+	// priceDetailsId:
+	public Long getPriceDetailsId(){
+		return this.priceDetailsId;
+	}
+	public void setPriceDetailsId(Long priceDetailsId){
+		this.priceDetailsId = priceDetailsId;
+	}
+
+	public void priceDetailsId(String multirequestToken){
+		setToken("priceDetailsId", multirequestToken);
+	}
+
 
 	public Collection() {
 		super();
@@ -250,7 +253,6 @@ public class Collection extends ObjectBase {
 		channels = GsonParser.parseArray(jsonObject.getAsJsonArray("channels"), BaseChannel.class);
 		startDate = GsonParser.parseLong(jsonObject.get("startDate"));
 		endDate = GsonParser.parseLong(jsonObject.get("endDate"));
-		price = GsonParser.parseObject(jsonObject.getAsJsonObject("price"), PriceDetails.class);
 		discountModule = GsonParser.parseObject(jsonObject.getAsJsonObject("discountModule"), DiscountModule.class);
 		name = GsonParser.parseString(jsonObject.get("name"));
 		multilingualName = GsonParser.parseObject(jsonObject.getAsJsonObject("multilingualName"), MultilingualString.class);
@@ -260,6 +262,7 @@ public class Collection extends ObjectBase {
 		couponsGroups = GsonParser.parseArray(jsonObject.getAsJsonArray("couponsGroups"), CouponsGroup.class);
 		externalId = GsonParser.parseString(jsonObject.get("externalId"));
 		productCodes = GsonParser.parseArray(jsonObject.getAsJsonArray("productCodes"), ProductCode.class);
+		priceDetailsId = GsonParser.parseLong(jsonObject.get("priceDetailsId"));
 
 	}
 
@@ -270,7 +273,6 @@ public class Collection extends ObjectBase {
 		kparams.add("channels", this.channels);
 		kparams.add("startDate", this.startDate);
 		kparams.add("endDate", this.endDate);
-		kparams.add("price", this.price);
 		kparams.add("discountModule", this.discountModule);
 		kparams.add("name", this.name);
 		kparams.add("multilingualName", this.multilingualName);
@@ -280,6 +282,7 @@ public class Collection extends ObjectBase {
 		kparams.add("couponsGroups", this.couponsGroups);
 		kparams.add("externalId", this.externalId);
 		kparams.add("productCodes", this.productCodes);
+		kparams.add("priceDetailsId", this.priceDetailsId);
 		return kparams;
 	}
 
@@ -308,7 +311,6 @@ public class Collection extends ObjectBase {
         }
         dest.writeValue(this.startDate);
         dest.writeValue(this.endDate);
-        dest.writeParcelable(this.price, flags);
         dest.writeParcelable(this.discountModule, flags);
         dest.writeString(this.name);
         dest.writeParcelable(this.multilingualName, flags);
@@ -328,6 +330,7 @@ public class Collection extends ObjectBase {
         } else {
             dest.writeInt(-1);
         }
+        dest.writeValue(this.priceDetailsId);
     }
 
     public Collection(Parcel in) {
@@ -340,7 +343,6 @@ public class Collection extends ObjectBase {
         }
         this.startDate = (Long)in.readValue(Long.class.getClassLoader());
         this.endDate = (Long)in.readValue(Long.class.getClassLoader());
-        this.price = in.readParcelable(PriceDetails.class.getClassLoader());
         this.discountModule = in.readParcelable(DiscountModule.class.getClassLoader());
         this.name = in.readString();
         this.multilingualName = in.readParcelable(MultilingualString.class.getClassLoader());
@@ -358,6 +360,7 @@ public class Collection extends ObjectBase {
             this.productCodes = new ArrayList<>();
             in.readList(this.productCodes, ProductCode.class.getClassLoader());
         }
+        this.priceDetailsId = (Long)in.readValue(Long.class.getClassLoader());
     }
 }
 

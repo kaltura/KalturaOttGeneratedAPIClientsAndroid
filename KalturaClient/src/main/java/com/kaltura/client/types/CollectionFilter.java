@@ -47,10 +47,13 @@ public class CollectionFilter extends Filter {
 	
 	public interface Tokenizer extends Filter.Tokenizer {
 		String collectionIdIn();
+		String mediaFileIdEqual();
 	}
 
 	/**  Comma separated collection IDs  */
 	private String collectionIdIn;
+	/**  Media-file ID to get the subscriptions by  */
+	private Integer mediaFileIdEqual;
 
 	// collectionIdIn:
 	public String getCollectionIdIn(){
@@ -62,6 +65,18 @@ public class CollectionFilter extends Filter {
 
 	public void collectionIdIn(String multirequestToken){
 		setToken("collectionIdIn", multirequestToken);
+	}
+
+	// mediaFileIdEqual:
+	public Integer getMediaFileIdEqual(){
+		return this.mediaFileIdEqual;
+	}
+	public void setMediaFileIdEqual(Integer mediaFileIdEqual){
+		this.mediaFileIdEqual = mediaFileIdEqual;
+	}
+
+	public void mediaFileIdEqual(String multirequestToken){
+		setToken("mediaFileIdEqual", multirequestToken);
 	}
 
 
@@ -76,6 +91,7 @@ public class CollectionFilter extends Filter {
 
 		// set members values:
 		collectionIdIn = GsonParser.parseString(jsonObject.get("collectionIdIn"));
+		mediaFileIdEqual = GsonParser.parseInt(jsonObject.get("mediaFileIdEqual"));
 
 	}
 
@@ -83,6 +99,7 @@ public class CollectionFilter extends Filter {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaCollectionFilter");
 		kparams.add("collectionIdIn", this.collectionIdIn);
+		kparams.add("mediaFileIdEqual", this.mediaFileIdEqual);
 		return kparams;
 	}
 
@@ -103,11 +120,13 @@ public class CollectionFilter extends Filter {
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeString(this.collectionIdIn);
+        dest.writeValue(this.mediaFileIdEqual);
     }
 
     public CollectionFilter(Parcel in) {
         super(in);
         this.collectionIdIn = in.readString();
+        this.mediaFileIdEqual = (Integer)in.readValue(Integer.class.getClassLoader());
     }
 }
 
