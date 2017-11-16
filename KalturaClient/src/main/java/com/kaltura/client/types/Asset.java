@@ -30,7 +30,6 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.types.MultilingualString;
 import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
@@ -56,9 +55,9 @@ public abstract class Asset extends ObjectBase {
 		String id();
 		String type();
 		String name();
-		MultilingualString.Tokenizer multilingualName();
+		RequestBuilder.ListTokenizer<TranslationToken.Tokenizer> multilingualName();
 		String description();
-		MultilingualString.Tokenizer multilingualDescription();
+		RequestBuilder.ListTokenizer<TranslationToken.Tokenizer> multilingualDescription();
 		RequestBuilder.ListTokenizer<MediaImage.Tokenizer> images();
 		RequestBuilder.ListTokenizer<MediaFile.Tokenizer> mediaFiles();
 		RequestBuilder.MapTokenizer<Value.Tokenizer> metas();
@@ -81,11 +80,11 @@ public abstract class Asset extends ObjectBase {
 	/**  Asset name  */
 	private String name;
 	/**  Asset name  */
-	private MultilingualString multilingualName;
+	private List<TranslationToken> multilingualName;
 	/**  Asset description  */
 	private String description;
 	/**  Asset description  */
-	private MultilingualString multilingualDescription;
+	private List<TranslationToken> multilingualDescription;
 	/**  Collection of images details that can be used to represent this asset  */
 	private List<MediaImage> images;
 	/**  Files  */
@@ -151,10 +150,10 @@ public abstract class Asset extends ObjectBase {
 	}
 
 	// multilingualName:
-	public MultilingualString getMultilingualName(){
+	public List<TranslationToken> getMultilingualName(){
 		return this.multilingualName;
 	}
-	public void setMultilingualName(MultilingualString multilingualName){
+	public void setMultilingualName(List<TranslationToken> multilingualName){
 		this.multilingualName = multilingualName;
 	}
 
@@ -171,10 +170,10 @@ public abstract class Asset extends ObjectBase {
 	}
 
 	// multilingualDescription:
-	public MultilingualString getMultilingualDescription(){
+	public List<TranslationToken> getMultilingualDescription(){
 		return this.multilingualDescription;
 	}
-	public void setMultilingualDescription(MultilingualString multilingualDescription){
+	public void setMultilingualDescription(List<TranslationToken> multilingualDescription){
 		this.multilingualDescription = multilingualDescription;
 	}
 
@@ -308,9 +307,9 @@ public abstract class Asset extends ObjectBase {
 		id = GsonParser.parseLong(jsonObject.get("id"));
 		type = GsonParser.parseInt(jsonObject.get("type"));
 		name = GsonParser.parseString(jsonObject.get("name"));
-		multilingualName = GsonParser.parseObject(jsonObject.getAsJsonObject("multilingualName"), MultilingualString.class);
+		multilingualName = GsonParser.parseArray(jsonObject.getAsJsonArray("multilingualName"), TranslationToken.class);
 		description = GsonParser.parseString(jsonObject.get("description"));
-		multilingualDescription = GsonParser.parseObject(jsonObject.getAsJsonObject("multilingualDescription"), MultilingualString.class);
+		multilingualDescription = GsonParser.parseArray(jsonObject.getAsJsonArray("multilingualDescription"), TranslationToken.class);
 		images = GsonParser.parseArray(jsonObject.getAsJsonArray("images"), MediaImage.class);
 		mediaFiles = GsonParser.parseArray(jsonObject.getAsJsonArray("mediaFiles"), MediaFile.class);
 		metas = GsonParser.parseMap(jsonObject.getAsJsonObject("metas"), Value.class);
@@ -354,9 +353,19 @@ public abstract class Asset extends ObjectBase {
         dest.writeValue(this.id);
         dest.writeValue(this.type);
         dest.writeString(this.name);
-        dest.writeParcelable(this.multilingualName, flags);
+        if(this.multilingualName != null) {
+            dest.writeInt(this.multilingualName.size());
+            dest.writeList(this.multilingualName);
+        } else {
+            dest.writeInt(-1);
+        }
         dest.writeString(this.description);
-        dest.writeParcelable(this.multilingualDescription, flags);
+        if(this.multilingualDescription != null) {
+            dest.writeInt(this.multilingualDescription.size());
+            dest.writeList(this.multilingualDescription);
+        } else {
+            dest.writeInt(-1);
+        }
         if(this.images != null) {
             dest.writeInt(this.images.size());
             dest.writeList(this.images);
@@ -401,9 +410,17 @@ public abstract class Asset extends ObjectBase {
         this.id = (Long)in.readValue(Long.class.getClassLoader());
         this.type = (Integer)in.readValue(Integer.class.getClassLoader());
         this.name = in.readString();
-        this.multilingualName = in.readParcelable(MultilingualString.class.getClassLoader());
+        int multilingualNameSize = in.readInt();
+        if( multilingualNameSize > -1) {
+            this.multilingualName = new ArrayList<>();
+            in.readList(this.multilingualName, TranslationToken.class.getClassLoader());
+        }
         this.description = in.readString();
-        this.multilingualDescription = in.readParcelable(MultilingualString.class.getClassLoader());
+        int multilingualDescriptionSize = in.readInt();
+        if( multilingualDescriptionSize > -1) {
+            this.multilingualDescription = new ArrayList<>();
+            in.readList(this.multilingualDescription, TranslationToken.class.getClassLoader());
+        }
         int imagesSize = in.readInt();
         if( imagesSize > -1) {
             this.images = new ArrayList<>();
