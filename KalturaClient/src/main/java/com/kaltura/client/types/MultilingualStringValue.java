@@ -30,9 +30,11 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.types.MultilingualString;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.utils.request.RequestBuilder;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -48,13 +50,13 @@ public class MultilingualStringValue extends Value {
 	
 	public interface Tokenizer extends Value.Tokenizer {
 		String value();
-		MultilingualString.Tokenizer multilingualValue();
+		RequestBuilder.ListTokenizer<TranslationToken.Tokenizer> multilingualValue();
 	}
 
 	/**  Value  */
 	private String value;
 	/**  Value  */
-	private MultilingualString multilingualValue;
+	private List<TranslationToken> multilingualValue;
 
 	// value:
 	public String getValue(){
@@ -69,10 +71,10 @@ public class MultilingualStringValue extends Value {
 	}
 
 	// multilingualValue:
-	public MultilingualString getMultilingualValue(){
+	public List<TranslationToken> getMultilingualValue(){
 		return this.multilingualValue;
 	}
-	public void setMultilingualValue(MultilingualString multilingualValue){
+	public void setMultilingualValue(List<TranslationToken> multilingualValue){
 		this.multilingualValue = multilingualValue;
 	}
 
@@ -88,7 +90,7 @@ public class MultilingualStringValue extends Value {
 
 		// set members values:
 		value = GsonParser.parseString(jsonObject.get("value"));
-		multilingualValue = GsonParser.parseObject(jsonObject.getAsJsonObject("multilingualValue"), MultilingualString.class);
+		multilingualValue = GsonParser.parseArray(jsonObject.getAsJsonArray("multilingualValue"), TranslationToken.class);
 
 	}
 
@@ -117,13 +119,22 @@ public class MultilingualStringValue extends Value {
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeString(this.value);
-        dest.writeParcelable(this.multilingualValue, flags);
+        if(this.multilingualValue != null) {
+            dest.writeInt(this.multilingualValue.size());
+            dest.writeList(this.multilingualValue);
+        } else {
+            dest.writeInt(-1);
+        }
     }
 
     public MultilingualStringValue(Parcel in) {
         super(in);
         this.value = in.readString();
-        this.multilingualValue = in.readParcelable(MultilingualString.class.getClassLoader());
+        int multilingualValueSize = in.readInt();
+        if( multilingualValueSize > -1) {
+            this.multilingualValue = new ArrayList<>();
+            in.readList(this.multilingualValue, TranslationToken.class.getClassLoader());
+        }
     }
 }
 
