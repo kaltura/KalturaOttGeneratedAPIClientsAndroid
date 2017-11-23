@@ -31,6 +31,7 @@ import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.enums.DeviceStatus;
+import com.kaltura.client.types.CustomDrmPlaybackPluginData;
 import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
@@ -55,6 +56,7 @@ public class HouseholdDevice extends ObjectBase {
 		String activatedOn();
 		String status();
 		String deviceFamilyId();
+		CustomDrmPlaybackPluginData.Tokenizer drm();
 	}
 
 	/**  Household identifier  */
@@ -71,6 +73,8 @@ public class HouseholdDevice extends ObjectBase {
 	private DeviceStatus status;
 	/**  Device family id  */
 	private Long deviceFamilyId;
+	/**  Device DRM data  */
+	private CustomDrmPlaybackPluginData drm;
 
 	// householdId:
 	public Integer getHouseholdId(){
@@ -156,6 +160,14 @@ public class HouseholdDevice extends ObjectBase {
 		setToken("deviceFamilyId", multirequestToken);
 	}
 
+	// drm:
+	public CustomDrmPlaybackPluginData getDrm(){
+		return this.drm;
+	}
+	public void setDrm(CustomDrmPlaybackPluginData drm){
+		this.drm = drm;
+	}
+
 
 	public HouseholdDevice() {
 		super();
@@ -174,6 +186,7 @@ public class HouseholdDevice extends ObjectBase {
 		activatedOn = GsonParser.parseLong(jsonObject.get("activatedOn"));
 		status = DeviceStatus.get(GsonParser.parseString(jsonObject.get("status")));
 		deviceFamilyId = GsonParser.parseLong(jsonObject.get("deviceFamilyId"));
+		drm = GsonParser.parseObject(jsonObject.getAsJsonObject("drm"), CustomDrmPlaybackPluginData.class);
 
 	}
 
@@ -211,6 +224,7 @@ public class HouseholdDevice extends ObjectBase {
         dest.writeValue(this.activatedOn);
         dest.writeInt(this.status == null ? -1 : this.status.ordinal());
         dest.writeValue(this.deviceFamilyId);
+        dest.writeParcelable(this.drm, flags);
     }
 
     public HouseholdDevice(Parcel in) {
@@ -223,6 +237,7 @@ public class HouseholdDevice extends ObjectBase {
         int tmpStatus = in.readInt();
         this.status = tmpStatus == -1 ? null : DeviceStatus.values()[tmpStatus];
         this.deviceFamilyId = (Long)in.readValue(Long.class.getClassLoader());
+        this.drm = in.readParcelable(CustomDrmPlaybackPluginData.class.getClassLoader());
     }
 }
 
