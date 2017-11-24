@@ -40,7 +40,9 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
-/**  Filtering recordings  */
+/**
+ * Filtering recordings
+ */
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(RecordingFilter.Tokenizer.class)
 public class RecordingFilter extends Filter {
@@ -50,9 +52,13 @@ public class RecordingFilter extends Filter {
 		String filterExpression();
 	}
 
-	/**  Recording Statuses  */
+	/**
+	 * Recording Statuses
+	 */
 	private String statusIn;
-	/**  KSQL expression  */
+	/**
+	 * KSQL expression
+	 */
 	private String filterExpression;
 
 	// statusIn:

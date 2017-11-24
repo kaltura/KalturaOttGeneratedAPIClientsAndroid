@@ -48,7 +48,9 @@ public class PriceDetailsFilter extends Filter {
 		String idIn();
 	}
 
-	/**  Comma separated price identifiers  */
+	/**
+	 * Comma separated price identifiers
+	 */
 	private String idIn;
 
 	// idIn:

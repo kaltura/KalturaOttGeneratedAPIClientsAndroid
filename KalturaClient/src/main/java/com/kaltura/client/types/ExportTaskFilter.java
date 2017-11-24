@@ -40,7 +40,9 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
-/**  Bulk export tasks filter  */
+/**
+ * Bulk export tasks filter
+ */
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(ExportTaskFilter.Tokenizer.class)
 public class ExportTaskFilter extends Filter {
@@ -49,7 +51,9 @@ public class ExportTaskFilter extends Filter {
 		String idIn();
 	}
 
-	/**  Comma separated tasks identifiers  */
+	/**
+	 * Comma separated tasks identifiers
+	 */
 	private String idIn;
 
 	// idIn:

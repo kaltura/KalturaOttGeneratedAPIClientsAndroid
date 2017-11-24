@@ -54,9 +54,13 @@ public class UserSocialActionResponse extends ObjectBase {
 		RequestBuilder.ListTokenizer<NetworkActionStatus.Tokenizer> failStatus();
 	}
 
-	/**  socialAction  */
+	/**
+	 * socialAction
+	 */
 	private SocialAction socialAction;
-	/**  List of action permission items  */
+	/**
+	 * List of action permission items
+	 */
 	private List<NetworkActionStatus> failStatus;
 
 	// socialAction:

@@ -44,7 +44,9 @@ import java.util.List;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
-/**  Translated string  */
+/**
+ * Translated string
+ */
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(MultilingualString.Tokenizer.class)
 public class MultilingualString extends ObjectBase {
@@ -53,7 +55,9 @@ public class MultilingualString extends ObjectBase {
 		RequestBuilder.ListTokenizer<TranslationToken.Tokenizer> values();
 	}
 
-	/**  All values in different languages  */
+	/**
+	 * All values in different languages
+	 */
 	private List<TranslationToken> values;
 
 	// values:

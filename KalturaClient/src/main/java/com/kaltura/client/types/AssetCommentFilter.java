@@ -50,9 +50,13 @@ public class AssetCommentFilter extends Filter {
 		String assetTypeEqual();
 	}
 
-	/**  Asset Id  */
+	/**
+	 * Asset Id
+	 */
 	private Integer assetIdEqual;
-	/**  Asset Type  */
+	/**
+	 * Asset Type
+	 */
 	private AssetType assetTypeEqual;
 
 	// assetIdEqual:

@@ -51,7 +51,9 @@ public class SocialUserConfig extends SocialConfig {
 		RequestBuilder.ListTokenizer<ActionPermissionItem.Tokenizer> actionPermissionItems();
 	}
 
-	/**  List of action permission items  */
+	/**
+	 * List of action permission items
+	 */
 	private List<ActionPermissionItem> actionPermissionItems;
 
 	// actionPermissionItems:

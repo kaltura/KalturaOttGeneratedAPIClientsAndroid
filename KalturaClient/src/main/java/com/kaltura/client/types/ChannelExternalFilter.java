@@ -50,11 +50,17 @@ public class ChannelExternalFilter extends AssetFilter {
 		String freeText();
 	}
 
-	/**  External Channel Id.  */
+	/**
+	 * External Channel Id.
+	 */
 	private Integer idEqual;
-	/**  UtcOffsetEqual  */
+	/**
+	 * UtcOffsetEqual
+	 */
 	private Double utcOffsetEqual;
-	/**  FreeTextEqual  */
+	/**
+	 * FreeTextEqual
+	 */
 	private String freeText;
 
 	// idEqual:

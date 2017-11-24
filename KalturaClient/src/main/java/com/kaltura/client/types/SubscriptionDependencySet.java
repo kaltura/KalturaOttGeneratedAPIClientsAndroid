@@ -40,7 +40,9 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
-/**  Subscription Dependency Set  */
+/**
+ * Subscription Dependency Set
+ */
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(SubscriptionDependencySet.Tokenizer.class)
 public class SubscriptionDependencySet extends SubscriptionSet {
@@ -49,7 +51,9 @@ public class SubscriptionDependencySet extends SubscriptionSet {
 		String baseSubscriptionId();
 	}
 
-	/**  Base Subscription identifier  */
+	/**
+	 * Base Subscription identifier
+	 */
 	private Long baseSubscriptionId;
 
 	// baseSubscriptionId:

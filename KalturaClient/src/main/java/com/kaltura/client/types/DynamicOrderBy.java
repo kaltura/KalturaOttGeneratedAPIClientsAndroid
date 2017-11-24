@@ -42,7 +42,9 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
-/**  Kaltura Asset Order  */
+/**
+ * Kaltura Asset Order
+ */
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(DynamicOrderBy.Tokenizer.class)
 public class DynamicOrderBy extends ObjectBase {
@@ -52,9 +54,13 @@ public class DynamicOrderBy extends ObjectBase {
 		String orderBy();
 	}
 
-	/**  order by name  */
+	/**
+	 * order by name
+	 */
 	private String name;
-	/**  order by meta asc/desc  */
+	/**
+	 * order by meta asc/desc
+	 */
 	private MetaTagOrderBy orderBy;
 
 	// name:

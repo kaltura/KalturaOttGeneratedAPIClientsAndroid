@@ -40,7 +40,9 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
-/**  A string representation to return an array of doubles  */
+/**
+ * A string representation to return an array of doubles
+ */
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(DoubleValue.Tokenizer.class)
 public class DoubleValue extends Value {
@@ -49,7 +51,9 @@ public class DoubleValue extends Value {
 		String value();
 	}
 
-	/**  Value  */
+	/**
+	 * Value
+	 */
 	private Double value;
 
 	// value:
