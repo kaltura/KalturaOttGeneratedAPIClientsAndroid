@@ -50,9 +50,13 @@ public class CDNPartnerSettings extends ObjectBase {
 		String defaultRecordingAdapterId();
 	}
 
-	/**  Default CDN adapter identifier  */
+	/**
+	 * Default CDN adapter identifier
+	 */
 	private Integer defaultAdapterId;
-	/**  Default recording CDN adapter identifier  */
+	/**
+	 * Default recording CDN adapter identifier
+	 */
 	private Integer defaultRecordingAdapterId;
 
 	// defaultAdapterId:

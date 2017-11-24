@@ -41,7 +41,9 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
-/**  Currency details  */
+/**
+ * Currency details
+ */
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(Currency.Tokenizer.class)
 public class Currency extends ObjectBase {
@@ -53,13 +55,21 @@ public class Currency extends ObjectBase {
 		String isDefault();
 	}
 
-	/**  Currency name  */
+	/**
+	 * Currency name
+	 */
 	private String name;
-	/**  Currency code  */
+	/**
+	 * Currency code
+	 */
 	private String code;
-	/**  Currency Sign  */
+	/**
+	 * Currency Sign
+	 */
 	private String sign;
-	/**  Is the default Currency of the account  */
+	/**
+	 * Is the default Currency of the account
+	 */
 	private Boolean isDefault;
 
 	// name:

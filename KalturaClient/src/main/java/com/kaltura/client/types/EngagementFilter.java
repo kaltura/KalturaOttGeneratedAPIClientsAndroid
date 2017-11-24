@@ -49,9 +49,13 @@ public class EngagementFilter extends Filter {
 		String sendTimeGreaterThanOrEqual();
 	}
 
-	/**  List of inbox message types to search within.  */
+	/**
+	 * List of inbox message types to search within.
+	 */
 	private String typeIn;
-	/**  SendTime GreaterThanOrEqual  */
+	/**
+	 * SendTime GreaterThanOrEqual
+	 */
 	private Long sendTimeGreaterThanOrEqual;
 
 	// typeIn:

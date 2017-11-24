@@ -40,7 +40,9 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
-/**  Favorite request filter  */
+/**
+ * Favorite request filter
+ */
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(FavoriteFilter.Tokenizer.class)
 public class FavoriteFilter extends Filter {
@@ -51,12 +53,18 @@ public class FavoriteFilter extends Filter {
 		String udidEqualCurrent();
 	}
 
-	/**  Media type to filter by the favorite assets  */
+	/**
+	 * Media type to filter by the favorite assets
+	 */
 	private Integer mediaTypeEqual;
-	/**  Media identifiers from which to filter the favorite assets  */
+	/**
+	 * Media identifiers from which to filter the favorite assets
+	 */
 	private String mediaIdIn;
-	/**  Indicates whether the results should be filtered by origin UDID using the
-	  current  */
+	/**
+	 * Indicates whether the results should be filtered by origin UDID using the
+	  current
+	 */
 	private Boolean udidEqualCurrent;
 
 	// mediaTypeEqual:

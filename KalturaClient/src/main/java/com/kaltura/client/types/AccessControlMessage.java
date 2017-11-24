@@ -50,9 +50,13 @@ public class AccessControlMessage extends ObjectBase {
 		String code();
 	}
 
-	/**  Message  */
+	/**
+	 * Message
+	 */
 	private String message;
-	/**  Code  */
+	/**
+	 * Code
+	 */
 	private String code;
 
 	// message:

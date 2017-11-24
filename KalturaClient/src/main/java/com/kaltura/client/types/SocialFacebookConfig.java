@@ -40,7 +40,9 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
-/**  Returns social configuration for the partner  */
+/**
+ * Returns social configuration for the partner
+ */
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(SocialFacebookConfig.Tokenizer.class)
 public class SocialFacebookConfig extends SocialConfig {
@@ -50,9 +52,13 @@ public class SocialFacebookConfig extends SocialConfig {
 		String permissions();
 	}
 
-	/**  The application identifier  */
+	/**
+	 * The application identifier
+	 */
 	private String appId;
-	/**  List of application permissions  */
+	/**
+	 * List of application permissions
+	 */
 	private String permissions;
 
 	// appId:
