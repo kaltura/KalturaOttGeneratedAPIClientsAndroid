@@ -48,7 +48,11 @@ public class SubscriptionService {
 		}
 	}
 
-	/**  Returns a list of subscriptions requested by Subscription ID or file ID  */
+	/**
+	 * Returns a list of subscriptions requested by Subscription ID or file ID
+	 * 
+	 * @param filter Filter request
+	 */
     public static ListSubscriptionBuilder list(SubscriptionFilter filter)  {
 		return new ListSubscriptionBuilder(filter);
 	}

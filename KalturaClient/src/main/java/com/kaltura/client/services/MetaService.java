@@ -52,7 +52,11 @@ public class MetaService {
 		return list(null);
 	}
 
-	/**  Get the list of meta mappings for the partner  */
+	/**
+	 * Get the list of meta mappings for the partner
+	 * 
+	 * @param filter Meta filter
+	 */
     public static ListMetaBuilder list(MetaFilter filter)  {
 		return new ListMetaBuilder(filter);
 	}

@@ -40,7 +40,9 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
-/**  Returns social configuration for the partner  */
+/**
+ * Returns social configuration for the partner
+ */
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(SocialConfig.Tokenizer.class)
 public class SocialConfig extends ObjectBase {

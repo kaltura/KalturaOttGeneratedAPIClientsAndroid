@@ -59,27 +59,49 @@ public class NotificationsPartnerSettings extends ObjectBase {
 		String pushAdapterUrl();
 	}
 
-	/**  Push notification capability is enabled for the account  */
+	/**
+	 * Push notification capability is enabled for the account
+	 */
 	private Boolean pushNotificationEnabled;
-	/**  System announcement capability is enabled for the account  */
+	/**
+	 * System announcement capability is enabled for the account
+	 */
 	private Boolean pushSystemAnnouncementsEnabled;
-	/**  Window start time (UTC) for send automated push messages  */
+	/**
+	 * Window start time (UTC) for send automated push messages
+	 */
 	private Integer pushStartHour;
-	/**  Window end time (UTC) for send automated push messages  */
+	/**
+	 * Window end time (UTC) for send automated push messages
+	 */
 	private Integer pushEndHour;
-	/**  Inbox enabled  */
+	/**
+	 * Inbox enabled
+	 */
 	private Boolean inboxEnabled;
-	/**  Message TTL in days  */
+	/**
+	 * Message TTL in days
+	 */
 	private Integer messageTTLDays;
-	/**  Automatic issue follow notification  */
+	/**
+	 * Automatic issue follow notification
+	 */
 	private Boolean automaticIssueFollowNotification;
-	/**  Topic expiration duration in days  */
+	/**
+	 * Topic expiration duration in days
+	 */
 	private Integer topicExpirationDurationDays;
-	/**  Reminder enabled  */
+	/**
+	 * Reminder enabled
+	 */
 	private Boolean reminderEnabled;
-	/**  Offset time (UTC) in seconds for send reminder  */
+	/**
+	 * Offset time (UTC) in seconds for send reminder
+	 */
 	private Integer reminderOffsetSec;
-	/**  Push adapter URL  */
+	/**
+	 * Push adapter URL
+	 */
 	private String pushAdapterUrl;
 
 	// pushNotificationEnabled:

@@ -41,7 +41,9 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
-/**  Define client request optional configurations  */
+/**
+ * Define client request optional configurations
+ */
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(RequestConfiguration.Tokenizer.class)
 public class RequestConfiguration extends ObjectBase {
@@ -53,13 +55,21 @@ public class RequestConfiguration extends ObjectBase {
 		String ks();
 	}
 
-	/**  Impersonated partner id  */
+	/**
+	 * Impersonated partner id
+	 */
 	private Integer partnerId;
-	/**  Impersonated user id  */
+	/**
+	 * Impersonated user id
+	 */
 	private Integer userId;
-	/**  Content language  */
+	/**
+	 * Content language
+	 */
 	private String language;
-	/**  Kaltura API session  */
+	/**
+	 * Kaltura API session
+	 */
 	private String ks;
 
 	// partnerId:

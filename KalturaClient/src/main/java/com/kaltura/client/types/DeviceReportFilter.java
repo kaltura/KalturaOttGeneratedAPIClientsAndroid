@@ -40,7 +40,9 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
-/**  Report filter  */
+/**
+ * Report filter
+ */
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(DeviceReportFilter.Tokenizer.class)
 public class DeviceReportFilter extends ReportFilter {
@@ -49,7 +51,9 @@ public class DeviceReportFilter extends ReportFilter {
 		String lastAccessDateGreaterThanOrEqual();
 	}
 
-	/**  Filter device configuration later than specific date  */
+	/**
+	 * Filter device configuration later than specific date
+	 */
 	private Long lastAccessDateGreaterThanOrEqual;
 
 	// lastAccessDateGreaterThanOrEqual:

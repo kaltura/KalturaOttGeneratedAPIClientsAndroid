@@ -52,7 +52,11 @@ public class MessageTemplateService {
 		}
 	}
 
-	/**  Retrieve a message template used in push notifications and inbox  */
+	/**
+	 * Retrieve a message template used in push notifications and inbox
+	 * 
+	 * @param assetType possible values: Asset type – Series
+	 */
     public static GetMessageTemplateBuilder get(OTTAssetType assetType)  {
 		return new GetMessageTemplateBuilder(assetType);
 	}
@@ -70,7 +74,12 @@ public class MessageTemplateService {
 		}
 	}
 
-	/**  Set the account’s push notifications and inbox messages templates  */
+	/**
+	 * Set the account’s push notifications and inbox messages templates
+	 * 
+	 * @param assetType The asset type to update its template
+	 * @param template The actual message with placeholders to be presented to the user
+	 */
     public static UpdateMessageTemplateBuilder update(OTTAssetType assetType, MessageTemplate template)  {
 		return new UpdateMessageTemplateBuilder(assetType, template);
 	}

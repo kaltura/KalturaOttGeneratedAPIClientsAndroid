@@ -49,9 +49,13 @@ public class ChannelFilter extends AssetFilter {
 		String kSql();
 	}
 
-	/**  Channel Id  */
+	/**
+	 * Channel Id
+	 */
 	private Integer idEqual;
-	/**  KSQL expression  */
+	/**
+	 * KSQL expression
+	 */
 	private String kSql;
 
 	// idEqual:
