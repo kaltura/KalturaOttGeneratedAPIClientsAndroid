@@ -41,7 +41,9 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
-/**  Subscription details  */
+/**
+ * Subscription details
+ */
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(SubscriptionSet.Tokenizer.class)
 public abstract class SubscriptionSet extends ObjectBase {
@@ -52,12 +54,18 @@ public abstract class SubscriptionSet extends ObjectBase {
 		String subscriptionIds();
 	}
 
-	/**  SubscriptionSet identifier  */
+	/**
+	 * SubscriptionSet identifier
+	 */
 	private Long id;
-	/**  SubscriptionSet name  */
+	/**
+	 * SubscriptionSet name
+	 */
 	private String name;
-	/**  A list of comma separated subscription ids associated with this set ordered by
-	  priority ascending  */
+	/**
+	 * A list of comma separated subscription ids associated with this set ordered by
+	  priority ascending
+	 */
 	private String subscriptionIds;
 
 	// id:

@@ -44,7 +44,9 @@ import java.util.List;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
-/**  Channel details  */
+/**
+ * Channel details
+ */
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(Channel.Tokenizer.class)
 public class Channel extends BaseChannel {
@@ -58,17 +60,29 @@ public class Channel extends BaseChannel {
 		String order();
 	}
 
-	/**  Cannel description  */
+	/**
+	 * Cannel description
+	 */
 	private String description;
-	/**  Channel images  */
+	/**
+	 * Channel images
+	 */
 	private List<MediaImage> images;
-	/**  Asset types in the channel.              -26 is EPG  */
+	/**
+	 * Asset types in the channel.              -26 is EPG
+	 */
 	private List<IntegerValue> assetTypes;
-	/**  Filter expression  */
+	/**
+	 * Filter expression
+	 */
 	private String filterExpression;
-	/**  active status  */
+	/**
+	 * active status
+	 */
 	private Boolean isActive;
-	/**  Channel order  */
+	/**
+	 * Channel order
+	 */
 	private AssetOrderBy order;
 
 	// description:

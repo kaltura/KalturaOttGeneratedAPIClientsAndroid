@@ -42,7 +42,9 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
-/**  Kaltura Session  */
+/**
+ * Kaltura Session
+ */
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(Session.Tokenizer.class)
 public class Session extends ObjectBase {
@@ -58,21 +60,37 @@ public class Session extends ObjectBase {
 		String createDate();
 	}
 
-	/**  KS  */
+	/**
+	 * KS
+	 */
 	private String ks;
-	/**  Session type  */
+	/**
+	 * Session type
+	 */
 	private SessionType sessionType;
-	/**  Partner identifier  */
+	/**
+	 * Partner identifier
+	 */
 	private Integer partnerId;
-	/**  User identifier  */
+	/**
+	 * User identifier
+	 */
 	private String userId;
-	/**  Expiry  */
+	/**
+	 * Expiry
+	 */
 	private Integer expiry;
-	/**  Privileges  */
+	/**
+	 * Privileges
+	 */
 	private String privileges;
-	/**  UDID  */
+	/**
+	 * UDID
+	 */
 	private String udid;
-	/**  Create date  */
+	/**
+	 * Create date
+	 */
 	private Integer createDate;
 
 	// ks:

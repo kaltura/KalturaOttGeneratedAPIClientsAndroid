@@ -50,11 +50,17 @@ public class ApiArgumentPermissionItem extends PermissionItem {
 		String parameter();
 	}
 
-	/**  API service name  */
+	/**
+	 * API service name
+	 */
 	private String service;
-	/**  API action name  */
+	/**
+	 * API action name
+	 */
 	private String action;
-	/**  API parameter name  */
+	/**
+	 * API parameter name
+	 */
 	private String parameter;
 
 	// service:

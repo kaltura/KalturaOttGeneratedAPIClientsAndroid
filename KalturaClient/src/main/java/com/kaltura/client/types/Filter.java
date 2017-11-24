@@ -49,7 +49,9 @@ public abstract class Filter extends ObjectBase {
 		String orderBy();
 	}
 
-	/**  order by  */
+	/**
+	 * order by
+	 */
 	private String orderBy;
 
 	// orderBy:

@@ -49,9 +49,13 @@ public class HouseholdDeviceFilter extends Filter {
 		String deviceFamilyIdIn();
 	}
 
-	/**  The identifier of the household  */
+	/**
+	 * The identifier of the household
+	 */
 	private Integer householdIdEqual;
-	/**  Device family Ids  */
+	/**
+	 * Device family Ids
+	 */
 	private String deviceFamilyIdIn;
 
 	// householdIdEqual:

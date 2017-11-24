@@ -41,7 +41,9 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
-/**  Container for translation  */
+/**
+ * Container for translation
+ */
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(TranslationToken.Tokenizer.class)
 public class TranslationToken extends ObjectBase {
@@ -51,9 +53,13 @@ public class TranslationToken extends ObjectBase {
 		String value();
 	}
 
-	/**  Language code  */
+	/**
+	 * Language code
+	 */
 	private String language;
-	/**  Translated value  */
+	/**
+	 * Translated value
+	 */
 	private String value;
 
 	// language:

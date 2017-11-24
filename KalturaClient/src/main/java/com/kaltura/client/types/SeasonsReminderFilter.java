@@ -50,11 +50,17 @@ public class SeasonsReminderFilter extends ReminderFilter {
 		String epgChannelIdEqual();
 	}
 
-	/**  Series ID  */
+	/**
+	 * Series ID
+	 */
 	private String seriesIdEqual;
-	/**  Comma separated season numbers  */
+	/**
+	 * Comma separated season numbers
+	 */
 	private String seasonNumberIn;
-	/**  EPG channel ID  */
+	/**
+	 * EPG channel ID
+	 */
 	private Long epgChannelIdEqual;
 
 	// seriesIdEqual:

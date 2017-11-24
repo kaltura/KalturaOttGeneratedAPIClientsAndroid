@@ -40,7 +40,9 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
-/**  Language filter  */
+/**
+ * Language filter
+ */
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(LanguageFilter.Tokenizer.class)
 public class LanguageFilter extends Filter {
@@ -49,7 +51,9 @@ public class LanguageFilter extends Filter {
 		String codeIn();
 	}
 
-	/**  Language codes  */
+	/**
+	 * Language codes
+	 */
 	private String codeIn;
 
 	// codeIn:

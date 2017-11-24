@@ -48,7 +48,9 @@ public class LicensedUrlRecordingRequest extends LicensedUrlBaseRequest {
 		String fileType();
 	}
 
-	/**  The file type for the URL  */
+	/**
+	 * The file type for the URL
+	 */
 	private String fileType;
 
 	// fileType:

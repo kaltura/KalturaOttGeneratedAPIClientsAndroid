@@ -49,7 +49,9 @@ public class AssetFilter extends PersistedFilter {
 		DynamicOrderBy.Tokenizer dynamicOrderBy();
 	}
 
-	/**  dynamicOrderBy - order by Meta  */
+	/**
+	 * dynamicOrderBy - order by Meta
+	 */
 	private DynamicOrderBy dynamicOrderBy;
 
 	// dynamicOrderBy:

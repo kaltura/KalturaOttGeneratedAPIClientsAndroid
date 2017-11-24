@@ -43,7 +43,9 @@ import java.util.Map;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
-/**  OSS Adapter  */
+/**
+ * OSS Adapter
+ */
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(OSSAdapterProfile.Tokenizer.class)
 public class OSSAdapterProfile extends OSSAdapterBaseProfile {
@@ -56,15 +58,25 @@ public class OSSAdapterProfile extends OSSAdapterBaseProfile {
 		String sharedSecret();
 	}
 
-	/**  OSS adapter active status  */
+	/**
+	 * OSS adapter active status
+	 */
 	private Boolean isActive;
-	/**  OSS adapter adapter URL  */
+	/**
+	 * OSS adapter adapter URL
+	 */
 	private String adapterUrl;
-	/**  OSS adapter extra parameters  */
+	/**
+	 * OSS adapter extra parameters
+	 */
 	private Map<String, StringValue> ossAdapterSettings;
-	/**  OSS adapter external identifier  */
+	/**
+	 * OSS adapter external identifier
+	 */
 	private String externalIdentifier;
-	/**  Shared Secret  */
+	/**
+	 * Shared Secret
+	 */
 	private String sharedSecret;
 
 	// isActive:
