@@ -50,9 +50,13 @@ public class ApiExceptionArg extends ObjectBase {
 		String value();
 	}
 
-	/**  Argument name  */
+	/**
+	 * Argument name
+	 */
 	private String name;
-	/**  Argument value  */
+	/**
+	 * Argument value
+	 */
 	private String value;
 
 	// name:

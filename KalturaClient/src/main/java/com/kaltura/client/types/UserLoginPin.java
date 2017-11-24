@@ -41,7 +41,9 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
-/**  Log in pin code details  */
+/**
+ * Log in pin code details
+ */
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(UserLoginPin.Tokenizer.class)
 public class UserLoginPin extends ObjectBase {
@@ -52,11 +54,17 @@ public class UserLoginPin extends ObjectBase {
 		String userId();
 	}
 
-	/**  Generated login pin code  */
+	/**
+	 * Generated login pin code
+	 */
 	private String pinCode;
-	/**  Login pin expiration time (epoch)  */
+	/**
+	 * Login pin expiration time (epoch)
+	 */
 	private Long expirationTime;
-	/**  User Identifier  */
+	/**
+	 * User Identifier
+	 */
 	private String userId;
 
 	// pinCode:

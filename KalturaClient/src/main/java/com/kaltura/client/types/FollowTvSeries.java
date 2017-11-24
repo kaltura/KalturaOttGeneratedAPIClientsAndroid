@@ -48,7 +48,9 @@ public class FollowTvSeries extends FollowDataBase {
 		String assetId();
 	}
 
-	/**  Asset Id  */
+	/**
+	 * Asset Id
+	 */
 	private Integer assetId;
 
 	// assetId:

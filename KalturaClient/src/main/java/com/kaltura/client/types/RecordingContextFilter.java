@@ -40,7 +40,9 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
-/**  Filtering assets  */
+/**
+ * Filtering assets
+ */
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(RecordingContextFilter.Tokenizer.class)
 public class RecordingContextFilter extends Filter {
@@ -49,7 +51,9 @@ public class RecordingContextFilter extends Filter {
 		String assetIdIn();
 	}
 
-	/**  Comma separated asset ids  */
+	/**
+	 * Comma separated asset ids
+	 */
 	private String assetIdIn;
 
 	// assetIdIn:

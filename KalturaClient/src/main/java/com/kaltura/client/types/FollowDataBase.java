@@ -53,15 +53,25 @@ public class FollowDataBase extends ObjectBase {
 		String followPhrase();
 	}
 
-	/**  Announcement Id  */
+	/**
+	 * Announcement Id
+	 */
 	private Long announcementId;
-	/**  Status  */
+	/**
+	 * Status
+	 */
 	private Integer status;
-	/**  Title  */
+	/**
+	 * Title
+	 */
 	private String title;
-	/**  Timestamp  */
+	/**
+	 * Timestamp
+	 */
 	private Long timestamp;
-	/**  Follow Phrase  */
+	/**
+	 * Follow Phrase
+	 */
 	private String followPhrase;
 
 	// announcementId:

@@ -41,7 +41,9 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
-/**  Device brand details  */
+/**
+ * Device brand details
+ */
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(DeviceBrand.Tokenizer.class)
 public class DeviceBrand extends ObjectBase {
@@ -52,11 +54,17 @@ public class DeviceBrand extends ObjectBase {
 		String deviceFamilyid();
 	}
 
-	/**  Device brand identifier  */
+	/**
+	 * Device brand identifier
+	 */
 	private Long id;
-	/**  Device brand name  */
+	/**
+	 * Device brand name
+	 */
 	private String name;
-	/**  Device family identifier  */
+	/**
+	 * Device family identifier
+	 */
 	private Long deviceFamilyid;
 
 	// id:

@@ -49,7 +49,9 @@ public class Feed extends ObjectBase {
 		String assetId();
 	}
 
-	/**  Asset identifier  */
+	/**
+	 * Asset identifier
+	 */
 	private Long assetId;
 
 	// assetId:

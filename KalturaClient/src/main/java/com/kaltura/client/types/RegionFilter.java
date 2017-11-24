@@ -48,7 +48,9 @@ public class RegionFilter extends Filter {
 		String externalIdIn();
 	}
 
-	/**  List of comma separated regions external identifiers  */
+	/**
+	 * List of comma separated regions external identifiers
+	 */
 	private String externalIdIn;
 
 	// externalIdIn:

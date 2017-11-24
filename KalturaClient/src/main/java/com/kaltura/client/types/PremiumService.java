@@ -41,7 +41,9 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
-/**  Premium service  */
+/**
+ * Premium service
+ */
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(PremiumService.Tokenizer.class)
 public class PremiumService extends ObjectBase {
@@ -51,9 +53,13 @@ public class PremiumService extends ObjectBase {
 		String name();
 	}
 
-	/**  Service identifier  */
+	/**
+	 * Service identifier
+	 */
 	private Long id;
-	/**  Service name / description  */
+	/**
+	 * Service name / description
+	 */
 	private String name;
 
 	// id:

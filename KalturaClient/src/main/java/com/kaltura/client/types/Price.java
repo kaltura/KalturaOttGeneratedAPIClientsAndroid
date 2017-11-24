@@ -41,7 +41,9 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
-/**  Price  */
+/**
+ * Price
+ */
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(Price.Tokenizer.class)
 public class Price extends ObjectBase {
@@ -53,13 +55,21 @@ public class Price extends ObjectBase {
 		String countryId();
 	}
 
-	/**  Price  */
+	/**
+	 * Price
+	 */
 	private Double amount;
-	/**  Currency  */
+	/**
+	 * Currency
+	 */
 	private String currency;
-	/**  Currency Sign  */
+	/**
+	 * Currency Sign
+	 */
 	private String currencySign;
-	/**  Currency  */
+	/**
+	 * Currency
+	 */
 	private Long countryId;
 
 	// amount:

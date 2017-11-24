@@ -40,8 +40,10 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
-/**  Group by a tag or meta - according to the name that appears in the system
-  (similar to KSQL)  */
+/**
+ * Group by a tag or meta - according to the name that appears in the system
+  (similar to KSQL)
+ */
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(AssetMetaOrTagGroupBy.Tokenizer.class)
 public class AssetMetaOrTagGroupBy extends AssetGroupBy {
@@ -50,8 +52,10 @@ public class AssetMetaOrTagGroupBy extends AssetGroupBy {
 		String value();
 	}
 
-	/**  Group by a tag or meta - according to the name that appears in the system
-	  (similar to KSQL)  */
+	/**
+	 * Group by a tag or meta - according to the name that appears in the system
+	  (similar to KSQL)
+	 */
 	private String value;
 
 	// value:
