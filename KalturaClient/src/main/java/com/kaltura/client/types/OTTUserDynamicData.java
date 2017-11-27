@@ -31,11 +31,9 @@ import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.types.StringValue;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
-import com.kaltura.client.utils.request.RequestBuilder;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -53,7 +51,8 @@ public class OTTUserDynamicData extends ObjectBase {
 	
 	public interface Tokenizer extends ObjectBase.Tokenizer {
 		String userId();
-		RequestBuilder.MapTokenizer<StringValue.Tokenizer> dynamicData();
+		String key();
+		StringValue.Tokenizer value();
 	}
 
 	/**
@@ -61,9 +60,13 @@ public class OTTUserDynamicData extends ObjectBase {
 	 */
 	private String userId;
 	/**
-	 * Dynamic data
+	 * Key
 	 */
-	private Map<String, StringValue> dynamicData;
+	private String key;
+	/**
+	 * Value
+	 */
+	private StringValue value;
 
 	// userId:
 	public String getUserId(){
@@ -77,12 +80,24 @@ public class OTTUserDynamicData extends ObjectBase {
 		setToken("userId", multirequestToken);
 	}
 
-	// dynamicData:
-	public Map<String, StringValue> getDynamicData(){
-		return this.dynamicData;
+	// key:
+	public String getKey(){
+		return this.key;
 	}
-	public void setDynamicData(Map<String, StringValue> dynamicData){
-		this.dynamicData = dynamicData;
+	public void setKey(String key){
+		this.key = key;
+	}
+
+	public void key(String multirequestToken){
+		setToken("key", multirequestToken);
+	}
+
+	// value:
+	public StringValue getValue(){
+		return this.value;
+	}
+	public void setValue(StringValue value){
+		this.value = value;
 	}
 
 
@@ -97,14 +112,16 @@ public class OTTUserDynamicData extends ObjectBase {
 
 		// set members values:
 		userId = GsonParser.parseString(jsonObject.get("userId"));
-		dynamicData = GsonParser.parseMap(jsonObject.getAsJsonObject("dynamicData"), StringValue.class);
+		key = GsonParser.parseString(jsonObject.get("key"));
+		value = GsonParser.parseObject(jsonObject.getAsJsonObject("value"), StringValue.class);
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaOTTUserDynamicData");
-		kparams.add("dynamicData", this.dynamicData);
+		kparams.add("key", this.key);
+		kparams.add("value", this.value);
 		return kparams;
 	}
 
@@ -125,29 +142,15 @@ public class OTTUserDynamicData extends ObjectBase {
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeString(this.userId);
-        if(this.dynamicData != null) {
-            dest.writeInt(this.dynamicData.size());
-            for (Map.Entry<String, StringValue> entry : this.dynamicData.entrySet()) {
-                dest.writeString(entry.getKey());
-                dest.writeParcelable(entry.getValue(), flags);
-            }
-        } else {
-            dest.writeInt(-1);
-        }
+        dest.writeString(this.key);
+        dest.writeParcelable(this.value, flags);
     }
 
     public OTTUserDynamicData(Parcel in) {
         super(in);
         this.userId = in.readString();
-        int dynamicDataSize = in.readInt();
-        if( dynamicDataSize > -1) {
-            this.dynamicData = new HashMap<>();
-            for (int i = 0; i < dynamicDataSize; i++) {
-                String key = in.readString();
-                StringValue value = in.readParcelable(StringValue.class.getClassLoader());
-                this.dynamicData.put(key, value);
-            }
-        }
+        this.key = in.readString();
+        this.value = in.readParcelable(StringValue.class.getClassLoader());
     }
 }
 
