@@ -54,6 +54,7 @@ public class SubscriptionEntitlement extends Entitlement {
 		String isInGracePeriod();
 		String paymentGatewayId();
 		String paymentMethodId();
+		String scheduledSubscriptionId();
 		String unifiedPaymentId();
 		String isSuspended();
 	}
@@ -83,6 +84,10 @@ public class SubscriptionEntitlement extends Entitlement {
 	 * Payment Method identifier
 	 */
 	private Integer paymentMethodId;
+	/**
+	 * Scheduled Subscription Identifier
+	 */
+	private Long scheduledSubscriptionId;
 	/**
 	 * Unified payment identifier
 	 */
@@ -164,6 +169,18 @@ public class SubscriptionEntitlement extends Entitlement {
 		setToken("paymentMethodId", multirequestToken);
 	}
 
+	// scheduledSubscriptionId:
+	public Long getScheduledSubscriptionId(){
+		return this.scheduledSubscriptionId;
+	}
+	public void setScheduledSubscriptionId(Long scheduledSubscriptionId){
+		this.scheduledSubscriptionId = scheduledSubscriptionId;
+	}
+
+	public void scheduledSubscriptionId(String multirequestToken){
+		setToken("scheduledSubscriptionId", multirequestToken);
+	}
+
 	// unifiedPaymentId:
 	public Long getUnifiedPaymentId(){
 		return this.unifiedPaymentId;
@@ -205,6 +222,7 @@ public class SubscriptionEntitlement extends Entitlement {
 		isInGracePeriod = GsonParser.parseBoolean(jsonObject.get("isInGracePeriod"));
 		paymentGatewayId = GsonParser.parseInt(jsonObject.get("paymentGatewayId"));
 		paymentMethodId = GsonParser.parseInt(jsonObject.get("paymentMethodId"));
+		scheduledSubscriptionId = GsonParser.parseLong(jsonObject.get("scheduledSubscriptionId"));
 		unifiedPaymentId = GsonParser.parseLong(jsonObject.get("unifiedPaymentId"));
 		isSuspended = GsonParser.parseBoolean(jsonObject.get("isSuspended"));
 
@@ -215,6 +233,7 @@ public class SubscriptionEntitlement extends Entitlement {
 		kparams.add("objectType", "KalturaSubscriptionEntitlement");
 		kparams.add("paymentGatewayId", this.paymentGatewayId);
 		kparams.add("paymentMethodId", this.paymentMethodId);
+		kparams.add("scheduledSubscriptionId", this.scheduledSubscriptionId);
 		kparams.add("unifiedPaymentId", this.unifiedPaymentId);
 		return kparams;
 	}
@@ -241,6 +260,7 @@ public class SubscriptionEntitlement extends Entitlement {
         dest.writeValue(this.isInGracePeriod);
         dest.writeValue(this.paymentGatewayId);
         dest.writeValue(this.paymentMethodId);
+        dest.writeValue(this.scheduledSubscriptionId);
         dest.writeValue(this.unifiedPaymentId);
         dest.writeValue(this.isSuspended);
     }
@@ -253,6 +273,7 @@ public class SubscriptionEntitlement extends Entitlement {
         this.isInGracePeriod = (Boolean)in.readValue(Boolean.class.getClassLoader());
         this.paymentGatewayId = (Integer)in.readValue(Integer.class.getClassLoader());
         this.paymentMethodId = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.scheduledSubscriptionId = (Long)in.readValue(Long.class.getClassLoader());
         this.unifiedPaymentId = (Long)in.readValue(Long.class.getClassLoader());
         this.isSuspended = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
