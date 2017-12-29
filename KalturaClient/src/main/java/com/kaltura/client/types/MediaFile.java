@@ -64,7 +64,6 @@ public class MediaFile extends ObjectBase {
 		String altCdnCode();
 		StringValueArray.Tokenizer ppvModules();
 		String productCode();
-		String fileSize();
 	}
 
 	/**
@@ -123,10 +122,6 @@ public class MediaFile extends ObjectBase {
 	 * Product code
 	 */
 	private String productCode;
-	/**
-	 * File size
-	 */
-	private Long fileSize;
 
 	// assetId:
 	public Integer getAssetId(){
@@ -292,18 +287,6 @@ public class MediaFile extends ObjectBase {
 		setToken("productCode", multirequestToken);
 	}
 
-	// fileSize:
-	public Long getFileSize(){
-		return this.fileSize;
-	}
-	public void setFileSize(Long fileSize){
-		this.fileSize = fileSize;
-	}
-
-	public void fileSize(String multirequestToken){
-		setToken("fileSize", multirequestToken);
-	}
-
 
 	public MediaFile() {
 		super();
@@ -329,7 +312,6 @@ public class MediaFile extends ObjectBase {
 		altCdnCode = GsonParser.parseString(jsonObject.get("altCdnCode"));
 		ppvModules = GsonParser.parseObject(jsonObject.getAsJsonObject("ppvModules"), StringValueArray.class);
 		productCode = GsonParser.parseString(jsonObject.get("productCode"));
-		fileSize = GsonParser.parseLong(jsonObject.get("fileSize"));
 
 	}
 
@@ -349,7 +331,6 @@ public class MediaFile extends ObjectBase {
 		kparams.add("altCdnCode", this.altCdnCode);
 		kparams.add("ppvModules", this.ppvModules);
 		kparams.add("productCode", this.productCode);
-		kparams.add("fileSize", this.fileSize);
 		return kparams;
 	}
 
@@ -383,7 +364,6 @@ public class MediaFile extends ObjectBase {
         dest.writeString(this.altCdnCode);
         dest.writeParcelable(this.ppvModules, flags);
         dest.writeString(this.productCode);
-        dest.writeValue(this.fileSize);
     }
 
     public MediaFile(Parcel in) {
@@ -402,7 +382,6 @@ public class MediaFile extends ObjectBase {
         this.altCdnCode = in.readString();
         this.ppvModules = in.readParcelable(StringValueArray.class.getClassLoader());
         this.productCode = in.readString();
-        this.fileSize = (Long)in.readValue(Long.class.getClassLoader());
     }
 }
 
