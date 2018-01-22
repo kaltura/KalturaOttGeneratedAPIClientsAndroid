@@ -49,14 +49,10 @@ public class MediaAsset extends Asset {
 	
 	public interface Tokenizer extends Asset.Tokenizer {
 		String externalIds();
-		String catchUpBuffer();
-		String trickPlayBuffer();
-		String enableRecordingPlaybackNonEntitledChannel();
-		String typeDescription();
 		String entryId();
-		String deviceRule();
-		String geoBlockRule();
-		String watchPermissionRule();
+		String deviceRuleId();
+		String geoBlockRuleId();
+		String status();
 	}
 
 	/**
@@ -64,37 +60,21 @@ public class MediaAsset extends Asset {
 	 */
 	private String externalIds;
 	/**
-	 * Catch-up buffer
-	 */
-	private Long catchUpBuffer;
-	/**
-	 * Trick-play buffer
-	 */
-	private Long trickPlayBuffer;
-	/**
-	 * Enable Recording playback for non entitled channel
-	 */
-	private Boolean enableRecordingPlaybackNonEntitledChannel;
-	/**
-	 * Asset type description
-	 */
-	private String typeDescription;
-	/**
 	 * Entry Identifier
 	 */
 	private String entryId;
 	/**
-	 * Device rule
+	 * Device rule identifier
 	 */
-	private String deviceRule;
+	private Integer deviceRuleId;
 	/**
-	 * Geo block rule
+	 * Geo block rule identifier
 	 */
-	private String geoBlockRule;
+	private Integer geoBlockRuleId;
 	/**
-	 * Watch permission rule
+	 * The media asset status
 	 */
-	private String watchPermissionRule;
+	private Boolean status;
 
 	// externalIds:
 	public String getExternalIds(){
@@ -106,54 +86,6 @@ public class MediaAsset extends Asset {
 
 	public void externalIds(String multirequestToken){
 		setToken("externalIds", multirequestToken);
-	}
-
-	// catchUpBuffer:
-	public Long getCatchUpBuffer(){
-		return this.catchUpBuffer;
-	}
-	public void setCatchUpBuffer(Long catchUpBuffer){
-		this.catchUpBuffer = catchUpBuffer;
-	}
-
-	public void catchUpBuffer(String multirequestToken){
-		setToken("catchUpBuffer", multirequestToken);
-	}
-
-	// trickPlayBuffer:
-	public Long getTrickPlayBuffer(){
-		return this.trickPlayBuffer;
-	}
-	public void setTrickPlayBuffer(Long trickPlayBuffer){
-		this.trickPlayBuffer = trickPlayBuffer;
-	}
-
-	public void trickPlayBuffer(String multirequestToken){
-		setToken("trickPlayBuffer", multirequestToken);
-	}
-
-	// enableRecordingPlaybackNonEntitledChannel:
-	public Boolean getEnableRecordingPlaybackNonEntitledChannel(){
-		return this.enableRecordingPlaybackNonEntitledChannel;
-	}
-	public void setEnableRecordingPlaybackNonEntitledChannel(Boolean enableRecordingPlaybackNonEntitledChannel){
-		this.enableRecordingPlaybackNonEntitledChannel = enableRecordingPlaybackNonEntitledChannel;
-	}
-
-	public void enableRecordingPlaybackNonEntitledChannel(String multirequestToken){
-		setToken("enableRecordingPlaybackNonEntitledChannel", multirequestToken);
-	}
-
-	// typeDescription:
-	public String getTypeDescription(){
-		return this.typeDescription;
-	}
-	public void setTypeDescription(String typeDescription){
-		this.typeDescription = typeDescription;
-	}
-
-	public void typeDescription(String multirequestToken){
-		setToken("typeDescription", multirequestToken);
 	}
 
 	// entryId:
@@ -168,40 +100,40 @@ public class MediaAsset extends Asset {
 		setToken("entryId", multirequestToken);
 	}
 
-	// deviceRule:
-	public String getDeviceRule(){
-		return this.deviceRule;
+	// deviceRuleId:
+	public Integer getDeviceRuleId(){
+		return this.deviceRuleId;
 	}
-	public void setDeviceRule(String deviceRule){
-		this.deviceRule = deviceRule;
-	}
-
-	public void deviceRule(String multirequestToken){
-		setToken("deviceRule", multirequestToken);
+	public void setDeviceRuleId(Integer deviceRuleId){
+		this.deviceRuleId = deviceRuleId;
 	}
 
-	// geoBlockRule:
-	public String getGeoBlockRule(){
-		return this.geoBlockRule;
-	}
-	public void setGeoBlockRule(String geoBlockRule){
-		this.geoBlockRule = geoBlockRule;
+	public void deviceRuleId(String multirequestToken){
+		setToken("deviceRuleId", multirequestToken);
 	}
 
-	public void geoBlockRule(String multirequestToken){
-		setToken("geoBlockRule", multirequestToken);
+	// geoBlockRuleId:
+	public Integer getGeoBlockRuleId(){
+		return this.geoBlockRuleId;
+	}
+	public void setGeoBlockRuleId(Integer geoBlockRuleId){
+		this.geoBlockRuleId = geoBlockRuleId;
 	}
 
-	// watchPermissionRule:
-	public String getWatchPermissionRule(){
-		return this.watchPermissionRule;
-	}
-	public void setWatchPermissionRule(String watchPermissionRule){
-		this.watchPermissionRule = watchPermissionRule;
+	public void geoBlockRuleId(String multirequestToken){
+		setToken("geoBlockRuleId", multirequestToken);
 	}
 
-	public void watchPermissionRule(String multirequestToken){
-		setToken("watchPermissionRule", multirequestToken);
+	// status:
+	public Boolean getStatus(){
+		return this.status;
+	}
+	public void setStatus(Boolean status){
+		this.status = status;
+	}
+
+	public void status(String multirequestToken){
+		setToken("status", multirequestToken);
 	}
 
 
@@ -216,14 +148,10 @@ public class MediaAsset extends Asset {
 
 		// set members values:
 		externalIds = GsonParser.parseString(jsonObject.get("externalIds"));
-		catchUpBuffer = GsonParser.parseLong(jsonObject.get("catchUpBuffer"));
-		trickPlayBuffer = GsonParser.parseLong(jsonObject.get("trickPlayBuffer"));
-		enableRecordingPlaybackNonEntitledChannel = GsonParser.parseBoolean(jsonObject.get("enableRecordingPlaybackNonEntitledChannel"));
-		typeDescription = GsonParser.parseString(jsonObject.get("typeDescription"));
 		entryId = GsonParser.parseString(jsonObject.get("entryId"));
-		deviceRule = GsonParser.parseString(jsonObject.get("deviceRule"));
-		geoBlockRule = GsonParser.parseString(jsonObject.get("geoBlockRule"));
-		watchPermissionRule = GsonParser.parseString(jsonObject.get("watchPermissionRule"));
+		deviceRuleId = GsonParser.parseInt(jsonObject.get("deviceRuleId"));
+		geoBlockRuleId = GsonParser.parseInt(jsonObject.get("geoBlockRuleId"));
+		status = GsonParser.parseBoolean(jsonObject.get("status"));
 
 	}
 
@@ -231,13 +159,10 @@ public class MediaAsset extends Asset {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaMediaAsset");
 		kparams.add("externalIds", this.externalIds);
-		kparams.add("catchUpBuffer", this.catchUpBuffer);
-		kparams.add("trickPlayBuffer", this.trickPlayBuffer);
-		kparams.add("typeDescription", this.typeDescription);
 		kparams.add("entryId", this.entryId);
-		kparams.add("deviceRule", this.deviceRule);
-		kparams.add("geoBlockRule", this.geoBlockRule);
-		kparams.add("watchPermissionRule", this.watchPermissionRule);
+		kparams.add("deviceRuleId", this.deviceRuleId);
+		kparams.add("geoBlockRuleId", this.geoBlockRuleId);
+		kparams.add("status", this.status);
 		return kparams;
 	}
 
@@ -258,27 +183,19 @@ public class MediaAsset extends Asset {
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeString(this.externalIds);
-        dest.writeValue(this.catchUpBuffer);
-        dest.writeValue(this.trickPlayBuffer);
-        dest.writeValue(this.enableRecordingPlaybackNonEntitledChannel);
-        dest.writeString(this.typeDescription);
         dest.writeString(this.entryId);
-        dest.writeString(this.deviceRule);
-        dest.writeString(this.geoBlockRule);
-        dest.writeString(this.watchPermissionRule);
+        dest.writeValue(this.deviceRuleId);
+        dest.writeValue(this.geoBlockRuleId);
+        dest.writeValue(this.status);
     }
 
     public MediaAsset(Parcel in) {
         super(in);
         this.externalIds = in.readString();
-        this.catchUpBuffer = (Long)in.readValue(Long.class.getClassLoader());
-        this.trickPlayBuffer = (Long)in.readValue(Long.class.getClassLoader());
-        this.enableRecordingPlaybackNonEntitledChannel = (Boolean)in.readValue(Boolean.class.getClassLoader());
-        this.typeDescription = in.readString();
         this.entryId = in.readString();
-        this.deviceRule = in.readString();
-        this.geoBlockRule = in.readString();
-        this.watchPermissionRule = in.readString();
+        this.deviceRuleId = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.geoBlockRuleId = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.status = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
 

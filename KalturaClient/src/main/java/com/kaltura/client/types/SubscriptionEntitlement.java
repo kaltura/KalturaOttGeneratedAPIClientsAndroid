@@ -55,6 +55,7 @@ public class SubscriptionEntitlement extends Entitlement {
 		String paymentGatewayId();
 		String paymentMethodId();
 		String scheduledSubscriptionId();
+		String unifiedPaymentId();
 		String isSuspended();
 	}
 
@@ -87,6 +88,10 @@ public class SubscriptionEntitlement extends Entitlement {
 	 * Scheduled Subscription Identifier
 	 */
 	private Long scheduledSubscriptionId;
+	/**
+	 * Unified payment identifier
+	 */
+	private Long unifiedPaymentId;
 	/**
 	 * Indicates if the subscription suspended
 	 */
@@ -176,6 +181,18 @@ public class SubscriptionEntitlement extends Entitlement {
 		setToken("scheduledSubscriptionId", multirequestToken);
 	}
 
+	// unifiedPaymentId:
+	public Long getUnifiedPaymentId(){
+		return this.unifiedPaymentId;
+	}
+	public void setUnifiedPaymentId(Long unifiedPaymentId){
+		this.unifiedPaymentId = unifiedPaymentId;
+	}
+
+	public void unifiedPaymentId(String multirequestToken){
+		setToken("unifiedPaymentId", multirequestToken);
+	}
+
 	// isSuspended:
 	public Boolean getIsSuspended(){
 		return this.isSuspended;
@@ -206,6 +223,7 @@ public class SubscriptionEntitlement extends Entitlement {
 		paymentGatewayId = GsonParser.parseInt(jsonObject.get("paymentGatewayId"));
 		paymentMethodId = GsonParser.parseInt(jsonObject.get("paymentMethodId"));
 		scheduledSubscriptionId = GsonParser.parseLong(jsonObject.get("scheduledSubscriptionId"));
+		unifiedPaymentId = GsonParser.parseLong(jsonObject.get("unifiedPaymentId"));
 		isSuspended = GsonParser.parseBoolean(jsonObject.get("isSuspended"));
 
 	}
@@ -216,6 +234,7 @@ public class SubscriptionEntitlement extends Entitlement {
 		kparams.add("paymentGatewayId", this.paymentGatewayId);
 		kparams.add("paymentMethodId", this.paymentMethodId);
 		kparams.add("scheduledSubscriptionId", this.scheduledSubscriptionId);
+		kparams.add("unifiedPaymentId", this.unifiedPaymentId);
 		return kparams;
 	}
 
@@ -242,6 +261,7 @@ public class SubscriptionEntitlement extends Entitlement {
         dest.writeValue(this.paymentGatewayId);
         dest.writeValue(this.paymentMethodId);
         dest.writeValue(this.scheduledSubscriptionId);
+        dest.writeValue(this.unifiedPaymentId);
         dest.writeValue(this.isSuspended);
     }
 
@@ -254,6 +274,7 @@ public class SubscriptionEntitlement extends Entitlement {
         this.paymentGatewayId = (Integer)in.readValue(Integer.class.getClassLoader());
         this.paymentMethodId = (Integer)in.readValue(Integer.class.getClassLoader());
         this.scheduledSubscriptionId = (Long)in.readValue(Long.class.getClassLoader());
+        this.unifiedPaymentId = (Long)in.readValue(Long.class.getClassLoader());
         this.isSuspended = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
