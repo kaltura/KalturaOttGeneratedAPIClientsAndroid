@@ -61,6 +61,8 @@ public class MediaFileType extends ObjectBase {
 		String streamerType();
 		String drmProfileId();
 		String quality();
+		String videoCodecs();
+		String audioCodecs();
 	}
 
 	/**
@@ -103,6 +105,14 @@ public class MediaFileType extends ObjectBase {
 	 * Media file type quality
 	 */
 	private MediaFileTypeQuality quality;
+	/**
+	 * List of comma separated video codecs
+	 */
+	private String videoCodecs;
+	/**
+	 * List of comma separated audio codecs
+	 */
+	private String audioCodecs;
 
 	// id:
 	public Integer getId(){
@@ -224,6 +234,30 @@ public class MediaFileType extends ObjectBase {
 		setToken("quality", multirequestToken);
 	}
 
+	// videoCodecs:
+	public String getVideoCodecs(){
+		return this.videoCodecs;
+	}
+	public void setVideoCodecs(String videoCodecs){
+		this.videoCodecs = videoCodecs;
+	}
+
+	public void videoCodecs(String multirequestToken){
+		setToken("videoCodecs", multirequestToken);
+	}
+
+	// audioCodecs:
+	public String getAudioCodecs(){
+		return this.audioCodecs;
+	}
+	public void setAudioCodecs(String audioCodecs){
+		this.audioCodecs = audioCodecs;
+	}
+
+	public void audioCodecs(String multirequestToken){
+		setToken("audioCodecs", multirequestToken);
+	}
+
 
 	public MediaFileType() {
 		super();
@@ -245,6 +279,8 @@ public class MediaFileType extends ObjectBase {
 		streamerType = MediaFileStreamerType.get(GsonParser.parseString(jsonObject.get("streamerType")));
 		drmProfileId = GsonParser.parseInt(jsonObject.get("drmProfileId"));
 		quality = MediaFileTypeQuality.get(GsonParser.parseString(jsonObject.get("quality")));
+		videoCodecs = GsonParser.parseString(jsonObject.get("videoCodecs"));
+		audioCodecs = GsonParser.parseString(jsonObject.get("audioCodecs"));
 
 	}
 
@@ -258,6 +294,8 @@ public class MediaFileType extends ObjectBase {
 		kparams.add("streamerType", this.streamerType);
 		kparams.add("drmProfileId", this.drmProfileId);
 		kparams.add("quality", this.quality);
+		kparams.add("videoCodecs", this.videoCodecs);
+		kparams.add("audioCodecs", this.audioCodecs);
 		return kparams;
 	}
 
@@ -287,6 +325,8 @@ public class MediaFileType extends ObjectBase {
         dest.writeInt(this.streamerType == null ? -1 : this.streamerType.ordinal());
         dest.writeValue(this.drmProfileId);
         dest.writeInt(this.quality == null ? -1 : this.quality.ordinal());
+        dest.writeString(this.videoCodecs);
+        dest.writeString(this.audioCodecs);
     }
 
     public MediaFileType(Parcel in) {
@@ -303,6 +343,8 @@ public class MediaFileType extends ObjectBase {
         this.drmProfileId = (Integer)in.readValue(Integer.class.getClassLoader());
         int tmpQuality = in.readInt();
         this.quality = tmpQuality == -1 ? null : MediaFileTypeQuality.values()[tmpQuality];
+        this.videoCodecs = in.readString();
+        this.audioCodecs = in.readString();
     }
 }
 
