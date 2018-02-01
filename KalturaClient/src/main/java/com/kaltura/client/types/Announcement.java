@@ -57,6 +57,7 @@ public class Announcement extends ObjectBase {
 		String recipients();
 		String id();
 		String imageUrl();
+		String includeMail();
 	}
 
 	/**
@@ -95,6 +96,10 @@ public class Announcement extends ObjectBase {
 	 * Announcement image URL, relevant for system announcements
 	 */
 	private String imageUrl;
+	/**
+	 * Include Mail
+	 */
+	private Boolean includeMail;
 
 	// name:
 	public String getName(){
@@ -204,6 +209,18 @@ public class Announcement extends ObjectBase {
 		setToken("imageUrl", multirequestToken);
 	}
 
+	// includeMail:
+	public Boolean getIncludeMail(){
+		return this.includeMail;
+	}
+	public void setIncludeMail(Boolean includeMail){
+		this.includeMail = includeMail;
+	}
+
+	public void includeMail(String multirequestToken){
+		setToken("includeMail", multirequestToken);
+	}
+
 
 	public Announcement() {
 		super();
@@ -224,6 +241,7 @@ public class Announcement extends ObjectBase {
 		recipients = AnnouncementRecipientsType.get(GsonParser.parseString(jsonObject.get("recipients")));
 		id = GsonParser.parseInt(jsonObject.get("id"));
 		imageUrl = GsonParser.parseString(jsonObject.get("imageUrl"));
+		includeMail = GsonParser.parseBoolean(jsonObject.get("includeMail"));
 
 	}
 
@@ -237,6 +255,7 @@ public class Announcement extends ObjectBase {
 		kparams.add("timezone", this.timezone);
 		kparams.add("recipients", this.recipients);
 		kparams.add("imageUrl", this.imageUrl);
+		kparams.add("includeMail", this.includeMail);
 		return kparams;
 	}
 
@@ -265,6 +284,7 @@ public class Announcement extends ObjectBase {
         dest.writeInt(this.recipients == null ? -1 : this.recipients.ordinal());
         dest.writeValue(this.id);
         dest.writeString(this.imageUrl);
+        dest.writeValue(this.includeMail);
     }
 
     public Announcement(Parcel in) {
@@ -280,6 +300,7 @@ public class Announcement extends ObjectBase {
         this.recipients = tmpRecipients == -1 ? null : AnnouncementRecipientsType.values()[tmpRecipients];
         this.id = (Integer)in.readValue(Integer.class.getClassLoader());
         this.imageUrl = in.readString();
+        this.includeMail = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
 
