@@ -49,7 +49,7 @@ import java.util.List;
  */
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(Channel.Tokenizer.class)
-public abstract class Channel extends ObjectBase {
+public class Channel extends ObjectBase {
 	
 	public interface Tokenizer extends ObjectBase.Tokenizer {
 		String id();
@@ -214,6 +214,18 @@ public abstract class Channel extends ObjectBase {
 		return kparams;
 	}
 
+
+    public static final Creator<Channel> CREATOR = new Creator<Channel>() {
+        @Override
+        public Channel createFromParcel(Parcel source) {
+            return new Channel(source);
+        }
+
+        @Override
+        public Channel[] newArray(int size) {
+            return new Channel[size];
+        }
+    };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
