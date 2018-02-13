@@ -30,6 +30,7 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
+import com.kaltura.client.types.ChannelOrder;
 import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
@@ -60,6 +61,7 @@ public class Channel extends ObjectBase {
 		RequestBuilder.ListTokenizer<TranslationToken.Tokenizer> multilingualDescription();
 		RequestBuilder.ListTokenizer<MediaImage.Tokenizer> images();
 		String isActive();
+		ChannelOrder.Tokenizer orderBy();
 	}
 
 	/**
@@ -94,6 +96,10 @@ public class Channel extends ObjectBase {
 	 * active status
 	 */
 	private Boolean isActive;
+	/**
+	 * Channel order by
+	 */
+	private ChannelOrder orderBy;
 
 	// id:
 	public Long getId(){
@@ -179,6 +185,14 @@ public class Channel extends ObjectBase {
 		setToken("isActive", multirequestToken);
 	}
 
+	// orderBy:
+	public ChannelOrder getOrderBy(){
+		return this.orderBy;
+	}
+	public void setOrderBy(ChannelOrder orderBy){
+		this.orderBy = orderBy;
+	}
+
 
 	public Channel() {
 		super();
@@ -198,6 +212,7 @@ public class Channel extends ObjectBase {
 		multilingualDescription = GsonParser.parseArray(jsonObject.getAsJsonArray("multilingualDescription"), TranslationToken.class);
 		images = GsonParser.parseArray(jsonObject.getAsJsonArray("images"), MediaImage.class);
 		isActive = GsonParser.parseBoolean(jsonObject.get("isActive"));
+		orderBy = GsonParser.parseObject(jsonObject.getAsJsonObject("orderBy"), ChannelOrder.class);
 
 	}
 
@@ -211,6 +226,7 @@ public class Channel extends ObjectBase {
 		kparams.add("multilingualDescription", this.multilingualDescription);
 		kparams.add("images", this.images);
 		kparams.add("isActive", this.isActive);
+		kparams.add("orderBy", this.orderBy);
 		return kparams;
 	}
 
@@ -253,6 +269,7 @@ public class Channel extends ObjectBase {
             dest.writeInt(-1);
         }
         dest.writeValue(this.isActive);
+        dest.writeParcelable(this.orderBy, flags);
     }
 
     public Channel(Parcel in) {
@@ -277,6 +294,7 @@ public class Channel extends ObjectBase {
             in.readList(this.images, MediaImage.class.getClassLoader());
         }
         this.isActive = (Boolean)in.readValue(Boolean.class.getClassLoader());
+        this.orderBy = in.readParcelable(ChannelOrder.class.getClassLoader());
     }
 }
 
