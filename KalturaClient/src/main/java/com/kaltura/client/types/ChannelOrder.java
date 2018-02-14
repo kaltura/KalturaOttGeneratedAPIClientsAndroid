@@ -53,6 +53,7 @@ public class ChannelOrder extends ObjectBase {
 	public interface Tokenizer extends ObjectBase.Tokenizer {
 		DynamicOrderBy.Tokenizer dynamicOrderBy();
 		String orderBy();
+		String slidingWindowPeriod();
 	}
 
 	/**
@@ -63,6 +64,10 @@ public class ChannelOrder extends ObjectBase {
 	 * Channel order by
 	 */
 	private ChannelOrderBy orderBy;
+	/**
+	 * Sliding window period in minutes
+	 */
+	private Integer slidingWindowPeriod;
 
 	// dynamicOrderBy:
 	public DynamicOrderBy getDynamicOrderBy(){
@@ -84,6 +89,18 @@ public class ChannelOrder extends ObjectBase {
 		setToken("orderBy", multirequestToken);
 	}
 
+	// slidingWindowPeriod:
+	public Integer getSlidingWindowPeriod(){
+		return this.slidingWindowPeriod;
+	}
+	public void setSlidingWindowPeriod(Integer slidingWindowPeriod){
+		this.slidingWindowPeriod = slidingWindowPeriod;
+	}
+
+	public void slidingWindowPeriod(String multirequestToken){
+		setToken("slidingWindowPeriod", multirequestToken);
+	}
+
 
 	public ChannelOrder() {
 		super();
@@ -97,6 +114,7 @@ public class ChannelOrder extends ObjectBase {
 		// set members values:
 		dynamicOrderBy = GsonParser.parseObject(jsonObject.getAsJsonObject("dynamicOrderBy"), DynamicOrderBy.class);
 		orderBy = ChannelOrderBy.get(GsonParser.parseString(jsonObject.get("orderBy")));
+		slidingWindowPeriod = GsonParser.parseInt(jsonObject.get("slidingWindowPeriod"));
 
 	}
 
@@ -105,6 +123,7 @@ public class ChannelOrder extends ObjectBase {
 		kparams.add("objectType", "KalturaChannelOrder");
 		kparams.add("dynamicOrderBy", this.dynamicOrderBy);
 		kparams.add("orderBy", this.orderBy);
+		kparams.add("slidingWindowPeriod", this.slidingWindowPeriod);
 		return kparams;
 	}
 
@@ -126,6 +145,7 @@ public class ChannelOrder extends ObjectBase {
         super.writeToParcel(dest, flags);
         dest.writeParcelable(this.dynamicOrderBy, flags);
         dest.writeInt(this.orderBy == null ? -1 : this.orderBy.ordinal());
+        dest.writeValue(this.slidingWindowPeriod);
     }
 
     public ChannelOrder(Parcel in) {
@@ -133,6 +153,7 @@ public class ChannelOrder extends ObjectBase {
         this.dynamicOrderBy = in.readParcelable(DynamicOrderBy.class.getClassLoader());
         int tmpOrderBy = in.readInt();
         this.orderBy = tmpOrderBy == -1 ? null : ChannelOrderBy.values()[tmpOrderBy];
+        this.slidingWindowPeriod = (Integer)in.readValue(Integer.class.getClassLoader());
     }
 }
 
