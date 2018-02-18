@@ -59,7 +59,7 @@ public class MediaFile extends ObjectBase {
 		String fileSize();
 		String additionalData();
 		String altStreamingCode();
-		String altStreamingSuplierId();
+		String altStreamingSupplierId();
 		String endDate();
 		String startDate();
 		String externalStoreId();
@@ -67,7 +67,7 @@ public class MediaFile extends ObjectBase {
 		String language();
 		String orderNum();
 		String outputProtecationLevel();
-		String streamingSuplierId();
+		String streamingSupplierId();
 		String status();
 	}
 
@@ -114,7 +114,7 @@ public class MediaFile extends ObjectBase {
 	/**
 	 * Alternative streaming supplier identifier
 	 */
-	private Long altStreamingSuplierId;
+	private Long altStreamingSupplierId;
 	/**
 	 * EndDate
 	 */
@@ -144,9 +144,9 @@ public class MediaFile extends ObjectBase {
 	 */
 	private String outputProtecationLevel;
 	/**
-	 * StreamingSuplierId
+	 * StreamingSupplierId
 	 */
-	private String streamingSuplierId;
+	private Long streamingSupplierId;
 	/**
 	 * The media file status
 	 */
@@ -272,16 +272,16 @@ public class MediaFile extends ObjectBase {
 		setToken("altStreamingCode", multirequestToken);
 	}
 
-	// altStreamingSuplierId:
-	public Long getAltStreamingSuplierId(){
-		return this.altStreamingSuplierId;
+	// altStreamingSupplierId:
+	public Long getAltStreamingSupplierId(){
+		return this.altStreamingSupplierId;
 	}
-	public void setAltStreamingSuplierId(Long altStreamingSuplierId){
-		this.altStreamingSuplierId = altStreamingSuplierId;
+	public void setAltStreamingSupplierId(Long altStreamingSupplierId){
+		this.altStreamingSupplierId = altStreamingSupplierId;
 	}
 
-	public void altStreamingSuplierId(String multirequestToken){
-		setToken("altStreamingSuplierId", multirequestToken);
+	public void altStreamingSupplierId(String multirequestToken){
+		setToken("altStreamingSupplierId", multirequestToken);
 	}
 
 	// endDate:
@@ -368,16 +368,16 @@ public class MediaFile extends ObjectBase {
 		setToken("outputProtecationLevel", multirequestToken);
 	}
 
-	// streamingSuplierId:
-	public String getStreamingSuplierId(){
-		return this.streamingSuplierId;
+	// streamingSupplierId:
+	public Long getStreamingSupplierId(){
+		return this.streamingSupplierId;
 	}
-	public void setStreamingSuplierId(String streamingSuplierId){
-		this.streamingSuplierId = streamingSuplierId;
+	public void setStreamingSupplierId(Long streamingSupplierId){
+		this.streamingSupplierId = streamingSupplierId;
 	}
 
-	public void streamingSuplierId(String multirequestToken){
-		setToken("streamingSuplierId", multirequestToken);
+	public void streamingSupplierId(String multirequestToken){
+		setToken("streamingSupplierId", multirequestToken);
 	}
 
 	// status:
@@ -413,7 +413,7 @@ public class MediaFile extends ObjectBase {
 		fileSize = GsonParser.parseLong(jsonObject.get("fileSize"));
 		additionalData = GsonParser.parseString(jsonObject.get("additionalData"));
 		altStreamingCode = GsonParser.parseString(jsonObject.get("altStreamingCode"));
-		altStreamingSuplierId = GsonParser.parseLong(jsonObject.get("altStreamingSuplierId"));
+		altStreamingSupplierId = GsonParser.parseLong(jsonObject.get("altStreamingSupplierId"));
 		endDate = GsonParser.parseLong(jsonObject.get("endDate"));
 		startDate = GsonParser.parseLong(jsonObject.get("startDate"));
 		externalStoreId = GsonParser.parseLong(jsonObject.get("externalStoreId"));
@@ -421,7 +421,7 @@ public class MediaFile extends ObjectBase {
 		language = GsonParser.parseString(jsonObject.get("language"));
 		orderNum = GsonParser.parseInt(jsonObject.get("orderNum"));
 		outputProtecationLevel = GsonParser.parseString(jsonObject.get("outputProtecationLevel"));
-		streamingSuplierId = GsonParser.parseString(jsonObject.get("streamingSuplierId"));
+		streamingSupplierId = GsonParser.parseLong(jsonObject.get("streamingSupplierId"));
 		status = GsonParser.parseBoolean(jsonObject.get("status"));
 
 	}
@@ -438,7 +438,7 @@ public class MediaFile extends ObjectBase {
 		kparams.add("fileSize", this.fileSize);
 		kparams.add("additionalData", this.additionalData);
 		kparams.add("altStreamingCode", this.altStreamingCode);
-		kparams.add("altStreamingSuplierId", this.altStreamingSuplierId);
+		kparams.add("altStreamingSupplierId", this.altStreamingSupplierId);
 		kparams.add("endDate", this.endDate);
 		kparams.add("startDate", this.startDate);
 		kparams.add("externalStoreId", this.externalStoreId);
@@ -446,7 +446,7 @@ public class MediaFile extends ObjectBase {
 		kparams.add("language", this.language);
 		kparams.add("orderNum", this.orderNum);
 		kparams.add("outputProtecationLevel", this.outputProtecationLevel);
-		kparams.add("streamingSuplierId", this.streamingSuplierId);
+		kparams.add("streamingSupplierId", this.streamingSupplierId);
 		kparams.add("status", this.status);
 		return kparams;
 	}
@@ -477,7 +477,7 @@ public class MediaFile extends ObjectBase {
         dest.writeValue(this.fileSize);
         dest.writeString(this.additionalData);
         dest.writeString(this.altStreamingCode);
-        dest.writeValue(this.altStreamingSuplierId);
+        dest.writeValue(this.altStreamingSupplierId);
         dest.writeValue(this.endDate);
         dest.writeValue(this.startDate);
         dest.writeValue(this.externalStoreId);
@@ -485,7 +485,7 @@ public class MediaFile extends ObjectBase {
         dest.writeString(this.language);
         dest.writeValue(this.orderNum);
         dest.writeString(this.outputProtecationLevel);
-        dest.writeString(this.streamingSuplierId);
+        dest.writeValue(this.streamingSupplierId);
         dest.writeValue(this.status);
     }
 
@@ -501,7 +501,7 @@ public class MediaFile extends ObjectBase {
         this.fileSize = (Long)in.readValue(Long.class.getClassLoader());
         this.additionalData = in.readString();
         this.altStreamingCode = in.readString();
-        this.altStreamingSuplierId = (Long)in.readValue(Long.class.getClassLoader());
+        this.altStreamingSupplierId = (Long)in.readValue(Long.class.getClassLoader());
         this.endDate = (Long)in.readValue(Long.class.getClassLoader());
         this.startDate = (Long)in.readValue(Long.class.getClassLoader());
         this.externalStoreId = (Long)in.readValue(Long.class.getClassLoader());
@@ -509,7 +509,7 @@ public class MediaFile extends ObjectBase {
         this.language = in.readString();
         this.orderNum = (Integer)in.readValue(Integer.class.getClassLoader());
         this.outputProtecationLevel = in.readString();
-        this.streamingSuplierId = in.readString();
+        this.streamingSupplierId = (Long)in.readValue(Long.class.getClassLoader());
         this.status = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
