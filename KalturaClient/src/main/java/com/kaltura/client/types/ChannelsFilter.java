@@ -45,10 +45,15 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
 public class ChannelsFilter extends Filter {
 	
 	public interface Tokenizer extends Filter.Tokenizer {
+		String idEqual();
 		String nameEqual();
 		String nameStartsWith();
 	}
 
+	/**
+	 * channel identifier to filter by
+	 */
+	private Integer idEqual;
 	/**
 	 * Exact channel name to filter by
 	 */
@@ -57,6 +62,18 @@ public class ChannelsFilter extends Filter {
 	 * Channel name starts with (autocomplete)
 	 */
 	private String nameStartsWith;
+
+	// idEqual:
+	public Integer getIdEqual(){
+		return this.idEqual;
+	}
+	public void setIdEqual(Integer idEqual){
+		this.idEqual = idEqual;
+	}
+
+	public void idEqual(String multirequestToken){
+		setToken("idEqual", multirequestToken);
+	}
 
 	// nameEqual:
 	public String getNameEqual(){
@@ -93,6 +110,7 @@ public class ChannelsFilter extends Filter {
 		if(jsonObject == null) return;
 
 		// set members values:
+		idEqual = GsonParser.parseInt(jsonObject.get("idEqual"));
 		nameEqual = GsonParser.parseString(jsonObject.get("nameEqual"));
 		nameStartsWith = GsonParser.parseString(jsonObject.get("nameStartsWith"));
 
@@ -101,6 +119,7 @@ public class ChannelsFilter extends Filter {
 	public Params toParams() {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaChannelsFilter");
+		kparams.add("idEqual", this.idEqual);
 		kparams.add("nameEqual", this.nameEqual);
 		kparams.add("nameStartsWith", this.nameStartsWith);
 		return kparams;
@@ -122,12 +141,14 @@ public class ChannelsFilter extends Filter {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
+        dest.writeValue(this.idEqual);
         dest.writeString(this.nameEqual);
         dest.writeString(this.nameStartsWith);
     }
 
     public ChannelsFilter(Parcel in) {
         super(in);
+        this.idEqual = (Integer)in.readValue(Integer.class.getClassLoader());
         this.nameEqual = in.readString();
         this.nameStartsWith = in.readString();
     }
