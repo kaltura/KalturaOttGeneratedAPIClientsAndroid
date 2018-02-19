@@ -62,6 +62,7 @@ public class NotificationsPartnerSettings extends ObjectBase {
 		String senderEmail();
 		String mailSenderName();
 		String mailNotificationAdapterId();
+		String smsEnabled();
 	}
 
 	/**
@@ -128,6 +129,10 @@ public class NotificationsPartnerSettings extends ObjectBase {
 	 * Mail notification adapter identifier
 	 */
 	private Long mailNotificationAdapterId;
+	/**
+	 * SMS capability is enabled for the account
+	 */
+	private Boolean smsEnabled;
 
 	// pushNotificationEnabled:
 	public Boolean getPushNotificationEnabled(){
@@ -321,6 +326,18 @@ public class NotificationsPartnerSettings extends ObjectBase {
 		setToken("mailNotificationAdapterId", multirequestToken);
 	}
 
+	// smsEnabled:
+	public Boolean getSmsEnabled(){
+		return this.smsEnabled;
+	}
+	public void setSmsEnabled(Boolean smsEnabled){
+		this.smsEnabled = smsEnabled;
+	}
+
+	public void smsEnabled(String multirequestToken){
+		setToken("smsEnabled", multirequestToken);
+	}
+
 
 	public NotificationsPartnerSettings() {
 		super();
@@ -348,6 +365,7 @@ public class NotificationsPartnerSettings extends ObjectBase {
 		senderEmail = GsonParser.parseString(jsonObject.get("senderEmail"));
 		mailSenderName = GsonParser.parseString(jsonObject.get("mailSenderName"));
 		mailNotificationAdapterId = GsonParser.parseLong(jsonObject.get("mailNotificationAdapterId"));
+		smsEnabled = GsonParser.parseBoolean(jsonObject.get("smsEnabled"));
 
 	}
 
@@ -370,6 +388,7 @@ public class NotificationsPartnerSettings extends ObjectBase {
 		kparams.add("senderEmail", this.senderEmail);
 		kparams.add("mailSenderName", this.mailSenderName);
 		kparams.add("mailNotificationAdapterId", this.mailNotificationAdapterId);
+		kparams.add("smsEnabled", this.smsEnabled);
 		return kparams;
 	}
 
@@ -405,6 +424,7 @@ public class NotificationsPartnerSettings extends ObjectBase {
         dest.writeString(this.senderEmail);
         dest.writeString(this.mailSenderName);
         dest.writeValue(this.mailNotificationAdapterId);
+        dest.writeValue(this.smsEnabled);
     }
 
     public NotificationsPartnerSettings(Parcel in) {
@@ -425,6 +445,7 @@ public class NotificationsPartnerSettings extends ObjectBase {
         this.senderEmail = in.readString();
         this.mailSenderName = in.readString();
         this.mailNotificationAdapterId = (Long)in.readValue(Long.class.getClassLoader());
+        this.smsEnabled = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
 
