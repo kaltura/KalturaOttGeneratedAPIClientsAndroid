@@ -59,7 +59,7 @@ public class MediaFile extends ObjectBase {
 		String fileSize();
 		String additionalData();
 		String altStreamingCode();
-		String altStreamingSupplierId();
+		String alternativecdnAdapaterProfileId ();
 		String endDate();
 		String startDate();
 		String externalStoreId();
@@ -67,7 +67,7 @@ public class MediaFile extends ObjectBase {
 		String language();
 		String orderNum();
 		String outputProtecationLevel();
-		String streamingSupplierId();
+		String cdnAdapaterProfileId();
 		String status();
 	}
 
@@ -112,9 +112,9 @@ public class MediaFile extends ObjectBase {
 	 */
 	private String altStreamingCode;
 	/**
-	 * Alternative streaming supplier identifier
+	 * Alternative cdn adapter profile identifier
 	 */
-	private Long altStreamingSupplierId;
+	private Long alternativecdnAdapaterProfileId ;
 	/**
 	 * EndDate
 	 */
@@ -126,7 +126,7 @@ public class MediaFile extends ObjectBase {
 	/**
 	 * ExternalStoreId
 	 */
-	private Long externalStoreId;
+	private String externalStoreId;
 	/**
 	 * IsDefaultLanguage
 	 */
@@ -144,9 +144,9 @@ public class MediaFile extends ObjectBase {
 	 */
 	private String outputProtecationLevel;
 	/**
-	 * StreamingSupplierId
+	 * cdn adapter profile identifier
 	 */
-	private Long streamingSupplierId;
+	private Long cdnAdapaterProfileId;
 	/**
 	 * The media file status
 	 */
@@ -272,16 +272,16 @@ public class MediaFile extends ObjectBase {
 		setToken("altStreamingCode", multirequestToken);
 	}
 
-	// altStreamingSupplierId:
-	public Long getAltStreamingSupplierId(){
-		return this.altStreamingSupplierId;
+	// alternativecdnAdapaterProfileId :
+	public Long getAlternativecdnAdapaterProfileId (){
+		return this.alternativecdnAdapaterProfileId ;
 	}
-	public void setAltStreamingSupplierId(Long altStreamingSupplierId){
-		this.altStreamingSupplierId = altStreamingSupplierId;
+	public void setAlternativecdnAdapaterProfileId (Long alternativecdnAdapaterProfileId ){
+		this.alternativecdnAdapaterProfileId  = alternativecdnAdapaterProfileId ;
 	}
 
-	public void altStreamingSupplierId(String multirequestToken){
-		setToken("altStreamingSupplierId", multirequestToken);
+	public void alternativecdnAdapaterProfileId (String multirequestToken){
+		setToken("alternativecdnAdapaterProfileId ", multirequestToken);
 	}
 
 	// endDate:
@@ -309,10 +309,10 @@ public class MediaFile extends ObjectBase {
 	}
 
 	// externalStoreId:
-	public Long getExternalStoreId(){
+	public String getExternalStoreId(){
 		return this.externalStoreId;
 	}
-	public void setExternalStoreId(Long externalStoreId){
+	public void setExternalStoreId(String externalStoreId){
 		this.externalStoreId = externalStoreId;
 	}
 
@@ -368,16 +368,16 @@ public class MediaFile extends ObjectBase {
 		setToken("outputProtecationLevel", multirequestToken);
 	}
 
-	// streamingSupplierId:
-	public Long getStreamingSupplierId(){
-		return this.streamingSupplierId;
+	// cdnAdapaterProfileId:
+	public Long getCdnAdapaterProfileId(){
+		return this.cdnAdapaterProfileId;
 	}
-	public void setStreamingSupplierId(Long streamingSupplierId){
-		this.streamingSupplierId = streamingSupplierId;
+	public void setCdnAdapaterProfileId(Long cdnAdapaterProfileId){
+		this.cdnAdapaterProfileId = cdnAdapaterProfileId;
 	}
 
-	public void streamingSupplierId(String multirequestToken){
-		setToken("streamingSupplierId", multirequestToken);
+	public void cdnAdapaterProfileId(String multirequestToken){
+		setToken("cdnAdapaterProfileId", multirequestToken);
 	}
 
 	// status:
@@ -413,15 +413,15 @@ public class MediaFile extends ObjectBase {
 		fileSize = GsonParser.parseLong(jsonObject.get("fileSize"));
 		additionalData = GsonParser.parseString(jsonObject.get("additionalData"));
 		altStreamingCode = GsonParser.parseString(jsonObject.get("altStreamingCode"));
-		altStreamingSupplierId = GsonParser.parseLong(jsonObject.get("altStreamingSupplierId"));
+		alternativecdnAdapaterProfileId  = GsonParser.parseLong(jsonObject.get("alternativecdnAdapaterProfileId "));
 		endDate = GsonParser.parseLong(jsonObject.get("endDate"));
 		startDate = GsonParser.parseLong(jsonObject.get("startDate"));
-		externalStoreId = GsonParser.parseLong(jsonObject.get("externalStoreId"));
+		externalStoreId = GsonParser.parseString(jsonObject.get("externalStoreId"));
 		isDefaultLanguage = GsonParser.parseBoolean(jsonObject.get("isDefaultLanguage"));
 		language = GsonParser.parseString(jsonObject.get("language"));
 		orderNum = GsonParser.parseInt(jsonObject.get("orderNum"));
 		outputProtecationLevel = GsonParser.parseString(jsonObject.get("outputProtecationLevel"));
-		streamingSupplierId = GsonParser.parseLong(jsonObject.get("streamingSupplierId"));
+		cdnAdapaterProfileId = GsonParser.parseLong(jsonObject.get("cdnAdapaterProfileId"));
 		status = GsonParser.parseBoolean(jsonObject.get("status"));
 
 	}
@@ -438,7 +438,7 @@ public class MediaFile extends ObjectBase {
 		kparams.add("fileSize", this.fileSize);
 		kparams.add("additionalData", this.additionalData);
 		kparams.add("altStreamingCode", this.altStreamingCode);
-		kparams.add("altStreamingSupplierId", this.altStreamingSupplierId);
+		kparams.add("alternativecdnAdapaterProfileId ", this.alternativecdnAdapaterProfileId );
 		kparams.add("endDate", this.endDate);
 		kparams.add("startDate", this.startDate);
 		kparams.add("externalStoreId", this.externalStoreId);
@@ -446,7 +446,7 @@ public class MediaFile extends ObjectBase {
 		kparams.add("language", this.language);
 		kparams.add("orderNum", this.orderNum);
 		kparams.add("outputProtecationLevel", this.outputProtecationLevel);
-		kparams.add("streamingSupplierId", this.streamingSupplierId);
+		kparams.add("cdnAdapaterProfileId", this.cdnAdapaterProfileId);
 		kparams.add("status", this.status);
 		return kparams;
 	}
@@ -477,15 +477,15 @@ public class MediaFile extends ObjectBase {
         dest.writeValue(this.fileSize);
         dest.writeString(this.additionalData);
         dest.writeString(this.altStreamingCode);
-        dest.writeValue(this.altStreamingSupplierId);
+        dest.writeValue(this.alternativecdnAdapaterProfileId );
         dest.writeValue(this.endDate);
         dest.writeValue(this.startDate);
-        dest.writeValue(this.externalStoreId);
+        dest.writeString(this.externalStoreId);
         dest.writeValue(this.isDefaultLanguage);
         dest.writeString(this.language);
         dest.writeValue(this.orderNum);
         dest.writeString(this.outputProtecationLevel);
-        dest.writeValue(this.streamingSupplierId);
+        dest.writeValue(this.cdnAdapaterProfileId);
         dest.writeValue(this.status);
     }
 
@@ -501,15 +501,15 @@ public class MediaFile extends ObjectBase {
         this.fileSize = (Long)in.readValue(Long.class.getClassLoader());
         this.additionalData = in.readString();
         this.altStreamingCode = in.readString();
-        this.altStreamingSupplierId = (Long)in.readValue(Long.class.getClassLoader());
+        this.alternativecdnAdapaterProfileId  = (Long)in.readValue(Long.class.getClassLoader());
         this.endDate = (Long)in.readValue(Long.class.getClassLoader());
         this.startDate = (Long)in.readValue(Long.class.getClassLoader());
-        this.externalStoreId = (Long)in.readValue(Long.class.getClassLoader());
+        this.externalStoreId = in.readString();
         this.isDefaultLanguage = (Boolean)in.readValue(Boolean.class.getClassLoader());
         this.language = in.readString();
         this.orderNum = (Integer)in.readValue(Integer.class.getClassLoader());
         this.outputProtecationLevel = in.readString();
-        this.streamingSupplierId = (Long)in.readValue(Long.class.getClassLoader());
+        this.cdnAdapaterProfileId = (Long)in.readValue(Long.class.getClassLoader());
         this.status = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
