@@ -50,7 +50,7 @@ public class Ratio extends ObjectBase {
 		String name();
 		String height();
 		String width();
-		String acceptedErrorMarginPrecentage();
+		String precisionPrecentage();
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class Ratio extends ObjectBase {
 	 * Accepted error margin precentage of an image uploaded for this ratio            
 	   0 - no validation, everything accepted
 	 */
-	private Integer acceptedErrorMarginPrecentage;
+	private Integer precisionPrecentage;
 
 	// id:
 	public Long getId(){
@@ -123,16 +123,16 @@ public class Ratio extends ObjectBase {
 		setToken("width", multirequestToken);
 	}
 
-	// acceptedErrorMarginPrecentage:
-	public Integer getAcceptedErrorMarginPrecentage(){
-		return this.acceptedErrorMarginPrecentage;
+	// precisionPrecentage:
+	public Integer getPrecisionPrecentage(){
+		return this.precisionPrecentage;
 	}
-	public void setAcceptedErrorMarginPrecentage(Integer acceptedErrorMarginPrecentage){
-		this.acceptedErrorMarginPrecentage = acceptedErrorMarginPrecentage;
+	public void setPrecisionPrecentage(Integer precisionPrecentage){
+		this.precisionPrecentage = precisionPrecentage;
 	}
 
-	public void acceptedErrorMarginPrecentage(String multirequestToken){
-		setToken("acceptedErrorMarginPrecentage", multirequestToken);
+	public void precisionPrecentage(String multirequestToken){
+		setToken("precisionPrecentage", multirequestToken);
 	}
 
 
@@ -150,7 +150,7 @@ public class Ratio extends ObjectBase {
 		name = GsonParser.parseString(jsonObject.get("name"));
 		height = GsonParser.parseInt(jsonObject.get("height"));
 		width = GsonParser.parseInt(jsonObject.get("width"));
-		acceptedErrorMarginPrecentage = GsonParser.parseInt(jsonObject.get("acceptedErrorMarginPrecentage"));
+		precisionPrecentage = GsonParser.parseInt(jsonObject.get("precisionPrecentage"));
 
 	}
 
@@ -160,7 +160,7 @@ public class Ratio extends ObjectBase {
 		kparams.add("name", this.name);
 		kparams.add("height", this.height);
 		kparams.add("width", this.width);
-		kparams.add("acceptedErrorMarginPrecentage", this.acceptedErrorMarginPrecentage);
+		kparams.add("precisionPrecentage", this.precisionPrecentage);
 		return kparams;
 	}
 
@@ -184,7 +184,7 @@ public class Ratio extends ObjectBase {
         dest.writeString(this.name);
         dest.writeValue(this.height);
         dest.writeValue(this.width);
-        dest.writeValue(this.acceptedErrorMarginPrecentage);
+        dest.writeValue(this.precisionPrecentage);
     }
 
     public Ratio(Parcel in) {
@@ -193,7 +193,7 @@ public class Ratio extends ObjectBase {
         this.name = in.readString();
         this.height = (Integer)in.readValue(Integer.class.getClassLoader());
         this.width = (Integer)in.readValue(Integer.class.getClassLoader());
-        this.acceptedErrorMarginPrecentage = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.precisionPrecentage = (Integer)in.readValue(Integer.class.getClassLoader());
     }
 }
 
