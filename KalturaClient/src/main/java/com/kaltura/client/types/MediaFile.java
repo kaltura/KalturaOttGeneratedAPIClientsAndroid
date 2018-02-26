@@ -59,7 +59,7 @@ public class MediaFile extends ObjectBase {
 		String fileSize();
 		String additionalData();
 		String altStreamingCode();
-		String alternativecdnAdapaterProfileId();
+		String alternativeCdnAdapaterProfileId();
 		String endDate();
 		String startDate();
 		String externalStoreId();
@@ -114,7 +114,7 @@ public class MediaFile extends ObjectBase {
 	/**
 	 * Alternative cdn adapter profile identifier
 	 */
-	private Long alternativecdnAdapaterProfileId;
+	private Long alternativeCdnAdapaterProfileId;
 	/**
 	 * EndDate
 	 */
@@ -272,16 +272,16 @@ public class MediaFile extends ObjectBase {
 		setToken("altStreamingCode", multirequestToken);
 	}
 
-	// alternativecdnAdapaterProfileId:
-	public Long getAlternativecdnAdapaterProfileId(){
-		return this.alternativecdnAdapaterProfileId;
+	// alternativeCdnAdapaterProfileId:
+	public Long getAlternativeCdnAdapaterProfileId(){
+		return this.alternativeCdnAdapaterProfileId;
 	}
-	public void setAlternativecdnAdapaterProfileId(Long alternativecdnAdapaterProfileId){
-		this.alternativecdnAdapaterProfileId = alternativecdnAdapaterProfileId;
+	public void setAlternativeCdnAdapaterProfileId(Long alternativeCdnAdapaterProfileId){
+		this.alternativeCdnAdapaterProfileId = alternativeCdnAdapaterProfileId;
 	}
 
-	public void alternativecdnAdapaterProfileId(String multirequestToken){
-		setToken("alternativecdnAdapaterProfileId", multirequestToken);
+	public void alternativeCdnAdapaterProfileId(String multirequestToken){
+		setToken("alternativeCdnAdapaterProfileId", multirequestToken);
 	}
 
 	// endDate:
@@ -413,7 +413,7 @@ public class MediaFile extends ObjectBase {
 		fileSize = GsonParser.parseLong(jsonObject.get("fileSize"));
 		additionalData = GsonParser.parseString(jsonObject.get("additionalData"));
 		altStreamingCode = GsonParser.parseString(jsonObject.get("altStreamingCode"));
-		alternativecdnAdapaterProfileId = GsonParser.parseLong(jsonObject.get("alternativecdnAdapaterProfileId"));
+		alternativeCdnAdapaterProfileId = GsonParser.parseLong(jsonObject.get("alternativeCdnAdapaterProfileId"));
 		endDate = GsonParser.parseLong(jsonObject.get("endDate"));
 		startDate = GsonParser.parseLong(jsonObject.get("startDate"));
 		externalStoreId = GsonParser.parseString(jsonObject.get("externalStoreId"));
@@ -438,7 +438,7 @@ public class MediaFile extends ObjectBase {
 		kparams.add("fileSize", this.fileSize);
 		kparams.add("additionalData", this.additionalData);
 		kparams.add("altStreamingCode", this.altStreamingCode);
-		kparams.add("alternativecdnAdapaterProfileId", this.alternativecdnAdapaterProfileId);
+		kparams.add("alternativeCdnAdapaterProfileId", this.alternativeCdnAdapaterProfileId);
 		kparams.add("endDate", this.endDate);
 		kparams.add("startDate", this.startDate);
 		kparams.add("externalStoreId", this.externalStoreId);
@@ -477,7 +477,7 @@ public class MediaFile extends ObjectBase {
         dest.writeValue(this.fileSize);
         dest.writeString(this.additionalData);
         dest.writeString(this.altStreamingCode);
-        dest.writeValue(this.alternativecdnAdapaterProfileId);
+        dest.writeValue(this.alternativeCdnAdapaterProfileId);
         dest.writeValue(this.endDate);
         dest.writeValue(this.startDate);
         dest.writeString(this.externalStoreId);
@@ -501,7 +501,7 @@ public class MediaFile extends ObjectBase {
         this.fileSize = (Long)in.readValue(Long.class.getClassLoader());
         this.additionalData = in.readString();
         this.altStreamingCode = in.readString();
-        this.alternativecdnAdapaterProfileId = (Long)in.readValue(Long.class.getClassLoader());
+        this.alternativeCdnAdapaterProfileId = (Long)in.readValue(Long.class.getClassLoader());
         this.endDate = (Long)in.readValue(Long.class.getClassLoader());
         this.startDate = (Long)in.readValue(Long.class.getClassLoader());
         this.externalStoreId = in.readString();

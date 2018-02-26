@@ -59,7 +59,6 @@ public class Channel extends ObjectBase {
 		String systemName();
 		String description();
 		RequestBuilder.ListTokenizer<TranslationToken.Tokenizer> multilingualDescription();
-		RequestBuilder.ListTokenizer<MediaImage.Tokenizer> images();
 		String isActive();
 		ChannelOrder.Tokenizer orderBy();
 		String createDate();
@@ -90,10 +89,6 @@ public class Channel extends ObjectBase {
 	 * Channel description
 	 */
 	private List<TranslationToken> multilingualDescription;
-	/**
-	 * Channel images
-	 */
-	private List<MediaImage> images;
 	/**
 	 * active status
 	 */
@@ -175,14 +170,6 @@ public class Channel extends ObjectBase {
 		this.multilingualDescription = multilingualDescription;
 	}
 
-	// images:
-	public List<MediaImage> getImages(){
-		return this.images;
-	}
-	public void setImages(List<MediaImage> images){
-		this.images = images;
-	}
-
 	// isActive:
 	public Boolean getIsActive(){
 		return this.isActive;
@@ -244,7 +231,6 @@ public class Channel extends ObjectBase {
 		systemName = GsonParser.parseString(jsonObject.get("systemName"));
 		description = GsonParser.parseString(jsonObject.get("description"));
 		multilingualDescription = GsonParser.parseArray(jsonObject.getAsJsonArray("multilingualDescription"), TranslationToken.class);
-		images = GsonParser.parseArray(jsonObject.getAsJsonArray("images"), MediaImage.class);
 		isActive = GsonParser.parseBoolean(jsonObject.get("isActive"));
 		orderBy = GsonParser.parseObject(jsonObject.getAsJsonObject("orderBy"), ChannelOrder.class);
 		createDate = GsonParser.parseLong(jsonObject.get("createDate"));
@@ -297,12 +283,6 @@ public class Channel extends ObjectBase {
         } else {
             dest.writeInt(-1);
         }
-        if(this.images != null) {
-            dest.writeInt(this.images.size());
-            dest.writeList(this.images);
-        } else {
-            dest.writeInt(-1);
-        }
         dest.writeValue(this.isActive);
         dest.writeParcelable(this.orderBy, flags);
         dest.writeValue(this.createDate);
@@ -324,11 +304,6 @@ public class Channel extends ObjectBase {
         if( multilingualDescriptionSize > -1) {
             this.multilingualDescription = new ArrayList<>();
             in.readList(this.multilingualDescription, TranslationToken.class.getClassLoader());
-        }
-        int imagesSize = in.readInt();
-        if( imagesSize > -1) {
-            this.images = new ArrayList<>();
-            in.readList(this.images, MediaImage.class.getClassLoader());
         }
         this.isActive = (Boolean)in.readValue(Boolean.class.getClassLoader());
         this.orderBy = in.readParcelable(ChannelOrder.class.getClassLoader());
