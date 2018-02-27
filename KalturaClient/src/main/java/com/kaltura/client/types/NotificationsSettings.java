@@ -48,6 +48,8 @@ public class NotificationsSettings extends ObjectBase {
 	public interface Tokenizer extends ObjectBase.Tokenizer {
 		String pushNotificationEnabled();
 		String pushFollowEnabled();
+		String mailEnabled();
+		String smsEnabled();
 	}
 
 	/**
@@ -59,6 +61,14 @@ public class NotificationsSettings extends ObjectBase {
 	  push_notification_enabled to be enabled)
 	 */
 	private Boolean pushFollowEnabled;
+	/**
+	 * Specify if the user wants to receive mail notifications or not
+	 */
+	private Boolean mailEnabled;
+	/**
+	 * Specify if the user wants to receive SMS notifications or not
+	 */
+	private Boolean smsEnabled;
 
 	// pushNotificationEnabled:
 	public Boolean getPushNotificationEnabled(){
@@ -84,6 +94,30 @@ public class NotificationsSettings extends ObjectBase {
 		setToken("pushFollowEnabled", multirequestToken);
 	}
 
+	// mailEnabled:
+	public Boolean getMailEnabled(){
+		return this.mailEnabled;
+	}
+	public void setMailEnabled(Boolean mailEnabled){
+		this.mailEnabled = mailEnabled;
+	}
+
+	public void mailEnabled(String multirequestToken){
+		setToken("mailEnabled", multirequestToken);
+	}
+
+	// smsEnabled:
+	public Boolean getSmsEnabled(){
+		return this.smsEnabled;
+	}
+	public void setSmsEnabled(Boolean smsEnabled){
+		this.smsEnabled = smsEnabled;
+	}
+
+	public void smsEnabled(String multirequestToken){
+		setToken("smsEnabled", multirequestToken);
+	}
+
 
 	public NotificationsSettings() {
 		super();
@@ -97,6 +131,8 @@ public class NotificationsSettings extends ObjectBase {
 		// set members values:
 		pushNotificationEnabled = GsonParser.parseBoolean(jsonObject.get("pushNotificationEnabled"));
 		pushFollowEnabled = GsonParser.parseBoolean(jsonObject.get("pushFollowEnabled"));
+		mailEnabled = GsonParser.parseBoolean(jsonObject.get("mailEnabled"));
+		smsEnabled = GsonParser.parseBoolean(jsonObject.get("smsEnabled"));
 
 	}
 
@@ -105,6 +141,8 @@ public class NotificationsSettings extends ObjectBase {
 		kparams.add("objectType", "KalturaNotificationsSettings");
 		kparams.add("pushNotificationEnabled", this.pushNotificationEnabled);
 		kparams.add("pushFollowEnabled", this.pushFollowEnabled);
+		kparams.add("mailEnabled", this.mailEnabled);
+		kparams.add("smsEnabled", this.smsEnabled);
 		return kparams;
 	}
 
@@ -126,12 +164,16 @@ public class NotificationsSettings extends ObjectBase {
         super.writeToParcel(dest, flags);
         dest.writeValue(this.pushNotificationEnabled);
         dest.writeValue(this.pushFollowEnabled);
+        dest.writeValue(this.mailEnabled);
+        dest.writeValue(this.smsEnabled);
     }
 
     public NotificationsSettings(Parcel in) {
         super(in);
         this.pushNotificationEnabled = (Boolean)in.readValue(Boolean.class.getClassLoader());
         this.pushFollowEnabled = (Boolean)in.readValue(Boolean.class.getClassLoader());
+        this.mailEnabled = (Boolean)in.readValue(Boolean.class.getClassLoader());
+        this.smsEnabled = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
 
