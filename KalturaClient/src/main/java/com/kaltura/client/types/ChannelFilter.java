@@ -47,6 +47,7 @@ public class ChannelFilter extends AssetFilter {
 	public interface Tokenizer extends AssetFilter.Tokenizer {
 		String idEqual();
 		String kSql();
+		String excludeWatched();
 	}
 
 	/**
@@ -78,6 +79,10 @@ public class ChannelFilter extends AssetFilter {
 	  characters)
 	 */
 	private String kSql;
+	/**
+	 * Exclude watched asset.
+	 */
+	private Boolean excludeWatched;
 
 	// idEqual:
 	public Integer getIdEqual(){
@@ -103,6 +108,18 @@ public class ChannelFilter extends AssetFilter {
 		setToken("kSql", multirequestToken);
 	}
 
+	// excludeWatched:
+	public Boolean getExcludeWatched(){
+		return this.excludeWatched;
+	}
+	public void setExcludeWatched(Boolean excludeWatched){
+		this.excludeWatched = excludeWatched;
+	}
+
+	public void excludeWatched(String multirequestToken){
+		setToken("excludeWatched", multirequestToken);
+	}
+
 
 	public ChannelFilter() {
 		super();
@@ -116,6 +133,7 @@ public class ChannelFilter extends AssetFilter {
 		// set members values:
 		idEqual = GsonParser.parseInt(jsonObject.get("idEqual"));
 		kSql = GsonParser.parseString(jsonObject.get("kSql"));
+		excludeWatched = GsonParser.parseBoolean(jsonObject.get("excludeWatched"));
 
 	}
 
@@ -124,6 +142,7 @@ public class ChannelFilter extends AssetFilter {
 		kparams.add("objectType", "KalturaChannelFilter");
 		kparams.add("idEqual", this.idEqual);
 		kparams.add("kSql", this.kSql);
+		kparams.add("excludeWatched", this.excludeWatched);
 		return kparams;
 	}
 
@@ -145,12 +164,14 @@ public class ChannelFilter extends AssetFilter {
         super.writeToParcel(dest, flags);
         dest.writeValue(this.idEqual);
         dest.writeString(this.kSql);
+        dest.writeValue(this.excludeWatched);
     }
 
     public ChannelFilter(Parcel in) {
         super(in);
         this.idEqual = (Integer)in.readValue(Integer.class.getClassLoader());
         this.kSql = in.readString();
+        this.excludeWatched = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
 
