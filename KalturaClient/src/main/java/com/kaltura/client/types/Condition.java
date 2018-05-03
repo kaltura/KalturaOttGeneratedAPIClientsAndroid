@@ -30,7 +30,6 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.enums.RuleActionType;
 import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
@@ -42,35 +41,21 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
+/**
+ * Condition
+ */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(RuleAction.Tokenizer.class)
-public class RuleAction extends ObjectBase {
+@MultiRequestBuilder.Tokenizer(Condition.Tokenizer.class)
+public abstract class Condition extends ObjectBase {
 	
 	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String type();
 		String description();
 	}
 
 	/**
-	 * The type of the action
-	 */
-	private RuleActionType type;
-	/**
 	 * Description
 	 */
 	private String description;
-
-	// type:
-	public RuleActionType getType(){
-		return this.type;
-	}
-	public void setType(RuleActionType type){
-		this.type = type;
-	}
-
-	public void type(String multirequestToken){
-		setToken("type", multirequestToken);
-	}
 
 	// description:
 	public String getDescription(){
@@ -85,53 +70,36 @@ public class RuleAction extends ObjectBase {
 	}
 
 
-	public RuleAction() {
+	public Condition() {
 		super();
 	}
 
-	public RuleAction(JsonObject jsonObject) throws APIException {
+	public Condition(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		type = RuleActionType.get(GsonParser.parseString(jsonObject.get("type")));
 		description = GsonParser.parseString(jsonObject.get("description"));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaRuleAction");
-		kparams.add("type", this.type);
+		kparams.add("objectType", "KalturaCondition");
 		kparams.add("description", this.description);
 		return kparams;
 	}
 
 
-    public static final Creator<RuleAction> CREATOR = new Creator<RuleAction>() {
-        @Override
-        public RuleAction createFromParcel(Parcel source) {
-            return new RuleAction(source);
-        }
-
-        @Override
-        public RuleAction[] newArray(int size) {
-            return new RuleAction[size];
-        }
-    };
-
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeInt(this.type == null ? -1 : this.type.ordinal());
         dest.writeString(this.description);
     }
 
-    public RuleAction(Parcel in) {
+    public Condition(Parcel in) {
         super(in);
-        int tmpType = in.readInt();
-        this.type = tmpType == -1 ? null : RuleActionType.values()[tmpType];
         this.description = in.readString();
     }
 }

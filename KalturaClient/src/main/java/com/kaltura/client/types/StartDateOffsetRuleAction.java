@@ -25,7 +25,12 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.client.enums;
+package com.kaltura.client.types;
+
+import android.os.Parcel;
+import com.google.gson.JsonObject;
+import com.kaltura.client.Params;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -33,39 +38,48 @@ package com.kaltura.client.enums;
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
-public enum RuleActionType implements EnumAsString {
-	BLOCK("BLOCK"),
-	START_DATE_OFFSET("START_DATE_OFFSET"),
-	END_DATE_OFFSET("END_DATE_OFFSET");
 
-	private String value;
-
-	RuleActionType(String value) {
-		this.value = value;
+/**
+ * Start date offset action
+ */
+@SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(StartDateOffsetRuleAction.Tokenizer.class)
+public class StartDateOffsetRuleAction extends TimeOffsetRuleAction {
+	
+	public interface Tokenizer extends TimeOffsetRuleAction.Tokenizer {
 	}
 
-	@Override
-	public String getValue() {
-		return this.value;
+
+
+	public StartDateOffsetRuleAction() {
+		super();
 	}
 
-	public void setValue(String value) {
-		this.value = value;
+	public StartDateOffsetRuleAction(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
 	}
 
-	public static RuleActionType get(String value) {
-		if(value == null)
-		{
-			return null;
-		}
-		
-		// goes over RuleActionType defined values and compare the inner value with the given one:
-		for(RuleActionType item: values()) {
-			if(item.getValue().equals(value)) {
-				return item;
-			}
-		}
-		// in case the requested value was not found in the enum values, we return the first item as default.
-		return RuleActionType.values().length > 0 ? RuleActionType.values()[0]: null;
-   }
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaStartDateOffsetRuleAction");
+		return kparams;
+	}
+
+
+    public static final Creator<StartDateOffsetRuleAction> CREATOR = new Creator<StartDateOffsetRuleAction>() {
+        @Override
+        public StartDateOffsetRuleAction createFromParcel(Parcel source) {
+            return new StartDateOffsetRuleAction(source);
+        }
+
+        @Override
+        public StartDateOffsetRuleAction[] newArray(int size) {
+            return new StartDateOffsetRuleAction[size];
+        }
+    };
+
+    public StartDateOffsetRuleAction(Parcel in) {
+        super(in);
+    }
 }
+

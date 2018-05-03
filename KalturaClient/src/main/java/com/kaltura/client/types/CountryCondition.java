@@ -30,8 +30,6 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.enums.RuleActionType;
-import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
@@ -42,97 +40,99 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
+/**
+ * Country condition
+ */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(RuleAction.Tokenizer.class)
-public class RuleAction extends ObjectBase {
+@MultiRequestBuilder.Tokenizer(CountryCondition.Tokenizer.class)
+public class CountryCondition extends Condition {
 	
-	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String type();
-		String description();
+	public interface Tokenizer extends Condition.Tokenizer {
+		String not();
+		String countries();
 	}
 
 	/**
-	 * The type of the action
+	 * Indicates whether to apply not on the other properties in the condition
 	 */
-	private RuleActionType type;
+	private Boolean not;
 	/**
-	 * Description
+	 * Comma separated countries IDs list
 	 */
-	private String description;
+	private String countries;
 
-	// type:
-	public RuleActionType getType(){
-		return this.type;
+	// not:
+	public Boolean getNot(){
+		return this.not;
 	}
-	public void setType(RuleActionType type){
-		this.type = type;
-	}
-
-	public void type(String multirequestToken){
-		setToken("type", multirequestToken);
+	public void setNot(Boolean not){
+		this.not = not;
 	}
 
-	// description:
-	public String getDescription(){
-		return this.description;
-	}
-	public void setDescription(String description){
-		this.description = description;
+	public void not(String multirequestToken){
+		setToken("not", multirequestToken);
 	}
 
-	public void description(String multirequestToken){
-		setToken("description", multirequestToken);
+	// countries:
+	public String getCountries(){
+		return this.countries;
+	}
+	public void setCountries(String countries){
+		this.countries = countries;
+	}
+
+	public void countries(String multirequestToken){
+		setToken("countries", multirequestToken);
 	}
 
 
-	public RuleAction() {
+	public CountryCondition() {
 		super();
 	}
 
-	public RuleAction(JsonObject jsonObject) throws APIException {
+	public CountryCondition(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		type = RuleActionType.get(GsonParser.parseString(jsonObject.get("type")));
-		description = GsonParser.parseString(jsonObject.get("description"));
+		not = GsonParser.parseBoolean(jsonObject.get("not"));
+		countries = GsonParser.parseString(jsonObject.get("countries"));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaRuleAction");
-		kparams.add("type", this.type);
-		kparams.add("description", this.description);
+		kparams.add("objectType", "KalturaCountryCondition");
+		kparams.add("not", this.not);
+		kparams.add("countries", this.countries);
 		return kparams;
 	}
 
 
-    public static final Creator<RuleAction> CREATOR = new Creator<RuleAction>() {
+    public static final Creator<CountryCondition> CREATOR = new Creator<CountryCondition>() {
         @Override
-        public RuleAction createFromParcel(Parcel source) {
-            return new RuleAction(source);
+        public CountryCondition createFromParcel(Parcel source) {
+            return new CountryCondition(source);
         }
 
         @Override
-        public RuleAction[] newArray(int size) {
-            return new RuleAction[size];
+        public CountryCondition[] newArray(int size) {
+            return new CountryCondition[size];
         }
     };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeInt(this.type == null ? -1 : this.type.ordinal());
-        dest.writeString(this.description);
+        dest.writeValue(this.not);
+        dest.writeString(this.countries);
     }
 
-    public RuleAction(Parcel in) {
+    public CountryCondition(Parcel in) {
         super(in);
-        int tmpType = in.readInt();
-        this.type = tmpType == -1 ? null : RuleActionType.values()[tmpType];
-        this.description = in.readString();
+        this.not = (Boolean)in.readValue(Boolean.class.getClassLoader());
+        this.countries = in.readString();
     }
 }
 
