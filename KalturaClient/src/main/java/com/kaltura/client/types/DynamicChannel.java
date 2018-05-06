@@ -30,12 +30,8 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.types.AssetGroupBy;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
-import com.kaltura.client.utils.request.RequestBuilder;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -50,8 +46,6 @@ public class DynamicChannel extends Channel {
 	
 	public interface Tokenizer extends Channel.Tokenizer {
 		String kSql();
-		RequestBuilder.ListTokenizer<IntegerValue.Tokenizer> channelAssetTypes();
-		AssetGroupBy.Tokenizer channelGroupBy();
 	}
 
 	/**
@@ -78,14 +72,6 @@ public class DynamicChannel extends Channel {
 	  of entire filter is 2048 characters)
 	 */
 	private String kSql;
-	/**
-	 * Asset types in the channel.              -26 is EPG
-	 */
-	private List<IntegerValue> channelAssetTypes;
-	/**
-	 * Channel group by
-	 */
-	private AssetGroupBy channelGroupBy;
 
 	// kSql:
 	public String getKSql(){
@@ -97,22 +83,6 @@ public class DynamicChannel extends Channel {
 
 	public void kSql(String multirequestToken){
 		setToken("kSql", multirequestToken);
-	}
-
-	// channelAssetTypes:
-	public List<IntegerValue> getChannelAssetTypes(){
-		return this.channelAssetTypes;
-	}
-	public void setChannelAssetTypes(List<IntegerValue> channelAssetTypes){
-		this.channelAssetTypes = channelAssetTypes;
-	}
-
-	// channelGroupBy:
-	public AssetGroupBy getChannelGroupBy(){
-		return this.channelGroupBy;
-	}
-	public void setChannelGroupBy(AssetGroupBy channelGroupBy){
-		this.channelGroupBy = channelGroupBy;
 	}
 
 
@@ -127,8 +97,6 @@ public class DynamicChannel extends Channel {
 
 		// set members values:
 		kSql = GsonParser.parseString(jsonObject.get("kSql"));
-		channelAssetTypes = GsonParser.parseArray(jsonObject.getAsJsonArray("channelAssetTypes"), IntegerValue.class);
-		channelGroupBy = GsonParser.parseObject(jsonObject.getAsJsonObject("channelGroupBy"), AssetGroupBy.class);
 
 	}
 
@@ -136,8 +104,6 @@ public class DynamicChannel extends Channel {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaDynamicChannel");
 		kparams.add("kSql", this.kSql);
-		kparams.add("channelAssetTypes", this.channelAssetTypes);
-		kparams.add("channelGroupBy", this.channelGroupBy);
 		return kparams;
 	}
 
@@ -158,24 +124,11 @@ public class DynamicChannel extends Channel {
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeString(this.kSql);
-        if(this.channelAssetTypes != null) {
-            dest.writeInt(this.channelAssetTypes.size());
-            dest.writeList(this.channelAssetTypes);
-        } else {
-            dest.writeInt(-1);
-        }
-        dest.writeParcelable(this.channelGroupBy, flags);
     }
 
     public DynamicChannel(Parcel in) {
         super(in);
         this.kSql = in.readString();
-        int channelAssetTypesSize = in.readInt();
-        if( channelAssetTypesSize > -1) {
-            this.channelAssetTypes = new ArrayList<>();
-            in.readList(this.channelAssetTypes, IntegerValue.class.getClassLoader());
-        }
-        this.channelGroupBy = in.readParcelable(AssetGroupBy.class.getClassLoader());
     }
 }
 
