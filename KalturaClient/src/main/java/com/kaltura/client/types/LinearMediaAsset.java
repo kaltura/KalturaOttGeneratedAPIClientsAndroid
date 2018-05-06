@@ -52,17 +52,12 @@ public class LinearMediaAsset extends MediaAsset {
 		String enableCdvrState();
 		String enableCatchUpState();
 		String enableStartOverState();
+		String bufferCatchUp();
+		String bufferTrickPlay();
 		String enableRecordingPlaybackNonEntitledChannelState();
 		String enableTrickPlayState();
 		String externalIngestId();
 		String externalCdvrId();
-		String cdvrEnabaled();
-		String catchUpEnabled();
-		String startOverEnabled();
-		String bufferCatchUp();
-		String bufferTrickPlay();
-		String recordingPlaybackNonEntitledChannelEnabled();
-		String trickPlayEnabled();
 	}
 
 	/**
@@ -77,6 +72,14 @@ public class LinearMediaAsset extends MediaAsset {
 	 * Enable start over, configuration only
 	 */
 	private TimeShiftedTvState enableStartOverState;
+	/**
+	 * buffer Catch-up, configuration only
+	 */
+	private Long bufferCatchUp;
+	/**
+	 * buffer Trick-play, configuration only
+	 */
+	private Long bufferTrickPlay;
 	/**
 	 * Enable Recording playback for non entitled channel, configuration only
 	 */
@@ -93,34 +96,6 @@ public class LinearMediaAsset extends MediaAsset {
 	 * External identifier for the CDVR
 	 */
 	private String externalCdvrId;
-	/**
-	 * Is CDVR enabled for this asset
-	 */
-	private Boolean cdvrEnabaled;
-	/**
-	 * Is catch-up enabled for this asset
-	 */
-	private Boolean catchUpEnabled;
-	/**
-	 * Is start over enabled for this asset
-	 */
-	private Boolean startOverEnabled;
-	/**
-	 * buffer Catch-up
-	 */
-	private Long bufferCatchUp;
-	/**
-	 * buffer Trick-play
-	 */
-	private Long bufferTrickPlay;
-	/**
-	 * Is recording playback for non entitled channel enabled for this asset
-	 */
-	private Boolean recordingPlaybackNonEntitledChannelEnabled;
-	/**
-	 * Is trick-play enabled for this asset
-	 */
-	private Boolean trickPlayEnabled;
 
 	// enableCdvrState:
 	public TimeShiftedTvState getEnableCdvrState(){
@@ -156,6 +131,30 @@ public class LinearMediaAsset extends MediaAsset {
 
 	public void enableStartOverState(String multirequestToken){
 		setToken("enableStartOverState", multirequestToken);
+	}
+
+	// bufferCatchUp:
+	public Long getBufferCatchUp(){
+		return this.bufferCatchUp;
+	}
+	public void setBufferCatchUp(Long bufferCatchUp){
+		this.bufferCatchUp = bufferCatchUp;
+	}
+
+	public void bufferCatchUp(String multirequestToken){
+		setToken("bufferCatchUp", multirequestToken);
+	}
+
+	// bufferTrickPlay:
+	public Long getBufferTrickPlay(){
+		return this.bufferTrickPlay;
+	}
+	public void setBufferTrickPlay(Long bufferTrickPlay){
+		this.bufferTrickPlay = bufferTrickPlay;
+	}
+
+	public void bufferTrickPlay(String multirequestToken){
+		setToken("bufferTrickPlay", multirequestToken);
 	}
 
 	// enableRecordingPlaybackNonEntitledChannelState:
@@ -206,90 +205,6 @@ public class LinearMediaAsset extends MediaAsset {
 		setToken("externalCdvrId", multirequestToken);
 	}
 
-	// cdvrEnabaled:
-	public Boolean getCdvrEnabaled(){
-		return this.cdvrEnabaled;
-	}
-	public void setCdvrEnabaled(Boolean cdvrEnabaled){
-		this.cdvrEnabaled = cdvrEnabaled;
-	}
-
-	public void cdvrEnabaled(String multirequestToken){
-		setToken("cdvrEnabaled", multirequestToken);
-	}
-
-	// catchUpEnabled:
-	public Boolean getCatchUpEnabled(){
-		return this.catchUpEnabled;
-	}
-	public void setCatchUpEnabled(Boolean catchUpEnabled){
-		this.catchUpEnabled = catchUpEnabled;
-	}
-
-	public void catchUpEnabled(String multirequestToken){
-		setToken("catchUpEnabled", multirequestToken);
-	}
-
-	// startOverEnabled:
-	public Boolean getStartOverEnabled(){
-		return this.startOverEnabled;
-	}
-	public void setStartOverEnabled(Boolean startOverEnabled){
-		this.startOverEnabled = startOverEnabled;
-	}
-
-	public void startOverEnabled(String multirequestToken){
-		setToken("startOverEnabled", multirequestToken);
-	}
-
-	// bufferCatchUp:
-	public Long getBufferCatchUp(){
-		return this.bufferCatchUp;
-	}
-	public void setBufferCatchUp(Long bufferCatchUp){
-		this.bufferCatchUp = bufferCatchUp;
-	}
-
-	public void bufferCatchUp(String multirequestToken){
-		setToken("bufferCatchUp", multirequestToken);
-	}
-
-	// bufferTrickPlay:
-	public Long getBufferTrickPlay(){
-		return this.bufferTrickPlay;
-	}
-	public void setBufferTrickPlay(Long bufferTrickPlay){
-		this.bufferTrickPlay = bufferTrickPlay;
-	}
-
-	public void bufferTrickPlay(String multirequestToken){
-		setToken("bufferTrickPlay", multirequestToken);
-	}
-
-	// recordingPlaybackNonEntitledChannelEnabled:
-	public Boolean getRecordingPlaybackNonEntitledChannelEnabled(){
-		return this.recordingPlaybackNonEntitledChannelEnabled;
-	}
-	public void setRecordingPlaybackNonEntitledChannelEnabled(Boolean recordingPlaybackNonEntitledChannelEnabled){
-		this.recordingPlaybackNonEntitledChannelEnabled = recordingPlaybackNonEntitledChannelEnabled;
-	}
-
-	public void recordingPlaybackNonEntitledChannelEnabled(String multirequestToken){
-		setToken("recordingPlaybackNonEntitledChannelEnabled", multirequestToken);
-	}
-
-	// trickPlayEnabled:
-	public Boolean getTrickPlayEnabled(){
-		return this.trickPlayEnabled;
-	}
-	public void setTrickPlayEnabled(Boolean trickPlayEnabled){
-		this.trickPlayEnabled = trickPlayEnabled;
-	}
-
-	public void trickPlayEnabled(String multirequestToken){
-		setToken("trickPlayEnabled", multirequestToken);
-	}
-
 
 	public LinearMediaAsset() {
 		super();
@@ -304,17 +219,12 @@ public class LinearMediaAsset extends MediaAsset {
 		enableCdvrState = TimeShiftedTvState.get(GsonParser.parseString(jsonObject.get("enableCdvrState")));
 		enableCatchUpState = TimeShiftedTvState.get(GsonParser.parseString(jsonObject.get("enableCatchUpState")));
 		enableStartOverState = TimeShiftedTvState.get(GsonParser.parseString(jsonObject.get("enableStartOverState")));
+		bufferCatchUp = GsonParser.parseLong(jsonObject.get("bufferCatchUp"));
+		bufferTrickPlay = GsonParser.parseLong(jsonObject.get("bufferTrickPlay"));
 		enableRecordingPlaybackNonEntitledChannelState = TimeShiftedTvState.get(GsonParser.parseString(jsonObject.get("enableRecordingPlaybackNonEntitledChannelState")));
 		enableTrickPlayState = TimeShiftedTvState.get(GsonParser.parseString(jsonObject.get("enableTrickPlayState")));
 		externalIngestId = GsonParser.parseString(jsonObject.get("externalIngestId"));
 		externalCdvrId = GsonParser.parseString(jsonObject.get("externalCdvrId"));
-		cdvrEnabaled = GsonParser.parseBoolean(jsonObject.get("cdvrEnabaled"));
-		catchUpEnabled = GsonParser.parseBoolean(jsonObject.get("catchUpEnabled"));
-		startOverEnabled = GsonParser.parseBoolean(jsonObject.get("startOverEnabled"));
-		bufferCatchUp = GsonParser.parseLong(jsonObject.get("bufferCatchUp"));
-		bufferTrickPlay = GsonParser.parseLong(jsonObject.get("bufferTrickPlay"));
-		recordingPlaybackNonEntitledChannelEnabled = GsonParser.parseBoolean(jsonObject.get("recordingPlaybackNonEntitledChannelEnabled"));
-		trickPlayEnabled = GsonParser.parseBoolean(jsonObject.get("trickPlayEnabled"));
 
 	}
 
@@ -324,6 +234,8 @@ public class LinearMediaAsset extends MediaAsset {
 		kparams.add("enableCdvrState", this.enableCdvrState);
 		kparams.add("enableCatchUpState", this.enableCatchUpState);
 		kparams.add("enableStartOverState", this.enableStartOverState);
+		kparams.add("bufferCatchUp", this.bufferCatchUp);
+		kparams.add("bufferTrickPlay", this.bufferTrickPlay);
 		kparams.add("enableRecordingPlaybackNonEntitledChannelState", this.enableRecordingPlaybackNonEntitledChannelState);
 		kparams.add("enableTrickPlayState", this.enableTrickPlayState);
 		kparams.add("externalIngestId", this.externalIngestId);
@@ -350,17 +262,12 @@ public class LinearMediaAsset extends MediaAsset {
         dest.writeInt(this.enableCdvrState == null ? -1 : this.enableCdvrState.ordinal());
         dest.writeInt(this.enableCatchUpState == null ? -1 : this.enableCatchUpState.ordinal());
         dest.writeInt(this.enableStartOverState == null ? -1 : this.enableStartOverState.ordinal());
+        dest.writeValue(this.bufferCatchUp);
+        dest.writeValue(this.bufferTrickPlay);
         dest.writeInt(this.enableRecordingPlaybackNonEntitledChannelState == null ? -1 : this.enableRecordingPlaybackNonEntitledChannelState.ordinal());
         dest.writeInt(this.enableTrickPlayState == null ? -1 : this.enableTrickPlayState.ordinal());
         dest.writeString(this.externalIngestId);
         dest.writeString(this.externalCdvrId);
-        dest.writeValue(this.cdvrEnabaled);
-        dest.writeValue(this.catchUpEnabled);
-        dest.writeValue(this.startOverEnabled);
-        dest.writeValue(this.bufferCatchUp);
-        dest.writeValue(this.bufferTrickPlay);
-        dest.writeValue(this.recordingPlaybackNonEntitledChannelEnabled);
-        dest.writeValue(this.trickPlayEnabled);
     }
 
     public LinearMediaAsset(Parcel in) {
@@ -371,19 +278,14 @@ public class LinearMediaAsset extends MediaAsset {
         this.enableCatchUpState = tmpEnableCatchUpState == -1 ? null : TimeShiftedTvState.values()[tmpEnableCatchUpState];
         int tmpEnableStartOverState = in.readInt();
         this.enableStartOverState = tmpEnableStartOverState == -1 ? null : TimeShiftedTvState.values()[tmpEnableStartOverState];
+        this.bufferCatchUp = (Long)in.readValue(Long.class.getClassLoader());
+        this.bufferTrickPlay = (Long)in.readValue(Long.class.getClassLoader());
         int tmpEnableRecordingPlaybackNonEntitledChannelState = in.readInt();
         this.enableRecordingPlaybackNonEntitledChannelState = tmpEnableRecordingPlaybackNonEntitledChannelState == -1 ? null : TimeShiftedTvState.values()[tmpEnableRecordingPlaybackNonEntitledChannelState];
         int tmpEnableTrickPlayState = in.readInt();
         this.enableTrickPlayState = tmpEnableTrickPlayState == -1 ? null : TimeShiftedTvState.values()[tmpEnableTrickPlayState];
         this.externalIngestId = in.readString();
         this.externalCdvrId = in.readString();
-        this.cdvrEnabaled = (Boolean)in.readValue(Boolean.class.getClassLoader());
-        this.catchUpEnabled = (Boolean)in.readValue(Boolean.class.getClassLoader());
-        this.startOverEnabled = (Boolean)in.readValue(Boolean.class.getClassLoader());
-        this.bufferCatchUp = (Long)in.readValue(Long.class.getClassLoader());
-        this.bufferTrickPlay = (Long)in.readValue(Long.class.getClassLoader());
-        this.recordingPlaybackNonEntitledChannelEnabled = (Boolean)in.readValue(Boolean.class.getClassLoader());
-        this.trickPlayEnabled = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
 
