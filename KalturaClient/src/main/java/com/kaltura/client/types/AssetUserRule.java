@@ -44,76 +44,76 @@ import java.util.List;
  */
 
 /**
- * Asset rule
+ * Asset user rule
  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(AssetRule.Tokenizer.class)
-public class AssetRule extends AssetRuleBase {
+@MultiRequestBuilder.Tokenizer(AssetUserRule.Tokenizer.class)
+public class AssetUserRule extends AssetRuleBase {
 	
 	public interface Tokenizer extends AssetRuleBase.Tokenizer {
-		RequestBuilder.ListTokenizer<Condition.Tokenizer> conditions();
-		RequestBuilder.ListTokenizer<AssetRuleAction.Tokenizer> actions();
+		RequestBuilder.ListTokenizer<AssetCondition.Tokenizer> conditions();
+		RequestBuilder.ListTokenizer<AssetUserRuleAction.Tokenizer> actions();
 	}
 
 	/**
-	 * List of conditions for the rule
+	 * List of Ksql conditions for the user rule
 	 */
-	private List<Condition> conditions;
+	private List<AssetCondition> conditions;
 	/**
-	 * List of actions for the rule
+	 * List of actions for the user rule
 	 */
-	private List<AssetRuleAction> actions;
+	private List<AssetUserRuleAction> actions;
 
 	// conditions:
-	public List<Condition> getConditions(){
+	public List<AssetCondition> getConditions(){
 		return this.conditions;
 	}
-	public void setConditions(List<Condition> conditions){
+	public void setConditions(List<AssetCondition> conditions){
 		this.conditions = conditions;
 	}
 
 	// actions:
-	public List<AssetRuleAction> getActions(){
+	public List<AssetUserRuleAction> getActions(){
 		return this.actions;
 	}
-	public void setActions(List<AssetRuleAction> actions){
+	public void setActions(List<AssetUserRuleAction> actions){
 		this.actions = actions;
 	}
 
 
-	public AssetRule() {
+	public AssetUserRule() {
 		super();
 	}
 
-	public AssetRule(JsonObject jsonObject) throws APIException {
+	public AssetUserRule(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		conditions = GsonParser.parseArray(jsonObject.getAsJsonArray("conditions"), Condition.class);
-		actions = GsonParser.parseArray(jsonObject.getAsJsonArray("actions"), AssetRuleAction.class);
+		conditions = GsonParser.parseArray(jsonObject.getAsJsonArray("conditions"), AssetCondition.class);
+		actions = GsonParser.parseArray(jsonObject.getAsJsonArray("actions"), AssetUserRuleAction.class);
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaAssetRule");
+		kparams.add("objectType", "KalturaAssetUserRule");
 		kparams.add("conditions", this.conditions);
 		kparams.add("actions", this.actions);
 		return kparams;
 	}
 
 
-    public static final Creator<AssetRule> CREATOR = new Creator<AssetRule>() {
+    public static final Creator<AssetUserRule> CREATOR = new Creator<AssetUserRule>() {
         @Override
-        public AssetRule createFromParcel(Parcel source) {
-            return new AssetRule(source);
+        public AssetUserRule createFromParcel(Parcel source) {
+            return new AssetUserRule(source);
         }
 
         @Override
-        public AssetRule[] newArray(int size) {
-            return new AssetRule[size];
+        public AssetUserRule[] newArray(int size) {
+            return new AssetUserRule[size];
         }
     };
 
@@ -134,17 +134,17 @@ public class AssetRule extends AssetRuleBase {
         }
     }
 
-    public AssetRule(Parcel in) {
+    public AssetUserRule(Parcel in) {
         super(in);
         int conditionsSize = in.readInt();
         if( conditionsSize > -1) {
             this.conditions = new ArrayList<>();
-            in.readList(this.conditions, Condition.class.getClassLoader());
+            in.readList(this.conditions, AssetCondition.class.getClassLoader());
         }
         int actionsSize = in.readInt();
         if( actionsSize > -1) {
             this.actions = new ArrayList<>();
-            in.readList(this.actions, AssetRuleAction.class.getClassLoader());
+            in.readList(this.actions, AssetUserRuleAction.class.getClassLoader());
         }
     }
 }

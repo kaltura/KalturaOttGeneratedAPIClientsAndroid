@@ -30,7 +30,6 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.enums.RuleActionType;
 import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
@@ -42,34 +41,54 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
+/**
+ * Asset rule base
+ */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(RuleAction.Tokenizer.class)
-public abstract class RuleAction extends ObjectBase {
+@MultiRequestBuilder.Tokenizer(AssetRuleBase.Tokenizer.class)
+public abstract class AssetRuleBase extends ObjectBase {
 	
 	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String type();
+		String id();
+		String name();
 		String description();
 	}
 
 	/**
-	 * The type of the action
+	 * ID
 	 */
-	private RuleActionType type;
+	private Long id;
+	/**
+	 * Name
+	 */
+	private String name;
 	/**
 	 * Description
 	 */
 	private String description;
 
-	// type:
-	public RuleActionType getType(){
-		return this.type;
+	// id:
+	public Long getId(){
+		return this.id;
 	}
-	public void setType(RuleActionType type){
-		this.type = type;
+	public void setId(Long id){
+		this.id = id;
 	}
 
-	public void type(String multirequestToken){
-		setToken("type", multirequestToken);
+	public void id(String multirequestToken){
+		setToken("id", multirequestToken);
+	}
+
+	// name:
+	public String getName(){
+		return this.name;
+	}
+	public void setName(String name){
+		this.name = name;
+	}
+
+	public void name(String multirequestToken){
+		setToken("name", multirequestToken);
 	}
 
 	// description:
@@ -85,25 +104,26 @@ public abstract class RuleAction extends ObjectBase {
 	}
 
 
-	public RuleAction() {
+	public AssetRuleBase() {
 		super();
 	}
 
-	public RuleAction(JsonObject jsonObject) throws APIException {
+	public AssetRuleBase(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		type = RuleActionType.get(GsonParser.parseString(jsonObject.get("type")));
+		id = GsonParser.parseLong(jsonObject.get("id"));
+		name = GsonParser.parseString(jsonObject.get("name"));
 		description = GsonParser.parseString(jsonObject.get("description"));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaRuleAction");
-		kparams.add("type", this.type);
+		kparams.add("objectType", "KalturaAssetRuleBase");
+		kparams.add("name", this.name);
 		kparams.add("description", this.description);
 		return kparams;
 	}
@@ -112,14 +132,15 @@ public abstract class RuleAction extends ObjectBase {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeInt(this.type == null ? -1 : this.type.ordinal());
+        dest.writeValue(this.id);
+        dest.writeString(this.name);
         dest.writeString(this.description);
     }
 
-    public RuleAction(Parcel in) {
+    public AssetRuleBase(Parcel in) {
         super(in);
-        int tmpType = in.readInt();
-        this.type = tmpType == -1 ? null : RuleActionType.values()[tmpType];
+        this.id = (Long)in.readValue(Long.class.getClassLoader());
+        this.name = in.readString();
         this.description = in.readString();
     }
 }
