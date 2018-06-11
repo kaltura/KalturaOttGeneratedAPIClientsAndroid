@@ -31,7 +31,6 @@ import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.enums.RuleConditionType;
-import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
@@ -43,86 +42,79 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 /**
- * Condition
+ * Asset rule filter
  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(Condition.Tokenizer.class)
-public abstract class Condition extends ObjectBase {
+@MultiRequestBuilder.Tokenizer(AssetRuleFilter.Tokenizer.class)
+public class AssetRuleFilter extends Filter {
 	
-	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String type();
-		String description();
+	public interface Tokenizer extends Filter.Tokenizer {
+		String conditionsContainType();
 	}
 
 	/**
-	 * The type of the condition
+	 * Indicates if to get the asset user rule list for the attached user or for the
+	  entire group
 	 */
-	private RuleConditionType type;
-	/**
-	 * Description
-	 */
-	private String description;
+	private RuleConditionType conditionsContainType;
 
-	// type:
-	public RuleConditionType getType(){
-		return this.type;
+	// conditionsContainType:
+	public RuleConditionType getConditionsContainType(){
+		return this.conditionsContainType;
 	}
-	public void setType(RuleConditionType type){
-		this.type = type;
+	public void setConditionsContainType(RuleConditionType conditionsContainType){
+		this.conditionsContainType = conditionsContainType;
 	}
 
-	public void type(String multirequestToken){
-		setToken("type", multirequestToken);
-	}
-
-	// description:
-	public String getDescription(){
-		return this.description;
-	}
-	public void setDescription(String description){
-		this.description = description;
-	}
-
-	public void description(String multirequestToken){
-		setToken("description", multirequestToken);
+	public void conditionsContainType(String multirequestToken){
+		setToken("conditionsContainType", multirequestToken);
 	}
 
 
-	public Condition() {
+	public AssetRuleFilter() {
 		super();
 	}
 
-	public Condition(JsonObject jsonObject) throws APIException {
+	public AssetRuleFilter(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		type = RuleConditionType.get(GsonParser.parseString(jsonObject.get("type")));
-		description = GsonParser.parseString(jsonObject.get("description"));
+		conditionsContainType = RuleConditionType.get(GsonParser.parseString(jsonObject.get("conditionsContainType")));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaCondition");
-		kparams.add("description", this.description);
+		kparams.add("objectType", "KalturaAssetRuleFilter");
+		kparams.add("conditionsContainType", this.conditionsContainType);
 		return kparams;
 	}
 
 
+    public static final Creator<AssetRuleFilter> CREATOR = new Creator<AssetRuleFilter>() {
+        @Override
+        public AssetRuleFilter createFromParcel(Parcel source) {
+            return new AssetRuleFilter(source);
+        }
+
+        @Override
+        public AssetRuleFilter[] newArray(int size) {
+            return new AssetRuleFilter[size];
+        }
+    };
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeInt(this.type == null ? -1 : this.type.ordinal());
-        dest.writeString(this.description);
+        dest.writeInt(this.conditionsContainType == null ? -1 : this.conditionsContainType.ordinal());
     }
 
-    public Condition(Parcel in) {
+    public AssetRuleFilter(Parcel in) {
         super(in);
-        int tmpType = in.readInt();
-        this.type = tmpType == -1 ? null : RuleConditionType.values()[tmpType];
-        this.description = in.readString();
+        int tmpConditionsContainType = in.readInt();
+        this.conditionsContainType = tmpConditionsContainType == -1 ? null : RuleConditionType.values()[tmpConditionsContainType];
     }
 }
 
