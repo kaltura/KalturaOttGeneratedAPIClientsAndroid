@@ -160,14 +160,6 @@ public class Announcement extends ObjectBase {
 	public AnnouncementStatus getStatus(){
 		return this.status;
 	}
-	public void setStatus(AnnouncementStatus status){
-		this.status = status;
-	}
-
-	public void status(String multirequestToken){
-		setToken("status", multirequestToken);
-	}
-
 	// recipients:
 	public AnnouncementRecipientsType getRecipients(){
 		return this.recipients;
@@ -184,14 +176,6 @@ public class Announcement extends ObjectBase {
 	public Integer getId(){
 		return this.id;
 	}
-	public void setId(Integer id){
-		this.id = id;
-	}
-
-	public void id(String multirequestToken){
-		setToken("id", multirequestToken);
-	}
-
 	// imageUrl:
 	public String getImageUrl(){
 		return this.imageUrl;

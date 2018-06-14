@@ -83,14 +83,6 @@ public class HouseholdPaymentMethod extends ObjectBase {
 	public Integer getId(){
 		return this.id;
 	}
-	public void setId(Integer id){
-		this.id = id;
-	}
-
-	public void id(String multirequestToken){
-		setToken("id", multirequestToken);
-	}
-
 	// externalId:
 	public String getExternalId(){
 		return this.externalId;
@@ -131,14 +123,6 @@ public class HouseholdPaymentMethod extends ObjectBase {
 	public Boolean getIsDefault(){
 		return this.isDefault;
 	}
-	public void setIsDefault(Boolean isDefault){
-		this.isDefault = isDefault;
-	}
-
-	public void isDefault(String multirequestToken){
-		setToken("isDefault", multirequestToken);
-	}
-
 	// paymentMethodProfileId:
 	public Integer getPaymentMethodProfileId(){
 		return this.paymentMethodProfileId;

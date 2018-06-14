@@ -58,14 +58,6 @@ public class Feed extends ObjectBase {
 	public Long getAssetId(){
 		return this.assetId;
 	}
-	public void setAssetId(Long assetId){
-		this.assetId = assetId;
-	}
-
-	public void assetId(String multirequestToken){
-		setToken("assetId", multirequestToken);
-	}
-
 
 	public Feed() {
 		super();
