@@ -96,14 +96,6 @@ public class Country extends ObjectBase {
 	public Integer getId(){
 		return this.id;
 	}
-	public void setId(Integer id){
-		this.id = id;
-	}
-
-	public void id(String multirequestToken){
-		setToken("id", multirequestToken);
-	}
-
 	// name:
 	public String getName(){
 		return this.name;
