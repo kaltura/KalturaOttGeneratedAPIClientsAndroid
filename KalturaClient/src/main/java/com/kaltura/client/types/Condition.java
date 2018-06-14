@@ -30,7 +30,6 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.enums.RuleConditionType;
 import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
@@ -50,30 +49,13 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
 public abstract class Condition extends ObjectBase {
 	
 	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String type();
 		String description();
 	}
 
 	/**
-	 * The type of the condition
-	 */
-	private RuleConditionType type;
-	/**
 	 * Description
 	 */
 	private String description;
-
-	// type:
-	public RuleConditionType getType(){
-		return this.type;
-	}
-	public void setType(RuleConditionType type){
-		this.type = type;
-	}
-
-	public void type(String multirequestToken){
-		setToken("type", multirequestToken);
-	}
 
 	// description:
 	public String getDescription(){
@@ -98,7 +80,6 @@ public abstract class Condition extends ObjectBase {
 		if(jsonObject == null) return;
 
 		// set members values:
-		type = RuleConditionType.get(GsonParser.parseString(jsonObject.get("type")));
 		description = GsonParser.parseString(jsonObject.get("description"));
 
 	}
@@ -114,14 +95,11 @@ public abstract class Condition extends ObjectBase {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeInt(this.type == null ? -1 : this.type.ordinal());
         dest.writeString(this.description);
     }
 
     public Condition(Parcel in) {
         super(in);
-        int tmpType = in.readInt();
-        this.type = tmpType == -1 ? null : RuleConditionType.values()[tmpType];
         this.description = in.readString();
     }
 }
