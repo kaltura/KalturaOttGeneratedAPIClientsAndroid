@@ -55,7 +55,8 @@ public class AssetRuleFilter extends Filter {
 	}
 
 	/**
-	 * Indicates which asset rule list to return by it KalturaRuleConditionType
+	 * Indicates which asset rule list to return by it KalturaRuleConditionType.       
+	        Default value: KalturaRuleConditionType.COUNTRY
 	 */
 	private RuleConditionType conditionsContainType;
 	/**
