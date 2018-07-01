@@ -34,9 +34,6 @@ import com.kaltura.client.enums.CouponGroupType;
 import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
-import com.kaltura.client.utils.request.RequestBuilder;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -55,12 +52,13 @@ public class CouponsGroup extends ObjectBase {
 	public interface Tokenizer extends ObjectBase.Tokenizer {
 		String id();
 		String name();
-		RequestBuilder.ListTokenizer<TranslationToken.Tokenizer> descriptions();
 		String startDate();
 		String endDate();
 		String maxUsesNumber();
 		String maxUsesNumberOnRenewableSub();
 		String couponGroupType();
+		String maxHouseholdUses();
+		String discountId();
 	}
 
 	/**
@@ -71,11 +69,6 @@ public class CouponsGroup extends ObjectBase {
 	 * Coupon group name
 	 */
 	private String name;
-	/**
-	 * A list of the descriptions of the coupon group on different languages (language
-	  code and translation)
-	 */
-	private List<TranslationToken> descriptions;
 	/**
 	 * The first date the coupons in this coupons group are valid
 	 */
@@ -96,6 +89,14 @@ public class CouponsGroup extends ObjectBase {
 	 * Type of the coupon group
 	 */
 	private CouponGroupType couponGroupType;
+	/**
+	 * Maximum number of uses per household for each coupon in the group
+	 */
+	private Integer maxHouseholdUses;
+	/**
+	 * Discount ID
+	 */
+	private Long discountId;
 
 	// id:
 	public String getId(){
@@ -111,14 +112,6 @@ public class CouponsGroup extends ObjectBase {
 
 	public void name(String multirequestToken){
 		setToken("name", multirequestToken);
-	}
-
-	// descriptions:
-	public List<TranslationToken> getDescriptions(){
-		return this.descriptions;
-	}
-	public void setDescriptions(List<TranslationToken> descriptions){
-		this.descriptions = descriptions;
 	}
 
 	// startDate:
@@ -181,6 +174,30 @@ public class CouponsGroup extends ObjectBase {
 		setToken("couponGroupType", multirequestToken);
 	}
 
+	// maxHouseholdUses:
+	public Integer getMaxHouseholdUses(){
+		return this.maxHouseholdUses;
+	}
+	public void setMaxHouseholdUses(Integer maxHouseholdUses){
+		this.maxHouseholdUses = maxHouseholdUses;
+	}
+
+	public void maxHouseholdUses(String multirequestToken){
+		setToken("maxHouseholdUses", multirequestToken);
+	}
+
+	// discountId:
+	public Long getDiscountId(){
+		return this.discountId;
+	}
+	public void setDiscountId(Long discountId){
+		this.discountId = discountId;
+	}
+
+	public void discountId(String multirequestToken){
+		setToken("discountId", multirequestToken);
+	}
+
 
 	public CouponsGroup() {
 		super();
@@ -194,12 +211,13 @@ public class CouponsGroup extends ObjectBase {
 		// set members values:
 		id = GsonParser.parseString(jsonObject.get("id"));
 		name = GsonParser.parseString(jsonObject.get("name"));
-		descriptions = GsonParser.parseArray(jsonObject.getAsJsonArray("descriptions"), TranslationToken.class);
 		startDate = GsonParser.parseLong(jsonObject.get("startDate"));
 		endDate = GsonParser.parseLong(jsonObject.get("endDate"));
 		maxUsesNumber = GsonParser.parseInt(jsonObject.get("maxUsesNumber"));
 		maxUsesNumberOnRenewableSub = GsonParser.parseInt(jsonObject.get("maxUsesNumberOnRenewableSub"));
 		couponGroupType = CouponGroupType.get(GsonParser.parseString(jsonObject.get("couponGroupType")));
+		maxHouseholdUses = GsonParser.parseInt(jsonObject.get("maxHouseholdUses"));
+		discountId = GsonParser.parseLong(jsonObject.get("discountId"));
 
 	}
 
@@ -207,12 +225,13 @@ public class CouponsGroup extends ObjectBase {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaCouponsGroup");
 		kparams.add("name", this.name);
-		kparams.add("descriptions", this.descriptions);
 		kparams.add("startDate", this.startDate);
 		kparams.add("endDate", this.endDate);
 		kparams.add("maxUsesNumber", this.maxUsesNumber);
 		kparams.add("maxUsesNumberOnRenewableSub", this.maxUsesNumberOnRenewableSub);
 		kparams.add("couponGroupType", this.couponGroupType);
+		kparams.add("maxHouseholdUses", this.maxHouseholdUses);
+		kparams.add("discountId", this.discountId);
 		return kparams;
 	}
 
@@ -234,34 +253,27 @@ public class CouponsGroup extends ObjectBase {
         super.writeToParcel(dest, flags);
         dest.writeString(this.id);
         dest.writeString(this.name);
-        if(this.descriptions != null) {
-            dest.writeInt(this.descriptions.size());
-            dest.writeList(this.descriptions);
-        } else {
-            dest.writeInt(-1);
-        }
         dest.writeValue(this.startDate);
         dest.writeValue(this.endDate);
         dest.writeValue(this.maxUsesNumber);
         dest.writeValue(this.maxUsesNumberOnRenewableSub);
         dest.writeInt(this.couponGroupType == null ? -1 : this.couponGroupType.ordinal());
+        dest.writeValue(this.maxHouseholdUses);
+        dest.writeValue(this.discountId);
     }
 
     public CouponsGroup(Parcel in) {
         super(in);
         this.id = in.readString();
         this.name = in.readString();
-        int descriptionsSize = in.readInt();
-        if( descriptionsSize > -1) {
-            this.descriptions = new ArrayList<>();
-            in.readList(this.descriptions, TranslationToken.class.getClassLoader());
-        }
         this.startDate = (Long)in.readValue(Long.class.getClassLoader());
         this.endDate = (Long)in.readValue(Long.class.getClassLoader());
         this.maxUsesNumber = (Integer)in.readValue(Integer.class.getClassLoader());
         this.maxUsesNumberOnRenewableSub = (Integer)in.readValue(Integer.class.getClassLoader());
         int tmpCouponGroupType = in.readInt();
         this.couponGroupType = tmpCouponGroupType == -1 ? null : CouponGroupType.values()[tmpCouponGroupType];
+        this.maxHouseholdUses = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.discountId = (Long)in.readValue(Long.class.getClassLoader());
     }
 }
 

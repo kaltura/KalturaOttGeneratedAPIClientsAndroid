@@ -43,7 +43,7 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(FollowDataBase.Tokenizer.class)
-public class FollowDataBase extends ObjectBase {
+public abstract class FollowDataBase extends ObjectBase {
 	
 	public interface Tokenizer extends ObjectBase.Tokenizer {
 		String announcementId();
@@ -119,18 +119,6 @@ public class FollowDataBase extends ObjectBase {
 		return kparams;
 	}
 
-
-    public static final Creator<FollowDataBase> CREATOR = new Creator<FollowDataBase>() {
-        @Override
-        public FollowDataBase createFromParcel(Parcel source) {
-            return new FollowDataBase(source);
-        }
-
-        @Override
-        public FollowDataBase[] newArray(int size) {
-            return new FollowDataBase[size];
-        }
-    };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
