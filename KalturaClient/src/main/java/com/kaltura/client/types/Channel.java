@@ -30,8 +30,8 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.enums.AssetOrderBy;
-import com.kaltura.client.types.AssetGroupBy;
+import com.kaltura.client.types.ChannelOrder;
+import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 import com.kaltura.client.utils.request.RequestBuilder;
@@ -50,52 +50,66 @@ import java.util.List;
  */
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(Channel.Tokenizer.class)
-public class Channel extends BaseChannel {
+public class Channel extends ObjectBase {
 	
-	public interface Tokenizer extends BaseChannel.Tokenizer {
+	public interface Tokenizer extends ObjectBase.Tokenizer {
+		String id();
 		String name();
+		RequestBuilder.ListTokenizer<TranslationToken.Tokenizer> multilingualName();
+		String systemName();
 		String description();
-		RequestBuilder.ListTokenizer<MediaImage.Tokenizer> images();
-		RequestBuilder.ListTokenizer<IntegerValue.Tokenizer> assetTypes();
-		String filterExpression();
+		RequestBuilder.ListTokenizer<TranslationToken.Tokenizer> multilingualDescription();
 		String isActive();
-		String order();
-		AssetGroupBy.Tokenizer groupBy();
+		ChannelOrder.Tokenizer orderBy();
+		String createDate();
+		String updateDate();
 	}
 
+	/**
+	 * Unique identifier for the channel
+	 */
+	private Long id;
 	/**
 	 * Channel name
 	 */
 	private String name;
 	/**
+	 * Channel name
+	 */
+	private List<TranslationToken> multilingualName;
+	/**
+	 * Channel system name
+	 */
+	private String systemName;
+	/**
 	 * Cannel description
 	 */
 	private String description;
 	/**
-	 * Channel images
+	 * Cannel description
 	 */
-	private List<MediaImage> images;
-	/**
-	 * Asset types in the channel.              -26 is EPG
-	 */
-	private List<IntegerValue> assetTypes;
-	/**
-	 * Filter expression
-	 */
-	private String filterExpression;
+	private List<TranslationToken> multilingualDescription;
 	/**
 	 * active status
 	 */
 	private Boolean isActive;
 	/**
-	 * Channel order
+	 * Channel order by
 	 */
-	private AssetOrderBy order;
+	private ChannelOrder orderBy;
 	/**
-	 * Channel group by
+	 * Specifies when was the Channel was created. Date and time represented as epoch.
 	 */
-	private AssetGroupBy groupBy;
+	private Long createDate;
+	/**
+	 * Specifies when was the Channel last updated. Date and time represented as epoch.
+	 */
+	private Long updateDate;
 
+	// id:
+	public Long getId(){
+		return this.id;
+	}
 	// name:
 	public String getName(){
 		return this.name;
@@ -106,6 +120,26 @@ public class Channel extends BaseChannel {
 
 	public void name(String multirequestToken){
 		setToken("name", multirequestToken);
+	}
+
+	// multilingualName:
+	public List<TranslationToken> getMultilingualName(){
+		return this.multilingualName;
+	}
+	public void setMultilingualName(List<TranslationToken> multilingualName){
+		this.multilingualName = multilingualName;
+	}
+
+	// systemName:
+	public String getSystemName(){
+		return this.systemName;
+	}
+	public void setSystemName(String systemName){
+		this.systemName = systemName;
+	}
+
+	public void systemName(String multirequestToken){
+		setToken("systemName", multirequestToken);
 	}
 
 	// description:
@@ -120,32 +154,12 @@ public class Channel extends BaseChannel {
 		setToken("description", multirequestToken);
 	}
 
-	// images:
-	public List<MediaImage> getImages(){
-		return this.images;
+	// multilingualDescription:
+	public List<TranslationToken> getMultilingualDescription(){
+		return this.multilingualDescription;
 	}
-	public void setImages(List<MediaImage> images){
-		this.images = images;
-	}
-
-	// assetTypes:
-	public List<IntegerValue> getAssetTypes(){
-		return this.assetTypes;
-	}
-	public void setAssetTypes(List<IntegerValue> assetTypes){
-		this.assetTypes = assetTypes;
-	}
-
-	// filterExpression:
-	public String getFilterExpression(){
-		return this.filterExpression;
-	}
-	public void setFilterExpression(String filterExpression){
-		this.filterExpression = filterExpression;
-	}
-
-	public void filterExpression(String multirequestToken){
-		setToken("filterExpression", multirequestToken);
+	public void setMultilingualDescription(List<TranslationToken> multilingualDescription){
+		this.multilingualDescription = multilingualDescription;
 	}
 
 	// isActive:
@@ -160,26 +174,22 @@ public class Channel extends BaseChannel {
 		setToken("isActive", multirequestToken);
 	}
 
-	// order:
-	public AssetOrderBy getOrder(){
-		return this.order;
+	// orderBy:
+	public ChannelOrder getOrderBy(){
+		return this.orderBy;
 	}
-	public void setOrder(AssetOrderBy order){
-		this.order = order;
-	}
-
-	public void order(String multirequestToken){
-		setToken("order", multirequestToken);
+	public void setOrderBy(ChannelOrder orderBy){
+		this.orderBy = orderBy;
 	}
 
-	// groupBy:
-	public AssetGroupBy getGroupBy(){
-		return this.groupBy;
+	// createDate:
+	public Long getCreateDate(){
+		return this.createDate;
 	}
-	public void setGroupBy(AssetGroupBy groupBy){
-		this.groupBy = groupBy;
+	// updateDate:
+	public Long getUpdateDate(){
+		return this.updateDate;
 	}
-
 
 	public Channel() {
 		super();
@@ -191,14 +201,16 @@ public class Channel extends BaseChannel {
 		if(jsonObject == null) return;
 
 		// set members values:
+		id = GsonParser.parseLong(jsonObject.get("id"));
 		name = GsonParser.parseString(jsonObject.get("name"));
+		multilingualName = GsonParser.parseArray(jsonObject.getAsJsonArray("multilingualName"), TranslationToken.class);
+		systemName = GsonParser.parseString(jsonObject.get("systemName"));
 		description = GsonParser.parseString(jsonObject.get("description"));
-		images = GsonParser.parseArray(jsonObject.getAsJsonArray("images"), MediaImage.class);
-		assetTypes = GsonParser.parseArray(jsonObject.getAsJsonArray("assetTypes"), IntegerValue.class);
-		filterExpression = GsonParser.parseString(jsonObject.get("filterExpression"));
+		multilingualDescription = GsonParser.parseArray(jsonObject.getAsJsonArray("multilingualDescription"), TranslationToken.class);
 		isActive = GsonParser.parseBoolean(jsonObject.get("isActive"));
-		order = AssetOrderBy.get(GsonParser.parseString(jsonObject.get("order")));
-		groupBy = GsonParser.parseObject(jsonObject.getAsJsonObject("groupBy"), AssetGroupBy.class);
+		orderBy = GsonParser.parseObject(jsonObject.getAsJsonObject("orderBy"), ChannelOrder.class);
+		createDate = GsonParser.parseLong(jsonObject.get("createDate"));
+		updateDate = GsonParser.parseLong(jsonObject.get("updateDate"));
 
 	}
 
@@ -206,13 +218,12 @@ public class Channel extends BaseChannel {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaChannel");
 		kparams.add("name", this.name);
+		kparams.add("multilingualName", this.multilingualName);
+		kparams.add("systemName", this.systemName);
 		kparams.add("description", this.description);
-		kparams.add("images", this.images);
-		kparams.add("assetTypes", this.assetTypes);
-		kparams.add("filterExpression", this.filterExpression);
+		kparams.add("multilingualDescription", this.multilingualDescription);
 		kparams.add("isActive", this.isActive);
-		kparams.add("order", this.order);
-		kparams.add("groupBy", this.groupBy);
+		kparams.add("orderBy", this.orderBy);
 		return kparams;
 	}
 
@@ -232,45 +243,48 @@ public class Channel extends BaseChannel {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
+        dest.writeValue(this.id);
         dest.writeString(this.name);
+        if(this.multilingualName != null) {
+            dest.writeInt(this.multilingualName.size());
+            dest.writeList(this.multilingualName);
+        } else {
+            dest.writeInt(-1);
+        }
+        dest.writeString(this.systemName);
         dest.writeString(this.description);
-        if(this.images != null) {
-            dest.writeInt(this.images.size());
-            dest.writeList(this.images);
+        if(this.multilingualDescription != null) {
+            dest.writeInt(this.multilingualDescription.size());
+            dest.writeList(this.multilingualDescription);
         } else {
             dest.writeInt(-1);
         }
-        if(this.assetTypes != null) {
-            dest.writeInt(this.assetTypes.size());
-            dest.writeList(this.assetTypes);
-        } else {
-            dest.writeInt(-1);
-        }
-        dest.writeString(this.filterExpression);
         dest.writeValue(this.isActive);
-        dest.writeInt(this.order == null ? -1 : this.order.ordinal());
-        dest.writeParcelable(this.groupBy, flags);
+        dest.writeParcelable(this.orderBy, flags);
+        dest.writeValue(this.createDate);
+        dest.writeValue(this.updateDate);
     }
 
     public Channel(Parcel in) {
         super(in);
+        this.id = (Long)in.readValue(Long.class.getClassLoader());
         this.name = in.readString();
+        int multilingualNameSize = in.readInt();
+        if( multilingualNameSize > -1) {
+            this.multilingualName = new ArrayList<>();
+            in.readList(this.multilingualName, TranslationToken.class.getClassLoader());
+        }
+        this.systemName = in.readString();
         this.description = in.readString();
-        int imagesSize = in.readInt();
-        if( imagesSize > -1) {
-            this.images = new ArrayList<>();
-            in.readList(this.images, MediaImage.class.getClassLoader());
+        int multilingualDescriptionSize = in.readInt();
+        if( multilingualDescriptionSize > -1) {
+            this.multilingualDescription = new ArrayList<>();
+            in.readList(this.multilingualDescription, TranslationToken.class.getClassLoader());
         }
-        int assetTypesSize = in.readInt();
-        if( assetTypesSize > -1) {
-            this.assetTypes = new ArrayList<>();
-            in.readList(this.assetTypes, IntegerValue.class.getClassLoader());
-        }
-        this.filterExpression = in.readString();
         this.isActive = (Boolean)in.readValue(Boolean.class.getClassLoader());
-        int tmpOrder = in.readInt();
-        this.order = tmpOrder == -1 ? null : AssetOrderBy.values()[tmpOrder];
-        this.groupBy = in.readParcelable(AssetGroupBy.class.getClassLoader());
+        this.orderBy = in.readParcelable(ChannelOrder.class.getClassLoader());
+        this.createDate = (Long)in.readValue(Long.class.getClassLoader());
+        this.updateDate = (Long)in.readValue(Long.class.getClassLoader());
     }
 }
 

@@ -30,7 +30,6 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.types.StringValueArray;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
@@ -51,18 +50,23 @@ public class MediaFile extends AssetFile {
 	public interface Tokenizer extends AssetFile.Tokenizer {
 		String assetId();
 		String id();
-		String type();
+		String typeId();
 		String duration();
 		String externalId();
-		String billingType();
-		String quality();
-		String handlingType();
-		String cdnName();
-		String cdnCode();
-		String altCdnCode();
-		StringValueArray.Tokenizer ppvModules();
-		String productCode();
+		String altExternalId();
 		String fileSize();
+		String additionalData();
+		String altStreamingCode();
+		String alternativeCdnAdapaterProfileId();
+		String endDate();
+		String startDate();
+		String externalStoreId();
+		String isDefaultLanguage();
+		String language();
+		String orderNum();
+		String outputProtecationLevel();
+		String cdnAdapaterProfileId();
+		String status();
 	}
 
 	/**
@@ -74,9 +78,9 @@ public class MediaFile extends AssetFile {
 	 */
 	private Integer id;
 	/**
-	 * Device types as defined in the system
+	 * Device types identifier as defined in the system
 	 */
-	private String type;
+	private Integer typeId;
 	/**
 	 * Duration of the media file
 	 */
@@ -86,41 +90,61 @@ public class MediaFile extends AssetFile {
 	 */
 	private String externalId;
 	/**
-	 * Billing type
+	 * Alternative external identifier for the media file
 	 */
-	private String billingType;
-	/**
-	 * Quality
-	 */
-	private String quality;
-	/**
-	 * Handling type
-	 */
-	private String handlingType;
-	/**
-	 * CDN name
-	 */
-	private String cdnName;
-	/**
-	 * CDN code
-	 */
-	private String cdnCode;
-	/**
-	 * Alt CDN code
-	 */
-	private String altCdnCode;
-	/**
-	 * PPV Module
-	 */
-	private StringValueArray ppvModules;
-	/**
-	 * Product code
-	 */
-	private String productCode;
+	private String altExternalId;
 	/**
 	 * File size
 	 */
 	private Long fileSize;
+	/**
+	 * Additional Data
+	 */
+	private String additionalData;
+	/**
+	 * Alternative streaming code
+	 */
+	private String altStreamingCode;
+	/**
+	 * Alternative cdn adapter profile identifier
+	 */
+	private Long alternativeCdnAdapaterProfileId;
+	/**
+	 * EndDate
+	 */
+	private Long endDate;
+	/**
+	 * StartDate
+	 */
+	private Long startDate;
+	/**
+	 * ExternalStoreId
+	 */
+	private String externalStoreId;
+	/**
+	 * IsDefaultLanguage
+	 */
+	private Boolean isDefaultLanguage;
+	/**
+	 * Language
+	 */
+	private String language;
+	/**
+	 * OrderNum
+	 */
+	private Integer orderNum;
+	/**
+	 * OutputProtecationLevel
+	 */
+	private String outputProtecationLevel;
+	/**
+	 * cdn adapter profile identifier
+	 */
+	private Long cdnAdapaterProfileId;
+	/**
+	 * The media file status
+	 */
+	private Boolean status;
 
 	// assetId:
 	public Integer getAssetId(){
@@ -138,16 +162,16 @@ public class MediaFile extends AssetFile {
 	public Integer getId(){
 		return this.id;
 	}
-	// type:
-	public String getType(){
-		return this.type;
+	// typeId:
+	public Integer getTypeId(){
+		return this.typeId;
 	}
-	public void setType(String type){
-		this.type = type;
+	public void setTypeId(Integer typeId){
+		this.typeId = typeId;
 	}
 
-	public void type(String multirequestToken){
-		setToken("type", multirequestToken);
+	public void typeId(String multirequestToken){
+		setToken("typeId", multirequestToken);
 	}
 
 	// duration:
@@ -174,96 +198,16 @@ public class MediaFile extends AssetFile {
 		setToken("externalId", multirequestToken);
 	}
 
-	// billingType:
-	public String getBillingType(){
-		return this.billingType;
+	// altExternalId:
+	public String getAltExternalId(){
+		return this.altExternalId;
 	}
-	public void setBillingType(String billingType){
-		this.billingType = billingType;
-	}
-
-	public void billingType(String multirequestToken){
-		setToken("billingType", multirequestToken);
+	public void setAltExternalId(String altExternalId){
+		this.altExternalId = altExternalId;
 	}
 
-	// quality:
-	public String getQuality(){
-		return this.quality;
-	}
-	public void setQuality(String quality){
-		this.quality = quality;
-	}
-
-	public void quality(String multirequestToken){
-		setToken("quality", multirequestToken);
-	}
-
-	// handlingType:
-	public String getHandlingType(){
-		return this.handlingType;
-	}
-	public void setHandlingType(String handlingType){
-		this.handlingType = handlingType;
-	}
-
-	public void handlingType(String multirequestToken){
-		setToken("handlingType", multirequestToken);
-	}
-
-	// cdnName:
-	public String getCdnName(){
-		return this.cdnName;
-	}
-	public void setCdnName(String cdnName){
-		this.cdnName = cdnName;
-	}
-
-	public void cdnName(String multirequestToken){
-		setToken("cdnName", multirequestToken);
-	}
-
-	// cdnCode:
-	public String getCdnCode(){
-		return this.cdnCode;
-	}
-	public void setCdnCode(String cdnCode){
-		this.cdnCode = cdnCode;
-	}
-
-	public void cdnCode(String multirequestToken){
-		setToken("cdnCode", multirequestToken);
-	}
-
-	// altCdnCode:
-	public String getAltCdnCode(){
-		return this.altCdnCode;
-	}
-	public void setAltCdnCode(String altCdnCode){
-		this.altCdnCode = altCdnCode;
-	}
-
-	public void altCdnCode(String multirequestToken){
-		setToken("altCdnCode", multirequestToken);
-	}
-
-	// ppvModules:
-	public StringValueArray getPpvModules(){
-		return this.ppvModules;
-	}
-	public void setPpvModules(StringValueArray ppvModules){
-		this.ppvModules = ppvModules;
-	}
-
-	// productCode:
-	public String getProductCode(){
-		return this.productCode;
-	}
-	public void setProductCode(String productCode){
-		this.productCode = productCode;
-	}
-
-	public void productCode(String multirequestToken){
-		setToken("productCode", multirequestToken);
+	public void altExternalId(String multirequestToken){
+		setToken("altExternalId", multirequestToken);
 	}
 
 	// fileSize:
@@ -276,6 +220,150 @@ public class MediaFile extends AssetFile {
 
 	public void fileSize(String multirequestToken){
 		setToken("fileSize", multirequestToken);
+	}
+
+	// additionalData:
+	public String getAdditionalData(){
+		return this.additionalData;
+	}
+	public void setAdditionalData(String additionalData){
+		this.additionalData = additionalData;
+	}
+
+	public void additionalData(String multirequestToken){
+		setToken("additionalData", multirequestToken);
+	}
+
+	// altStreamingCode:
+	public String getAltStreamingCode(){
+		return this.altStreamingCode;
+	}
+	public void setAltStreamingCode(String altStreamingCode){
+		this.altStreamingCode = altStreamingCode;
+	}
+
+	public void altStreamingCode(String multirequestToken){
+		setToken("altStreamingCode", multirequestToken);
+	}
+
+	// alternativeCdnAdapaterProfileId:
+	public Long getAlternativeCdnAdapaterProfileId(){
+		return this.alternativeCdnAdapaterProfileId;
+	}
+	public void setAlternativeCdnAdapaterProfileId(Long alternativeCdnAdapaterProfileId){
+		this.alternativeCdnAdapaterProfileId = alternativeCdnAdapaterProfileId;
+	}
+
+	public void alternativeCdnAdapaterProfileId(String multirequestToken){
+		setToken("alternativeCdnAdapaterProfileId", multirequestToken);
+	}
+
+	// endDate:
+	public Long getEndDate(){
+		return this.endDate;
+	}
+	public void setEndDate(Long endDate){
+		this.endDate = endDate;
+	}
+
+	public void endDate(String multirequestToken){
+		setToken("endDate", multirequestToken);
+	}
+
+	// startDate:
+	public Long getStartDate(){
+		return this.startDate;
+	}
+	public void setStartDate(Long startDate){
+		this.startDate = startDate;
+	}
+
+	public void startDate(String multirequestToken){
+		setToken("startDate", multirequestToken);
+	}
+
+	// externalStoreId:
+	public String getExternalStoreId(){
+		return this.externalStoreId;
+	}
+	public void setExternalStoreId(String externalStoreId){
+		this.externalStoreId = externalStoreId;
+	}
+
+	public void externalStoreId(String multirequestToken){
+		setToken("externalStoreId", multirequestToken);
+	}
+
+	// isDefaultLanguage:
+	public Boolean getIsDefaultLanguage(){
+		return this.isDefaultLanguage;
+	}
+	public void setIsDefaultLanguage(Boolean isDefaultLanguage){
+		this.isDefaultLanguage = isDefaultLanguage;
+	}
+
+	public void isDefaultLanguage(String multirequestToken){
+		setToken("isDefaultLanguage", multirequestToken);
+	}
+
+	// language:
+	public String getLanguage(){
+		return this.language;
+	}
+	public void setLanguage(String language){
+		this.language = language;
+	}
+
+	public void language(String multirequestToken){
+		setToken("language", multirequestToken);
+	}
+
+	// orderNum:
+	public Integer getOrderNum(){
+		return this.orderNum;
+	}
+	public void setOrderNum(Integer orderNum){
+		this.orderNum = orderNum;
+	}
+
+	public void orderNum(String multirequestToken){
+		setToken("orderNum", multirequestToken);
+	}
+
+	// outputProtecationLevel:
+	public String getOutputProtecationLevel(){
+		return this.outputProtecationLevel;
+	}
+	public void setOutputProtecationLevel(String outputProtecationLevel){
+		this.outputProtecationLevel = outputProtecationLevel;
+	}
+
+	public void outputProtecationLevel(String multirequestToken){
+		setToken("outputProtecationLevel", multirequestToken);
+	}
+
+	// cdnAdapaterProfileId:
+	public Long getCdnAdapaterProfileId(){
+		return this.cdnAdapaterProfileId;
+	}
+	public void setCdnAdapaterProfileId(Long cdnAdapaterProfileId){
+		this.cdnAdapaterProfileId = cdnAdapaterProfileId;
+	}
+
+	public void cdnAdapaterProfileId(String multirequestToken){
+		setToken("cdnAdapaterProfileId", multirequestToken);
+	}
+
+	// status:
+	public Boolean getStatus(){
+		return this.status;
+	}
+	public void setStatus(Boolean status){
+		this.status = status;
+	}
+
+	public void status(String multirequestToken){
+		setToken("status", multirequestToken);
 	}
 
 
@@ -291,18 +379,23 @@ public class MediaFile extends AssetFile {
 		// set members values:
 		assetId = GsonParser.parseInt(jsonObject.get("assetId"));
 		id = GsonParser.parseInt(jsonObject.get("id"));
-		type = GsonParser.parseString(jsonObject.get("type"));
+		typeId = GsonParser.parseInt(jsonObject.get("typeId"));
 		duration = GsonParser.parseLong(jsonObject.get("duration"));
 		externalId = GsonParser.parseString(jsonObject.get("externalId"));
-		billingType = GsonParser.parseString(jsonObject.get("billingType"));
-		quality = GsonParser.parseString(jsonObject.get("quality"));
-		handlingType = GsonParser.parseString(jsonObject.get("handlingType"));
-		cdnName = GsonParser.parseString(jsonObject.get("cdnName"));
-		cdnCode = GsonParser.parseString(jsonObject.get("cdnCode"));
-		altCdnCode = GsonParser.parseString(jsonObject.get("altCdnCode"));
-		ppvModules = GsonParser.parseObject(jsonObject.getAsJsonObject("ppvModules"), StringValueArray.class);
-		productCode = GsonParser.parseString(jsonObject.get("productCode"));
+		altExternalId = GsonParser.parseString(jsonObject.get("altExternalId"));
 		fileSize = GsonParser.parseLong(jsonObject.get("fileSize"));
+		additionalData = GsonParser.parseString(jsonObject.get("additionalData"));
+		altStreamingCode = GsonParser.parseString(jsonObject.get("altStreamingCode"));
+		alternativeCdnAdapaterProfileId = GsonParser.parseLong(jsonObject.get("alternativeCdnAdapaterProfileId"));
+		endDate = GsonParser.parseLong(jsonObject.get("endDate"));
+		startDate = GsonParser.parseLong(jsonObject.get("startDate"));
+		externalStoreId = GsonParser.parseString(jsonObject.get("externalStoreId"));
+		isDefaultLanguage = GsonParser.parseBoolean(jsonObject.get("isDefaultLanguage"));
+		language = GsonParser.parseString(jsonObject.get("language"));
+		orderNum = GsonParser.parseInt(jsonObject.get("orderNum"));
+		outputProtecationLevel = GsonParser.parseString(jsonObject.get("outputProtecationLevel"));
+		cdnAdapaterProfileId = GsonParser.parseLong(jsonObject.get("cdnAdapaterProfileId"));
+		status = GsonParser.parseBoolean(jsonObject.get("status"));
 
 	}
 
@@ -310,18 +403,23 @@ public class MediaFile extends AssetFile {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaMediaFile");
 		kparams.add("assetId", this.assetId);
-		kparams.add("type", this.type);
+		kparams.add("typeId", this.typeId);
 		kparams.add("duration", this.duration);
 		kparams.add("externalId", this.externalId);
-		kparams.add("billingType", this.billingType);
-		kparams.add("quality", this.quality);
-		kparams.add("handlingType", this.handlingType);
-		kparams.add("cdnName", this.cdnName);
-		kparams.add("cdnCode", this.cdnCode);
-		kparams.add("altCdnCode", this.altCdnCode);
-		kparams.add("ppvModules", this.ppvModules);
-		kparams.add("productCode", this.productCode);
+		kparams.add("altExternalId", this.altExternalId);
 		kparams.add("fileSize", this.fileSize);
+		kparams.add("additionalData", this.additionalData);
+		kparams.add("altStreamingCode", this.altStreamingCode);
+		kparams.add("alternativeCdnAdapaterProfileId", this.alternativeCdnAdapaterProfileId);
+		kparams.add("endDate", this.endDate);
+		kparams.add("startDate", this.startDate);
+		kparams.add("externalStoreId", this.externalStoreId);
+		kparams.add("isDefaultLanguage", this.isDefaultLanguage);
+		kparams.add("language", this.language);
+		kparams.add("orderNum", this.orderNum);
+		kparams.add("outputProtecationLevel", this.outputProtecationLevel);
+		kparams.add("cdnAdapaterProfileId", this.cdnAdapaterProfileId);
+		kparams.add("status", this.status);
 		return kparams;
 	}
 
@@ -343,36 +441,46 @@ public class MediaFile extends AssetFile {
         super.writeToParcel(dest, flags);
         dest.writeValue(this.assetId);
         dest.writeValue(this.id);
-        dest.writeString(this.type);
+        dest.writeValue(this.typeId);
         dest.writeValue(this.duration);
         dest.writeString(this.externalId);
-        dest.writeString(this.billingType);
-        dest.writeString(this.quality);
-        dest.writeString(this.handlingType);
-        dest.writeString(this.cdnName);
-        dest.writeString(this.cdnCode);
-        dest.writeString(this.altCdnCode);
-        dest.writeParcelable(this.ppvModules, flags);
-        dest.writeString(this.productCode);
+        dest.writeString(this.altExternalId);
         dest.writeValue(this.fileSize);
+        dest.writeString(this.additionalData);
+        dest.writeString(this.altStreamingCode);
+        dest.writeValue(this.alternativeCdnAdapaterProfileId);
+        dest.writeValue(this.endDate);
+        dest.writeValue(this.startDate);
+        dest.writeString(this.externalStoreId);
+        dest.writeValue(this.isDefaultLanguage);
+        dest.writeString(this.language);
+        dest.writeValue(this.orderNum);
+        dest.writeString(this.outputProtecationLevel);
+        dest.writeValue(this.cdnAdapaterProfileId);
+        dest.writeValue(this.status);
     }
 
     public MediaFile(Parcel in) {
         super(in);
         this.assetId = (Integer)in.readValue(Integer.class.getClassLoader());
         this.id = (Integer)in.readValue(Integer.class.getClassLoader());
-        this.type = in.readString();
+        this.typeId = (Integer)in.readValue(Integer.class.getClassLoader());
         this.duration = (Long)in.readValue(Long.class.getClassLoader());
         this.externalId = in.readString();
-        this.billingType = in.readString();
-        this.quality = in.readString();
-        this.handlingType = in.readString();
-        this.cdnName = in.readString();
-        this.cdnCode = in.readString();
-        this.altCdnCode = in.readString();
-        this.ppvModules = in.readParcelable(StringValueArray.class.getClassLoader());
-        this.productCode = in.readString();
+        this.altExternalId = in.readString();
         this.fileSize = (Long)in.readValue(Long.class.getClassLoader());
+        this.additionalData = in.readString();
+        this.altStreamingCode = in.readString();
+        this.alternativeCdnAdapaterProfileId = (Long)in.readValue(Long.class.getClassLoader());
+        this.endDate = (Long)in.readValue(Long.class.getClassLoader());
+        this.startDate = (Long)in.readValue(Long.class.getClassLoader());
+        this.externalStoreId = in.readString();
+        this.isDefaultLanguage = (Boolean)in.readValue(Boolean.class.getClassLoader());
+        this.language = in.readString();
+        this.orderNum = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.outputProtecationLevel = in.readString();
+        this.cdnAdapaterProfileId = (Long)in.readValue(Long.class.getClassLoader());
+        this.status = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
 

@@ -30,7 +30,6 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.enums.MetaDataType;
 import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
@@ -45,79 +44,59 @@ import java.util.List;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
-/**
- * Asset meta
- */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(Meta.Tokenizer.class)
-public class Meta extends ObjectBase {
+@MultiRequestBuilder.Tokenizer(AssetStruct.Tokenizer.class)
+public class AssetStruct extends ObjectBase {
 	
 	public interface Tokenizer extends ObjectBase.Tokenizer {
 		String id();
 		String name();
 		RequestBuilder.ListTokenizer<TranslationToken.Tokenizer> multilingualName();
 		String systemName();
-		String dataType();
-		String multipleValue();
 		String isProtected();
-		String helpText();
-		String features();
-		String parentId();
+		String metaIds();
 		String createDate();
 		String updateDate();
 	}
 
 	/**
-	 * Meta id
+	 * Asset Struct id
 	 */
-	private String id;
+	private Long id;
 	/**
-	 * Meta name for the partner
+	 * Asset struct name for the partner
 	 */
 	private String name;
 	/**
-	 * Meta name for the partner
+	 * Asset struct name for the partner
 	 */
 	private List<TranslationToken> multilingualName;
 	/**
-	 * Meta system name for the partner
+	 * Asset Struct system name for the partner
 	 */
 	private String systemName;
 	/**
-	 * Meta data type
-	 */
-	private MetaDataType dataType;
-	/**
-	 * Does the meta contain multiple values
-	 */
-	private Boolean multipleValue;
-	/**
-	 * Is the meta protected by the system
+	 * Is the Asset Struct protected by the system
 	 */
 	private Boolean isProtected;
 	/**
-	 * The help text of the meta to be displayed on the UI.
+	 * A list of comma separated meta ids associated with this asset struct, returned
+	  according to the order.
 	 */
-	private String helpText;
+	private String metaIds;
 	/**
-	 * List of supported features
-	 */
-	private String features;
-	/**
-	 * Parent meta id
-	 */
-	private String parentId;
-	/**
-	 * Specifies when was the meta created. Date and time represented as epoch.
+	 * Specifies when was the Asset Struct was created. Date and time represented as
+	  epoch.
 	 */
 	private Long createDate;
 	/**
-	 * Specifies when was the meta last updated. Date and time represented as epoch.
+	 * Specifies when was the Asset Struct last updated. Date and time represented as
+	  epoch.
 	 */
 	private Long updateDate;
 
 	// id:
-	public String getId(){
+	public Long getId(){
 		return this.id;
 	}
 	// name:
@@ -152,30 +131,6 @@ public class Meta extends ObjectBase {
 		setToken("systemName", multirequestToken);
 	}
 
-	// dataType:
-	public MetaDataType getDataType(){
-		return this.dataType;
-	}
-	public void setDataType(MetaDataType dataType){
-		this.dataType = dataType;
-	}
-
-	public void dataType(String multirequestToken){
-		setToken("dataType", multirequestToken);
-	}
-
-	// multipleValue:
-	public Boolean getMultipleValue(){
-		return this.multipleValue;
-	}
-	public void setMultipleValue(Boolean multipleValue){
-		this.multipleValue = multipleValue;
-	}
-
-	public void multipleValue(String multirequestToken){
-		setToken("multipleValue", multirequestToken);
-	}
-
 	// isProtected:
 	public Boolean getIsProtected(){
 		return this.isProtected;
@@ -188,40 +143,16 @@ public class Meta extends ObjectBase {
 		setToken("isProtected", multirequestToken);
 	}
 
-	// helpText:
-	public String getHelpText(){
-		return this.helpText;
+	// metaIds:
+	public String getMetaIds(){
+		return this.metaIds;
 	}
-	public void setHelpText(String helpText){
-		this.helpText = helpText;
-	}
-
-	public void helpText(String multirequestToken){
-		setToken("helpText", multirequestToken);
+	public void setMetaIds(String metaIds){
+		this.metaIds = metaIds;
 	}
 
-	// features:
-	public String getFeatures(){
-		return this.features;
-	}
-	public void setFeatures(String features){
-		this.features = features;
-	}
-
-	public void features(String multirequestToken){
-		setToken("features", multirequestToken);
-	}
-
-	// parentId:
-	public String getParentId(){
-		return this.parentId;
-	}
-	public void setParentId(String parentId){
-		this.parentId = parentId;
-	}
-
-	public void parentId(String multirequestToken){
-		setToken("parentId", multirequestToken);
+	public void metaIds(String multirequestToken){
+		setToken("metaIds", multirequestToken);
 	}
 
 	// createDate:
@@ -233,26 +164,22 @@ public class Meta extends ObjectBase {
 		return this.updateDate;
 	}
 
-	public Meta() {
+	public AssetStruct() {
 		super();
 	}
 
-	public Meta(JsonObject jsonObject) throws APIException {
+	public AssetStruct(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		id = GsonParser.parseString(jsonObject.get("id"));
+		id = GsonParser.parseLong(jsonObject.get("id"));
 		name = GsonParser.parseString(jsonObject.get("name"));
 		multilingualName = GsonParser.parseArray(jsonObject.getAsJsonArray("multilingualName"), TranslationToken.class);
 		systemName = GsonParser.parseString(jsonObject.get("systemName"));
-		dataType = MetaDataType.get(GsonParser.parseString(jsonObject.get("dataType")));
-		multipleValue = GsonParser.parseBoolean(jsonObject.get("multipleValue"));
 		isProtected = GsonParser.parseBoolean(jsonObject.get("isProtected"));
-		helpText = GsonParser.parseString(jsonObject.get("helpText"));
-		features = GsonParser.parseString(jsonObject.get("features"));
-		parentId = GsonParser.parseString(jsonObject.get("parentId"));
+		metaIds = GsonParser.parseString(jsonObject.get("metaIds"));
 		createDate = GsonParser.parseLong(jsonObject.get("createDate"));
 		updateDate = GsonParser.parseLong(jsonObject.get("updateDate"));
 
@@ -260,36 +187,32 @@ public class Meta extends ObjectBase {
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaMeta");
+		kparams.add("objectType", "KalturaAssetStruct");
 		kparams.add("name", this.name);
 		kparams.add("multilingualName", this.multilingualName);
 		kparams.add("systemName", this.systemName);
-		kparams.add("dataType", this.dataType);
-		kparams.add("multipleValue", this.multipleValue);
 		kparams.add("isProtected", this.isProtected);
-		kparams.add("helpText", this.helpText);
-		kparams.add("features", this.features);
-		kparams.add("parentId", this.parentId);
+		kparams.add("metaIds", this.metaIds);
 		return kparams;
 	}
 
 
-    public static final Creator<Meta> CREATOR = new Creator<Meta>() {
+    public static final Creator<AssetStruct> CREATOR = new Creator<AssetStruct>() {
         @Override
-        public Meta createFromParcel(Parcel source) {
-            return new Meta(source);
+        public AssetStruct createFromParcel(Parcel source) {
+            return new AssetStruct(source);
         }
 
         @Override
-        public Meta[] newArray(int size) {
-            return new Meta[size];
+        public AssetStruct[] newArray(int size) {
+            return new AssetStruct[size];
         }
     };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeString(this.id);
+        dest.writeValue(this.id);
         dest.writeString(this.name);
         if(this.multilingualName != null) {
             dest.writeInt(this.multilingualName.size());
@@ -298,19 +221,15 @@ public class Meta extends ObjectBase {
             dest.writeInt(-1);
         }
         dest.writeString(this.systemName);
-        dest.writeInt(this.dataType == null ? -1 : this.dataType.ordinal());
-        dest.writeValue(this.multipleValue);
         dest.writeValue(this.isProtected);
-        dest.writeString(this.helpText);
-        dest.writeString(this.features);
-        dest.writeString(this.parentId);
+        dest.writeString(this.metaIds);
         dest.writeValue(this.createDate);
         dest.writeValue(this.updateDate);
     }
 
-    public Meta(Parcel in) {
+    public AssetStruct(Parcel in) {
         super(in);
-        this.id = in.readString();
+        this.id = (Long)in.readValue(Long.class.getClassLoader());
         this.name = in.readString();
         int multilingualNameSize = in.readInt();
         if( multilingualNameSize > -1) {
@@ -318,13 +237,8 @@ public class Meta extends ObjectBase {
             in.readList(this.multilingualName, TranslationToken.class.getClassLoader());
         }
         this.systemName = in.readString();
-        int tmpDataType = in.readInt();
-        this.dataType = tmpDataType == -1 ? null : MetaDataType.values()[tmpDataType];
-        this.multipleValue = (Boolean)in.readValue(Boolean.class.getClassLoader());
         this.isProtected = (Boolean)in.readValue(Boolean.class.getClassLoader());
-        this.helpText = in.readString();
-        this.features = in.readString();
-        this.parentId = in.readString();
+        this.metaIds = in.readString();
         this.createDate = (Long)in.readValue(Long.class.getClassLoader());
         this.updateDate = (Long)in.readValue(Long.class.getClassLoader());
     }
