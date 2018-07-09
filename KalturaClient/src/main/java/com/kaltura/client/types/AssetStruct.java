@@ -57,6 +57,11 @@ public class AssetStruct extends ObjectBase {
 		String metaIds();
 		String createDate();
 		String updateDate();
+		String features();
+		String pluralName();
+		String parentId();
+		String connectingMetaId();
+		String connectedParentMetaId();
 	}
 
 	/**
@@ -94,6 +99,26 @@ public class AssetStruct extends ObjectBase {
 	  epoch.
 	 */
 	private Long updateDate;
+	/**
+	 * List of supported features
+	 */
+	private String features;
+	/**
+	 * Plural Name
+	 */
+	private String pluralName;
+	/**
+	 * AssetStruct parent Id
+	 */
+	private Long parentId;
+	/**
+	 * connectingMetaId
+	 */
+	private Long connectingMetaId;
+	/**
+	 * connectedParentMetaId
+	 */
+	private Long connectedParentMetaId;
 
 	// id:
 	public Long getId(){
@@ -163,6 +188,66 @@ public class AssetStruct extends ObjectBase {
 	public Long getUpdateDate(){
 		return this.updateDate;
 	}
+	// features:
+	public String getFeatures(){
+		return this.features;
+	}
+	public void setFeatures(String features){
+		this.features = features;
+	}
+
+	public void features(String multirequestToken){
+		setToken("features", multirequestToken);
+	}
+
+	// pluralName:
+	public String getPluralName(){
+		return this.pluralName;
+	}
+	public void setPluralName(String pluralName){
+		this.pluralName = pluralName;
+	}
+
+	public void pluralName(String multirequestToken){
+		setToken("pluralName", multirequestToken);
+	}
+
+	// parentId:
+	public Long getParentId(){
+		return this.parentId;
+	}
+	public void setParentId(Long parentId){
+		this.parentId = parentId;
+	}
+
+	public void parentId(String multirequestToken){
+		setToken("parentId", multirequestToken);
+	}
+
+	// connectingMetaId:
+	public Long getConnectingMetaId(){
+		return this.connectingMetaId;
+	}
+	public void setConnectingMetaId(Long connectingMetaId){
+		this.connectingMetaId = connectingMetaId;
+	}
+
+	public void connectingMetaId(String multirequestToken){
+		setToken("connectingMetaId", multirequestToken);
+	}
+
+	// connectedParentMetaId:
+	public Long getConnectedParentMetaId(){
+		return this.connectedParentMetaId;
+	}
+	public void setConnectedParentMetaId(Long connectedParentMetaId){
+		this.connectedParentMetaId = connectedParentMetaId;
+	}
+
+	public void connectedParentMetaId(String multirequestToken){
+		setToken("connectedParentMetaId", multirequestToken);
+	}
+
 
 	public AssetStruct() {
 		super();
@@ -182,6 +267,11 @@ public class AssetStruct extends ObjectBase {
 		metaIds = GsonParser.parseString(jsonObject.get("metaIds"));
 		createDate = GsonParser.parseLong(jsonObject.get("createDate"));
 		updateDate = GsonParser.parseLong(jsonObject.get("updateDate"));
+		features = GsonParser.parseString(jsonObject.get("features"));
+		pluralName = GsonParser.parseString(jsonObject.get("pluralName"));
+		parentId = GsonParser.parseLong(jsonObject.get("parentId"));
+		connectingMetaId = GsonParser.parseLong(jsonObject.get("connectingMetaId"));
+		connectedParentMetaId = GsonParser.parseLong(jsonObject.get("connectedParentMetaId"));
 
 	}
 
@@ -193,6 +283,11 @@ public class AssetStruct extends ObjectBase {
 		kparams.add("systemName", this.systemName);
 		kparams.add("isProtected", this.isProtected);
 		kparams.add("metaIds", this.metaIds);
+		kparams.add("features", this.features);
+		kparams.add("pluralName", this.pluralName);
+		kparams.add("parentId", this.parentId);
+		kparams.add("connectingMetaId", this.connectingMetaId);
+		kparams.add("connectedParentMetaId", this.connectedParentMetaId);
 		return kparams;
 	}
 
@@ -225,6 +320,11 @@ public class AssetStruct extends ObjectBase {
         dest.writeString(this.metaIds);
         dest.writeValue(this.createDate);
         dest.writeValue(this.updateDate);
+        dest.writeString(this.features);
+        dest.writeString(this.pluralName);
+        dest.writeValue(this.parentId);
+        dest.writeValue(this.connectingMetaId);
+        dest.writeValue(this.connectedParentMetaId);
     }
 
     public AssetStruct(Parcel in) {
@@ -241,6 +341,11 @@ public class AssetStruct extends ObjectBase {
         this.metaIds = in.readString();
         this.createDate = (Long)in.readValue(Long.class.getClassLoader());
         this.updateDate = (Long)in.readValue(Long.class.getClassLoader());
+        this.features = in.readString();
+        this.pluralName = in.readString();
+        this.parentId = (Long)in.readValue(Long.class.getClassLoader());
+        this.connectingMetaId = (Long)in.readValue(Long.class.getClassLoader());
+        this.connectedParentMetaId = (Long)in.readValue(Long.class.getClassLoader());
     }
 }
 
