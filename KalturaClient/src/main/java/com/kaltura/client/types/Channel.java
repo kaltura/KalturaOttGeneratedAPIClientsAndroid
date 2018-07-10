@@ -31,7 +31,6 @@ import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.types.ChannelOrder;
-import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 import com.kaltura.client.utils.request.RequestBuilder;
@@ -50,10 +49,9 @@ import java.util.List;
  */
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(Channel.Tokenizer.class)
-public class Channel extends ObjectBase {
+public class Channel extends BaseChannel {
 	
-	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String id();
+	public interface Tokenizer extends BaseChannel.Tokenizer {
 		String name();
 		RequestBuilder.ListTokenizer<TranslationToken.Tokenizer> multilingualName();
 		String systemName();
@@ -65,10 +63,6 @@ public class Channel extends ObjectBase {
 		String updateDate();
 	}
 
-	/**
-	 * Unique identifier for the channel
-	 */
-	private Long id;
 	/**
 	 * Channel name
 	 */
@@ -106,10 +100,6 @@ public class Channel extends ObjectBase {
 	 */
 	private Long updateDate;
 
-	// id:
-	public Long getId(){
-		return this.id;
-	}
 	// name:
 	public String getName(){
 		return this.name;
@@ -201,7 +191,6 @@ public class Channel extends ObjectBase {
 		if(jsonObject == null) return;
 
 		// set members values:
-		id = GsonParser.parseLong(jsonObject.get("id"));
 		name = GsonParser.parseString(jsonObject.get("name"));
 		multilingualName = GsonParser.parseArray(jsonObject.getAsJsonArray("multilingualName"), TranslationToken.class);
 		systemName = GsonParser.parseString(jsonObject.get("systemName"));
@@ -243,7 +232,6 @@ public class Channel extends ObjectBase {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeValue(this.id);
         dest.writeString(this.name);
         if(this.multilingualName != null) {
             dest.writeInt(this.multilingualName.size());
@@ -267,7 +255,6 @@ public class Channel extends ObjectBase {
 
     public Channel(Parcel in) {
         super(in);
-        this.id = (Long)in.readValue(Long.class.getClassLoader());
         this.name = in.readString();
         int multilingualNameSize = in.readInt();
         if( multilingualNameSize > -1) {
