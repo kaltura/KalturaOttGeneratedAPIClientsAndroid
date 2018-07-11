@@ -124,14 +124,6 @@ public class Meta extends ObjectBase {
 	public String getName(){
 		return this.name;
 	}
-	public void setName(String name){
-		this.name = name;
-	}
-
-	public void name(String multirequestToken){
-		setToken("name", multirequestToken);
-	}
-
 	// multilingualName:
 	public List<TranslationToken> getMultilingualName(){
 		return this.multilingualName;
@@ -261,7 +253,6 @@ public class Meta extends ObjectBase {
 	public Params toParams() {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaMeta");
-		kparams.add("name", this.name);
 		kparams.add("multilingualName", this.multilingualName);
 		kparams.add("systemName", this.systemName);
 		kparams.add("dataType", this.dataType);

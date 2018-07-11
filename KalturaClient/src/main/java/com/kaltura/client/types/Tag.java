@@ -92,14 +92,6 @@ public class Tag extends ObjectBase {
 	public String getTag(){
 		return this.tag;
 	}
-	public void setTag(String tag){
-		this.tag = tag;
-	}
-
-	public void tag(String multirequestToken){
-		setToken("tag", multirequestToken);
-	}
-
 	// multilingualTag:
 	public List<TranslationToken> getMultilingualTag(){
 		return this.multilingualTag;
@@ -130,7 +122,6 @@ public class Tag extends ObjectBase {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaTag");
 		kparams.add("type", this.type);
-		kparams.add("tag", this.tag);
 		kparams.add("multilingualTag", this.multilingualTag);
 		return kparams;
 	}
