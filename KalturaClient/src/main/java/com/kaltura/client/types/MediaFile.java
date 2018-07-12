@@ -31,7 +31,6 @@ import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.types.ObjectBase;
-import com.kaltura.client.types.StringValueArray;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
@@ -56,14 +55,6 @@ public class MediaFile extends ObjectBase {
 		String url();
 		String duration();
 		String externalId();
-		String billingType();
-		String quality();
-		String handlingType();
-		String cdnName();
-		String cdnCode();
-		String altCdnCode();
-		StringValueArray.Tokenizer ppvModules();
-		String productCode();
 		String fileSize();
 	}
 
@@ -91,38 +82,6 @@ public class MediaFile extends ObjectBase {
 	 * External identifier for the media file
 	 */
 	private String externalId;
-	/**
-	 * Billing type
-	 */
-	private String billingType;
-	/**
-	 * Quality
-	 */
-	private String quality;
-	/**
-	 * Handling type
-	 */
-	private String handlingType;
-	/**
-	 * CDN name
-	 */
-	private String cdnName;
-	/**
-	 * CDN code
-	 */
-	private String cdnCode;
-	/**
-	 * Alt CDN code
-	 */
-	private String altCdnCode;
-	/**
-	 * PPV Module
-	 */
-	private StringValueArray ppvModules;
-	/**
-	 * Product code
-	 */
-	private String productCode;
 	/**
 	 * File size
 	 */
@@ -192,98 +151,6 @@ public class MediaFile extends ObjectBase {
 		setToken("externalId", multirequestToken);
 	}
 
-	// billingType:
-	public String getBillingType(){
-		return this.billingType;
-	}
-	public void setBillingType(String billingType){
-		this.billingType = billingType;
-	}
-
-	public void billingType(String multirequestToken){
-		setToken("billingType", multirequestToken);
-	}
-
-	// quality:
-	public String getQuality(){
-		return this.quality;
-	}
-	public void setQuality(String quality){
-		this.quality = quality;
-	}
-
-	public void quality(String multirequestToken){
-		setToken("quality", multirequestToken);
-	}
-
-	// handlingType:
-	public String getHandlingType(){
-		return this.handlingType;
-	}
-	public void setHandlingType(String handlingType){
-		this.handlingType = handlingType;
-	}
-
-	public void handlingType(String multirequestToken){
-		setToken("handlingType", multirequestToken);
-	}
-
-	// cdnName:
-	public String getCdnName(){
-		return this.cdnName;
-	}
-	public void setCdnName(String cdnName){
-		this.cdnName = cdnName;
-	}
-
-	public void cdnName(String multirequestToken){
-		setToken("cdnName", multirequestToken);
-	}
-
-	// cdnCode:
-	public String getCdnCode(){
-		return this.cdnCode;
-	}
-	public void setCdnCode(String cdnCode){
-		this.cdnCode = cdnCode;
-	}
-
-	public void cdnCode(String multirequestToken){
-		setToken("cdnCode", multirequestToken);
-	}
-
-	// altCdnCode:
-	public String getAltCdnCode(){
-		return this.altCdnCode;
-	}
-	public void setAltCdnCode(String altCdnCode){
-		this.altCdnCode = altCdnCode;
-	}
-
-	public void altCdnCode(String multirequestToken){
-		setToken("altCdnCode", multirequestToken);
-	}
-
-	// ppvModules:
-	public StringValueArray getPpvModules(){
-		return this.ppvModules;
-	}
-	public void setPpvModules(StringValueArray ppvModules){
-		this.ppvModules = ppvModules;
-	}
-
-	// productCode:
-	public String getProductCode(){
-		return this.productCode;
-	}
-	public void setProductCode(String productCode){
-		this.productCode = productCode;
-	}
-
-	public void productCode(String multirequestToken){
-		setToken("productCode", multirequestToken);
-	}
-
 	// fileSize:
 	public Long getFileSize(){
 		return this.fileSize;
@@ -313,14 +180,6 @@ public class MediaFile extends ObjectBase {
 		url = GsonParser.parseString(jsonObject.get("url"));
 		duration = GsonParser.parseLong(jsonObject.get("duration"));
 		externalId = GsonParser.parseString(jsonObject.get("externalId"));
-		billingType = GsonParser.parseString(jsonObject.get("billingType"));
-		quality = GsonParser.parseString(jsonObject.get("quality"));
-		handlingType = GsonParser.parseString(jsonObject.get("handlingType"));
-		cdnName = GsonParser.parseString(jsonObject.get("cdnName"));
-		cdnCode = GsonParser.parseString(jsonObject.get("cdnCode"));
-		altCdnCode = GsonParser.parseString(jsonObject.get("altCdnCode"));
-		ppvModules = GsonParser.parseObject(jsonObject.getAsJsonObject("ppvModules"), StringValueArray.class);
-		productCode = GsonParser.parseString(jsonObject.get("productCode"));
 		fileSize = GsonParser.parseLong(jsonObject.get("fileSize"));
 
 	}
@@ -333,14 +192,6 @@ public class MediaFile extends ObjectBase {
 		kparams.add("url", this.url);
 		kparams.add("duration", this.duration);
 		kparams.add("externalId", this.externalId);
-		kparams.add("billingType", this.billingType);
-		kparams.add("quality", this.quality);
-		kparams.add("handlingType", this.handlingType);
-		kparams.add("cdnName", this.cdnName);
-		kparams.add("cdnCode", this.cdnCode);
-		kparams.add("altCdnCode", this.altCdnCode);
-		kparams.add("ppvModules", this.ppvModules);
-		kparams.add("productCode", this.productCode);
 		kparams.add("fileSize", this.fileSize);
 		return kparams;
 	}
@@ -367,14 +218,6 @@ public class MediaFile extends ObjectBase {
         dest.writeString(this.url);
         dest.writeValue(this.duration);
         dest.writeString(this.externalId);
-        dest.writeString(this.billingType);
-        dest.writeString(this.quality);
-        dest.writeString(this.handlingType);
-        dest.writeString(this.cdnName);
-        dest.writeString(this.cdnCode);
-        dest.writeString(this.altCdnCode);
-        dest.writeParcelable(this.ppvModules, flags);
-        dest.writeString(this.productCode);
         dest.writeValue(this.fileSize);
     }
 
@@ -386,14 +229,6 @@ public class MediaFile extends ObjectBase {
         this.url = in.readString();
         this.duration = (Long)in.readValue(Long.class.getClassLoader());
         this.externalId = in.readString();
-        this.billingType = in.readString();
-        this.quality = in.readString();
-        this.handlingType = in.readString();
-        this.cdnName = in.readString();
-        this.cdnCode = in.readString();
-        this.altCdnCode = in.readString();
-        this.ppvModules = in.readParcelable(StringValueArray.class.getClassLoader());
-        this.productCode = in.readString();
         this.fileSize = (Long)in.readValue(Long.class.getClassLoader());
     }
 }

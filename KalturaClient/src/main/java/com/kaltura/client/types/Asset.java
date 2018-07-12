@@ -70,7 +70,6 @@ public abstract class Asset extends ObjectBase {
 		String enableCatchUp();
 		String enableStartOver();
 		String enableTrickPlay();
-		String externalId();
 	}
 
 	/**
@@ -144,10 +143,6 @@ public abstract class Asset extends ObjectBase {
 	 * Enable trick-play
 	 */
 	private Boolean enableTrickPlay;
-	/**
-	 * External identifier for the media file
-	 */
-	private String externalId;
 
 	// id:
 	public Long getId(){
@@ -169,14 +164,6 @@ public abstract class Asset extends ObjectBase {
 	public String getName(){
 		return this.name;
 	}
-	public void setName(String name){
-		this.name = name;
-	}
-
-	public void name(String multirequestToken){
-		setToken("name", multirequestToken);
-	}
-
 	// multilingualName:
 	public List<TranslationToken> getMultilingualName(){
 		return this.multilingualName;
@@ -189,14 +176,6 @@ public abstract class Asset extends ObjectBase {
 	public String getDescription(){
 		return this.description;
 	}
-	public void setDescription(String description){
-		this.description = description;
-	}
-
-	public void description(String multirequestToken){
-		setToken("description", multirequestToken);
-	}
-
 	// multilingualDescription:
 	public List<TranslationToken> getMultilingualDescription(){
 		return this.multilingualDescription;
@@ -309,18 +288,6 @@ public abstract class Asset extends ObjectBase {
 		setToken("enableTrickPlay", multirequestToken);
 	}
 
-	// externalId:
-	public String getExternalId(){
-		return this.externalId;
-	}
-	public void setExternalId(String externalId){
-		this.externalId = externalId;
-	}
-
-	public void externalId(String multirequestToken){
-		setToken("externalId", multirequestToken);
-	}
-
 
 	public Asset() {
 		super();
@@ -348,7 +315,6 @@ public abstract class Asset extends ObjectBase {
 		enableCatchUp = GsonParser.parseBoolean(jsonObject.get("enableCatchUp"));
 		enableStartOver = GsonParser.parseBoolean(jsonObject.get("enableStartOver"));
 		enableTrickPlay = GsonParser.parseBoolean(jsonObject.get("enableTrickPlay"));
-		externalId = GsonParser.parseString(jsonObject.get("externalId"));
 
 	}
 
@@ -356,9 +322,7 @@ public abstract class Asset extends ObjectBase {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaAsset");
 		kparams.add("type", this.type);
-		kparams.add("name", this.name);
 		kparams.add("multilingualName", this.multilingualName);
-		kparams.add("description", this.description);
 		kparams.add("multilingualDescription", this.multilingualDescription);
 		kparams.add("images", this.images);
 		kparams.add("mediaFiles", this.mediaFiles);
@@ -370,7 +334,6 @@ public abstract class Asset extends ObjectBase {
 		kparams.add("enableCatchUp", this.enableCatchUp);
 		kparams.add("enableStartOver", this.enableStartOver);
 		kparams.add("enableTrickPlay", this.enableTrickPlay);
-		kparams.add("externalId", this.externalId);
 		return kparams;
 	}
 
@@ -430,7 +393,6 @@ public abstract class Asset extends ObjectBase {
         dest.writeValue(this.enableCatchUp);
         dest.writeValue(this.enableStartOver);
         dest.writeValue(this.enableTrickPlay);
-        dest.writeString(this.externalId);
     }
 
     public Asset(Parcel in) {
@@ -483,7 +445,6 @@ public abstract class Asset extends ObjectBase {
         this.enableCatchUp = (Boolean)in.readValue(Boolean.class.getClassLoader());
         this.enableStartOver = (Boolean)in.readValue(Boolean.class.getClassLoader());
         this.enableTrickPlay = (Boolean)in.readValue(Boolean.class.getClassLoader());
-        this.externalId = in.readString();
     }
 }
 

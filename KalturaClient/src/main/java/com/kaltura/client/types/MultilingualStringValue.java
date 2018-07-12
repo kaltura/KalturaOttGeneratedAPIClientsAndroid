@@ -68,14 +68,6 @@ public class MultilingualStringValue extends Value {
 	public String getValue(){
 		return this.value;
 	}
-	public void setValue(String value){
-		this.value = value;
-	}
-
-	public void value(String multirequestToken){
-		setToken("value", multirequestToken);
-	}
-
 	// multilingualValue:
 	public List<TranslationToken> getMultilingualValue(){
 		return this.multilingualValue;
@@ -103,7 +95,6 @@ public class MultilingualStringValue extends Value {
 	public Params toParams() {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaMultilingualStringValue");
-		kparams.add("value", this.value);
 		kparams.add("multilingualValue", this.multilingualValue);
 		return kparams;
 	}
