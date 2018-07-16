@@ -50,6 +50,7 @@ public class MediaFile extends AssetFile {
 	public interface Tokenizer extends AssetFile.Tokenizer {
 		String assetId();
 		String id();
+		String type();
 		String typeId();
 		String duration();
 		String externalId();
@@ -77,6 +78,10 @@ public class MediaFile extends AssetFile {
 	 * File unique identifier
 	 */
 	private Integer id;
+	/**
+	 * Deprecated - Device types as defined in the system
+	 */
+	private String type;
 	/**
 	 * Device types identifier as defined in the system
 	 */
@@ -161,6 +166,10 @@ public class MediaFile extends AssetFile {
 	// id:
 	public Integer getId(){
 		return this.id;
+	}
+	// type:
+	public String getType(){
+		return this.type;
 	}
 	// typeId:
 	public Integer getTypeId(){
@@ -379,6 +388,7 @@ public class MediaFile extends AssetFile {
 		// set members values:
 		assetId = GsonParser.parseInt(jsonObject.get("assetId"));
 		id = GsonParser.parseInt(jsonObject.get("id"));
+		type = GsonParser.parseString(jsonObject.get("type"));
 		typeId = GsonParser.parseInt(jsonObject.get("typeId"));
 		duration = GsonParser.parseLong(jsonObject.get("duration"));
 		externalId = GsonParser.parseString(jsonObject.get("externalId"));
@@ -441,6 +451,7 @@ public class MediaFile extends AssetFile {
         super.writeToParcel(dest, flags);
         dest.writeValue(this.assetId);
         dest.writeValue(this.id);
+        dest.writeString(this.type);
         dest.writeValue(this.typeId);
         dest.writeValue(this.duration);
         dest.writeString(this.externalId);
@@ -464,6 +475,7 @@ public class MediaFile extends AssetFile {
         super(in);
         this.assetId = (Integer)in.readValue(Integer.class.getClassLoader());
         this.id = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.type = in.readString();
         this.typeId = (Integer)in.readValue(Integer.class.getClassLoader());
         this.duration = (Long)in.readValue(Long.class.getClassLoader());
         this.externalId = in.readString();
