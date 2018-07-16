@@ -54,7 +54,6 @@ public class Recording extends ObjectBase {
 		String type();
 		String viewableUntilDate();
 		String isProtected();
-		String externalId();
 		String createDate();
 		String updateDate();
 	}
@@ -84,10 +83,6 @@ public class Recording extends ObjectBase {
 	 * Specifies whether or not the recording is protected
 	 */
 	private Boolean isProtected;
-	/**
-	 * External identifier for the recording
-	 */
-	private String externalId;
 	/**
 	 * Specifies when was the recording created. Date and time represented as epoch.
 	 */
@@ -146,18 +141,6 @@ public class Recording extends ObjectBase {
 		setToken("isProtected", multirequestToken);
 	}
 
-	// externalId:
-	public String getExternalId(){
-		return this.externalId;
-	}
-	public void setExternalId(String externalId){
-		this.externalId = externalId;
-	}
-
-	public void externalId(String multirequestToken){
-		setToken("externalId", multirequestToken);
-	}
-
 	// createDate:
 	public Long getCreateDate(){
 		return this.createDate;
@@ -183,7 +166,6 @@ public class Recording extends ObjectBase {
 		type = RecordingType.get(GsonParser.parseString(jsonObject.get("type")));
 		viewableUntilDate = GsonParser.parseLong(jsonObject.get("viewableUntilDate"));
 		isProtected = GsonParser.parseBoolean(jsonObject.get("isProtected"));
-		externalId = GsonParser.parseString(jsonObject.get("externalId"));
 		createDate = GsonParser.parseLong(jsonObject.get("createDate"));
 		updateDate = GsonParser.parseLong(jsonObject.get("updateDate"));
 
@@ -195,7 +177,6 @@ public class Recording extends ObjectBase {
 		kparams.add("assetId", this.assetId);
 		kparams.add("type", this.type);
 		kparams.add("isProtected", this.isProtected);
-		kparams.add("externalId", this.externalId);
 		return kparams;
 	}
 
@@ -221,7 +202,6 @@ public class Recording extends ObjectBase {
         dest.writeInt(this.type == null ? -1 : this.type.ordinal());
         dest.writeValue(this.viewableUntilDate);
         dest.writeValue(this.isProtected);
-        dest.writeString(this.externalId);
         dest.writeValue(this.createDate);
         dest.writeValue(this.updateDate);
     }
@@ -236,7 +216,6 @@ public class Recording extends ObjectBase {
         this.type = tmpType == -1 ? null : RecordingType.values()[tmpType];
         this.viewableUntilDate = (Long)in.readValue(Long.class.getClassLoader());
         this.isProtected = (Boolean)in.readValue(Boolean.class.getClassLoader());
-        this.externalId = in.readString();
         this.createDate = (Long)in.readValue(Long.class.getClassLoader());
         this.updateDate = (Long)in.readValue(Long.class.getClassLoader());
     }
