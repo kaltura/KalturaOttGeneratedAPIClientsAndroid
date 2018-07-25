@@ -54,9 +54,11 @@ public class Channel extends BaseChannel {
 	public interface Tokenizer extends BaseChannel.Tokenizer {
 		String name();
 		RequestBuilder.ListTokenizer<TranslationToken.Tokenizer> multilingualName();
+		String oldName();
 		String systemName();
 		String description();
 		RequestBuilder.ListTokenizer<TranslationToken.Tokenizer> multilingualDescription();
+		String oldDescription();
 		String isActive();
 		ChannelOrder.Tokenizer orderBy();
 		String createDate();
@@ -72,6 +74,10 @@ public class Channel extends BaseChannel {
 	 */
 	private List<TranslationToken> multilingualName;
 	/**
+	 * Channel name
+	 */
+	private String oldName;
+	/**
 	 * Channel system name
 	 */
 	private String systemName;
@@ -83,6 +89,10 @@ public class Channel extends BaseChannel {
 	 * Cannel description
 	 */
 	private List<TranslationToken> multilingualDescription;
+	/**
+	 * Cannel description
+	 */
+	private String oldDescription;
 	/**
 	 * active status
 	 */
@@ -112,6 +122,18 @@ public class Channel extends BaseChannel {
 		this.multilingualName = multilingualName;
 	}
 
+	// oldName:
+	public String getOldName(){
+		return this.oldName;
+	}
+	public void setOldName(String oldName){
+		this.oldName = oldName;
+	}
+
+	public void oldName(String multirequestToken){
+		setToken("oldName", multirequestToken);
+	}
+
 	// systemName:
 	public String getSystemName(){
 		return this.systemName;
@@ -134,6 +156,18 @@ public class Channel extends BaseChannel {
 	}
 	public void setMultilingualDescription(List<TranslationToken> multilingualDescription){
 		this.multilingualDescription = multilingualDescription;
+	}
+
+	// oldDescription:
+	public String getOldDescription(){
+		return this.oldDescription;
+	}
+	public void setOldDescription(String oldDescription){
+		this.oldDescription = oldDescription;
+	}
+
+	public void oldDescription(String multirequestToken){
+		setToken("oldDescription", multirequestToken);
 	}
 
 	// isActive:
@@ -177,9 +211,11 @@ public class Channel extends BaseChannel {
 		// set members values:
 		name = GsonParser.parseString(jsonObject.get("name"));
 		multilingualName = GsonParser.parseArray(jsonObject.getAsJsonArray("multilingualName"), TranslationToken.class);
+		oldName = GsonParser.parseString(jsonObject.get("oldName"));
 		systemName = GsonParser.parseString(jsonObject.get("systemName"));
 		description = GsonParser.parseString(jsonObject.get("description"));
 		multilingualDescription = GsonParser.parseArray(jsonObject.getAsJsonArray("multilingualDescription"), TranslationToken.class);
+		oldDescription = GsonParser.parseString(jsonObject.get("oldDescription"));
 		isActive = GsonParser.parseBoolean(jsonObject.get("isActive"));
 		orderBy = GsonParser.parseObject(jsonObject.getAsJsonObject("orderBy"), ChannelOrder.class);
 		createDate = GsonParser.parseLong(jsonObject.get("createDate"));
@@ -191,8 +227,10 @@ public class Channel extends BaseChannel {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaChannel");
 		kparams.add("multilingualName", this.multilingualName);
+		kparams.add("oldName", this.oldName);
 		kparams.add("systemName", this.systemName);
 		kparams.add("multilingualDescription", this.multilingualDescription);
+		kparams.add("oldDescription", this.oldDescription);
 		kparams.add("isActive", this.isActive);
 		kparams.add("orderBy", this.orderBy);
 		return kparams;
@@ -221,6 +259,7 @@ public class Channel extends BaseChannel {
         } else {
             dest.writeInt(-1);
         }
+        dest.writeString(this.oldName);
         dest.writeString(this.systemName);
         dest.writeString(this.description);
         if(this.multilingualDescription != null) {
@@ -229,6 +268,7 @@ public class Channel extends BaseChannel {
         } else {
             dest.writeInt(-1);
         }
+        dest.writeString(this.oldDescription);
         dest.writeValue(this.isActive);
         dest.writeParcelable(this.orderBy, flags);
         dest.writeValue(this.createDate);
@@ -243,6 +283,7 @@ public class Channel extends BaseChannel {
             this.multilingualName = new ArrayList<>();
             in.readList(this.multilingualName, TranslationToken.class.getClassLoader());
         }
+        this.oldName = in.readString();
         this.systemName = in.readString();
         this.description = in.readString();
         int multilingualDescriptionSize = in.readInt();
@@ -250,6 +291,7 @@ public class Channel extends BaseChannel {
             this.multilingualDescription = new ArrayList<>();
             in.readList(this.multilingualDescription, TranslationToken.class.getClassLoader());
         }
+        this.oldDescription = in.readString();
         this.isActive = (Boolean)in.readValue(Boolean.class.getClassLoader());
         this.orderBy = in.readParcelable(ChannelOrder.class.getClassLoader());
         this.createDate = (Long)in.readValue(Long.class.getClassLoader());
