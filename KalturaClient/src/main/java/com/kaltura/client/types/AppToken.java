@@ -58,8 +58,6 @@ public class AppToken extends ObjectBase {
 		String sessionPrivileges();
 		String token();
 		String sessionUserId();
-		String createDate();
-		String updateDate();
 	}
 
 	/**
@@ -96,14 +94,6 @@ public class AppToken extends ObjectBase {
 	 * User id of KS (Kaltura Session) that created using the current token
 	 */
 	private String sessionUserId;
-	/**
-	 * Create date
-	 */
-	private Long createDate;
-	/**
-	 * Update date
-	 */
-	private Long updateDate;
 
 	// id:
 	public String getId(){
@@ -177,14 +167,6 @@ public class AppToken extends ObjectBase {
 		setToken("sessionUserId", multirequestToken);
 	}
 
-	// createDate:
-	public Long getCreateDate(){
-		return this.createDate;
-	}
-	// updateDate:
-	public Long getUpdateDate(){
-		return this.updateDate;
-	}
 
 	public AppToken() {
 		super();
@@ -204,8 +186,6 @@ public class AppToken extends ObjectBase {
 		sessionPrivileges = GsonParser.parseString(jsonObject.get("sessionPrivileges"));
 		token = GsonParser.parseString(jsonObject.get("token"));
 		sessionUserId = GsonParser.parseString(jsonObject.get("sessionUserId"));
-		createDate = GsonParser.parseLong(jsonObject.get("createDate"));
-		updateDate = GsonParser.parseLong(jsonObject.get("updateDate"));
 
 	}
 
@@ -244,8 +224,6 @@ public class AppToken extends ObjectBase {
         dest.writeString(this.sessionPrivileges);
         dest.writeString(this.token);
         dest.writeString(this.sessionUserId);
-        dest.writeValue(this.createDate);
-        dest.writeValue(this.updateDate);
     }
 
     public AppToken(Parcel in) {
@@ -259,8 +237,6 @@ public class AppToken extends ObjectBase {
         this.sessionPrivileges = in.readString();
         this.token = in.readString();
         this.sessionUserId = in.readString();
-        this.createDate = (Long)in.readValue(Long.class.getClassLoader());
-        this.updateDate = (Long)in.readValue(Long.class.getClassLoader());
     }
 }
 

@@ -52,8 +52,6 @@ public class Bookmark extends SlimAsset {
 		String positionOwner();
 		String finishedWatching();
 		BookmarkPlayerData.Tokenizer playerData();
-		String programId();
-		String isReportingMode();
 	}
 
 	/**
@@ -77,14 +75,6 @@ public class Bookmark extends SlimAsset {
 	 * Insert only player data
 	 */
 	private BookmarkPlayerData playerData;
-	/**
-	 * Program Id
-	 */
-	private Long programId;
-	/**
-	 * Indicates if the current request is in reporting mode (hit)
-	 */
-	private Boolean isReportingMode;
 
 	// userId:
 	public String getUserId(){
@@ -118,30 +108,6 @@ public class Bookmark extends SlimAsset {
 		this.playerData = playerData;
 	}
 
-	// programId:
-	public Long getProgramId(){
-		return this.programId;
-	}
-	public void setProgramId(Long programId){
-		this.programId = programId;
-	}
-
-	public void programId(String multirequestToken){
-		setToken("programId", multirequestToken);
-	}
-
-	// isReportingMode:
-	public Boolean getIsReportingMode(){
-		return this.isReportingMode;
-	}
-	public void setIsReportingMode(Boolean isReportingMode){
-		this.isReportingMode = isReportingMode;
-	}
-
-	public void isReportingMode(String multirequestToken){
-		setToken("isReportingMode", multirequestToken);
-	}
-
 
 	public Bookmark() {
 		super();
@@ -158,8 +124,6 @@ public class Bookmark extends SlimAsset {
 		positionOwner = PositionOwner.get(GsonParser.parseString(jsonObject.get("positionOwner")));
 		finishedWatching = GsonParser.parseBoolean(jsonObject.get("finishedWatching"));
 		playerData = GsonParser.parseObject(jsonObject.getAsJsonObject("playerData"), BookmarkPlayerData.class);
-		programId = GsonParser.parseLong(jsonObject.get("programId"));
-		isReportingMode = GsonParser.parseBoolean(jsonObject.get("isReportingMode"));
 
 	}
 
@@ -168,8 +132,6 @@ public class Bookmark extends SlimAsset {
 		kparams.add("objectType", "KalturaBookmark");
 		kparams.add("position", this.position);
 		kparams.add("playerData", this.playerData);
-		kparams.add("programId", this.programId);
-		kparams.add("isReportingMode", this.isReportingMode);
 		return kparams;
 	}
 
@@ -194,8 +156,6 @@ public class Bookmark extends SlimAsset {
         dest.writeInt(this.positionOwner == null ? -1 : this.positionOwner.ordinal());
         dest.writeValue(this.finishedWatching);
         dest.writeParcelable(this.playerData, flags);
-        dest.writeValue(this.programId);
-        dest.writeValue(this.isReportingMode);
     }
 
     public Bookmark(Parcel in) {
@@ -206,8 +166,6 @@ public class Bookmark extends SlimAsset {
         this.positionOwner = tmpPositionOwner == -1 ? null : PositionOwner.values()[tmpPositionOwner];
         this.finishedWatching = (Boolean)in.readValue(Boolean.class.getClassLoader());
         this.playerData = in.readParcelable(BookmarkPlayerData.class.getClassLoader());
-        this.programId = (Long)in.readValue(Long.class.getClassLoader());
-        this.isReportingMode = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
 

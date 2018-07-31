@@ -30,13 +30,12 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.enums.MetaDataType;
+import com.kaltura.client.enums.AssetType;
+import com.kaltura.client.enums.MetaFieldName;
+import com.kaltura.client.enums.MetaType;
 import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
-import com.kaltura.client.utils.request.RequestBuilder;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -53,143 +52,95 @@ import java.util.List;
 public class Meta extends ObjectBase {
 	
 	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String id();
 		String name();
-		RequestBuilder.ListTokenizer<TranslationToken.Tokenizer> multilingualName();
-		String systemName();
-		String dataType();
-		String multipleValue();
-		String isProtected();
-		String helpText();
+		String fieldName();
+		String type();
+		String assetType();
 		String features();
+		String id();
 		String parentId();
-		String createDate();
-		String updateDate();
+		String partnerId();
 	}
 
-	/**
-	 * Meta id
-	 */
-	private String id;
 	/**
 	 * Meta name for the partner
 	 */
 	private String name;
 	/**
-	 * Meta name for the partner
+	 * Meta system field name
 	 */
-	private List<TranslationToken> multilingualName;
+	private MetaFieldName fieldName;
 	/**
-	 * Meta system name for the partner
+	 * Meta value type
 	 */
-	private String systemName;
+	private MetaType type;
 	/**
-	 * Meta data type
+	 * Asset type this meta is related to
 	 */
-	private MetaDataType dataType;
-	/**
-	 * Does the meta contain multiple values
-	 */
-	private Boolean multipleValue;
-	/**
-	 * Is the meta protected by the system
-	 */
-	private Boolean isProtected;
-	/**
-	 * The help text of the meta to be displayed on the UI.
-	 */
-	private String helpText;
+	private AssetType assetType;
 	/**
 	 * List of supported features
 	 */
 	private String features;
 	/**
+	 * Meta id
+	 */
+	private String id;
+	/**
 	 * Parent meta id
 	 */
 	private String parentId;
 	/**
-	 * Specifies when was the meta created. Date and time represented as epoch.
+	 * Partner Id
 	 */
-	private Long createDate;
-	/**
-	 * Specifies when was the meta last updated. Date and time represented as epoch.
-	 */
-	private Long updateDate;
+	private Integer partnerId;
 
-	// id:
-	public String getId(){
-		return this.id;
-	}
 	// name:
 	public String getName(){
 		return this.name;
 	}
-	// multilingualName:
-	public List<TranslationToken> getMultilingualName(){
-		return this.multilingualName;
-	}
-	public void setMultilingualName(List<TranslationToken> multilingualName){
-		this.multilingualName = multilingualName;
+	public void setName(String name){
+		this.name = name;
 	}
 
-	// systemName:
-	public String getSystemName(){
-		return this.systemName;
-	}
-	public void setSystemName(String systemName){
-		this.systemName = systemName;
+	public void name(String multirequestToken){
+		setToken("name", multirequestToken);
 	}
 
-	public void systemName(String multirequestToken){
-		setToken("systemName", multirequestToken);
+	// fieldName:
+	public MetaFieldName getFieldName(){
+		return this.fieldName;
+	}
+	public void setFieldName(MetaFieldName fieldName){
+		this.fieldName = fieldName;
 	}
 
-	// dataType:
-	public MetaDataType getDataType(){
-		return this.dataType;
-	}
-	public void setDataType(MetaDataType dataType){
-		this.dataType = dataType;
+	public void fieldName(String multirequestToken){
+		setToken("fieldName", multirequestToken);
 	}
 
-	public void dataType(String multirequestToken){
-		setToken("dataType", multirequestToken);
+	// type:
+	public MetaType getType(){
+		return this.type;
+	}
+	public void setType(MetaType type){
+		this.type = type;
 	}
 
-	// multipleValue:
-	public Boolean getMultipleValue(){
-		return this.multipleValue;
-	}
-	public void setMultipleValue(Boolean multipleValue){
-		this.multipleValue = multipleValue;
+	public void type(String multirequestToken){
+		setToken("type", multirequestToken);
 	}
 
-	public void multipleValue(String multirequestToken){
-		setToken("multipleValue", multirequestToken);
+	// assetType:
+	public AssetType getAssetType(){
+		return this.assetType;
+	}
+	public void setAssetType(AssetType assetType){
+		this.assetType = assetType;
 	}
 
-	// isProtected:
-	public Boolean getIsProtected(){
-		return this.isProtected;
-	}
-	public void setIsProtected(Boolean isProtected){
-		this.isProtected = isProtected;
-	}
-
-	public void isProtected(String multirequestToken){
-		setToken("isProtected", multirequestToken);
-	}
-
-	// helpText:
-	public String getHelpText(){
-		return this.helpText;
-	}
-	public void setHelpText(String helpText){
-		this.helpText = helpText;
-	}
-
-	public void helpText(String multirequestToken){
-		setToken("helpText", multirequestToken);
+	public void assetType(String multirequestToken){
+		setToken("assetType", multirequestToken);
 	}
 
 	// features:
@@ -204,6 +155,18 @@ public class Meta extends ObjectBase {
 		setToken("features", multirequestToken);
 	}
 
+	// id:
+	public String getId(){
+		return this.id;
+	}
+	public void setId(String id){
+		this.id = id;
+	}
+
+	public void id(String multirequestToken){
+		setToken("id", multirequestToken);
+	}
+
 	// parentId:
 	public String getParentId(){
 		return this.parentId;
@@ -216,14 +179,18 @@ public class Meta extends ObjectBase {
 		setToken("parentId", multirequestToken);
 	}
 
-	// createDate:
-	public Long getCreateDate(){
-		return this.createDate;
+	// partnerId:
+	public Integer getPartnerId(){
+		return this.partnerId;
 	}
-	// updateDate:
-	public Long getUpdateDate(){
-		return this.updateDate;
+	public void setPartnerId(Integer partnerId){
+		this.partnerId = partnerId;
 	}
+
+	public void partnerId(String multirequestToken){
+		setToken("partnerId", multirequestToken);
+	}
+
 
 	public Meta() {
 		super();
@@ -235,32 +202,28 @@ public class Meta extends ObjectBase {
 		if(jsonObject == null) return;
 
 		// set members values:
-		id = GsonParser.parseString(jsonObject.get("id"));
 		name = GsonParser.parseString(jsonObject.get("name"));
-		multilingualName = GsonParser.parseArray(jsonObject.getAsJsonArray("multilingualName"), TranslationToken.class);
-		systemName = GsonParser.parseString(jsonObject.get("systemName"));
-		dataType = MetaDataType.get(GsonParser.parseString(jsonObject.get("dataType")));
-		multipleValue = GsonParser.parseBoolean(jsonObject.get("multipleValue"));
-		isProtected = GsonParser.parseBoolean(jsonObject.get("isProtected"));
-		helpText = GsonParser.parseString(jsonObject.get("helpText"));
+		fieldName = MetaFieldName.get(GsonParser.parseString(jsonObject.get("fieldName")));
+		type = MetaType.get(GsonParser.parseString(jsonObject.get("type")));
+		assetType = AssetType.get(GsonParser.parseString(jsonObject.get("assetType")));
 		features = GsonParser.parseString(jsonObject.get("features"));
+		id = GsonParser.parseString(jsonObject.get("id"));
 		parentId = GsonParser.parseString(jsonObject.get("parentId"));
-		createDate = GsonParser.parseLong(jsonObject.get("createDate"));
-		updateDate = GsonParser.parseLong(jsonObject.get("updateDate"));
+		partnerId = GsonParser.parseInt(jsonObject.get("partnerId"));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaMeta");
-		kparams.add("multilingualName", this.multilingualName);
-		kparams.add("systemName", this.systemName);
-		kparams.add("dataType", this.dataType);
-		kparams.add("multipleValue", this.multipleValue);
-		kparams.add("isProtected", this.isProtected);
-		kparams.add("helpText", this.helpText);
+		kparams.add("name", this.name);
+		kparams.add("fieldName", this.fieldName);
+		kparams.add("type", this.type);
+		kparams.add("assetType", this.assetType);
 		kparams.add("features", this.features);
+		kparams.add("id", this.id);
 		kparams.add("parentId", this.parentId);
+		kparams.add("partnerId", this.partnerId);
 		return kparams;
 	}
 
@@ -280,44 +243,29 @@ public class Meta extends ObjectBase {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeString(this.id);
         dest.writeString(this.name);
-        if(this.multilingualName != null) {
-            dest.writeInt(this.multilingualName.size());
-            dest.writeList(this.multilingualName);
-        } else {
-            dest.writeInt(-1);
-        }
-        dest.writeString(this.systemName);
-        dest.writeInt(this.dataType == null ? -1 : this.dataType.ordinal());
-        dest.writeValue(this.multipleValue);
-        dest.writeValue(this.isProtected);
-        dest.writeString(this.helpText);
+        dest.writeInt(this.fieldName == null ? -1 : this.fieldName.ordinal());
+        dest.writeInt(this.type == null ? -1 : this.type.ordinal());
+        dest.writeInt(this.assetType == null ? -1 : this.assetType.ordinal());
         dest.writeString(this.features);
+        dest.writeString(this.id);
         dest.writeString(this.parentId);
-        dest.writeValue(this.createDate);
-        dest.writeValue(this.updateDate);
+        dest.writeValue(this.partnerId);
     }
 
     public Meta(Parcel in) {
         super(in);
-        this.id = in.readString();
         this.name = in.readString();
-        int multilingualNameSize = in.readInt();
-        if( multilingualNameSize > -1) {
-            this.multilingualName = new ArrayList<>();
-            in.readList(this.multilingualName, TranslationToken.class.getClassLoader());
-        }
-        this.systemName = in.readString();
-        int tmpDataType = in.readInt();
-        this.dataType = tmpDataType == -1 ? null : MetaDataType.values()[tmpDataType];
-        this.multipleValue = (Boolean)in.readValue(Boolean.class.getClassLoader());
-        this.isProtected = (Boolean)in.readValue(Boolean.class.getClassLoader());
-        this.helpText = in.readString();
+        int tmpFieldName = in.readInt();
+        this.fieldName = tmpFieldName == -1 ? null : MetaFieldName.values()[tmpFieldName];
+        int tmpType = in.readInt();
+        this.type = tmpType == -1 ? null : MetaType.values()[tmpType];
+        int tmpAssetType = in.readInt();
+        this.assetType = tmpAssetType == -1 ? null : AssetType.values()[tmpAssetType];
         this.features = in.readString();
+        this.id = in.readString();
         this.parentId = in.readString();
-        this.createDate = (Long)in.readValue(Long.class.getClassLoader());
-        this.updateDate = (Long)in.readValue(Long.class.getClassLoader());
+        this.partnerId = (Integer)in.readValue(Integer.class.getClassLoader());
     }
 }
 

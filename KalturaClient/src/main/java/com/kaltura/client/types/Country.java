@@ -57,7 +57,6 @@ public class Country extends ObjectBase {
 		String currency();
 		String currencySign();
 		String vatPercent();
-		String timeZoneId();
 	}
 
 	/**
@@ -92,10 +91,6 @@ public class Country extends ObjectBase {
 	 * Vat Percent in the country
 	 */
 	private Double vatPercent;
-	/**
-	 * Time zone ID
-	 */
-	private String timeZoneId;
 
 	// id:
 	public Integer getId(){
@@ -185,18 +180,6 @@ public class Country extends ObjectBase {
 		setToken("vatPercent", multirequestToken);
 	}
 
-	// timeZoneId:
-	public String getTimeZoneId(){
-		return this.timeZoneId;
-	}
-	public void setTimeZoneId(String timeZoneId){
-		this.timeZoneId = timeZoneId;
-	}
-
-	public void timeZoneId(String multirequestToken){
-		setToken("timeZoneId", multirequestToken);
-	}
-
 
 	public Country() {
 		super();
@@ -216,7 +199,6 @@ public class Country extends ObjectBase {
 		currency = GsonParser.parseString(jsonObject.get("currency"));
 		currencySign = GsonParser.parseString(jsonObject.get("currencySign"));
 		vatPercent = GsonParser.parseDouble(jsonObject.get("vatPercent"));
-		timeZoneId = GsonParser.parseString(jsonObject.get("timeZoneId"));
 
 	}
 
@@ -230,7 +212,6 @@ public class Country extends ObjectBase {
 		kparams.add("currency", this.currency);
 		kparams.add("currencySign", this.currencySign);
 		kparams.add("vatPercent", this.vatPercent);
-		kparams.add("timeZoneId", this.timeZoneId);
 		return kparams;
 	}
 
@@ -258,7 +239,6 @@ public class Country extends ObjectBase {
         dest.writeString(this.currency);
         dest.writeString(this.currencySign);
         dest.writeValue(this.vatPercent);
-        dest.writeString(this.timeZoneId);
     }
 
     public Country(Parcel in) {
@@ -271,7 +251,6 @@ public class Country extends ObjectBase {
         this.currency = in.readString();
         this.currencySign = in.readString();
         this.vatPercent = (Double)in.readValue(Double.class.getClassLoader());
-        this.timeZoneId = in.readString();
     }
 }
 

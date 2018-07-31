@@ -44,36 +44,27 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(RuleAction.Tokenizer.class)
-public abstract class RuleAction extends ObjectBase {
+public class RuleAction extends ObjectBase {
 	
 	public interface Tokenizer extends ObjectBase.Tokenizer {
 		String type();
-		String description();
 	}
 
 	/**
 	 * The type of the action
 	 */
 	private RuleActionType type;
-	/**
-	 * Description
-	 */
-	private String description;
 
 	// type:
 	public RuleActionType getType(){
 		return this.type;
 	}
-	// description:
-	public String getDescription(){
-		return this.description;
-	}
-	public void setDescription(String description){
-		this.description = description;
+	public void setType(RuleActionType type){
+		this.type = type;
 	}
 
-	public void description(String multirequestToken){
-		setToken("description", multirequestToken);
+	public void type(String multirequestToken){
+		setToken("type", multirequestToken);
 	}
 
 
@@ -88,30 +79,39 @@ public abstract class RuleAction extends ObjectBase {
 
 		// set members values:
 		type = RuleActionType.get(GsonParser.parseString(jsonObject.get("type")));
-		description = GsonParser.parseString(jsonObject.get("description"));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaRuleAction");
-		kparams.add("description", this.description);
+		kparams.add("type", this.type);
 		return kparams;
 	}
 
+
+    public static final Creator<RuleAction> CREATOR = new Creator<RuleAction>() {
+        @Override
+        public RuleAction createFromParcel(Parcel source) {
+            return new RuleAction(source);
+        }
+
+        @Override
+        public RuleAction[] newArray(int size) {
+            return new RuleAction[size];
+        }
+    };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeInt(this.type == null ? -1 : this.type.ordinal());
-        dest.writeString(this.description);
     }
 
     public RuleAction(Parcel in) {
         super(in);
         int tmpType = in.readInt();
         this.type = tmpType == -1 ? null : RuleActionType.values()[tmpType];
-        this.description = in.readString();
     }
 }
 
