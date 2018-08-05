@@ -68,6 +68,9 @@ public class OTTUser extends BaseOTTUser {
 		String isHouseholdMaster();
 		String suspensionState();
 		String userState();
+		String roleIds();
+		String createDate();
+		String updateDate();
 	}
 
 	/**
@@ -126,6 +129,18 @@ public class OTTUser extends BaseOTTUser {
 	 * User state
 	 */
 	private UserState userState;
+	/**
+	 * Comma separated list of role Ids.
+	 */
+	private String roleIds;
+	/**
+	 * User create date
+	 */
+	private Long createDate;
+	/**
+	 * User last update date
+	 */
+	private Long updateDate;
 
 	// householdId:
 	public Integer getHouseholdId(){
@@ -255,6 +270,26 @@ public class OTTUser extends BaseOTTUser {
 	public UserState getUserState(){
 		return this.userState;
 	}
+	// roleIds:
+	public String getRoleIds(){
+		return this.roleIds;
+	}
+	public void setRoleIds(String roleIds){
+		this.roleIds = roleIds;
+	}
+
+	public void roleIds(String multirequestToken){
+		setToken("roleIds", multirequestToken);
+	}
+
+	// createDate:
+	public Long getCreateDate(){
+		return this.createDate;
+	}
+	// updateDate:
+	public Long getUpdateDate(){
+		return this.updateDate;
+	}
 
 	public OTTUser() {
 		super();
@@ -280,6 +315,9 @@ public class OTTUser extends BaseOTTUser {
 		isHouseholdMaster = GsonParser.parseBoolean(jsonObject.get("isHouseholdMaster"));
 		suspensionState = HouseholdSuspensionState.get(GsonParser.parseString(jsonObject.get("suspensionState")));
 		userState = UserState.get(GsonParser.parseString(jsonObject.get("userState")));
+		roleIds = GsonParser.parseString(jsonObject.get("roleIds"));
+		createDate = GsonParser.parseLong(jsonObject.get("createDate"));
+		updateDate = GsonParser.parseLong(jsonObject.get("updateDate"));
 
 	}
 
@@ -296,6 +334,7 @@ public class OTTUser extends BaseOTTUser {
 		kparams.add("externalId", this.externalId);
 		kparams.add("userType", this.userType);
 		kparams.add("dynamicData", this.dynamicData);
+		kparams.add("roleIds", this.roleIds);
 		return kparams;
 	}
 
@@ -337,6 +376,9 @@ public class OTTUser extends BaseOTTUser {
         dest.writeValue(this.isHouseholdMaster);
         dest.writeInt(this.suspensionState == null ? -1 : this.suspensionState.ordinal());
         dest.writeInt(this.userState == null ? -1 : this.userState.ordinal());
+        dest.writeString(this.roleIds);
+        dest.writeValue(this.createDate);
+        dest.writeValue(this.updateDate);
     }
 
     public OTTUser(Parcel in) {
@@ -365,6 +407,9 @@ public class OTTUser extends BaseOTTUser {
         this.suspensionState = tmpSuspensionState == -1 ? null : HouseholdSuspensionState.values()[tmpSuspensionState];
         int tmpUserState = in.readInt();
         this.userState = tmpUserState == -1 ? null : UserState.values()[tmpUserState];
+        this.roleIds = in.readString();
+        this.createDate = (Long)in.readValue(Long.class.getClassLoader());
+        this.updateDate = (Long)in.readValue(Long.class.getClassLoader());
     }
 }
 
