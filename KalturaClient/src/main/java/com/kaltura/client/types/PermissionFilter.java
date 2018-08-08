@@ -30,7 +30,6 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
@@ -41,108 +40,78 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
+/**
+ * Permissions filter
+ */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(Permission.Tokenizer.class)
-public class Permission extends ObjectBase {
+@MultiRequestBuilder.Tokenizer(PermissionFilter.Tokenizer.class)
+public class PermissionFilter extends Filter {
 	
-	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String id();
-		String name();
-		String friendlyName();
+	public interface Tokenizer extends Filter.Tokenizer {
+		String currentUserPermissionsContains();
 	}
 
 	/**
-	 * Permission identifier
+	 * Indicates whether the results should be filtered by userId using the current
 	 */
-	private Long id;
-	/**
-	 * Permission name
-	 */
-	private String name;
-	/**
-	 * Permission friendly name
-	 */
-	private String friendlyName;
+	private Boolean currentUserPermissionsContains;
 
-	// id:
-	public Long getId(){
-		return this.id;
+	// currentUserPermissionsContains:
+	public Boolean getCurrentUserPermissionsContains(){
+		return this.currentUserPermissionsContains;
 	}
-	// name:
-	public String getName(){
-		return this.name;
-	}
-	public void setName(String name){
-		this.name = name;
+	public void setCurrentUserPermissionsContains(Boolean currentUserPermissionsContains){
+		this.currentUserPermissionsContains = currentUserPermissionsContains;
 	}
 
-	public void name(String multirequestToken){
-		setToken("name", multirequestToken);
-	}
-
-	// friendlyName:
-	public String getFriendlyName(){
-		return this.friendlyName;
-	}
-	public void setFriendlyName(String friendlyName){
-		this.friendlyName = friendlyName;
-	}
-
-	public void friendlyName(String multirequestToken){
-		setToken("friendlyName", multirequestToken);
+	public void currentUserPermissionsContains(String multirequestToken){
+		setToken("currentUserPermissionsContains", multirequestToken);
 	}
 
 
-	public Permission() {
+	public PermissionFilter() {
 		super();
 	}
 
-	public Permission(JsonObject jsonObject) throws APIException {
+	public PermissionFilter(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		id = GsonParser.parseLong(jsonObject.get("id"));
-		name = GsonParser.parseString(jsonObject.get("name"));
-		friendlyName = GsonParser.parseString(jsonObject.get("friendlyName"));
+		currentUserPermissionsContains = GsonParser.parseBoolean(jsonObject.get("currentUserPermissionsContains"));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaPermission");
-		kparams.add("name", this.name);
-		kparams.add("friendlyName", this.friendlyName);
+		kparams.add("objectType", "KalturaPermissionFilter");
+		kparams.add("currentUserPermissionsContains", this.currentUserPermissionsContains);
 		return kparams;
 	}
 
 
-    public static final Creator<Permission> CREATOR = new Creator<Permission>() {
+    public static final Creator<PermissionFilter> CREATOR = new Creator<PermissionFilter>() {
         @Override
-        public Permission createFromParcel(Parcel source) {
-            return new Permission(source);
+        public PermissionFilter createFromParcel(Parcel source) {
+            return new PermissionFilter(source);
         }
 
         @Override
-        public Permission[] newArray(int size) {
-            return new Permission[size];
+        public PermissionFilter[] newArray(int size) {
+            return new PermissionFilter[size];
         }
     };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeValue(this.id);
-        dest.writeString(this.name);
-        dest.writeString(this.friendlyName);
+        dest.writeValue(this.currentUserPermissionsContains);
     }
 
-    public Permission(Parcel in) {
+    public PermissionFilter(Parcel in) {
         super(in);
-        this.id = (Long)in.readValue(Long.class.getClassLoader());
-        this.name = in.readString();
-        this.friendlyName = in.readString();
+        this.currentUserPermissionsContains = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
 
