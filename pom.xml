@@ -11,7 +11,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.kaltura</groupId>
     <artifactId>KalturaOttAndroidClient</artifactId>
-    <version>5.0.1.42001-SNAPSHOT</version>
+    <version>5.0.1.43122-SNAPSHOT</version>
 
     <!-- Project description -->
     <name>Kaltura OTT Android Client Library</name>
