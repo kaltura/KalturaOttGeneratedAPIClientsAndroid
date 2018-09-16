@@ -41,77 +41,77 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 /**
- * Content based source (meta, tag etc.)
+ * Filter for user segments
  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(ContentSource.Tokenizer.class)
-public class ContentSource extends SegmentSource {
+@MultiRequestBuilder.Tokenizer(UserSegmentFilter.Tokenizer.class)
+public class UserSegmentFilter extends Filter {
 	
-	public interface Tokenizer extends SegmentSource.Tokenizer {
-		String field();
+	public interface Tokenizer extends Filter.Tokenizer {
+		String userIdEqual();
 	}
 
 	/**
-	 * Topic (meta or tag) name
+	 * User ID
 	 */
-	private String field;
+	private String userIdEqual;
 
-	// field:
-	public String getField(){
-		return this.field;
+	// userIdEqual:
+	public String getUserIdEqual(){
+		return this.userIdEqual;
 	}
-	public void setField(String field){
-		this.field = field;
-	}
-
-	public void field(String multirequestToken){
-		setToken("field", multirequestToken);
+	public void setUserIdEqual(String userIdEqual){
+		this.userIdEqual = userIdEqual;
 	}
 
+	public void userIdEqual(String multirequestToken){
+		setToken("userIdEqual", multirequestToken);
+	}
 
-	public ContentSource() {
+
+	public UserSegmentFilter() {
 		super();
 	}
 
-	public ContentSource(JsonObject jsonObject) throws APIException {
+	public UserSegmentFilter(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		field = GsonParser.parseString(jsonObject.get("field"));
+		userIdEqual = GsonParser.parseString(jsonObject.get("userIdEqual"));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaContentSource");
-		kparams.add("field", this.field);
+		kparams.add("objectType", "KalturaUserSegmentFilter");
+		kparams.add("userIdEqual", this.userIdEqual);
 		return kparams;
 	}
 
 
-    public static final Creator<ContentSource> CREATOR = new Creator<ContentSource>() {
+    public static final Creator<UserSegmentFilter> CREATOR = new Creator<UserSegmentFilter>() {
         @Override
-        public ContentSource createFromParcel(Parcel source) {
-            return new ContentSource(source);
+        public UserSegmentFilter createFromParcel(Parcel source) {
+            return new UserSegmentFilter(source);
         }
 
         @Override
-        public ContentSource[] newArray(int size) {
-            return new ContentSource[size];
+        public UserSegmentFilter[] newArray(int size) {
+            return new UserSegmentFilter[size];
         }
     };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeString(this.field);
+        dest.writeString(this.userIdEqual);
     }
 
-    public ContentSource(Parcel in) {
+    public UserSegmentFilter(Parcel in) {
         super(in);
-        this.field = in.readString();
+        this.userIdEqual = in.readString();
     }
 }
 
