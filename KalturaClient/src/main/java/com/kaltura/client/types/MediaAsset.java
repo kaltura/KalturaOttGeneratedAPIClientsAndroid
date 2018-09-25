@@ -30,6 +30,7 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
+import com.kaltura.client.enums.AssetInheritancePolicy;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
@@ -53,6 +54,7 @@ public class MediaAsset extends Asset {
 		String deviceRuleId();
 		String geoBlockRuleId();
 		String status();
+		String inheritancePolicy();
 	}
 
 	/**
@@ -75,6 +77,10 @@ public class MediaAsset extends Asset {
 	 * The media asset status
 	 */
 	private Boolean status;
+	/**
+	 * The media asset inheritance policy
+	 */
+	private AssetInheritancePolicy inheritancePolicy;
 
 	// externalIds:
 	public String getExternalIds(){
@@ -136,6 +142,18 @@ public class MediaAsset extends Asset {
 		setToken("status", multirequestToken);
 	}
 
+	// inheritancePolicy:
+	public AssetInheritancePolicy getInheritancePolicy(){
+		return this.inheritancePolicy;
+	}
+	public void setInheritancePolicy(AssetInheritancePolicy inheritancePolicy){
+		this.inheritancePolicy = inheritancePolicy;
+	}
+
+	public void inheritancePolicy(String multirequestToken){
+		setToken("inheritancePolicy", multirequestToken);
+	}
+
 
 	public MediaAsset() {
 		super();
@@ -152,6 +170,7 @@ public class MediaAsset extends Asset {
 		deviceRuleId = GsonParser.parseInt(jsonObject.get("deviceRuleId"));
 		geoBlockRuleId = GsonParser.parseInt(jsonObject.get("geoBlockRuleId"));
 		status = GsonParser.parseBoolean(jsonObject.get("status"));
+		inheritancePolicy = AssetInheritancePolicy.get(GsonParser.parseString(jsonObject.get("inheritancePolicy")));
 
 	}
 
@@ -163,6 +182,7 @@ public class MediaAsset extends Asset {
 		kparams.add("deviceRuleId", this.deviceRuleId);
 		kparams.add("geoBlockRuleId", this.geoBlockRuleId);
 		kparams.add("status", this.status);
+		kparams.add("inheritancePolicy", this.inheritancePolicy);
 		return kparams;
 	}
 
@@ -187,6 +207,7 @@ public class MediaAsset extends Asset {
         dest.writeValue(this.deviceRuleId);
         dest.writeValue(this.geoBlockRuleId);
         dest.writeValue(this.status);
+        dest.writeInt(this.inheritancePolicy == null ? -1 : this.inheritancePolicy.ordinal());
     }
 
     public MediaAsset(Parcel in) {
@@ -196,6 +217,8 @@ public class MediaAsset extends Asset {
         this.deviceRuleId = (Integer)in.readValue(Integer.class.getClassLoader());
         this.geoBlockRuleId = (Integer)in.readValue(Integer.class.getClassLoader());
         this.status = (Boolean)in.readValue(Boolean.class.getClassLoader());
+        int tmpInheritancePolicy = in.readInt();
+        this.inheritancePolicy = tmpInheritancePolicy == -1 ? null : AssetInheritancePolicy.values()[tmpInheritancePolicy];
     }
 }
 
