@@ -55,9 +55,7 @@ public class SegmentationType extends ObjectBase {
 	public interface Tokenizer extends ObjectBase.Tokenizer {
 		String id();
 		String name();
-		RequestBuilder.ListTokenizer<TranslationToken.Tokenizer> multilingualName();
 		String description();
-		RequestBuilder.ListTokenizer<TranslationToken.Tokenizer> multilingualDescription();
 		RequestBuilder.ListTokenizer<BaseSegmentCondition.Tokenizer> conditions();
 		BaseSegmentValue.Tokenizer value();
 	}
@@ -71,17 +69,9 @@ public class SegmentationType extends ObjectBase {
 	 */
 	private String name;
 	/**
-	 * Name of segmentation type
-	 */
-	private List<TranslationToken> multilingualName;
-	/**
 	 * Description of segmentation type
 	 */
 	private String description;
-	/**
-	 * Description of segmentation type
-	 */
-	private List<TranslationToken> multilingualDescription;
 	/**
 	 * Segmentation conditions - can be empty
 	 */
@@ -107,24 +97,24 @@ public class SegmentationType extends ObjectBase {
 	public String getName(){
 		return this.name;
 	}
-	// multilingualName:
-	public List<TranslationToken> getMultilingualName(){
-		return this.multilingualName;
+	public void setName(String name){
+		this.name = name;
 	}
-	public void setMultilingualName(List<TranslationToken> multilingualName){
-		this.multilingualName = multilingualName;
+
+	public void name(String multirequestToken){
+		setToken("name", multirequestToken);
 	}
 
 	// description:
 	public String getDescription(){
 		return this.description;
 	}
-	// multilingualDescription:
-	public List<TranslationToken> getMultilingualDescription(){
-		return this.multilingualDescription;
+	public void setDescription(String description){
+		this.description = description;
 	}
-	public void setMultilingualDescription(List<TranslationToken> multilingualDescription){
-		this.multilingualDescription = multilingualDescription;
+
+	public void description(String multirequestToken){
+		setToken("description", multirequestToken);
 	}
 
 	// conditions:
@@ -156,9 +146,7 @@ public class SegmentationType extends ObjectBase {
 		// set members values:
 		id = GsonParser.parseLong(jsonObject.get("id"));
 		name = GsonParser.parseString(jsonObject.get("name"));
-		multilingualName = GsonParser.parseArray(jsonObject.getAsJsonArray("multilingualName"), TranslationToken.class);
 		description = GsonParser.parseString(jsonObject.get("description"));
-		multilingualDescription = GsonParser.parseArray(jsonObject.getAsJsonArray("multilingualDescription"), TranslationToken.class);
 		conditions = GsonParser.parseArray(jsonObject.getAsJsonArray("conditions"), BaseSegmentCondition.class);
 		value = GsonParser.parseObject(jsonObject.getAsJsonObject("value"), BaseSegmentValue.class);
 
@@ -168,8 +156,8 @@ public class SegmentationType extends ObjectBase {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaSegmentationType");
 		kparams.add("id", this.id);
-		kparams.add("multilingualName", this.multilingualName);
-		kparams.add("multilingualDescription", this.multilingualDescription);
+		kparams.add("name", this.name);
+		kparams.add("description", this.description);
 		kparams.add("conditions", this.conditions);
 		kparams.add("value", this.value);
 		return kparams;
@@ -193,19 +181,7 @@ public class SegmentationType extends ObjectBase {
         super.writeToParcel(dest, flags);
         dest.writeValue(this.id);
         dest.writeString(this.name);
-        if(this.multilingualName != null) {
-            dest.writeInt(this.multilingualName.size());
-            dest.writeList(this.multilingualName);
-        } else {
-            dest.writeInt(-1);
-        }
         dest.writeString(this.description);
-        if(this.multilingualDescription != null) {
-            dest.writeInt(this.multilingualDescription.size());
-            dest.writeList(this.multilingualDescription);
-        } else {
-            dest.writeInt(-1);
-        }
         if(this.conditions != null) {
             dest.writeInt(this.conditions.size());
             dest.writeList(this.conditions);
@@ -219,17 +195,7 @@ public class SegmentationType extends ObjectBase {
         super(in);
         this.id = (Long)in.readValue(Long.class.getClassLoader());
         this.name = in.readString();
-        int multilingualNameSize = in.readInt();
-        if( multilingualNameSize > -1) {
-            this.multilingualName = new ArrayList<>();
-            in.readList(this.multilingualName, TranslationToken.class.getClassLoader());
-        }
         this.description = in.readString();
-        int multilingualDescriptionSize = in.readInt();
-        if( multilingualDescriptionSize > -1) {
-            this.multilingualDescription = new ArrayList<>();
-            in.readList(this.multilingualDescription, TranslationToken.class.getClassLoader());
-        }
         int conditionsSize = in.readInt();
         if( conditionsSize > -1) {
             this.conditions = new ArrayList<>();

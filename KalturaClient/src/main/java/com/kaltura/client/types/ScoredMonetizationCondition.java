@@ -52,7 +52,8 @@ import java.util.List;
 public class ScoredMonetizationCondition extends BaseSegmentCondition {
 	
 	public interface Tokenizer extends BaseSegmentCondition.Tokenizer {
-		String score();
+		String minScore();
+		String maxScore();
 		String days();
 		RequestBuilder.ListTokenizer<MonetizationCondition.Tokenizer> actions();
 	}
@@ -60,7 +61,11 @@ public class ScoredMonetizationCondition extends BaseSegmentCondition {
 	/**
 	 * The minimum score to be met
 	 */
-	private Integer score;
+	private Integer minScore;
+	/**
+	 * The maximum score to be met
+	 */
+	private Integer maxScore;
 	/**
 	 * How many days back should the actions be considered
 	 */
@@ -70,16 +75,28 @@ public class ScoredMonetizationCondition extends BaseSegmentCondition {
 	 */
 	private List<MonetizationCondition> actions;
 
-	// score:
-	public Integer getScore(){
-		return this.score;
+	// minScore:
+	public Integer getMinScore(){
+		return this.minScore;
 	}
-	public void setScore(Integer score){
-		this.score = score;
+	public void setMinScore(Integer minScore){
+		this.minScore = minScore;
 	}
 
-	public void score(String multirequestToken){
-		setToken("score", multirequestToken);
+	public void minScore(String multirequestToken){
+		setToken("minScore", multirequestToken);
+	}
+
+	// maxScore:
+	public Integer getMaxScore(){
+		return this.maxScore;
+	}
+	public void setMaxScore(Integer maxScore){
+		this.maxScore = maxScore;
+	}
+
+	public void maxScore(String multirequestToken){
+		setToken("maxScore", multirequestToken);
 	}
 
 	// days:
@@ -113,7 +130,8 @@ public class ScoredMonetizationCondition extends BaseSegmentCondition {
 		if(jsonObject == null) return;
 
 		// set members values:
-		score = GsonParser.parseInt(jsonObject.get("score"));
+		minScore = GsonParser.parseInt(jsonObject.get("minScore"));
+		maxScore = GsonParser.parseInt(jsonObject.get("maxScore"));
 		days = GsonParser.parseInt(jsonObject.get("days"));
 		actions = GsonParser.parseArray(jsonObject.getAsJsonArray("actions"), MonetizationCondition.class);
 
@@ -122,7 +140,8 @@ public class ScoredMonetizationCondition extends BaseSegmentCondition {
 	public Params toParams() {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaScoredMonetizationCondition");
-		kparams.add("score", this.score);
+		kparams.add("minScore", this.minScore);
+		kparams.add("maxScore", this.maxScore);
 		kparams.add("days", this.days);
 		kparams.add("actions", this.actions);
 		return kparams;
@@ -144,7 +163,8 @@ public class ScoredMonetizationCondition extends BaseSegmentCondition {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeValue(this.score);
+        dest.writeValue(this.minScore);
+        dest.writeValue(this.maxScore);
         dest.writeValue(this.days);
         if(this.actions != null) {
             dest.writeInt(this.actions.size());
@@ -156,7 +176,8 @@ public class ScoredMonetizationCondition extends BaseSegmentCondition {
 
     public ScoredMonetizationCondition(Parcel in) {
         super(in);
-        this.score = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.minScore = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.maxScore = (Integer)in.readValue(Integer.class.getClassLoader());
         this.days = (Integer)in.readValue(Integer.class.getClassLoader());
         int actionsSize = in.readInt();
         if( actionsSize > -1) {
