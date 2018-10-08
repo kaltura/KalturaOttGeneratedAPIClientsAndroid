@@ -52,63 +52,34 @@ import java.util.List;
 public class ContentScoreCondition extends BaseSegmentCondition {
 	
 	public interface Tokenizer extends BaseSegmentCondition.Tokenizer {
-		String minScore();
-		String maxScore();
+		String score();
 		String days();
-		String field();
-		String value();
 		RequestBuilder.ListTokenizer<ContentActionCondition.Tokenizer> actions();
 	}
 
 	/**
 	 * The minimum score to be met
 	 */
-	private Integer minScore;
-	/**
-	 * The maximum score to be met
-	 */
-	private Integer maxScore;
+	private Integer score;
 	/**
 	 * How many days back should the actions be considered
 	 */
 	private Integer days;
 	/**
-	 * If condition should be applied on specific field (and not the one of the segment
-	  value)
-	 */
-	private String field;
-	/**
-	 * If condition should be applied on specific field (and not the one of the segment
-	  value) -
-	 */
-	private String value;
-	/**
 	 * List of the actions that consist the condition
 	 */
 	private List<ContentActionCondition> actions;
 
-	// minScore:
-	public Integer getMinScore(){
-		return this.minScore;
+	// score:
+	public Integer getScore(){
+		return this.score;
 	}
-	public void setMinScore(Integer minScore){
-		this.minScore = minScore;
-	}
-
-	public void minScore(String multirequestToken){
-		setToken("minScore", multirequestToken);
+	public void setScore(Integer score){
+		this.score = score;
 	}
 
-	// maxScore:
-	public Integer getMaxScore(){
-		return this.maxScore;
-	}
-	public void setMaxScore(Integer maxScore){
-		this.maxScore = maxScore;
-	}
-
-	public void maxScore(String multirequestToken){
-		setToken("maxScore", multirequestToken);
+	public void score(String multirequestToken){
+		setToken("score", multirequestToken);
 	}
 
 	// days:
@@ -121,30 +92,6 @@ public class ContentScoreCondition extends BaseSegmentCondition {
 
 	public void days(String multirequestToken){
 		setToken("days", multirequestToken);
-	}
-
-	// field:
-	public String getField(){
-		return this.field;
-	}
-	public void setField(String field){
-		this.field = field;
-	}
-
-	public void field(String multirequestToken){
-		setToken("field", multirequestToken);
-	}
-
-	// value:
-	public String getValue(){
-		return this.value;
-	}
-	public void setValue(String value){
-		this.value = value;
-	}
-
-	public void value(String multirequestToken){
-		setToken("value", multirequestToken);
 	}
 
 	// actions:
@@ -166,11 +113,8 @@ public class ContentScoreCondition extends BaseSegmentCondition {
 		if(jsonObject == null) return;
 
 		// set members values:
-		minScore = GsonParser.parseInt(jsonObject.get("minScore"));
-		maxScore = GsonParser.parseInt(jsonObject.get("maxScore"));
+		score = GsonParser.parseInt(jsonObject.get("score"));
 		days = GsonParser.parseInt(jsonObject.get("days"));
-		field = GsonParser.parseString(jsonObject.get("field"));
-		value = GsonParser.parseString(jsonObject.get("value"));
 		actions = GsonParser.parseArray(jsonObject.getAsJsonArray("actions"), ContentActionCondition.class);
 
 	}
@@ -178,11 +122,8 @@ public class ContentScoreCondition extends BaseSegmentCondition {
 	public Params toParams() {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaContentScoreCondition");
-		kparams.add("minScore", this.minScore);
-		kparams.add("maxScore", this.maxScore);
+		kparams.add("score", this.score);
 		kparams.add("days", this.days);
-		kparams.add("field", this.field);
-		kparams.add("value", this.value);
 		kparams.add("actions", this.actions);
 		return kparams;
 	}
@@ -203,11 +144,8 @@ public class ContentScoreCondition extends BaseSegmentCondition {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeValue(this.minScore);
-        dest.writeValue(this.maxScore);
+        dest.writeValue(this.score);
         dest.writeValue(this.days);
-        dest.writeString(this.field);
-        dest.writeString(this.value);
         if(this.actions != null) {
             dest.writeInt(this.actions.size());
             dest.writeList(this.actions);
@@ -218,11 +156,8 @@ public class ContentScoreCondition extends BaseSegmentCondition {
 
     public ContentScoreCondition(Parcel in) {
         super(in);
-        this.minScore = (Integer)in.readValue(Integer.class.getClassLoader());
-        this.maxScore = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.score = (Integer)in.readValue(Integer.class.getClassLoader());
         this.days = (Integer)in.readValue(Integer.class.getClassLoader());
-        this.field = in.readString();
-        this.value = in.readString();
         int actionsSize = in.readInt();
         if( actionsSize > -1) {
             this.actions = new ArrayList<>();

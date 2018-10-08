@@ -33,6 +33,9 @@ import com.kaltura.client.Params;
 import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.utils.request.RequestBuilder;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -52,6 +55,7 @@ public class SegmentRange extends ObjectBase {
 		String id();
 		String systematicName();
 		String name();
+		RequestBuilder.ListTokenizer<TranslationToken.Tokenizer> multilingualName();
 		String gte();
 		String gt();
 		String lte();
@@ -71,6 +75,10 @@ public class SegmentRange extends ObjectBase {
 	 * Specific segment name
 	 */
 	private String name;
+	/**
+	 * Specific segment name
+	 */
+	private List<TranslationToken> multilingualName;
 	/**
 	 * Greater than or equals &amp;gt;=
 	 */
@@ -112,12 +120,12 @@ public class SegmentRange extends ObjectBase {
 	public String getName(){
 		return this.name;
 	}
-	public void setName(String name){
-		this.name = name;
+	// multilingualName:
+	public List<TranslationToken> getMultilingualName(){
+		return this.multilingualName;
 	}
-
-	public void name(String multirequestToken){
-		setToken("name", multirequestToken);
+	public void setMultilingualName(List<TranslationToken> multilingualName){
+		this.multilingualName = multilingualName;
 	}
 
 	// gte:
@@ -194,6 +202,7 @@ public class SegmentRange extends ObjectBase {
 		id = GsonParser.parseLong(jsonObject.get("id"));
 		systematicName = GsonParser.parseString(jsonObject.get("systematicName"));
 		name = GsonParser.parseString(jsonObject.get("name"));
+		multilingualName = GsonParser.parseArray(jsonObject.getAsJsonArray("multilingualName"), TranslationToken.class);
 		gte = GsonParser.parseDouble(jsonObject.get("gte"));
 		gt = GsonParser.parseDouble(jsonObject.get("gt"));
 		lte = GsonParser.parseDouble(jsonObject.get("lte"));
@@ -206,7 +215,7 @@ public class SegmentRange extends ObjectBase {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaSegmentRange");
 		kparams.add("systematicName", this.systematicName);
-		kparams.add("name", this.name);
+		kparams.add("multilingualName", this.multilingualName);
 		kparams.add("gte", this.gte);
 		kparams.add("gt", this.gt);
 		kparams.add("lte", this.lte);
@@ -234,6 +243,12 @@ public class SegmentRange extends ObjectBase {
         dest.writeValue(this.id);
         dest.writeString(this.systematicName);
         dest.writeString(this.name);
+        if(this.multilingualName != null) {
+            dest.writeInt(this.multilingualName.size());
+            dest.writeList(this.multilingualName);
+        } else {
+            dest.writeInt(-1);
+        }
         dest.writeValue(this.gte);
         dest.writeValue(this.gt);
         dest.writeValue(this.lte);
@@ -246,6 +261,11 @@ public class SegmentRange extends ObjectBase {
         this.id = (Long)in.readValue(Long.class.getClassLoader());
         this.systematicName = in.readString();
         this.name = in.readString();
+        int multilingualNameSize = in.readInt();
+        if( multilingualNameSize > -1) {
+            this.multilingualName = new ArrayList<>();
+            in.readList(this.multilingualName, TranslationToken.class.getClassLoader());
+        }
         this.gte = (Double)in.readValue(Double.class.getClassLoader());
         this.gt = (Double)in.readValue(Double.class.getClassLoader());
         this.lte = (Double)in.readValue(Double.class.getClassLoader());

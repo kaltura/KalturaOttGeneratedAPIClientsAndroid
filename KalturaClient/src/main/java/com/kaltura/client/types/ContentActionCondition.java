@@ -31,7 +31,6 @@ import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.enums.ContentAction;
-import com.kaltura.client.enums.ContentActionConditionLengthType;
 import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
@@ -53,7 +52,6 @@ public class ContentActionCondition extends ObjectBase {
 	public interface Tokenizer extends ObjectBase.Tokenizer {
 		String action();
 		String length();
-		String lengthType();
 		String multiplier();
 	}
 
@@ -62,15 +60,9 @@ public class ContentActionCondition extends ObjectBase {
 	 */
 	private ContentAction action;
 	/**
-	 * Optional - if action required specific length to be considered (in percentage or
-	  minutes)
+	 * Optional - if action required specific length to be considered
 	 */
 	private Integer length;
-	/**
-	 * Optional - if action required specific length to be considered (in percentage or
-	  minutes)
-	 */
-	private ContentActionConditionLengthType lengthType;
 	/**
 	 * Score multiplier - how much is a single action worth when considering the action
 	 */
@@ -100,18 +92,6 @@ public class ContentActionCondition extends ObjectBase {
 		setToken("length", multirequestToken);
 	}
 
-	// lengthType:
-	public ContentActionConditionLengthType getLengthType(){
-		return this.lengthType;
-	}
-	public void setLengthType(ContentActionConditionLengthType lengthType){
-		this.lengthType = lengthType;
-	}
-
-	public void lengthType(String multirequestToken){
-		setToken("lengthType", multirequestToken);
-	}
-
 	// multiplier:
 	public Integer getMultiplier(){
 		return this.multiplier;
@@ -137,7 +117,6 @@ public class ContentActionCondition extends ObjectBase {
 		// set members values:
 		action = ContentAction.get(GsonParser.parseString(jsonObject.get("action")));
 		length = GsonParser.parseInt(jsonObject.get("length"));
-		lengthType = ContentActionConditionLengthType.get(GsonParser.parseString(jsonObject.get("lengthType")));
 		multiplier = GsonParser.parseInt(jsonObject.get("multiplier"));
 
 	}
@@ -147,7 +126,6 @@ public class ContentActionCondition extends ObjectBase {
 		kparams.add("objectType", "KalturaContentActionCondition");
 		kparams.add("action", this.action);
 		kparams.add("length", this.length);
-		kparams.add("lengthType", this.lengthType);
 		kparams.add("multiplier", this.multiplier);
 		return kparams;
 	}
@@ -170,7 +148,6 @@ public class ContentActionCondition extends ObjectBase {
         super.writeToParcel(dest, flags);
         dest.writeInt(this.action == null ? -1 : this.action.ordinal());
         dest.writeValue(this.length);
-        dest.writeInt(this.lengthType == null ? -1 : this.lengthType.ordinal());
         dest.writeValue(this.multiplier);
     }
 
@@ -179,8 +156,6 @@ public class ContentActionCondition extends ObjectBase {
         int tmpAction = in.readInt();
         this.action = tmpAction == -1 ? null : ContentAction.values()[tmpAction];
         this.length = (Integer)in.readValue(Integer.class.getClassLoader());
-        int tmpLengthType = in.readInt();
-        this.lengthType = tmpLengthType == -1 ? null : ContentActionConditionLengthType.values()[tmpLengthType];
         this.multiplier = (Integer)in.readValue(Integer.class.getClassLoader());
     }
 }
