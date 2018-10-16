@@ -32,6 +32,9 @@ import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.utils.request.RequestBuilder;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -40,78 +43,80 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
-/**
- * Country condition
- */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(CountryCondition.Tokenizer.class)
-public class CountryCondition extends NotCondition {
+@MultiRequestBuilder.Tokenizer(OrCondition.Tokenizer.class)
+public class OrCondition extends Condition {
 	
-	public interface Tokenizer extends NotCondition.Tokenizer {
-		String countries();
+	public interface Tokenizer extends Condition.Tokenizer {
+		RequestBuilder.ListTokenizer<Condition.Tokenizer> conditions();
 	}
 
 	/**
-	 * Comma separated countries IDs list
+	 * List of conditions with or between them
 	 */
-	private String countries;
+	private List<Condition> conditions;
 
-	// countries:
-	public String getCountries(){
-		return this.countries;
+	// conditions:
+	public List<Condition> getConditions(){
+		return this.conditions;
 	}
-	public void setCountries(String countries){
-		this.countries = countries;
-	}
-
-	public void countries(String multirequestToken){
-		setToken("countries", multirequestToken);
+	public void setConditions(List<Condition> conditions){
+		this.conditions = conditions;
 	}
 
 
-	public CountryCondition() {
+	public OrCondition() {
 		super();
 	}
 
-	public CountryCondition(JsonObject jsonObject) throws APIException {
+	public OrCondition(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		countries = GsonParser.parseString(jsonObject.get("countries"));
+		conditions = GsonParser.parseArray(jsonObject.getAsJsonArray("conditions"), Condition.class);
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaCountryCondition");
-		kparams.add("countries", this.countries);
+		kparams.add("objectType", "KalturaOrCondition");
+		kparams.add("conditions", this.conditions);
 		return kparams;
 	}
 
 
-    public static final Creator<CountryCondition> CREATOR = new Creator<CountryCondition>() {
+    public static final Creator<OrCondition> CREATOR = new Creator<OrCondition>() {
         @Override
-        public CountryCondition createFromParcel(Parcel source) {
-            return new CountryCondition(source);
+        public OrCondition createFromParcel(Parcel source) {
+            return new OrCondition(source);
         }
 
         @Override
-        public CountryCondition[] newArray(int size) {
-            return new CountryCondition[size];
+        public OrCondition[] newArray(int size) {
+            return new OrCondition[size];
         }
     };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeString(this.countries);
+        if(this.conditions != null) {
+            dest.writeInt(this.conditions.size());
+            dest.writeList(this.conditions);
+        } else {
+            dest.writeInt(-1);
+        }
     }
 
-    public CountryCondition(Parcel in) {
+    public OrCondition(Parcel in) {
         super(in);
-        this.countries = in.readString();
+        int conditionsSize = in.readInt();
+        if( conditionsSize > -1) {
+            this.conditions = new ArrayList<>();
+            in.readList(this.conditions, Condition.class.getClassLoader());
+        }
     }
 }
 

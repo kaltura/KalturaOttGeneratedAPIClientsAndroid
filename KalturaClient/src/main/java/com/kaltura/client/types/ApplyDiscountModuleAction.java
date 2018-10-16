@@ -40,78 +40,75 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
-/**
- * Country condition
- */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(CountryCondition.Tokenizer.class)
-public class CountryCondition extends NotCondition {
+@MultiRequestBuilder.Tokenizer(ApplyDiscountModuleAction.Tokenizer.class)
+public class ApplyDiscountModuleAction extends RuleAction {
 	
-	public interface Tokenizer extends NotCondition.Tokenizer {
-		String countries();
+	public interface Tokenizer extends RuleAction.Tokenizer {
+		String discountModuleId();
 	}
 
 	/**
-	 * Comma separated countries IDs list
+	 * Discount module ID
 	 */
-	private String countries;
+	private Long discountModuleId;
 
-	// countries:
-	public String getCountries(){
-		return this.countries;
+	// discountModuleId:
+	public Long getDiscountModuleId(){
+		return this.discountModuleId;
 	}
-	public void setCountries(String countries){
-		this.countries = countries;
-	}
-
-	public void countries(String multirequestToken){
-		setToken("countries", multirequestToken);
+	public void setDiscountModuleId(Long discountModuleId){
+		this.discountModuleId = discountModuleId;
 	}
 
+	public void discountModuleId(String multirequestToken){
+		setToken("discountModuleId", multirequestToken);
+	}
 
-	public CountryCondition() {
+
+	public ApplyDiscountModuleAction() {
 		super();
 	}
 
-	public CountryCondition(JsonObject jsonObject) throws APIException {
+	public ApplyDiscountModuleAction(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		countries = GsonParser.parseString(jsonObject.get("countries"));
+		discountModuleId = GsonParser.parseLong(jsonObject.get("discountModuleId"));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaCountryCondition");
-		kparams.add("countries", this.countries);
+		kparams.add("objectType", "KalturaApplyDiscountModuleAction");
+		kparams.add("discountModuleId", this.discountModuleId);
 		return kparams;
 	}
 
 
-    public static final Creator<CountryCondition> CREATOR = new Creator<CountryCondition>() {
+    public static final Creator<ApplyDiscountModuleAction> CREATOR = new Creator<ApplyDiscountModuleAction>() {
         @Override
-        public CountryCondition createFromParcel(Parcel source) {
-            return new CountryCondition(source);
+        public ApplyDiscountModuleAction createFromParcel(Parcel source) {
+            return new ApplyDiscountModuleAction(source);
         }
 
         @Override
-        public CountryCondition[] newArray(int size) {
-            return new CountryCondition[size];
+        public ApplyDiscountModuleAction[] newArray(int size) {
+            return new ApplyDiscountModuleAction[size];
         }
     };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeString(this.countries);
+        dest.writeValue(this.discountModuleId);
     }
 
-    public CountryCondition(Parcel in) {
+    public ApplyDiscountModuleAction(Parcel in) {
         super(in);
-        this.countries = in.readString();
+        this.discountModuleId = (Long)in.readValue(Long.class.getClassLoader());
     }
 }
 

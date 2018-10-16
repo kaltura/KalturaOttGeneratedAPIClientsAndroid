@@ -41,77 +41,77 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 /**
- * Country condition
+ * Segments condition
  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(CountryCondition.Tokenizer.class)
-public class CountryCondition extends NotCondition {
+@MultiRequestBuilder.Tokenizer(SegmentsCondition.Tokenizer.class)
+public class SegmentsCondition extends Condition {
 	
-	public interface Tokenizer extends NotCondition.Tokenizer {
-		String countries();
+	public interface Tokenizer extends Condition.Tokenizer {
+		String segmentsIds();
 	}
 
 	/**
-	 * Comma separated countries IDs list
+	 * Comma separated segments IDs list
 	 */
-	private String countries;
+	private String segmentsIds;
 
-	// countries:
-	public String getCountries(){
-		return this.countries;
+	// segmentsIds:
+	public String getSegmentsIds(){
+		return this.segmentsIds;
 	}
-	public void setCountries(String countries){
-		this.countries = countries;
-	}
-
-	public void countries(String multirequestToken){
-		setToken("countries", multirequestToken);
+	public void setSegmentsIds(String segmentsIds){
+		this.segmentsIds = segmentsIds;
 	}
 
+	public void segmentsIds(String multirequestToken){
+		setToken("segmentsIds", multirequestToken);
+	}
 
-	public CountryCondition() {
+
+	public SegmentsCondition() {
 		super();
 	}
 
-	public CountryCondition(JsonObject jsonObject) throws APIException {
+	public SegmentsCondition(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		countries = GsonParser.parseString(jsonObject.get("countries"));
+		segmentsIds = GsonParser.parseString(jsonObject.get("segmentsIds"));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaCountryCondition");
-		kparams.add("countries", this.countries);
+		kparams.add("objectType", "KalturaSegmentsCondition");
+		kparams.add("segmentsIds", this.segmentsIds);
 		return kparams;
 	}
 
 
-    public static final Creator<CountryCondition> CREATOR = new Creator<CountryCondition>() {
+    public static final Creator<SegmentsCondition> CREATOR = new Creator<SegmentsCondition>() {
         @Override
-        public CountryCondition createFromParcel(Parcel source) {
-            return new CountryCondition(source);
+        public SegmentsCondition createFromParcel(Parcel source) {
+            return new SegmentsCondition(source);
         }
 
         @Override
-        public CountryCondition[] newArray(int size) {
-            return new CountryCondition[size];
+        public SegmentsCondition[] newArray(int size) {
+            return new SegmentsCondition[size];
         }
     };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeString(this.countries);
+        dest.writeString(this.segmentsIds);
     }
 
-    public CountryCondition(Parcel in) {
+    public SegmentsCondition(Parcel in) {
         super(in);
-        this.countries = in.readString();
+        this.segmentsIds = in.readString();
     }
 }
 

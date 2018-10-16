@@ -30,6 +30,7 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
+import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
@@ -41,77 +42,98 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 /**
- * Country condition
+ * Rule base
  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(CountryCondition.Tokenizer.class)
-public class CountryCondition extends NotCondition {
+@MultiRequestBuilder.Tokenizer(Rule.Tokenizer.class)
+public abstract class Rule extends ObjectBase {
 	
-	public interface Tokenizer extends NotCondition.Tokenizer {
-		String countries();
+	public interface Tokenizer extends ObjectBase.Tokenizer {
+		String id();
+		String name();
+		String description();
 	}
 
 	/**
-	 * Comma separated countries IDs list
+	 * ID
 	 */
-	private String countries;
+	private Long id;
+	/**
+	 * Name
+	 */
+	private String name;
+	/**
+	 * Description
+	 */
+	private String description;
 
-	// countries:
-	public String getCountries(){
-		return this.countries;
+	// id:
+	public Long getId(){
+		return this.id;
 	}
-	public void setCountries(String countries){
-		this.countries = countries;
+	// name:
+	public String getName(){
+		return this.name;
+	}
+	public void setName(String name){
+		this.name = name;
 	}
 
-	public void countries(String multirequestToken){
-		setToken("countries", multirequestToken);
+	public void name(String multirequestToken){
+		setToken("name", multirequestToken);
+	}
+
+	// description:
+	public String getDescription(){
+		return this.description;
+	}
+	public void setDescription(String description){
+		this.description = description;
+	}
+
+	public void description(String multirequestToken){
+		setToken("description", multirequestToken);
 	}
 
 
-	public CountryCondition() {
+	public Rule() {
 		super();
 	}
 
-	public CountryCondition(JsonObject jsonObject) throws APIException {
+	public Rule(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		countries = GsonParser.parseString(jsonObject.get("countries"));
+		id = GsonParser.parseLong(jsonObject.get("id"));
+		name = GsonParser.parseString(jsonObject.get("name"));
+		description = GsonParser.parseString(jsonObject.get("description"));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaCountryCondition");
-		kparams.add("countries", this.countries);
+		kparams.add("objectType", "KalturaRule");
+		kparams.add("name", this.name);
+		kparams.add("description", this.description);
 		return kparams;
 	}
 
 
-    public static final Creator<CountryCondition> CREATOR = new Creator<CountryCondition>() {
-        @Override
-        public CountryCondition createFromParcel(Parcel source) {
-            return new CountryCondition(source);
-        }
-
-        @Override
-        public CountryCondition[] newArray(int size) {
-            return new CountryCondition[size];
-        }
-    };
-
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeString(this.countries);
+        dest.writeValue(this.id);
+        dest.writeString(this.name);
+        dest.writeString(this.description);
     }
 
-    public CountryCondition(Parcel in) {
+    public Rule(Parcel in) {
         super(in);
-        this.countries = in.readString();
+        this.id = (Long)in.readValue(Long.class.getClassLoader());
+        this.name = in.readString();
+        this.description = in.readString();
     }
 }
 
