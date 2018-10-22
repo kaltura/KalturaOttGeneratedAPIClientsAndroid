@@ -58,6 +58,8 @@ public class SegmentationType extends ObjectBase {
 		String description();
 		RequestBuilder.ListTokenizer<BaseSegmentCondition.Tokenizer> conditions();
 		BaseSegmentValue.Tokenizer value();
+		String createDate();
+		String affectsContentOrdering();
 	}
 
 	/**
@@ -80,6 +82,14 @@ public class SegmentationType extends ObjectBase {
 	 * Segmentation values - can be empty (so only one segment will be created)
 	 */
 	private BaseSegmentValue value;
+	/**
+	 * Create date of segmentation type
+	 */
+	private Long createDate;
+	/**
+	 * Do the segments of this type affect content ordering of channels and searches
+	 */
+	private Boolean affectsContentOrdering;
 
 	// id:
 	public Long getId(){
@@ -125,6 +135,22 @@ public class SegmentationType extends ObjectBase {
 		this.value = value;
 	}
 
+	// createDate:
+	public Long getCreateDate(){
+		return this.createDate;
+	}
+	// affectsContentOrdering:
+	public Boolean getAffectsContentOrdering(){
+		return this.affectsContentOrdering;
+	}
+	public void setAffectsContentOrdering(Boolean affectsContentOrdering){
+		this.affectsContentOrdering = affectsContentOrdering;
+	}
+
+	public void affectsContentOrdering(String multirequestToken){
+		setToken("affectsContentOrdering", multirequestToken);
+	}
+
 
 	public SegmentationType() {
 		super();
@@ -141,6 +167,8 @@ public class SegmentationType extends ObjectBase {
 		description = GsonParser.parseString(jsonObject.get("description"));
 		conditions = GsonParser.parseArray(jsonObject.getAsJsonArray("conditions"), BaseSegmentCondition.class);
 		value = GsonParser.parseObject(jsonObject.getAsJsonObject("value"), BaseSegmentValue.class);
+		createDate = GsonParser.parseLong(jsonObject.get("createDate"));
+		affectsContentOrdering = GsonParser.parseBoolean(jsonObject.get("affectsContentOrdering"));
 
 	}
 
@@ -151,6 +179,7 @@ public class SegmentationType extends ObjectBase {
 		kparams.add("description", this.description);
 		kparams.add("conditions", this.conditions);
 		kparams.add("value", this.value);
+		kparams.add("affectsContentOrdering", this.affectsContentOrdering);
 		return kparams;
 	}
 
@@ -180,6 +209,8 @@ public class SegmentationType extends ObjectBase {
             dest.writeInt(-1);
         }
         dest.writeParcelable(this.value, flags);
+        dest.writeValue(this.createDate);
+        dest.writeValue(this.affectsContentOrdering);
     }
 
     public SegmentationType(Parcel in) {
@@ -193,6 +224,8 @@ public class SegmentationType extends ObjectBase {
             in.readList(this.conditions, BaseSegmentCondition.class.getClassLoader());
         }
         this.value = in.readParcelable(BaseSegmentValue.class.getClassLoader());
+        this.createDate = (Long)in.readValue(Long.class.getClassLoader());
+        this.affectsContentOrdering = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
 
