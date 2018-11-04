@@ -53,6 +53,8 @@ public class BusinessModuleRule extends Rule {
 	public interface Tokenizer extends Rule.Tokenizer {
 		RequestBuilder.ListTokenizer<Condition.Tokenizer> conditions();
 		RequestBuilder.ListTokenizer<ApplyDiscountModuleAction.Tokenizer> actions();
+		String createDate();
+		String updateDate();
 	}
 
 	/**
@@ -63,6 +65,14 @@ public class BusinessModuleRule extends Rule {
 	 * List of actions for the rule
 	 */
 	private List<ApplyDiscountModuleAction> actions;
+	/**
+	 * Create date of the rule
+	 */
+	private Long createDate;
+	/**
+	 * Update date of the rule
+	 */
+	private Long updateDate;
 
 	// conditions:
 	public List<Condition> getConditions(){
@@ -80,6 +90,14 @@ public class BusinessModuleRule extends Rule {
 		this.actions = actions;
 	}
 
+	// createDate:
+	public Long getCreateDate(){
+		return this.createDate;
+	}
+	// updateDate:
+	public Long getUpdateDate(){
+		return this.updateDate;
+	}
 
 	public BusinessModuleRule() {
 		super();
@@ -93,6 +111,8 @@ public class BusinessModuleRule extends Rule {
 		// set members values:
 		conditions = GsonParser.parseArray(jsonObject.getAsJsonArray("conditions"), Condition.class);
 		actions = GsonParser.parseArray(jsonObject.getAsJsonArray("actions"), ApplyDiscountModuleAction.class);
+		createDate = GsonParser.parseLong(jsonObject.get("createDate"));
+		updateDate = GsonParser.parseLong(jsonObject.get("updateDate"));
 
 	}
 
@@ -132,6 +152,8 @@ public class BusinessModuleRule extends Rule {
         } else {
             dest.writeInt(-1);
         }
+        dest.writeValue(this.createDate);
+        dest.writeValue(this.updateDate);
     }
 
     public BusinessModuleRule(Parcel in) {
@@ -146,6 +168,8 @@ public class BusinessModuleRule extends Rule {
             this.actions = new ArrayList<>();
             in.readList(this.actions, ApplyDiscountModuleAction.class.getClassLoader());
         }
+        this.createDate = (Long)in.readValue(Long.class.getClassLoader());
+        this.updateDate = (Long)in.readValue(Long.class.getClassLoader());
     }
 }
 
