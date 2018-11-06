@@ -58,7 +58,7 @@ public class RequestConfiguration extends ObjectBase {
 		String ks();
 		BaseResponseProfile.Tokenizer responseProfile();
 		String abortAllOnError();
-		String skipOnOrror();
+		String skipOnError();
 	}
 
 	/**
@@ -92,7 +92,7 @@ public class RequestConfiguration extends ObjectBase {
 	/**
 	 * Skip current request according to skip option
 	 */
-	private SkipOptions skipOnOrror;
+	private SkipOptions skipOnError;
 
 	// partnerId:
 	public Integer getPartnerId(){
@@ -174,16 +174,16 @@ public class RequestConfiguration extends ObjectBase {
 		setToken("abortAllOnError", multirequestToken);
 	}
 
-	// skipOnOrror:
-	public SkipOptions getSkipOnOrror(){
-		return this.skipOnOrror;
+	// skipOnError:
+	public SkipOptions getSkipOnError(){
+		return this.skipOnError;
 	}
-	public void setSkipOnOrror(SkipOptions skipOnOrror){
-		this.skipOnOrror = skipOnOrror;
+	public void setSkipOnError(SkipOptions skipOnError){
+		this.skipOnError = skipOnError;
 	}
 
-	public void skipOnOrror(String multirequestToken){
-		setToken("skipOnOrror", multirequestToken);
+	public void skipOnError(String multirequestToken){
+		setToken("skipOnError", multirequestToken);
 	}
 
 
@@ -204,7 +204,7 @@ public class RequestConfiguration extends ObjectBase {
 		ks = GsonParser.parseString(jsonObject.get("ks"));
 		responseProfile = GsonParser.parseObject(jsonObject.getAsJsonObject("responseProfile"), BaseResponseProfile.class);
 		abortAllOnError = GsonParser.parseBoolean(jsonObject.get("abortAllOnError"));
-		skipOnOrror = SkipOptions.get(GsonParser.parseString(jsonObject.get("skipOnOrror")));
+		skipOnError = SkipOptions.get(GsonParser.parseString(jsonObject.get("skipOnError")));
 
 	}
 
@@ -218,7 +218,7 @@ public class RequestConfiguration extends ObjectBase {
 		kparams.add("ks", this.ks);
 		kparams.add("responseProfile", this.responseProfile);
 		kparams.add("abortAllOnError", this.abortAllOnError);
-		kparams.add("skipOnOrror", this.skipOnOrror);
+		kparams.add("skipOnError", this.skipOnError);
 		return kparams;
 	}
 
@@ -245,7 +245,7 @@ public class RequestConfiguration extends ObjectBase {
         dest.writeString(this.ks);
         dest.writeParcelable(this.responseProfile, flags);
         dest.writeValue(this.abortAllOnError);
-        dest.writeInt(this.skipOnOrror == null ? -1 : this.skipOnOrror.ordinal());
+        dest.writeInt(this.skipOnError == null ? -1 : this.skipOnError.ordinal());
     }
 
     public RequestConfiguration(Parcel in) {
@@ -257,8 +257,8 @@ public class RequestConfiguration extends ObjectBase {
         this.ks = in.readString();
         this.responseProfile = in.readParcelable(BaseResponseProfile.class.getClassLoader());
         this.abortAllOnError = (Boolean)in.readValue(Boolean.class.getClassLoader());
-        int tmpSkipOnOrror = in.readInt();
-        this.skipOnOrror = tmpSkipOnOrror == -1 ? null : SkipOptions.values()[tmpSkipOnOrror];
+        int tmpSkipOnError = in.readInt();
+        this.skipOnError = tmpSkipOnError == -1 ? null : SkipOptions.values()[tmpSkipOnError];
     }
 }
 
