@@ -59,6 +59,7 @@ public class SegmentationType extends ObjectBase {
 		RequestBuilder.ListTokenizer<BaseSegmentCondition.Tokenizer> conditions();
 		BaseSegmentValue.Tokenizer value();
 		String createDate();
+		String version();
 	}
 
 	/**
@@ -85,6 +86,10 @@ public class SegmentationType extends ObjectBase {
 	 * Create date of segmentation type
 	 */
 	private Long createDate;
+	/**
+	 * Segmentation type version
+	 */
+	private Long version;
 
 	// id:
 	public Long getId(){
@@ -134,6 +139,10 @@ public class SegmentationType extends ObjectBase {
 	public Long getCreateDate(){
 		return this.createDate;
 	}
+	// version:
+	public Long getVersion(){
+		return this.version;
+	}
 
 	public SegmentationType() {
 		super();
@@ -151,6 +160,7 @@ public class SegmentationType extends ObjectBase {
 		conditions = GsonParser.parseArray(jsonObject.getAsJsonArray("conditions"), BaseSegmentCondition.class);
 		value = GsonParser.parseObject(jsonObject.getAsJsonObject("value"), BaseSegmentValue.class);
 		createDate = GsonParser.parseLong(jsonObject.get("createDate"));
+		version = GsonParser.parseLong(jsonObject.get("version"));
 
 	}
 
@@ -191,6 +201,7 @@ public class SegmentationType extends ObjectBase {
         }
         dest.writeParcelable(this.value, flags);
         dest.writeValue(this.createDate);
+        dest.writeValue(this.version);
     }
 
     public SegmentationType(Parcel in) {
@@ -205,6 +216,7 @@ public class SegmentationType extends ObjectBase {
         }
         this.value = in.readParcelable(BaseSegmentValue.class.getClassLoader());
         this.createDate = (Long)in.readValue(Long.class.getClassLoader());
+        this.version = (Long)in.readValue(Long.class.getClassLoader());
     }
 }
 
