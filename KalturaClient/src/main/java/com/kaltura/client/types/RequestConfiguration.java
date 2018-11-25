@@ -30,9 +30,9 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.enums.SkipOptions;
 import com.kaltura.client.types.BaseResponseProfile;
 import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.types.SkipCondition;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
@@ -58,7 +58,7 @@ public class RequestConfiguration extends ObjectBase {
 		String ks();
 		BaseResponseProfile.Tokenizer responseProfile();
 		String abortAllOnError();
-		String skipOnError();
+		SkipCondition.Tokenizer skipCondition();
 	}
 
 	/**
@@ -90,9 +90,9 @@ public class RequestConfiguration extends ObjectBase {
 	 */
 	private Boolean abortAllOnError;
 	/**
-	 * Skip current request according to skip option
+	 * Skip current request according to skip condition
 	 */
-	private SkipOptions skipOnError;
+	private SkipCondition skipCondition;
 
 	// partnerId:
 	public Integer getPartnerId(){
@@ -174,16 +174,12 @@ public class RequestConfiguration extends ObjectBase {
 		setToken("abortAllOnError", multirequestToken);
 	}
 
-	// skipOnError:
-	public SkipOptions getSkipOnError(){
-		return this.skipOnError;
+	// skipCondition:
+	public SkipCondition getSkipCondition(){
+		return this.skipCondition;
 	}
-	public void setSkipOnError(SkipOptions skipOnError){
-		this.skipOnError = skipOnError;
-	}
-
-	public void skipOnError(String multirequestToken){
-		setToken("skipOnError", multirequestToken);
+	public void setSkipCondition(SkipCondition skipCondition){
+		this.skipCondition = skipCondition;
 	}
 
 
@@ -204,7 +200,7 @@ public class RequestConfiguration extends ObjectBase {
 		ks = GsonParser.parseString(jsonObject.get("ks"));
 		responseProfile = GsonParser.parseObject(jsonObject.getAsJsonObject("responseProfile"), BaseResponseProfile.class);
 		abortAllOnError = GsonParser.parseBoolean(jsonObject.get("abortAllOnError"));
-		skipOnError = SkipOptions.get(GsonParser.parseString(jsonObject.get("skipOnError")));
+		skipCondition = GsonParser.parseObject(jsonObject.getAsJsonObject("skipCondition"), SkipCondition.class);
 
 	}
 
@@ -218,7 +214,7 @@ public class RequestConfiguration extends ObjectBase {
 		kparams.add("ks", this.ks);
 		kparams.add("responseProfile", this.responseProfile);
 		kparams.add("abortAllOnError", this.abortAllOnError);
-		kparams.add("skipOnError", this.skipOnError);
+		kparams.add("skipCondition", this.skipCondition);
 		return kparams;
 	}
 
@@ -245,7 +241,7 @@ public class RequestConfiguration extends ObjectBase {
         dest.writeString(this.ks);
         dest.writeParcelable(this.responseProfile, flags);
         dest.writeValue(this.abortAllOnError);
-        dest.writeInt(this.skipOnError == null ? -1 : this.skipOnError.ordinal());
+        dest.writeParcelable(this.skipCondition, flags);
     }
 
     public RequestConfiguration(Parcel in) {
@@ -257,8 +253,7 @@ public class RequestConfiguration extends ObjectBase {
         this.ks = in.readString();
         this.responseProfile = in.readParcelable(BaseResponseProfile.class.getClassLoader());
         this.abortAllOnError = (Boolean)in.readValue(Boolean.class.getClassLoader());
-        int tmpSkipOnError = in.readInt();
-        this.skipOnError = tmpSkipOnError == -1 ? null : SkipOptions.values()[tmpSkipOnError];
+        this.skipCondition = in.readParcelable(SkipCondition.class.getClassLoader());
     }
 }
 
