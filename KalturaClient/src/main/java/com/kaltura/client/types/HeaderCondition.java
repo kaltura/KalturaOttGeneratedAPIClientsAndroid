@@ -32,9 +32,6 @@ import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
-import com.kaltura.client.utils.request.RequestBuilder;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -43,80 +40,99 @@ import java.util.List;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
+/**
+ * Header condition
+ */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(OrCondition.Tokenizer.class)
-public class OrCondition extends NotCondition {
+@MultiRequestBuilder.Tokenizer(HeaderCondition.Tokenizer.class)
+public class HeaderCondition extends NotCondition {
 	
 	public interface Tokenizer extends NotCondition.Tokenizer {
-		RequestBuilder.ListTokenizer<Condition.Tokenizer> conditions();
+		String key();
+		String value();
 	}
 
 	/**
-	 * List of conditions with or between them
+	 * Header key
 	 */
-	private List<Condition> conditions;
+	private String key;
+	/**
+	 * Header value
+	 */
+	private String value;
 
-	// conditions:
-	public List<Condition> getConditions(){
-		return this.conditions;
+	// key:
+	public String getKey(){
+		return this.key;
 	}
-	public void setConditions(List<Condition> conditions){
-		this.conditions = conditions;
+	public void setKey(String key){
+		this.key = key;
+	}
+
+	public void key(String multirequestToken){
+		setToken("key", multirequestToken);
+	}
+
+	// value:
+	public String getValue(){
+		return this.value;
+	}
+	public void setValue(String value){
+		this.value = value;
+	}
+
+	public void value(String multirequestToken){
+		setToken("value", multirequestToken);
 	}
 
 
-	public OrCondition() {
+	public HeaderCondition() {
 		super();
 	}
 
-	public OrCondition(JsonObject jsonObject) throws APIException {
+	public HeaderCondition(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		conditions = GsonParser.parseArray(jsonObject.getAsJsonArray("conditions"), Condition.class);
+		key = GsonParser.parseString(jsonObject.get("key"));
+		value = GsonParser.parseString(jsonObject.get("value"));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaOrCondition");
-		kparams.add("conditions", this.conditions);
+		kparams.add("objectType", "KalturaHeaderCondition");
+		kparams.add("key", this.key);
+		kparams.add("value", this.value);
 		return kparams;
 	}
 
 
-    public static final Creator<OrCondition> CREATOR = new Creator<OrCondition>() {
+    public static final Creator<HeaderCondition> CREATOR = new Creator<HeaderCondition>() {
         @Override
-        public OrCondition createFromParcel(Parcel source) {
-            return new OrCondition(source);
+        public HeaderCondition createFromParcel(Parcel source) {
+            return new HeaderCondition(source);
         }
 
         @Override
-        public OrCondition[] newArray(int size) {
-            return new OrCondition[size];
+        public HeaderCondition[] newArray(int size) {
+            return new HeaderCondition[size];
         }
     };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        if(this.conditions != null) {
-            dest.writeInt(this.conditions.size());
-            dest.writeList(this.conditions);
-        } else {
-            dest.writeInt(-1);
-        }
+        dest.writeString(this.key);
+        dest.writeString(this.value);
     }
 
-    public OrCondition(Parcel in) {
+    public HeaderCondition(Parcel in) {
         super(in);
-        int conditionsSize = in.readInt();
-        if( conditionsSize > -1) {
-            this.conditions = new ArrayList<>();
-            in.readList(this.conditions, Condition.class.getClassLoader());
-        }
+        this.key = in.readString();
+        this.value = in.readString();
     }
 }
 

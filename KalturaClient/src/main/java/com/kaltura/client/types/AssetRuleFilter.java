@@ -30,6 +30,7 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
+import com.kaltura.client.enums.RuleActionType;
 import com.kaltura.client.enums.RuleConditionType;
 import com.kaltura.client.types.SlimAsset;
 import com.kaltura.client.utils.GsonParser;
@@ -52,6 +53,7 @@ public class AssetRuleFilter extends Filter {
 	public interface Tokenizer extends Filter.Tokenizer {
 		String conditionsContainType();
 		SlimAsset.Tokenizer assetApplied();
+		String actionsContainType();
 	}
 
 	/**
@@ -63,6 +65,10 @@ public class AssetRuleFilter extends Filter {
 	 * Indicates if to return an asset rule list that related to specific asset
 	 */
 	private SlimAsset assetApplied;
+	/**
+	 * Indicates which asset rule list to return by this KalturaRuleActionType.
+	 */
+	private RuleActionType actionsContainType;
 
 	// conditionsContainType:
 	public RuleConditionType getConditionsContainType(){
@@ -84,6 +90,18 @@ public class AssetRuleFilter extends Filter {
 		this.assetApplied = assetApplied;
 	}
 
+	// actionsContainType:
+	public RuleActionType getActionsContainType(){
+		return this.actionsContainType;
+	}
+	public void setActionsContainType(RuleActionType actionsContainType){
+		this.actionsContainType = actionsContainType;
+	}
+
+	public void actionsContainType(String multirequestToken){
+		setToken("actionsContainType", multirequestToken);
+	}
+
 
 	public AssetRuleFilter() {
 		super();
@@ -97,6 +115,7 @@ public class AssetRuleFilter extends Filter {
 		// set members values:
 		conditionsContainType = RuleConditionType.get(GsonParser.parseString(jsonObject.get("conditionsContainType")));
 		assetApplied = GsonParser.parseObject(jsonObject.getAsJsonObject("assetApplied"), SlimAsset.class);
+		actionsContainType = RuleActionType.get(GsonParser.parseString(jsonObject.get("actionsContainType")));
 
 	}
 
@@ -105,6 +124,7 @@ public class AssetRuleFilter extends Filter {
 		kparams.add("objectType", "KalturaAssetRuleFilter");
 		kparams.add("conditionsContainType", this.conditionsContainType);
 		kparams.add("assetApplied", this.assetApplied);
+		kparams.add("actionsContainType", this.actionsContainType);
 		return kparams;
 	}
 
@@ -126,6 +146,7 @@ public class AssetRuleFilter extends Filter {
         super.writeToParcel(dest, flags);
         dest.writeInt(this.conditionsContainType == null ? -1 : this.conditionsContainType.ordinal());
         dest.writeParcelable(this.assetApplied, flags);
+        dest.writeInt(this.actionsContainType == null ? -1 : this.actionsContainType.ordinal());
     }
 
     public AssetRuleFilter(Parcel in) {
@@ -133,6 +154,8 @@ public class AssetRuleFilter extends Filter {
         int tmpConditionsContainType = in.readInt();
         this.conditionsContainType = tmpConditionsContainType == -1 ? null : RuleConditionType.values()[tmpConditionsContainType];
         this.assetApplied = in.readParcelable(SlimAsset.class.getClassLoader());
+        int tmpActionsContainType = in.readInt();
+        this.actionsContainType = tmpActionsContainType == -1 ? null : RuleActionType.values()[tmpActionsContainType];
     }
 }
 

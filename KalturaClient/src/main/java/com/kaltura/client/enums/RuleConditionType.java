@@ -41,7 +41,8 @@ public enum RuleConditionType implements EnumAsString {
 	BUSINESS_MODULE("BUSINESS_MODULE"),
 	SEGMENTS("SEGMENTS"),
 	DATE("DATE"),
-	OR("OR");
+	OR("OR"),
+	HEADER("HEADER");
 
 	private String value;
 
