@@ -51,6 +51,7 @@ public class PlaybackSource extends MediaFile {
 		String format();
 		String protocols();
 		RequestBuilder.ListTokenizer<DrmPlaybackPluginData.Tokenizer> drm();
+		String isTokenized();
 	}
 
 	/**
@@ -67,6 +68,10 @@ public class PlaybackSource extends MediaFile {
 	 * DRM data object containing relevant license URL ,scheme name and certificate
 	 */
 	private List<DrmPlaybackPluginData> drm;
+	/**
+	 * Is Tokenized
+	 */
+	private Boolean isTokenized;
 
 	// format:
 	public String getFormat(){
@@ -100,6 +105,18 @@ public class PlaybackSource extends MediaFile {
 		this.drm = drm;
 	}
 
+	// isTokenized:
+	public Boolean getIsTokenized(){
+		return this.isTokenized;
+	}
+	public void setIsTokenized(Boolean isTokenized){
+		this.isTokenized = isTokenized;
+	}
+
+	public void isTokenized(String multirequestToken){
+		setToken("isTokenized", multirequestToken);
+	}
+
 
 	public PlaybackSource() {
 		super();
@@ -114,6 +131,7 @@ public class PlaybackSource extends MediaFile {
 		format = GsonParser.parseString(jsonObject.get("format"));
 		protocols = GsonParser.parseString(jsonObject.get("protocols"));
 		drm = GsonParser.parseArray(jsonObject.getAsJsonArray("drm"), DrmPlaybackPluginData.class);
+		isTokenized = GsonParser.parseBoolean(jsonObject.get("isTokenized"));
 
 	}
 
@@ -123,6 +141,7 @@ public class PlaybackSource extends MediaFile {
 		kparams.add("format", this.format);
 		kparams.add("protocols", this.protocols);
 		kparams.add("drm", this.drm);
+		kparams.add("isTokenized", this.isTokenized);
 		return kparams;
 	}
 
@@ -150,6 +169,7 @@ public class PlaybackSource extends MediaFile {
         } else {
             dest.writeInt(-1);
         }
+        dest.writeValue(this.isTokenized);
     }
 
     public PlaybackSource(Parcel in) {
@@ -161,6 +181,7 @@ public class PlaybackSource extends MediaFile {
             this.drm = new ArrayList<>();
             in.readList(this.drm, DrmPlaybackPluginData.class.getClassLoader());
         }
+        this.isTokenized = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
 
