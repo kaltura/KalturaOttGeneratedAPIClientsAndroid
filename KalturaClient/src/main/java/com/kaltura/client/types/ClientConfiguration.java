@@ -65,7 +65,7 @@ public class ClientConfiguration extends ObjectBase {
 	/**
 	 * Abort the Multireuqset call if any error occurs in one of the requests
 	 */
-	private String abortOnError;
+	private Boolean abortOnError;
 
 	// clientTag:
 	public String getClientTag(){
@@ -92,10 +92,10 @@ public class ClientConfiguration extends ObjectBase {
 	}
 
 	// abortOnError:
-	public String getAbortOnError(){
+	public Boolean getAbortOnError(){
 		return this.abortOnError;
 	}
-	public void setAbortOnError(String abortOnError){
+	public void setAbortOnError(Boolean abortOnError){
 		this.abortOnError = abortOnError;
 	}
 
@@ -116,7 +116,7 @@ public class ClientConfiguration extends ObjectBase {
 		// set members values:
 		clientTag = GsonParser.parseString(jsonObject.get("clientTag"));
 		apiVersion = GsonParser.parseString(jsonObject.get("apiVersion"));
-		abortOnError = GsonParser.parseString(jsonObject.get("abortOnError"));
+		abortOnError = GsonParser.parseBoolean(jsonObject.get("abortOnError"));
 
 	}
 
@@ -147,14 +147,14 @@ public class ClientConfiguration extends ObjectBase {
         super.writeToParcel(dest, flags);
         dest.writeString(this.clientTag);
         dest.writeString(this.apiVersion);
-        dest.writeString(this.abortOnError);
+        dest.writeValue(this.abortOnError);
     }
 
     public ClientConfiguration(Parcel in) {
         super(in);
         this.clientTag = in.readString();
         this.apiVersion = in.readString();
-        this.abortOnError = in.readString();
+        this.abortOnError = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
 
