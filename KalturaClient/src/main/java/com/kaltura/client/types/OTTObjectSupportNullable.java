@@ -25,11 +25,13 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.client.services;
+package com.kaltura.client.types;
 
-import com.kaltura.client.types.DiscountDetails;
-import com.kaltura.client.types.DiscountDetailsFilter;
-import com.kaltura.client.utils.request.ListResponseRequestBuilder;
+import android.os.Parcel;
+import com.google.gson.JsonObject;
+import com.kaltura.client.Params;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -38,27 +40,44 @@ import com.kaltura.client.utils.request.ListResponseRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
-public class DiscountDetailsService {
+@SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(OTTObjectSupportNullable.Tokenizer.class)
+public class OTTObjectSupportNullable extends ObjectBase {
 	
-	public static class ListDiscountDetailsBuilder extends ListResponseRequestBuilder<DiscountDetails, DiscountDetails.Tokenizer, ListDiscountDetailsBuilder> {
-		
-		public ListDiscountDetailsBuilder(DiscountDetailsFilter filter) {
-			super(DiscountDetails.class, "discountdetails", "list");
-			params.add("filter", filter);
-		}
+	public interface Tokenizer extends ObjectBase.Tokenizer {
 	}
 
-	public static ListDiscountDetailsBuilder list()  {
-		return list(null);
+
+
+	public OTTObjectSupportNullable() {
+		super();
 	}
 
-	/**
-	 * Returns the list of available discounts details, can be filtered by discount
-	  codes
-	 * 
-	 * @param filter Filter
-	 */
-    public static ListDiscountDetailsBuilder list(DiscountDetailsFilter filter)  {
-		return new ListDiscountDetailsBuilder(filter);
+	public OTTObjectSupportNullable(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
 	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaOTTObjectSupportNullable");
+		return kparams;
+	}
+
+
+    public static final Creator<OTTObjectSupportNullable> CREATOR = new Creator<OTTObjectSupportNullable>() {
+        @Override
+        public OTTObjectSupportNullable createFromParcel(Parcel source) {
+            return new OTTObjectSupportNullable(source);
+        }
+
+        @Override
+        public OTTObjectSupportNullable[] newArray(int size) {
+            return new OTTObjectSupportNullable[size];
+        }
+    };
+
+    public OTTObjectSupportNullable(Parcel in) {
+        super(in);
+    }
 }
+
