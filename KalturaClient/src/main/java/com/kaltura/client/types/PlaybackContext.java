@@ -53,7 +53,7 @@ public class PlaybackContext extends ObjectBase {
 		RequestBuilder.ListTokenizer<RuleAction.Tokenizer> actions();
 		RequestBuilder.ListTokenizer<AccessControlMessage.Tokenizer> messages();
 		RequestBuilder.ListTokenizer<CaptionPlaybackPluginData.Tokenizer> playbackCaptions();
-		RequestBuilder.ListTokenizer<BumpersPlaybackPluginData.Tokenizer> playbackBumpers();
+		RequestBuilder.ListTokenizer<PlaybackPluginData.Tokenizer> plugins();
 	}
 
 	/**
@@ -73,9 +73,9 @@ public class PlaybackContext extends ObjectBase {
 	 */
 	private List<CaptionPlaybackPluginData> playbackCaptions;
 	/**
-	 * Playback bumpers
+	 * Plugins
 	 */
-	private List<BumpersPlaybackPluginData> playbackBumpers;
+	private List<PlaybackPluginData> plugins;
 
 	// sources:
 	public List<PlaybackSource> getSources(){
@@ -109,12 +109,12 @@ public class PlaybackContext extends ObjectBase {
 		this.playbackCaptions = playbackCaptions;
 	}
 
-	// playbackBumpers:
-	public List<BumpersPlaybackPluginData> getPlaybackBumpers(){
-		return this.playbackBumpers;
+	// plugins:
+	public List<PlaybackPluginData> getPlugins(){
+		return this.plugins;
 	}
-	public void setPlaybackBumpers(List<BumpersPlaybackPluginData> playbackBumpers){
-		this.playbackBumpers = playbackBumpers;
+	public void setPlugins(List<PlaybackPluginData> plugins){
+		this.plugins = plugins;
 	}
 
 
@@ -132,7 +132,7 @@ public class PlaybackContext extends ObjectBase {
 		actions = GsonParser.parseArray(jsonObject.getAsJsonArray("actions"), RuleAction.class);
 		messages = GsonParser.parseArray(jsonObject.getAsJsonArray("messages"), AccessControlMessage.class);
 		playbackCaptions = GsonParser.parseArray(jsonObject.getAsJsonArray("playbackCaptions"), CaptionPlaybackPluginData.class);
-		playbackBumpers = GsonParser.parseArray(jsonObject.getAsJsonArray("playbackBumpers"), BumpersPlaybackPluginData.class);
+		plugins = GsonParser.parseArray(jsonObject.getAsJsonArray("plugins"), PlaybackPluginData.class);
 
 	}
 
@@ -143,7 +143,7 @@ public class PlaybackContext extends ObjectBase {
 		kparams.add("actions", this.actions);
 		kparams.add("messages", this.messages);
 		kparams.add("playbackCaptions", this.playbackCaptions);
-		kparams.add("playbackBumpers", this.playbackBumpers);
+		kparams.add("plugins", this.plugins);
 		return kparams;
 	}
 
@@ -187,9 +187,9 @@ public class PlaybackContext extends ObjectBase {
         } else {
             dest.writeInt(-1);
         }
-        if(this.playbackBumpers != null) {
-            dest.writeInt(this.playbackBumpers.size());
-            dest.writeList(this.playbackBumpers);
+        if(this.plugins != null) {
+            dest.writeInt(this.plugins.size());
+            dest.writeList(this.plugins);
         } else {
             dest.writeInt(-1);
         }
@@ -217,10 +217,10 @@ public class PlaybackContext extends ObjectBase {
             this.playbackCaptions = new ArrayList<>();
             in.readList(this.playbackCaptions, CaptionPlaybackPluginData.class.getClassLoader());
         }
-        int playbackBumpersSize = in.readInt();
-        if( playbackBumpersSize > -1) {
-            this.playbackBumpers = new ArrayList<>();
-            in.readList(this.playbackBumpers, BumpersPlaybackPluginData.class.getClassLoader());
+        int pluginsSize = in.readInt();
+        if( pluginsSize > -1) {
+            this.plugins = new ArrayList<>();
+            in.readList(this.plugins, PlaybackPluginData.class.getClassLoader());
         }
     }
 }
