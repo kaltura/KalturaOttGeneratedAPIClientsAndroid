@@ -35,9 +35,6 @@ import com.kaltura.client.enums.ExportType;
 import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
-import com.kaltura.client.utils.request.RequestBuilder;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -62,7 +59,6 @@ public class ExportTask extends ObjectBase {
 		String exportType();
 		String frequency();
 		String notificationUrl();
-		RequestBuilder.ListTokenizer<IntegerValue.Tokenizer> vodTypes();
 		String isActive();
 	}
 
@@ -101,11 +97,6 @@ public class ExportTask extends ObjectBase {
 	  done
 	 */
 	private String notificationUrl;
-	/**
-	 * List of media type identifiers (as configured in TVM) to export. used only in
-	  case data_type = vod
-	 */
-	private List<IntegerValue> vodTypes;
 	/**
 	 * Indicates if the task is active or not
 	 */
@@ -199,14 +190,6 @@ public class ExportTask extends ObjectBase {
 		setToken("notificationUrl", multirequestToken);
 	}
 
-	// vodTypes:
-	public List<IntegerValue> getVodTypes(){
-		return this.vodTypes;
-	}
-	public void setVodTypes(List<IntegerValue> vodTypes){
-		this.vodTypes = vodTypes;
-	}
-
 	// isActive:
 	public Boolean getIsActive(){
 		return this.isActive;
@@ -238,7 +221,6 @@ public class ExportTask extends ObjectBase {
 		exportType = ExportType.get(GsonParser.parseString(jsonObject.get("exportType")));
 		frequency = GsonParser.parseLong(jsonObject.get("frequency"));
 		notificationUrl = GsonParser.parseString(jsonObject.get("notificationUrl"));
-		vodTypes = GsonParser.parseArray(jsonObject.getAsJsonArray("vodTypes"), IntegerValue.class);
 		isActive = GsonParser.parseBoolean(jsonObject.get("isActive"));
 
 	}
@@ -253,7 +235,6 @@ public class ExportTask extends ObjectBase {
 		kparams.add("exportType", this.exportType);
 		kparams.add("frequency", this.frequency);
 		kparams.add("notificationUrl", this.notificationUrl);
-		kparams.add("vodTypes", this.vodTypes);
 		kparams.add("isActive", this.isActive);
 		return kparams;
 	}
@@ -282,12 +263,6 @@ public class ExportTask extends ObjectBase {
         dest.writeInt(this.exportType == null ? -1 : this.exportType.ordinal());
         dest.writeValue(this.frequency);
         dest.writeString(this.notificationUrl);
-        if(this.vodTypes != null) {
-            dest.writeInt(this.vodTypes.size());
-            dest.writeList(this.vodTypes);
-        } else {
-            dest.writeInt(-1);
-        }
         dest.writeValue(this.isActive);
     }
 
@@ -303,11 +278,6 @@ public class ExportTask extends ObjectBase {
         this.exportType = tmpExportType == -1 ? null : ExportType.values()[tmpExportType];
         this.frequency = (Long)in.readValue(Long.class.getClassLoader());
         this.notificationUrl = in.readString();
-        int vodTypesSize = in.readInt();
-        if( vodTypesSize > -1) {
-            this.vodTypes = new ArrayList<>();
-            in.readList(this.vodTypes, IntegerValue.class.getClassLoader());
-        }
         this.isActive = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
