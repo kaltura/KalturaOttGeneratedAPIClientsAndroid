@@ -8,7 +8,7 @@
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2019  Kaltura Inc.
+// Copyright (C) 2006-2018  Kaltura Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -51,7 +51,6 @@ public class ClientConfiguration extends ObjectBase {
 	public interface Tokenizer extends ObjectBase.Tokenizer {
 		String clientTag();
 		String apiVersion();
-		String abortOnError();
 	}
 
 	/**
@@ -62,10 +61,6 @@ public class ClientConfiguration extends ObjectBase {
 	 * API client version
 	 */
 	private String apiVersion;
-	/**
-	 * Abort the Multireuqset call if any error occurs in one of the requests
-	 */
-	private Boolean abortOnError;
 
 	// clientTag:
 	public String getClientTag(){
@@ -91,18 +86,6 @@ public class ClientConfiguration extends ObjectBase {
 		setToken("apiVersion", multirequestToken);
 	}
 
-	// abortOnError:
-	public Boolean getAbortOnError(){
-		return this.abortOnError;
-	}
-	public void setAbortOnError(Boolean abortOnError){
-		this.abortOnError = abortOnError;
-	}
-
-	public void abortOnError(String multirequestToken){
-		setToken("abortOnError", multirequestToken);
-	}
-
 
 	public ClientConfiguration() {
 		super();
@@ -116,7 +99,6 @@ public class ClientConfiguration extends ObjectBase {
 		// set members values:
 		clientTag = GsonParser.parseString(jsonObject.get("clientTag"));
 		apiVersion = GsonParser.parseString(jsonObject.get("apiVersion"));
-		abortOnError = GsonParser.parseBoolean(jsonObject.get("abortOnError"));
 
 	}
 
@@ -125,7 +107,6 @@ public class ClientConfiguration extends ObjectBase {
 		kparams.add("objectType", "KalturaClientConfiguration");
 		kparams.add("clientTag", this.clientTag);
 		kparams.add("apiVersion", this.apiVersion);
-		kparams.add("abortOnError", this.abortOnError);
 		return kparams;
 	}
 
@@ -147,14 +128,12 @@ public class ClientConfiguration extends ObjectBase {
         super.writeToParcel(dest, flags);
         dest.writeString(this.clientTag);
         dest.writeString(this.apiVersion);
-        dest.writeValue(this.abortOnError);
     }
 
     public ClientConfiguration(Parcel in) {
         super(in);
         this.clientTag = in.readString();
         this.apiVersion = in.readString();
-        this.abortOnError = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
 
