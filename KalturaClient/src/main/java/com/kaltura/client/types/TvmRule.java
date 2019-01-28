@@ -30,7 +30,7 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.enums.RuleType;
+import com.kaltura.client.enums.TvmRuleType;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
@@ -60,14 +60,14 @@ public abstract class TvmRule extends Rule {
 	/**
 	 * Specifies the tvm rule type.
 	 */
-	private RuleType ruleType;
+	private TvmRuleType ruleType;
 
 	// createDate:
 	public Long getCreateDate(){
 		return this.createDate;
 	}
 	// ruleType:
-	public RuleType getRuleType(){
+	public TvmRuleType getRuleType(){
 		return this.ruleType;
 	}
 
@@ -82,7 +82,7 @@ public abstract class TvmRule extends Rule {
 
 		// set members values:
 		createDate = GsonParser.parseLong(jsonObject.get("createDate"));
-		ruleType = RuleType.get(GsonParser.parseString(jsonObject.get("ruleType")));
+		ruleType = TvmRuleType.get(GsonParser.parseString(jsonObject.get("ruleType")));
 
 	}
 
@@ -104,7 +104,7 @@ public abstract class TvmRule extends Rule {
         super(in);
         this.createDate = (Long)in.readValue(Long.class.getClassLoader());
         int tmpRuleType = in.readInt();
-        this.ruleType = tmpRuleType == -1 ? null : RuleType.values()[tmpRuleType];
+        this.ruleType = tmpRuleType == -1 ? null : TvmRuleType.values()[tmpRuleType];
     }
 }
 
