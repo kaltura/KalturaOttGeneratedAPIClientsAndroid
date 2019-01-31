@@ -43,35 +43,21 @@ import java.util.Map;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
+/**
+ * Filtering external recordings
+ */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(ExternalRecording.Tokenizer.class)
-public class ExternalRecording extends Recording {
+@MultiRequestBuilder.Tokenizer(ExternalRecordingFilter.Tokenizer.class)
+public class ExternalRecordingFilter extends RecordingFilter {
 	
-	public interface Tokenizer extends Recording.Tokenizer {
-		String externalId();
+	public interface Tokenizer extends RecordingFilter.Tokenizer {
 		RequestBuilder.MapTokenizer<StringValue.Tokenizer> metaData();
 	}
 
 	/**
-	 * External identifier for the recording
-	 */
-	private String externalId;
-	/**
-	 * key/value map field for extra data
+	 * MetaData filtering
 	 */
 	private Map<String, StringValue> metaData;
-
-	// externalId:
-	public String getExternalId(){
-		return this.externalId;
-	}
-	public void setExternalId(String externalId){
-		this.externalId = externalId;
-	}
-
-	public void externalId(String multirequestToken){
-		setToken("externalId", multirequestToken);
-	}
 
 	// metaData:
 	public Map<String, StringValue> getMetaData(){
@@ -82,46 +68,43 @@ public class ExternalRecording extends Recording {
 	}
 
 
-	public ExternalRecording() {
+	public ExternalRecordingFilter() {
 		super();
 	}
 
-	public ExternalRecording(JsonObject jsonObject) throws APIException {
+	public ExternalRecordingFilter(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		externalId = GsonParser.parseString(jsonObject.get("externalId"));
 		metaData = GsonParser.parseMap(jsonObject.getAsJsonObject("metaData"), StringValue.class);
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaExternalRecording");
-		kparams.add("externalId", this.externalId);
+		kparams.add("objectType", "KalturaExternalRecordingFilter");
 		kparams.add("metaData", this.metaData);
 		return kparams;
 	}
 
 
-    public static final Creator<ExternalRecording> CREATOR = new Creator<ExternalRecording>() {
+    public static final Creator<ExternalRecordingFilter> CREATOR = new Creator<ExternalRecordingFilter>() {
         @Override
-        public ExternalRecording createFromParcel(Parcel source) {
-            return new ExternalRecording(source);
+        public ExternalRecordingFilter createFromParcel(Parcel source) {
+            return new ExternalRecordingFilter(source);
         }
 
         @Override
-        public ExternalRecording[] newArray(int size) {
-            return new ExternalRecording[size];
+        public ExternalRecordingFilter[] newArray(int size) {
+            return new ExternalRecordingFilter[size];
         }
     };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeString(this.externalId);
         if(this.metaData != null) {
             dest.writeInt(this.metaData.size());
             for (Map.Entry<String, StringValue> entry : this.metaData.entrySet()) {
@@ -133,9 +116,8 @@ public class ExternalRecording extends Recording {
         }
     }
 
-    public ExternalRecording(Parcel in) {
+    public ExternalRecordingFilter(Parcel in) {
         super(in);
-        this.externalId = in.readString();
         int metaDataSize = in.readInt();
         if( metaDataSize > -1) {
             this.metaData = new HashMap<>();

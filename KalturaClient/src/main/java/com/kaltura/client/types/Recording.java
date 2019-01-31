@@ -35,9 +35,6 @@ import com.kaltura.client.enums.RecordingType;
 import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
-import com.kaltura.client.utils.request.RequestBuilder;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * This class was generated using clients-generator\exec.php
@@ -59,7 +56,6 @@ public class Recording extends ObjectBase {
 		String isProtected();
 		String createDate();
 		String updateDate();
-		RequestBuilder.MapTokenizer<StringValue.Tokenizer> metaData();
 	}
 
 	/**
@@ -96,10 +92,6 @@ public class Recording extends ObjectBase {
 	  epoch.
 	 */
 	private Long updateDate;
-	/**
-	 * key/value map field for extra data
-	 */
-	private Map<String, StringValue> metaData;
 
 	// id:
 	public Long getId(){
@@ -157,14 +149,6 @@ public class Recording extends ObjectBase {
 	public Long getUpdateDate(){
 		return this.updateDate;
 	}
-	// metaData:
-	public Map<String, StringValue> getMetaData(){
-		return this.metaData;
-	}
-	public void setMetaData(Map<String, StringValue> metaData){
-		this.metaData = metaData;
-	}
-
 
 	public Recording() {
 		super();
@@ -184,7 +168,6 @@ public class Recording extends ObjectBase {
 		isProtected = GsonParser.parseBoolean(jsonObject.get("isProtected"));
 		createDate = GsonParser.parseLong(jsonObject.get("createDate"));
 		updateDate = GsonParser.parseLong(jsonObject.get("updateDate"));
-		metaData = GsonParser.parseMap(jsonObject.getAsJsonObject("metaData"), StringValue.class);
 
 	}
 
@@ -194,7 +177,6 @@ public class Recording extends ObjectBase {
 		kparams.add("assetId", this.assetId);
 		kparams.add("type", this.type);
 		kparams.add("isProtected", this.isProtected);
-		kparams.add("metaData", this.metaData);
 		return kparams;
 	}
 
@@ -222,15 +204,6 @@ public class Recording extends ObjectBase {
         dest.writeValue(this.isProtected);
         dest.writeValue(this.createDate);
         dest.writeValue(this.updateDate);
-        if(this.metaData != null) {
-            dest.writeInt(this.metaData.size());
-            for (Map.Entry<String, StringValue> entry : this.metaData.entrySet()) {
-                dest.writeString(entry.getKey());
-                dest.writeParcelable(entry.getValue(), flags);
-            }
-        } else {
-            dest.writeInt(-1);
-        }
     }
 
     public Recording(Parcel in) {
@@ -245,15 +218,6 @@ public class Recording extends ObjectBase {
         this.isProtected = (Boolean)in.readValue(Boolean.class.getClassLoader());
         this.createDate = (Long)in.readValue(Long.class.getClassLoader());
         this.updateDate = (Long)in.readValue(Long.class.getClassLoader());
-        int metaDataSize = in.readInt();
-        if( metaDataSize > -1) {
-            this.metaData = new HashMap<>();
-            for (int i = 0; i < metaDataSize; i++) {
-                String key = in.readString();
-                StringValue value = in.readParcelable(StringValue.class.getClassLoader());
-                this.metaData.put(key, value);
-            }
-        }
     }
 }
 
