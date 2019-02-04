@@ -49,6 +49,7 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
 public class Language extends ObjectBase {
 	
 	public interface Tokenizer extends ObjectBase.Tokenizer {
+		String id();
 		String name();
 		String systemName();
 		String code();
@@ -56,6 +57,10 @@ public class Language extends ObjectBase {
 		String isDefault();
 	}
 
+	/**
+	 * Identifier
+	 */
+	private Integer id;
 	/**
 	 * Language name
 	 */
@@ -76,6 +81,18 @@ public class Language extends ObjectBase {
 	 * Is the default language of the account
 	 */
 	private Boolean isDefault;
+
+	// id:
+	public Integer getId(){
+		return this.id;
+	}
+	public void setId(Integer id){
+		this.id = id;
+	}
+
+	public void id(String multirequestToken){
+		setToken("id", multirequestToken);
+	}
 
 	// name:
 	public String getName(){
@@ -148,6 +165,7 @@ public class Language extends ObjectBase {
 		if(jsonObject == null) return;
 
 		// set members values:
+		id = GsonParser.parseInt(jsonObject.get("id"));
 		name = GsonParser.parseString(jsonObject.get("name"));
 		systemName = GsonParser.parseString(jsonObject.get("systemName"));
 		code = GsonParser.parseString(jsonObject.get("code"));
@@ -159,6 +177,7 @@ public class Language extends ObjectBase {
 	public Params toParams() {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaLanguage");
+		kparams.add("id", this.id);
 		kparams.add("name", this.name);
 		kparams.add("systemName", this.systemName);
 		kparams.add("code", this.code);
@@ -183,6 +202,7 @@ public class Language extends ObjectBase {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
+        dest.writeValue(this.id);
         dest.writeString(this.name);
         dest.writeString(this.systemName);
         dest.writeString(this.code);
@@ -192,6 +212,7 @@ public class Language extends ObjectBase {
 
     public Language(Parcel in) {
         super(in);
+        this.id = (Integer)in.readValue(Integer.class.getClassLoader());
         this.name = in.readString();
         this.systemName = in.readString();
         this.code = in.readString();
