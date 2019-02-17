@@ -129,6 +129,14 @@ public class Recording extends ObjectBase {
 	public Long getViewableUntilDate(){
 		return this.viewableUntilDate;
 	}
+	public void setViewableUntilDate(Long viewableUntilDate){
+		this.viewableUntilDate = viewableUntilDate;
+	}
+
+	public void viewableUntilDate(String multirequestToken){
+		setToken("viewableUntilDate", multirequestToken);
+	}
+
 	// isProtected:
 	public Boolean getIsProtected(){
 		return this.isProtected;
@@ -176,6 +184,7 @@ public class Recording extends ObjectBase {
 		kparams.add("objectType", "KalturaRecording");
 		kparams.add("assetId", this.assetId);
 		kparams.add("type", this.type);
+		kparams.add("viewableUntilDate", this.viewableUntilDate);
 		kparams.add("isProtected", this.isProtected);
 		return kparams;
 	}
