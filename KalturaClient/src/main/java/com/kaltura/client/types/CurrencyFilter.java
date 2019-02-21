@@ -49,17 +49,12 @@ public class CurrencyFilter extends Filter {
 	
 	public interface Tokenizer extends Filter.Tokenizer {
 		String codeIn();
-		String excludePartner();
 	}
 
 	/**
 	 * Currency codes
 	 */
 	private String codeIn;
-	/**
-	 * Exclude partner
-	 */
-	private Boolean excludePartner;
 
 	// codeIn:
 	public String getCodeIn(){
@@ -71,18 +66,6 @@ public class CurrencyFilter extends Filter {
 
 	public void codeIn(String multirequestToken){
 		setToken("codeIn", multirequestToken);
-	}
-
-	// excludePartner:
-	public Boolean getExcludePartner(){
-		return this.excludePartner;
-	}
-	public void setExcludePartner(Boolean excludePartner){
-		this.excludePartner = excludePartner;
-	}
-
-	public void excludePartner(String multirequestToken){
-		setToken("excludePartner", multirequestToken);
 	}
 
 
@@ -97,7 +80,6 @@ public class CurrencyFilter extends Filter {
 
 		// set members values:
 		codeIn = GsonParser.parseString(jsonObject.get("codeIn"));
-		excludePartner = GsonParser.parseBoolean(jsonObject.get("excludePartner"));
 
 	}
 
@@ -105,7 +87,6 @@ public class CurrencyFilter extends Filter {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaCurrencyFilter");
 		kparams.add("codeIn", this.codeIn);
-		kparams.add("excludePartner", this.excludePartner);
 		return kparams;
 	}
 
@@ -126,13 +107,11 @@ public class CurrencyFilter extends Filter {
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeString(this.codeIn);
-        dest.writeValue(this.excludePartner);
     }
 
     public CurrencyFilter(Parcel in) {
         super(in);
         this.codeIn = in.readString();
-        this.excludePartner = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
 
