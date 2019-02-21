@@ -55,7 +55,7 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
 		String secondaryLanguages();
 		String deleteMediaPolicy();
 		String mainCurrency();
-		String secondaryCurrencys();
+		String secondaryCurrencies();
 		String downgradePolicy();
 		String mailSettings();
 		String dateFormat();
@@ -83,9 +83,9 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
 	 */
 	private Integer mainCurrency;
 	/**
-	 * A list of comma separated currencys ids.
+	 * A list of comma separated currency ids.
 	 */
-	private String secondaryCurrencys;
+	private String secondaryCurrencies;
 	/**
 	 * Downgrade policy
 	 */
@@ -163,16 +163,16 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
 		setToken("mainCurrency", multirequestToken);
 	}
 
-	// secondaryCurrencys:
-	public String getSecondaryCurrencys(){
-		return this.secondaryCurrencys;
+	// secondaryCurrencies:
+	public String getSecondaryCurrencies(){
+		return this.secondaryCurrencies;
 	}
-	public void setSecondaryCurrencys(String secondaryCurrencys){
-		this.secondaryCurrencys = secondaryCurrencys;
+	public void setSecondaryCurrencies(String secondaryCurrencies){
+		this.secondaryCurrencies = secondaryCurrencies;
 	}
 
-	public void secondaryCurrencys(String multirequestToken){
-		setToken("secondaryCurrencys", multirequestToken);
+	public void secondaryCurrencies(String multirequestToken){
+		setToken("secondaryCurrencies", multirequestToken);
 	}
 
 	// downgradePolicy:
@@ -239,7 +239,7 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
 		secondaryLanguages = GsonParser.parseString(jsonObject.get("secondaryLanguages"));
 		deleteMediaPolicy = DeleteMediaPolicy.get(GsonParser.parseString(jsonObject.get("deleteMediaPolicy")));
 		mainCurrency = GsonParser.parseInt(jsonObject.get("mainCurrency"));
-		secondaryCurrencys = GsonParser.parseString(jsonObject.get("secondaryCurrencys"));
+		secondaryCurrencies = GsonParser.parseString(jsonObject.get("secondaryCurrencies"));
 		downgradePolicy = DowngradePolicy.get(GsonParser.parseString(jsonObject.get("downgradePolicy")));
 		mailSettings = GsonParser.parseString(jsonObject.get("mailSettings"));
 		dateFormat = GsonParser.parseString(jsonObject.get("dateFormat"));
@@ -255,7 +255,7 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
 		kparams.add("secondaryLanguages", this.secondaryLanguages);
 		kparams.add("deleteMediaPolicy", this.deleteMediaPolicy);
 		kparams.add("mainCurrency", this.mainCurrency);
-		kparams.add("secondaryCurrencys", this.secondaryCurrencys);
+		kparams.add("secondaryCurrencies", this.secondaryCurrencies);
 		kparams.add("downgradePolicy", this.downgradePolicy);
 		kparams.add("mailSettings", this.mailSettings);
 		kparams.add("dateFormat", this.dateFormat);
@@ -284,7 +284,7 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
         dest.writeString(this.secondaryLanguages);
         dest.writeInt(this.deleteMediaPolicy == null ? -1 : this.deleteMediaPolicy.ordinal());
         dest.writeValue(this.mainCurrency);
-        dest.writeString(this.secondaryCurrencys);
+        dest.writeString(this.secondaryCurrencies);
         dest.writeInt(this.downgradePolicy == null ? -1 : this.downgradePolicy.ordinal());
         dest.writeString(this.mailSettings);
         dest.writeString(this.dateFormat);
@@ -299,7 +299,7 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
         int tmpDeleteMediaPolicy = in.readInt();
         this.deleteMediaPolicy = tmpDeleteMediaPolicy == -1 ? null : DeleteMediaPolicy.values()[tmpDeleteMediaPolicy];
         this.mainCurrency = (Integer)in.readValue(Integer.class.getClassLoader());
-        this.secondaryCurrencys = in.readString();
+        this.secondaryCurrencies = in.readString();
         int tmpDowngradePolicy = in.readInt();
         this.downgradePolicy = tmpDowngradePolicy == -1 ? null : DowngradePolicy.values()[tmpDowngradePolicy];
         this.mailSettings = in.readString();
