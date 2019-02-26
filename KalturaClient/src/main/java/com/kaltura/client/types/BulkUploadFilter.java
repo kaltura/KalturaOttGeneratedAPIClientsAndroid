@@ -30,6 +30,7 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
+import com.kaltura.client.enums.BatchUploadJobStatus;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
@@ -41,98 +42,78 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 /**
- * User asset rule filter
+ * Bulk Upload Filter
  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(UserAssetRuleFilter.Tokenizer.class)
-public class UserAssetRuleFilter extends Filter {
+@MultiRequestBuilder.Tokenizer(BulkUploadFilter.Tokenizer.class)
+public class BulkUploadFilter extends PersistedFilter {
 	
-	public interface Tokenizer extends Filter.Tokenizer {
-		String assetIdEqual();
-		String assetTypeEqual();
+	public interface Tokenizer extends PersistedFilter.Tokenizer {
+		String statusEqual();
 	}
 
 	/**
-	 * Asset identifier to filter by
+	 * Indicates which Bulk Upload list to return by this KalturaBatchUploadJobStatus.
 	 */
-	private Long assetIdEqual;
-	/**
-	 * Asset type to filter by - 0 = EPG, 1 = media, 2 = npvr
-	 */
-	private Integer assetTypeEqual;
+	private BatchUploadJobStatus statusEqual;
 
-	// assetIdEqual:
-	public Long getAssetIdEqual(){
-		return this.assetIdEqual;
+	// statusEqual:
+	public BatchUploadJobStatus getStatusEqual(){
+		return this.statusEqual;
 	}
-	public void setAssetIdEqual(Long assetIdEqual){
-		this.assetIdEqual = assetIdEqual;
+	public void setStatusEqual(BatchUploadJobStatus statusEqual){
+		this.statusEqual = statusEqual;
 	}
 
-	public void assetIdEqual(String multirequestToken){
-		setToken("assetIdEqual", multirequestToken);
-	}
-
-	// assetTypeEqual:
-	public Integer getAssetTypeEqual(){
-		return this.assetTypeEqual;
-	}
-	public void setAssetTypeEqual(Integer assetTypeEqual){
-		this.assetTypeEqual = assetTypeEqual;
-	}
-
-	public void assetTypeEqual(String multirequestToken){
-		setToken("assetTypeEqual", multirequestToken);
+	public void statusEqual(String multirequestToken){
+		setToken("statusEqual", multirequestToken);
 	}
 
 
-	public UserAssetRuleFilter() {
+	public BulkUploadFilter() {
 		super();
 	}
 
-	public UserAssetRuleFilter(JsonObject jsonObject) throws APIException {
+	public BulkUploadFilter(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		assetIdEqual = GsonParser.parseLong(jsonObject.get("assetIdEqual"));
-		assetTypeEqual = GsonParser.parseInt(jsonObject.get("assetTypeEqual"));
+		statusEqual = BatchUploadJobStatus.get(GsonParser.parseString(jsonObject.get("statusEqual")));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaUserAssetRuleFilter");
-		kparams.add("assetIdEqual", this.assetIdEqual);
-		kparams.add("assetTypeEqual", this.assetTypeEqual);
+		kparams.add("objectType", "KalturaBulkUploadFilter");
+		kparams.add("statusEqual", this.statusEqual);
 		return kparams;
 	}
 
 
-    public static final Creator<UserAssetRuleFilter> CREATOR = new Creator<UserAssetRuleFilter>() {
+    public static final Creator<BulkUploadFilter> CREATOR = new Creator<BulkUploadFilter>() {
         @Override
-        public UserAssetRuleFilter createFromParcel(Parcel source) {
-            return new UserAssetRuleFilter(source);
+        public BulkUploadFilter createFromParcel(Parcel source) {
+            return new BulkUploadFilter(source);
         }
 
         @Override
-        public UserAssetRuleFilter[] newArray(int size) {
-            return new UserAssetRuleFilter[size];
+        public BulkUploadFilter[] newArray(int size) {
+            return new BulkUploadFilter[size];
         }
     };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeValue(this.assetIdEqual);
-        dest.writeValue(this.assetTypeEqual);
+        dest.writeInt(this.statusEqual == null ? -1 : this.statusEqual.ordinal());
     }
 
-    public UserAssetRuleFilter(Parcel in) {
+    public BulkUploadFilter(Parcel in) {
         super(in);
-        this.assetIdEqual = (Long)in.readValue(Long.class.getClassLoader());
-        this.assetTypeEqual = (Integer)in.readValue(Integer.class.getClassLoader());
+        int tmpStatusEqual = in.readInt();
+        this.statusEqual = tmpStatusEqual == -1 ? null : BatchUploadJobStatus.values()[tmpStatusEqual];
     }
 }
 

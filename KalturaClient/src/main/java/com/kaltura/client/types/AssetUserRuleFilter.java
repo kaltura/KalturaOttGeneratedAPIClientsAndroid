@@ -30,6 +30,7 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
+import com.kaltura.client.enums.RuleActionType;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
@@ -49,6 +50,7 @@ public class AssetUserRuleFilter extends Filter {
 	
 	public interface Tokenizer extends Filter.Tokenizer {
 		String attachedUserIdEqualCurrent();
+		String actionsContainType();
 	}
 
 	/**
@@ -56,6 +58,10 @@ public class AssetUserRuleFilter extends Filter {
 	  entire group
 	 */
 	private Boolean attachedUserIdEqualCurrent;
+	/**
+	 * Indicates which asset rule list to return by this KalturaRuleActionType.
+	 */
+	private RuleActionType actionsContainType;
 
 	// attachedUserIdEqualCurrent:
 	public Boolean getAttachedUserIdEqualCurrent(){
@@ -67,6 +73,18 @@ public class AssetUserRuleFilter extends Filter {
 
 	public void attachedUserIdEqualCurrent(String multirequestToken){
 		setToken("attachedUserIdEqualCurrent", multirequestToken);
+	}
+
+	// actionsContainType:
+	public RuleActionType getActionsContainType(){
+		return this.actionsContainType;
+	}
+	public void setActionsContainType(RuleActionType actionsContainType){
+		this.actionsContainType = actionsContainType;
+	}
+
+	public void actionsContainType(String multirequestToken){
+		setToken("actionsContainType", multirequestToken);
 	}
 
 
@@ -81,6 +99,7 @@ public class AssetUserRuleFilter extends Filter {
 
 		// set members values:
 		attachedUserIdEqualCurrent = GsonParser.parseBoolean(jsonObject.get("attachedUserIdEqualCurrent"));
+		actionsContainType = RuleActionType.get(GsonParser.parseString(jsonObject.get("actionsContainType")));
 
 	}
 
@@ -88,6 +107,7 @@ public class AssetUserRuleFilter extends Filter {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaAssetUserRuleFilter");
 		kparams.add("attachedUserIdEqualCurrent", this.attachedUserIdEqualCurrent);
+		kparams.add("actionsContainType", this.actionsContainType);
 		return kparams;
 	}
 
@@ -108,11 +128,14 @@ public class AssetUserRuleFilter extends Filter {
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeValue(this.attachedUserIdEqualCurrent);
+        dest.writeInt(this.actionsContainType == null ? -1 : this.actionsContainType.ordinal());
     }
 
     public AssetUserRuleFilter(Parcel in) {
         super(in);
         this.attachedUserIdEqualCurrent = (Boolean)in.readValue(Boolean.class.getClassLoader());
+        int tmpActionsContainType = in.readInt();
+        this.actionsContainType = tmpActionsContainType == -1 ? null : RuleActionType.values()[tmpActionsContainType];
     }
 }
 

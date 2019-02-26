@@ -30,7 +30,6 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.enums.BatchJobStatus;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
@@ -42,75 +41,79 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(BulkFilter.Tokenizer.class)
-public class BulkFilter extends PersistedFilter {
+@MultiRequestBuilder.Tokenizer(BulkUploadAssetResult.Tokenizer.class)
+public class BulkUploadAssetResult extends BulkUploadResult {
 	
-	public interface Tokenizer extends PersistedFilter.Tokenizer {
-		String statusEqual();
+	public interface Tokenizer extends BulkUploadResult.Tokenizer {
+		String type();
+		String externalId();
 	}
 
 	/**
-	 * dynamicOrderBy - order by Meta
+	 * Identifies the asset type (EPG, Recording, Movie, TV Series, etc).              
+	  Possible values: 0 – EPG linear programs, 1 - Recording; or any asset type ID
+	  according to the asset types IDs defined in the system.
 	 */
-	private BatchJobStatus statusEqual;
+	private Integer type;
+	/**
+	 * External identifier for the asset
+	 */
+	private String externalId;
 
-	// statusEqual:
-	public BatchJobStatus getStatusEqual(){
-		return this.statusEqual;
+	// type:
+	public Integer getType(){
+		return this.type;
 	}
-	public void setStatusEqual(BatchJobStatus statusEqual){
-		this.statusEqual = statusEqual;
+	// externalId:
+	public String getExternalId(){
+		return this.externalId;
 	}
 
-	public void statusEqual(String multirequestToken){
-		setToken("statusEqual", multirequestToken);
-	}
-
-
-	public BulkFilter() {
+	public BulkUploadAssetResult() {
 		super();
 	}
 
-	public BulkFilter(JsonObject jsonObject) throws APIException {
+	public BulkUploadAssetResult(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		statusEqual = BatchJobStatus.get(GsonParser.parseString(jsonObject.get("statusEqual")));
+		type = GsonParser.parseInt(jsonObject.get("type"));
+		externalId = GsonParser.parseString(jsonObject.get("externalId"));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaBulkFilter");
-		kparams.add("statusEqual", this.statusEqual);
+		kparams.add("objectType", "KalturaBulkUploadAssetResult");
 		return kparams;
 	}
 
 
-    public static final Creator<BulkFilter> CREATOR = new Creator<BulkFilter>() {
+    public static final Creator<BulkUploadAssetResult> CREATOR = new Creator<BulkUploadAssetResult>() {
         @Override
-        public BulkFilter createFromParcel(Parcel source) {
-            return new BulkFilter(source);
+        public BulkUploadAssetResult createFromParcel(Parcel source) {
+            return new BulkUploadAssetResult(source);
         }
 
         @Override
-        public BulkFilter[] newArray(int size) {
-            return new BulkFilter[size];
+        public BulkUploadAssetResult[] newArray(int size) {
+            return new BulkUploadAssetResult[size];
         }
     };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeInt(this.statusEqual == null ? -1 : this.statusEqual.ordinal());
+        dest.writeValue(this.type);
+        dest.writeString(this.externalId);
     }
 
-    public BulkFilter(Parcel in) {
+    public BulkUploadAssetResult(Parcel in) {
         super(in);
-        int tmpStatusEqual = in.readInt();
-        this.statusEqual = tmpStatusEqual == -1 ? null : BatchJobStatus.values()[tmpStatusEqual];
+        this.type = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.externalId = in.readString();
     }
 }
 

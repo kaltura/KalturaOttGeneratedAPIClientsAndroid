@@ -33,12 +33,13 @@ package com.kaltura.client.enums;
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
-public enum BulkOrderBy implements EnumAsString {
-	NONE("NONE");
+public enum BatchUploadJobAction implements EnumAsString {
+	UPSERT("Upsert"),
+	DELETE("Delete");
 
 	private String value;
 
-	BulkOrderBy(String value) {
+	BatchUploadJobAction(String value) {
 		this.value = value;
 	}
 
@@ -51,19 +52,19 @@ public enum BulkOrderBy implements EnumAsString {
 		this.value = value;
 	}
 
-	public static BulkOrderBy get(String value) {
+	public static BatchUploadJobAction get(String value) {
 		if(value == null)
 		{
 			return null;
 		}
 		
-		// goes over BulkOrderBy defined values and compare the inner value with the given one:
-		for(BulkOrderBy item: values()) {
+		// goes over BatchUploadJobAction defined values and compare the inner value with the given one:
+		for(BatchUploadJobAction item: values()) {
 			if(item.getValue().equals(value)) {
 				return item;
 			}
 		}
 		// in case the requested value was not found in the enum values, we return the first item as default.
-		return BulkOrderBy.values().length > 0 ? BulkOrderBy.values()[0]: null;
+		return BatchUploadJobAction.values().length > 0 ? BatchUploadJobAction.values()[0]: null;
    }
 }

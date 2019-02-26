@@ -30,7 +30,6 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.enums.BatchJobStatus;
 import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
@@ -42,104 +41,81 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
+/**
+ * Response Status
+ */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(Bulk.Tokenizer.class)
-public class Bulk extends ObjectBase {
+@MultiRequestBuilder.Tokenizer(ResponseStatus.Tokenizer.class)
+public class ResponseStatus extends ObjectBase {
 	
 	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String id();
-		String status();
-		String createDate();
-		String updateDate();
+		String code();
+		String message();
 	}
 
 	/**
-	 * Bulk identifier
+	 * Code
 	 */
-	private Long id;
+	private Integer code;
 	/**
-	 * Status
+	 * Message
 	 */
-	private BatchJobStatus status;
-	/**
-	 * Specifies when was the bulk action created. Date and time represented as epoch
-	 */
-	private Long createDate;
-	/**
-	 * Specifies when was the bulk action last updated. Date and time represented as
-	  epoch
-	 */
-	private Long updateDate;
+	private String message;
 
-	// id:
-	public Long getId(){
-		return this.id;
+	// code:
+	public Integer getCode(){
+		return this.code;
 	}
-	// status:
-	public BatchJobStatus getStatus(){
-		return this.status;
-	}
-	// createDate:
-	public Long getCreateDate(){
-		return this.createDate;
-	}
-	// updateDate:
-	public Long getUpdateDate(){
-		return this.updateDate;
+	// message:
+	public String getMessage(){
+		return this.message;
 	}
 
-	public Bulk() {
+	public ResponseStatus() {
 		super();
 	}
 
-	public Bulk(JsonObject jsonObject) throws APIException {
+	public ResponseStatus(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		id = GsonParser.parseLong(jsonObject.get("id"));
-		status = BatchJobStatus.get(GsonParser.parseString(jsonObject.get("status")));
-		createDate = GsonParser.parseLong(jsonObject.get("createDate"));
-		updateDate = GsonParser.parseLong(jsonObject.get("updateDate"));
+		code = GsonParser.parseInt(jsonObject.get("code"));
+		message = GsonParser.parseString(jsonObject.get("message"));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaBulk");
+		kparams.add("objectType", "KalturaResponseStatus");
 		return kparams;
 	}
 
 
-    public static final Creator<Bulk> CREATOR = new Creator<Bulk>() {
+    public static final Creator<ResponseStatus> CREATOR = new Creator<ResponseStatus>() {
         @Override
-        public Bulk createFromParcel(Parcel source) {
-            return new Bulk(source);
+        public ResponseStatus createFromParcel(Parcel source) {
+            return new ResponseStatus(source);
         }
 
         @Override
-        public Bulk[] newArray(int size) {
-            return new Bulk[size];
+        public ResponseStatus[] newArray(int size) {
+            return new ResponseStatus[size];
         }
     };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeValue(this.id);
-        dest.writeInt(this.status == null ? -1 : this.status.ordinal());
-        dest.writeValue(this.createDate);
-        dest.writeValue(this.updateDate);
+        dest.writeValue(this.code);
+        dest.writeString(this.message);
     }
 
-    public Bulk(Parcel in) {
+    public ResponseStatus(Parcel in) {
         super(in);
-        this.id = (Long)in.readValue(Long.class.getClassLoader());
-        int tmpStatus = in.readInt();
-        this.status = tmpStatus == -1 ? null : BatchJobStatus.values()[tmpStatus];
-        this.createDate = (Long)in.readValue(Long.class.getClassLoader());
-        this.updateDate = (Long)in.readValue(Long.class.getClassLoader());
+        this.code = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.message = in.readString();
     }
 }
 
