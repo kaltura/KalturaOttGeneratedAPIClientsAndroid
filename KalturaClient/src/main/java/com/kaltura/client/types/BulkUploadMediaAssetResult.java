@@ -30,8 +30,6 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.types.ObjectBase;
-import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
@@ -41,81 +39,44 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
-/**
- * Response Status
- */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(ResponseStatus.Tokenizer.class)
-public class ResponseStatus extends ObjectBase {
+@MultiRequestBuilder.Tokenizer(BulkUploadMediaAssetResult.Tokenizer.class)
+public class BulkUploadMediaAssetResult extends BulkUploadAssetResult {
 	
-	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String code();
-		String message();
+	public interface Tokenizer extends BulkUploadAssetResult.Tokenizer {
 	}
 
-	/**
-	 * Code
-	 */
-	private Integer code;
-	/**
-	 * Message
-	 */
-	private String message;
 
-	// code:
-	public Integer getCode(){
-		return this.code;
-	}
-	// message:
-	public String getMessage(){
-		return this.message;
-	}
 
-	public ResponseStatus() {
+	public BulkUploadMediaAssetResult() {
 		super();
 	}
 
-	public ResponseStatus(JsonObject jsonObject) throws APIException {
+	public BulkUploadMediaAssetResult(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		code = GsonParser.parseInt(jsonObject.get("code"));
-		message = GsonParser.parseString(jsonObject.get("message"));
-
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaResponseStatus");
+		kparams.add("objectType", "KalturaBulkUploadMediaAssetResult");
 		return kparams;
 	}
 
 
-    public static final Creator<ResponseStatus> CREATOR = new Creator<ResponseStatus>() {
+    public static final Creator<BulkUploadMediaAssetResult> CREATOR = new Creator<BulkUploadMediaAssetResult>() {
         @Override
-        public ResponseStatus createFromParcel(Parcel source) {
-            return new ResponseStatus(source);
+        public BulkUploadMediaAssetResult createFromParcel(Parcel source) {
+            return new BulkUploadMediaAssetResult(source);
         }
 
         @Override
-        public ResponseStatus[] newArray(int size) {
-            return new ResponseStatus[size];
+        public BulkUploadMediaAssetResult[] newArray(int size) {
+            return new BulkUploadMediaAssetResult[size];
         }
     };
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeValue(this.code);
-        dest.writeString(this.message);
-    }
-
-    public ResponseStatus(Parcel in) {
+    public BulkUploadMediaAssetResult(Parcel in) {
         super(in);
-        this.code = (Integer)in.readValue(Integer.class.getClassLoader());
-        this.message = in.readString();
     }
 }
 

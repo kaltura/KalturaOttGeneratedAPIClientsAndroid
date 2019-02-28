@@ -25,12 +25,7 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.client.types;
-
-import android.os.Parcel;
-import com.google.gson.JsonObject;
-import com.kaltura.client.Params;
-import com.kaltura.client.utils.request.MultiRequestBuilder;
+package com.kaltura.client.enums;
 
 /**
  * This class was generated using exec.php
@@ -38,48 +33,39 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
+public enum BulkUploadJobStatus implements EnumAsString {
+	PENDING("PENDING"),
+	UPLOADED("UPLOADED"),
+	QUEUED("QUEUED");
 
-/**
- * instractions for upload epg asset values
- */
-@SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(BulkUploadEpgEntryData.Tokenizer.class)
-public class BulkUploadEpgEntryData extends BulkUploadAssetEntryData {
-	
-	public interface Tokenizer extends BulkUploadAssetEntryData.Tokenizer {
+	private String value;
+
+	BulkUploadJobStatus(String value) {
+		this.value = value;
 	}
 
-
-
-	public BulkUploadEpgEntryData() {
-		super();
+	@Override
+	public String getValue() {
+		return this.value;
 	}
 
-	public BulkUploadEpgEntryData(JsonObject jsonObject) throws APIException {
-		super(jsonObject);
+	public void setValue(String value) {
+		this.value = value;
 	}
 
-	public Params toParams() {
-		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaBulkUploadEpgEntryData");
-		return kparams;
-	}
-
-
-    public static final Creator<BulkUploadEpgEntryData> CREATOR = new Creator<BulkUploadEpgEntryData>() {
-        @Override
-        public BulkUploadEpgEntryData createFromParcel(Parcel source) {
-            return new BulkUploadEpgEntryData(source);
-        }
-
-        @Override
-        public BulkUploadEpgEntryData[] newArray(int size) {
-            return new BulkUploadEpgEntryData[size];
-        }
-    };
-
-    public BulkUploadEpgEntryData(Parcel in) {
-        super(in);
-    }
+	public static BulkUploadJobStatus get(String value) {
+		if(value == null)
+		{
+			return null;
+		}
+		
+		// goes over BulkUploadJobStatus defined values and compare the inner value with the given one:
+		for(BulkUploadJobStatus item: values()) {
+			if(item.getValue().equals(value)) {
+				return item;
+			}
+		}
+		// in case the requested value was not found in the enum values, we return the first item as default.
+		return BulkUploadJobStatus.values().length > 0 ? BulkUploadJobStatus.values()[0]: null;
+   }
 }
-

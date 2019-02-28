@@ -30,9 +30,7 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.types.BulkUploadEntryData;
 import com.kaltura.client.types.ObjectBase;
-import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
@@ -50,21 +48,8 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
 public abstract class BulkUploadJobData extends ObjectBase {
 	
 	public interface Tokenizer extends ObjectBase.Tokenizer {
-		BulkUploadEntryData.Tokenizer entryData();
 	}
 
-	/**
-	 * EntryData
-	 */
-	private BulkUploadEntryData entryData;
-
-	// entryData:
-	public BulkUploadEntryData getEntryData(){
-		return this.entryData;
-	}
-	public void setEntryData(BulkUploadEntryData entryData){
-		this.entryData = entryData;
-	}
 
 
 	public BulkUploadJobData() {
@@ -73,31 +58,17 @@ public abstract class BulkUploadJobData extends ObjectBase {
 
 	public BulkUploadJobData(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		entryData = GsonParser.parseObject(jsonObject.getAsJsonObject("entryData"), BulkUploadEntryData.class);
-
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaBulkUploadJobData");
-		kparams.add("entryData", this.entryData);
 		return kparams;
 	}
 
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeParcelable(this.entryData, flags);
-    }
-
     public BulkUploadJobData(Parcel in) {
         super(in);
-        this.entryData = in.readParcelable(BulkUploadEntryData.class.getClassLoader());
     }
 }
 

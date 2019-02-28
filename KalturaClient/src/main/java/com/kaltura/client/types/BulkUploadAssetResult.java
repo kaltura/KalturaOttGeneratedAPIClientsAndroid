@@ -42,7 +42,7 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(BulkUploadAssetResult.Tokenizer.class)
-public class BulkUploadAssetResult extends BulkUploadResult {
+public abstract class BulkUploadAssetResult extends BulkUploadResult {
 	
 	public interface Tokenizer extends BulkUploadResult.Tokenizer {
 		String type();
@@ -90,18 +90,6 @@ public class BulkUploadAssetResult extends BulkUploadResult {
 		return kparams;
 	}
 
-
-    public static final Creator<BulkUploadAssetResult> CREATOR = new Creator<BulkUploadAssetResult>() {
-        @Override
-        public BulkUploadAssetResult createFromParcel(Parcel source) {
-            return new BulkUploadAssetResult(source);
-        }
-
-        @Override
-        public BulkUploadAssetResult[] newArray(int size) {
-            return new BulkUploadAssetResult[size];
-        }
-    };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {

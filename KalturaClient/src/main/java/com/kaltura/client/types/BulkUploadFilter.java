@@ -30,7 +30,7 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.enums.BatchUploadJobStatus;
+import com.kaltura.client.enums.BulkUploadJobStatus;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
@@ -55,13 +55,13 @@ public class BulkUploadFilter extends PersistedFilter {
 	/**
 	 * Indicates which Bulk Upload list to return by this KalturaBatchUploadJobStatus.
 	 */
-	private BatchUploadJobStatus statusEqual;
+	private BulkUploadJobStatus statusEqual;
 
 	// statusEqual:
-	public BatchUploadJobStatus getStatusEqual(){
+	public BulkUploadJobStatus getStatusEqual(){
 		return this.statusEqual;
 	}
-	public void setStatusEqual(BatchUploadJobStatus statusEqual){
+	public void setStatusEqual(BulkUploadJobStatus statusEqual){
 		this.statusEqual = statusEqual;
 	}
 
@@ -80,7 +80,7 @@ public class BulkUploadFilter extends PersistedFilter {
 		if(jsonObject == null) return;
 
 		// set members values:
-		statusEqual = BatchUploadJobStatus.get(GsonParser.parseString(jsonObject.get("statusEqual")));
+		statusEqual = BulkUploadJobStatus.get(GsonParser.parseString(jsonObject.get("statusEqual")));
 
 	}
 
@@ -113,7 +113,7 @@ public class BulkUploadFilter extends PersistedFilter {
     public BulkUploadFilter(Parcel in) {
         super(in);
         int tmpStatusEqual = in.readInt();
-        this.statusEqual = tmpStatusEqual == -1 ? null : BatchUploadJobStatus.values()[tmpStatusEqual];
+        this.statusEqual = tmpStatusEqual == -1 ? null : BulkUploadJobStatus.values()[tmpStatusEqual];
     }
 }
 
