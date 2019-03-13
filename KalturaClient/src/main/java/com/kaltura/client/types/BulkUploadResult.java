@@ -34,6 +34,9 @@ import com.kaltura.client.enums.BulkUploadResultStatus;
 import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.utils.request.RequestBuilder;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class was generated using exec.php
@@ -56,6 +59,7 @@ public abstract class BulkUploadResult extends ObjectBase {
 		String status();
 		String errorCode();
 		String errorMessage();
+		RequestBuilder.ListTokenizer<Message.Tokenizer> warnings();
 	}
 
 	/**
@@ -82,6 +86,10 @@ public abstract class BulkUploadResult extends ObjectBase {
 	 * Error Message
 	 */
 	private String errorMessage;
+	/**
+	 * A list of warnings
+	 */
+	private List<Message> warnings;
 
 	// objectId:
 	public Long getObjectId(){
@@ -107,6 +115,10 @@ public abstract class BulkUploadResult extends ObjectBase {
 	public String getErrorMessage(){
 		return this.errorMessage;
 	}
+	// warnings:
+	public List<Message> getWarnings(){
+		return this.warnings;
+	}
 
 	public BulkUploadResult() {
 		super();
@@ -124,6 +136,7 @@ public abstract class BulkUploadResult extends ObjectBase {
 		status = BulkUploadResultStatus.get(GsonParser.parseString(jsonObject.get("status")));
 		errorCode = GsonParser.parseInt(jsonObject.get("errorCode"));
 		errorMessage = GsonParser.parseString(jsonObject.get("errorMessage"));
+		warnings = GsonParser.parseArray(jsonObject.getAsJsonArray("warnings"), Message.class);
 
 	}
 
@@ -143,6 +156,12 @@ public abstract class BulkUploadResult extends ObjectBase {
         dest.writeInt(this.status == null ? -1 : this.status.ordinal());
         dest.writeValue(this.errorCode);
         dest.writeString(this.errorMessage);
+        if(this.warnings != null) {
+            dest.writeInt(this.warnings.size());
+            dest.writeList(this.warnings);
+        } else {
+            dest.writeInt(-1);
+        }
     }
 
     public BulkUploadResult(Parcel in) {
@@ -154,6 +173,11 @@ public abstract class BulkUploadResult extends ObjectBase {
         this.status = tmpStatus == -1 ? null : BulkUploadResultStatus.values()[tmpStatus];
         this.errorCode = (Integer)in.readValue(Integer.class.getClassLoader());
         this.errorMessage = in.readString();
+        int warningsSize = in.readInt();
+        if( warningsSize > -1) {
+            this.warnings = new ArrayList<>();
+            in.readList(this.warnings, Message.class.getClassLoader());
+        }
     }
 }
 

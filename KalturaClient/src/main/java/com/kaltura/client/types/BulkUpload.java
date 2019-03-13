@@ -61,6 +61,7 @@ public class BulkUpload extends ObjectBase {
 		String numOfObjects();
 		String createDate();
 		String updateDate();
+		String uploadedByUserId();
 		RequestBuilder.ListTokenizer<BulkUploadResult.Tokenizer> results();
 	}
 
@@ -94,6 +95,10 @@ public class BulkUpload extends ObjectBase {
 	 */
 	private Long updateDate;
 	/**
+	 * The user who uploaded this bulk
+	 */
+	private Long uploadedByUserId;
+	/**
 	 * A list of results
 	 */
 	private List<BulkUploadResult> results;
@@ -126,6 +131,10 @@ public class BulkUpload extends ObjectBase {
 	public Long getUpdateDate(){
 		return this.updateDate;
 	}
+	// uploadedByUserId:
+	public Long getUploadedByUserId(){
+		return this.uploadedByUserId;
+	}
 	// results:
 	public List<BulkUploadResult> getResults(){
 		return this.results;
@@ -148,6 +157,7 @@ public class BulkUpload extends ObjectBase {
 		numOfObjects = GsonParser.parseInt(jsonObject.get("numOfObjects"));
 		createDate = GsonParser.parseLong(jsonObject.get("createDate"));
 		updateDate = GsonParser.parseLong(jsonObject.get("updateDate"));
+		uploadedByUserId = GsonParser.parseLong(jsonObject.get("uploadedByUserId"));
 		results = GsonParser.parseArray(jsonObject.getAsJsonArray("results"), BulkUploadResult.class);
 
 	}
@@ -181,6 +191,7 @@ public class BulkUpload extends ObjectBase {
         dest.writeValue(this.numOfObjects);
         dest.writeValue(this.createDate);
         dest.writeValue(this.updateDate);
+        dest.writeValue(this.uploadedByUserId);
         if(this.results != null) {
             dest.writeInt(this.results.size());
             dest.writeList(this.results);
@@ -200,6 +211,7 @@ public class BulkUpload extends ObjectBase {
         this.numOfObjects = (Integer)in.readValue(Integer.class.getClassLoader());
         this.createDate = (Long)in.readValue(Long.class.getClassLoader());
         this.updateDate = (Long)in.readValue(Long.class.getClassLoader());
+        this.uploadedByUserId = (Long)in.readValue(Long.class.getClassLoader());
         int resultsSize = in.readInt();
         if( resultsSize > -1) {
             this.results = new ArrayList<>();
