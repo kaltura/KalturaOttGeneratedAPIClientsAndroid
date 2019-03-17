@@ -31,6 +31,7 @@ import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.enums.BulkUploadResultStatus;
+import com.kaltura.client.types.Message;
 import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
@@ -57,8 +58,7 @@ public abstract class BulkUploadResult extends ObjectBase {
 		String index();
 		String bulkUploadId();
 		String status();
-		String errorCode();
-		String errorMessage();
+		Message.Tokenizer error();
 		RequestBuilder.ListTokenizer<Message.Tokenizer> warnings();
 	}
 
@@ -79,13 +79,9 @@ public abstract class BulkUploadResult extends ObjectBase {
 	 */
 	private BulkUploadResultStatus status;
 	/**
-	 * Error Code
+	 * Error details
 	 */
-	private Integer errorCode;
-	/**
-	 * Error Message
-	 */
-	private String errorMessage;
+	private Message error;
 	/**
 	 * A list of warnings
 	 */
@@ -107,13 +103,9 @@ public abstract class BulkUploadResult extends ObjectBase {
 	public BulkUploadResultStatus getStatus(){
 		return this.status;
 	}
-	// errorCode:
-	public Integer getErrorCode(){
-		return this.errorCode;
-	}
-	// errorMessage:
-	public String getErrorMessage(){
-		return this.errorMessage;
+	// error:
+	public Message getError(){
+		return this.error;
 	}
 	// warnings:
 	public List<Message> getWarnings(){
@@ -134,8 +126,7 @@ public abstract class BulkUploadResult extends ObjectBase {
 		index = GsonParser.parseInt(jsonObject.get("index"));
 		bulkUploadId = GsonParser.parseLong(jsonObject.get("bulkUploadId"));
 		status = BulkUploadResultStatus.get(GsonParser.parseString(jsonObject.get("status")));
-		errorCode = GsonParser.parseInt(jsonObject.get("errorCode"));
-		errorMessage = GsonParser.parseString(jsonObject.get("errorMessage"));
+		error = GsonParser.parseObject(jsonObject.getAsJsonObject("error"), Message.class);
 		warnings = GsonParser.parseArray(jsonObject.getAsJsonArray("warnings"), Message.class);
 
 	}
@@ -154,8 +145,7 @@ public abstract class BulkUploadResult extends ObjectBase {
         dest.writeValue(this.index);
         dest.writeValue(this.bulkUploadId);
         dest.writeInt(this.status == null ? -1 : this.status.ordinal());
-        dest.writeValue(this.errorCode);
-        dest.writeString(this.errorMessage);
+        dest.writeParcelable(this.error, flags);
         if(this.warnings != null) {
             dest.writeInt(this.warnings.size());
             dest.writeList(this.warnings);
@@ -171,8 +161,7 @@ public abstract class BulkUploadResult extends ObjectBase {
         this.bulkUploadId = (Long)in.readValue(Long.class.getClassLoader());
         int tmpStatus = in.readInt();
         this.status = tmpStatus == -1 ? null : BulkUploadResultStatus.values()[tmpStatus];
-        this.errorCode = (Integer)in.readValue(Integer.class.getClassLoader());
-        this.errorMessage = in.readString();
+        this.error = in.readParcelable(Message.class.getClassLoader());
         int warningsSize = in.readInt();
         if( warningsSize > -1) {
             this.warnings = new ArrayList<>();
