@@ -30,7 +30,6 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
@@ -41,80 +40,46 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 /**
- * indicates the asset object type in the bulk file (this class is not abstract for
-  backward-compatibility)
+ * indicates the media asset object type in the bulk file
  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(BulkUploadAssetData.Tokenizer.class)
-public class BulkUploadAssetData extends BulkUploadObjectData {
+@MultiRequestBuilder.Tokenizer(BulkUploadMediaAssetData.Tokenizer.class)
+public class BulkUploadMediaAssetData extends BulkUploadAssetData {
 	
-	public interface Tokenizer extends BulkUploadObjectData.Tokenizer {
-		String typeId();
-	}
-
-	/**
-	 * Identifies the asset type (EPG, Recording, Movie, TV Series, etc).              
-	  Possible values: 0 – EPG linear programs, 1 - Recording; or any asset type ID
-	  according to the asset types IDs defined in the system.
-	 */
-	private Long typeId;
-
-	// typeId:
-	public Long getTypeId(){
-		return this.typeId;
-	}
-	public void setTypeId(Long typeId){
-		this.typeId = typeId;
-	}
-
-	public void typeId(String multirequestToken){
-		setToken("typeId", multirequestToken);
+	public interface Tokenizer extends BulkUploadAssetData.Tokenizer {
 	}
 
 
-	public BulkUploadAssetData() {
+
+	public BulkUploadMediaAssetData() {
 		super();
 	}
 
-	public BulkUploadAssetData(JsonObject jsonObject) throws APIException {
+	public BulkUploadMediaAssetData(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
-
-		if(jsonObject == null) return;
-
-		// set members values:
-		typeId = GsonParser.parseLong(jsonObject.get("typeId"));
-
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaBulkUploadAssetData");
-		kparams.add("typeId", this.typeId);
+		kparams.add("objectType", "KalturaBulkUploadMediaAssetData");
 		return kparams;
 	}
 
 
-    public static final Creator<BulkUploadAssetData> CREATOR = new Creator<BulkUploadAssetData>() {
+    public static final Creator<BulkUploadMediaAssetData> CREATOR = new Creator<BulkUploadMediaAssetData>() {
         @Override
-        public BulkUploadAssetData createFromParcel(Parcel source) {
-            return new BulkUploadAssetData(source);
+        public BulkUploadMediaAssetData createFromParcel(Parcel source) {
+            return new BulkUploadMediaAssetData(source);
         }
 
         @Override
-        public BulkUploadAssetData[] newArray(int size) {
-            return new BulkUploadAssetData[size];
+        public BulkUploadMediaAssetData[] newArray(int size) {
+            return new BulkUploadMediaAssetData[size];
         }
     };
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeValue(this.typeId);
-    }
-
-    public BulkUploadAssetData(Parcel in) {
+    public BulkUploadMediaAssetData(Parcel in) {
         super(in);
-        this.typeId = (Long)in.readValue(Long.class.getClassLoader());
     }
 }
 
