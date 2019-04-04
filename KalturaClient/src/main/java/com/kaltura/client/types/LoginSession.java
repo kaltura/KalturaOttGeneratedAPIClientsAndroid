@@ -50,12 +50,17 @@ public class LoginSession extends ObjectBase {
 	
 	public interface Tokenizer extends ObjectBase.Tokenizer {
 		String ks();
+		String expiration();
 	}
 
 	/**
 	 * Access token in a KS format
 	 */
 	private String ks;
+	/**
+	 * Expiration
+	 */
+	private Long expiration;
 
 	// ks:
 	public String getKs(){
@@ -67,6 +72,18 @@ public class LoginSession extends ObjectBase {
 
 	public void ks(String multirequestToken){
 		setToken("ks", multirequestToken);
+	}
+
+	// expiration:
+	public Long getExpiration(){
+		return this.expiration;
+	}
+	public void setExpiration(Long expiration){
+		this.expiration = expiration;
+	}
+
+	public void expiration(String multirequestToken){
+		setToken("expiration", multirequestToken);
 	}
 
 
@@ -81,6 +98,7 @@ public class LoginSession extends ObjectBase {
 
 		// set members values:
 		ks = GsonParser.parseString(jsonObject.get("ks"));
+		expiration = GsonParser.parseLong(jsonObject.get("expiration"));
 
 	}
 
@@ -88,6 +106,7 @@ public class LoginSession extends ObjectBase {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaLoginSession");
 		kparams.add("ks", this.ks);
+		kparams.add("expiration", this.expiration);
 		return kparams;
 	}
 
@@ -108,11 +127,13 @@ public class LoginSession extends ObjectBase {
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeString(this.ks);
+        dest.writeValue(this.expiration);
     }
 
     public LoginSession(Parcel in) {
         super(in);
         this.ks = in.readString();
+        this.expiration = (Long)in.readValue(Long.class.getClassLoader());
     }
 }
 
