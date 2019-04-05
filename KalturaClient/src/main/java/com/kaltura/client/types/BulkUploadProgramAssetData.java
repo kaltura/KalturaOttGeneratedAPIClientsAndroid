@@ -43,42 +43,42 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * indicates the epg asset object type in the bulk file
  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(BulkUploadEpgAssetData.Tokenizer.class)
-public class BulkUploadEpgAssetData extends BulkUploadAssetData {
+@MultiRequestBuilder.Tokenizer(BulkUploadProgramAssetData.Tokenizer.class)
+public class BulkUploadProgramAssetData extends BulkUploadAssetData {
 	
 	public interface Tokenizer extends BulkUploadAssetData.Tokenizer {
 	}
 
 
 
-	public BulkUploadEpgAssetData() {
+	public BulkUploadProgramAssetData() {
 		super();
 	}
 
-	public BulkUploadEpgAssetData(JsonObject jsonObject) throws APIException {
+	public BulkUploadProgramAssetData(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaBulkUploadEpgAssetData");
+		kparams.add("objectType", "KalturaBulkUploadProgramAssetData");
 		return kparams;
 	}
 
 
-    public static final Creator<BulkUploadEpgAssetData> CREATOR = new Creator<BulkUploadEpgAssetData>() {
+    public static final Creator<BulkUploadProgramAssetData> CREATOR = new Creator<BulkUploadProgramAssetData>() {
         @Override
-        public BulkUploadEpgAssetData createFromParcel(Parcel source) {
-            return new BulkUploadEpgAssetData(source);
+        public BulkUploadProgramAssetData createFromParcel(Parcel source) {
+            return new BulkUploadProgramAssetData(source);
         }
 
         @Override
-        public BulkUploadEpgAssetData[] newArray(int size) {
-            return new BulkUploadEpgAssetData[size];
+        public BulkUploadProgramAssetData[] newArray(int size) {
+            return new BulkUploadProgramAssetData[size];
         }
     };
 
-    public BulkUploadEpgAssetData(Parcel in) {
+    public BulkUploadProgramAssetData(Parcel in) {
         super(in);
     }
 }
