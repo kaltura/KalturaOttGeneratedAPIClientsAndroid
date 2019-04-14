@@ -64,6 +64,7 @@ public class Channel extends BaseChannel {
 		String createDate();
 		String updateDate();
 		String supportSegmentBasedOrdering();
+		String assetUserRuleId();
 	}
 
 	/**
@@ -115,6 +116,10 @@ public class Channel extends BaseChannel {
 	  match to the user&amp;#39;s segments (see BEO-5524)
 	 */
 	private Boolean supportSegmentBasedOrdering;
+	/**
+	 * Asset user rule identifier
+	 */
+	private Long assetUserRuleId;
 
 	// name:
 	public String getName(){
@@ -216,6 +221,18 @@ public class Channel extends BaseChannel {
 		setToken("supportSegmentBasedOrdering", multirequestToken);
 	}
 
+	// assetUserRuleId:
+	public Long getAssetUserRuleId(){
+		return this.assetUserRuleId;
+	}
+	public void setAssetUserRuleId(Long assetUserRuleId){
+		this.assetUserRuleId = assetUserRuleId;
+	}
+
+	public void assetUserRuleId(String multirequestToken){
+		setToken("assetUserRuleId", multirequestToken);
+	}
+
 
 	public Channel() {
 		super();
@@ -239,6 +256,7 @@ public class Channel extends BaseChannel {
 		createDate = GsonParser.parseLong(jsonObject.get("createDate"));
 		updateDate = GsonParser.parseLong(jsonObject.get("updateDate"));
 		supportSegmentBasedOrdering = GsonParser.parseBoolean(jsonObject.get("supportSegmentBasedOrdering"));
+		assetUserRuleId = GsonParser.parseLong(jsonObject.get("assetUserRuleId"));
 
 	}
 
@@ -253,6 +271,7 @@ public class Channel extends BaseChannel {
 		kparams.add("isActive", this.isActive);
 		kparams.add("orderBy", this.orderBy);
 		kparams.add("supportSegmentBasedOrdering", this.supportSegmentBasedOrdering);
+		kparams.add("assetUserRuleId", this.assetUserRuleId);
 		return kparams;
 	}
 
@@ -294,6 +313,7 @@ public class Channel extends BaseChannel {
         dest.writeValue(this.createDate);
         dest.writeValue(this.updateDate);
         dest.writeValue(this.supportSegmentBasedOrdering);
+        dest.writeValue(this.assetUserRuleId);
     }
 
     public Channel(Parcel in) {
@@ -318,6 +338,7 @@ public class Channel extends BaseChannel {
         this.createDate = (Long)in.readValue(Long.class.getClassLoader());
         this.updateDate = (Long)in.readValue(Long.class.getClassLoader());
         this.supportSegmentBasedOrdering = (Boolean)in.readValue(Boolean.class.getClassLoader());
+        this.assetUserRuleId = (Long)in.readValue(Long.class.getClassLoader());
     }
 }
 

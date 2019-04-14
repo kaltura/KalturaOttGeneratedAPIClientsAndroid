@@ -25,7 +25,12 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.client.enums;
+package com.kaltura.client.types;
+
+import android.os.Parcel;
+import com.google.gson.JsonObject;
+import com.kaltura.client.Params;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using exec.php
@@ -33,44 +38,45 @@ package com.kaltura.client.enums;
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
-public enum ChannelEnrichment implements EnumAsString {
-	CLIENTLOCATION("ClientLocation"),
-	USERID("UserId"),
-	HOUSEHOLDID("HouseholdId"),
-	DEVICEID("DeviceId"),
-	DEVICETYPE("DeviceType"),
-	UTCOFFSET("UTCOffset"),
-	LANGUAGE("Language"),
-	DTTREGION("DTTRegion");
 
-	private String value;
-
-	ChannelEnrichment(String value) {
-		this.value = value;
+@SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(BulkUploadMediaAssetResult.Tokenizer.class)
+public class BulkUploadMediaAssetResult extends BulkUploadAssetResult {
+	
+	public interface Tokenizer extends BulkUploadAssetResult.Tokenizer {
 	}
 
-	@Override
-	public String getValue() {
-		return this.value;
+
+
+	public BulkUploadMediaAssetResult() {
+		super();
 	}
 
-	public void setValue(String value) {
-		this.value = value;
+	public BulkUploadMediaAssetResult(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
 	}
 
-	public static ChannelEnrichment get(String value) {
-		if(value == null)
-		{
-			return null;
-		}
-		
-		// goes over ChannelEnrichment defined values and compare the inner value with the given one:
-		for(ChannelEnrichment item: values()) {
-			if(item.getValue().equals(value)) {
-				return item;
-			}
-		}
-		// in case the requested value was not found in the enum values, we return the first item as default.
-		return ChannelEnrichment.values().length > 0 ? ChannelEnrichment.values()[0]: null;
-   }
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaBulkUploadMediaAssetResult");
+		return kparams;
+	}
+
+
+    public static final Creator<BulkUploadMediaAssetResult> CREATOR = new Creator<BulkUploadMediaAssetResult>() {
+        @Override
+        public BulkUploadMediaAssetResult createFromParcel(Parcel source) {
+            return new BulkUploadMediaAssetResult(source);
+        }
+
+        @Override
+        public BulkUploadMediaAssetResult[] newArray(int size) {
+            return new BulkUploadMediaAssetResult[size];
+        }
+    };
+
+    public BulkUploadMediaAssetResult(Parcel in) {
+        super(in);
+    }
 }
+

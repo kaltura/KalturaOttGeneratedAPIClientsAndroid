@@ -25,7 +25,12 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.client.enums;
+package com.kaltura.client.types;
+
+import android.os.Parcel;
+import com.google.gson.JsonObject;
+import com.kaltura.client.Params;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using exec.php
@@ -33,49 +38,48 @@ package com.kaltura.client.enums;
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
-public enum BatchJobStatus implements EnumAsString {
-	PENDING("PENDING"),
-	QUEUED("QUEUED"),
-	PROCESSING("PROCESSING"),
-	PROCESSED("PROCESSED"),
-	MOVEFILE("MOVEFILE"),
-	FINISHED("FINISHED"),
-	FAILED("FAILED"),
-	ABORTED("ABORTED"),
-	ALMOST_DONE("ALMOST_DONE"),
-	RETRY("RETRY"),
-	FATAL("FATAL"),
-	DONT_PROCESS("DONT_PROCESS"),
-	FINISHED_PARTIALLY("FINISHED_PARTIALLY");
 
-	private String value;
-
-	BatchJobStatus(String value) {
-		this.value = value;
+/**
+ * instructions for upload data type with Excel
+ */
+@SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(BulkUploadExcelJobData.Tokenizer.class)
+public class BulkUploadExcelJobData extends BulkUploadJobData {
+	
+	public interface Tokenizer extends BulkUploadJobData.Tokenizer {
 	}
 
-	@Override
-	public String getValue() {
-		return this.value;
+
+
+	public BulkUploadExcelJobData() {
+		super();
 	}
 
-	public void setValue(String value) {
-		this.value = value;
+	public BulkUploadExcelJobData(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
 	}
 
-	public static BatchJobStatus get(String value) {
-		if(value == null)
-		{
-			return null;
-		}
-		
-		// goes over BatchJobStatus defined values and compare the inner value with the given one:
-		for(BatchJobStatus item: values()) {
-			if(item.getValue().equals(value)) {
-				return item;
-			}
-		}
-		// in case the requested value was not found in the enum values, we return the first item as default.
-		return BatchJobStatus.values().length > 0 ? BatchJobStatus.values()[0]: null;
-   }
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaBulkUploadExcelJobData");
+		return kparams;
+	}
+
+
+    public static final Creator<BulkUploadExcelJobData> CREATOR = new Creator<BulkUploadExcelJobData>() {
+        @Override
+        public BulkUploadExcelJobData createFromParcel(Parcel source) {
+            return new BulkUploadExcelJobData(source);
+        }
+
+        @Override
+        public BulkUploadExcelJobData[] newArray(int size) {
+            return new BulkUploadExcelJobData[size];
+        }
+    };
+
+    public BulkUploadExcelJobData(Parcel in) {
+        super(in);
+    }
 }
+

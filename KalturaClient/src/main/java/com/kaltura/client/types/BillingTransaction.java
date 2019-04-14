@@ -70,6 +70,7 @@ public class BillingTransaction extends ObjectBase {
 		String purchaseId();
 		String remarks();
 		String billingPriceType();
+		String externalTransactionId();
 	}
 
 	/**
@@ -136,6 +137,10 @@ public class BillingTransaction extends ObjectBase {
 	 * Billing Price Info
 	 */
 	private BillingPriceType billingPriceType;
+	/**
+	 * External Transaction Id
+	 */
+	private String externalTransactionId;
 
 	// recieptCode:
 	public String getRecieptCode(){
@@ -201,6 +206,10 @@ public class BillingTransaction extends ObjectBase {
 	public BillingPriceType getBillingPriceType(){
 		return this.billingPriceType;
 	}
+	// externalTransactionId:
+	public String getExternalTransactionId(){
+		return this.externalTransactionId;
+	}
 
 	public BillingTransaction() {
 		super();
@@ -228,6 +237,7 @@ public class BillingTransaction extends ObjectBase {
 		purchaseId = GsonParser.parseInt(jsonObject.get("purchaseId"));
 		remarks = GsonParser.parseString(jsonObject.get("remarks"));
 		billingPriceType = BillingPriceType.get(GsonParser.parseString(jsonObject.get("billingPriceType")));
+		externalTransactionId = GsonParser.parseString(jsonObject.get("externalTransactionId"));
 
 	}
 
@@ -269,6 +279,7 @@ public class BillingTransaction extends ObjectBase {
         dest.writeValue(this.purchaseId);
         dest.writeString(this.remarks);
         dest.writeInt(this.billingPriceType == null ? -1 : this.billingPriceType.ordinal());
+        dest.writeString(this.externalTransactionId);
     }
 
     public BillingTransaction(Parcel in) {
@@ -293,6 +304,7 @@ public class BillingTransaction extends ObjectBase {
         this.remarks = in.readString();
         int tmpBillingPriceType = in.readInt();
         this.billingPriceType = tmpBillingPriceType == -1 ? null : BillingPriceType.values()[tmpBillingPriceType];
+        this.externalTransactionId = in.readString();
     }
 }
 

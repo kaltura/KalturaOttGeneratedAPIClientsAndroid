@@ -30,10 +30,14 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.enums.BatchJobStatus;
+import com.kaltura.client.enums.BulkUploadJobAction;
+import com.kaltura.client.enums.BulkUploadJobStatus;
 import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.utils.request.RequestBuilder;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class was generated using exec.php
@@ -42,15 +46,23 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
+/**
+ * Bulk Upload
+ */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(Bulk.Tokenizer.class)
-public class Bulk extends ObjectBase {
+@MultiRequestBuilder.Tokenizer(BulkUpload.Tokenizer.class)
+public class BulkUpload extends ObjectBase {
 	
 	public interface Tokenizer extends ObjectBase.Tokenizer {
 		String id();
+		String fileName();
 		String status();
+		String action();
+		String numOfObjects();
 		String createDate();
 		String updateDate();
+		String uploadedByUserId();
+		RequestBuilder.ListTokenizer<BulkUploadResult.Tokenizer> results();
 	}
 
 	/**
@@ -58,9 +70,21 @@ public class Bulk extends ObjectBase {
 	 */
 	private Long id;
 	/**
+	 * File Name
+	 */
+	private String fileName;
+	/**
 	 * Status
 	 */
-	private BatchJobStatus status;
+	private BulkUploadJobStatus status;
+	/**
+	 * Action
+	 */
+	private BulkUploadJobAction action;
+	/**
+	 * Total number of objects in file
+	 */
+	private Integer numOfObjects;
 	/**
 	 * Specifies when was the bulk action created. Date and time represented as epoch
 	 */
@@ -70,14 +94,34 @@ public class Bulk extends ObjectBase {
 	  epoch
 	 */
 	private Long updateDate;
+	/**
+	 * The user who uploaded this bulk
+	 */
+	private Long uploadedByUserId;
+	/**
+	 * A list of results
+	 */
+	private List<BulkUploadResult> results;
 
 	// id:
 	public Long getId(){
 		return this.id;
 	}
+	// fileName:
+	public String getFileName(){
+		return this.fileName;
+	}
 	// status:
-	public BatchJobStatus getStatus(){
+	public BulkUploadJobStatus getStatus(){
 		return this.status;
+	}
+	// action:
+	public BulkUploadJobAction getAction(){
+		return this.action;
+	}
+	// numOfObjects:
+	public Integer getNumOfObjects(){
+		return this.numOfObjects;
 	}
 	// createDate:
 	public Long getCreateDate(){
@@ -87,40 +131,53 @@ public class Bulk extends ObjectBase {
 	public Long getUpdateDate(){
 		return this.updateDate;
 	}
+	// uploadedByUserId:
+	public Long getUploadedByUserId(){
+		return this.uploadedByUserId;
+	}
+	// results:
+	public List<BulkUploadResult> getResults(){
+		return this.results;
+	}
 
-	public Bulk() {
+	public BulkUpload() {
 		super();
 	}
 
-	public Bulk(JsonObject jsonObject) throws APIException {
+	public BulkUpload(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
 		id = GsonParser.parseLong(jsonObject.get("id"));
-		status = BatchJobStatus.get(GsonParser.parseString(jsonObject.get("status")));
+		fileName = GsonParser.parseString(jsonObject.get("fileName"));
+		status = BulkUploadJobStatus.get(GsonParser.parseString(jsonObject.get("status")));
+		action = BulkUploadJobAction.get(GsonParser.parseString(jsonObject.get("action")));
+		numOfObjects = GsonParser.parseInt(jsonObject.get("numOfObjects"));
 		createDate = GsonParser.parseLong(jsonObject.get("createDate"));
 		updateDate = GsonParser.parseLong(jsonObject.get("updateDate"));
+		uploadedByUserId = GsonParser.parseLong(jsonObject.get("uploadedByUserId"));
+		results = GsonParser.parseArray(jsonObject.getAsJsonArray("results"), BulkUploadResult.class);
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaBulk");
+		kparams.add("objectType", "KalturaBulkUpload");
 		return kparams;
 	}
 
 
-    public static final Creator<Bulk> CREATOR = new Creator<Bulk>() {
+    public static final Creator<BulkUpload> CREATOR = new Creator<BulkUpload>() {
         @Override
-        public Bulk createFromParcel(Parcel source) {
-            return new Bulk(source);
+        public BulkUpload createFromParcel(Parcel source) {
+            return new BulkUpload(source);
         }
 
         @Override
-        public Bulk[] newArray(int size) {
-            return new Bulk[size];
+        public BulkUpload[] newArray(int size) {
+            return new BulkUpload[size];
         }
     };
 
@@ -128,18 +185,38 @@ public class Bulk extends ObjectBase {
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeValue(this.id);
+        dest.writeString(this.fileName);
         dest.writeInt(this.status == null ? -1 : this.status.ordinal());
+        dest.writeInt(this.action == null ? -1 : this.action.ordinal());
+        dest.writeValue(this.numOfObjects);
         dest.writeValue(this.createDate);
         dest.writeValue(this.updateDate);
+        dest.writeValue(this.uploadedByUserId);
+        if(this.results != null) {
+            dest.writeInt(this.results.size());
+            dest.writeList(this.results);
+        } else {
+            dest.writeInt(-1);
+        }
     }
 
-    public Bulk(Parcel in) {
+    public BulkUpload(Parcel in) {
         super(in);
         this.id = (Long)in.readValue(Long.class.getClassLoader());
+        this.fileName = in.readString();
         int tmpStatus = in.readInt();
-        this.status = tmpStatus == -1 ? null : BatchJobStatus.values()[tmpStatus];
+        this.status = tmpStatus == -1 ? null : BulkUploadJobStatus.values()[tmpStatus];
+        int tmpAction = in.readInt();
+        this.action = tmpAction == -1 ? null : BulkUploadJobAction.values()[tmpAction];
+        this.numOfObjects = (Integer)in.readValue(Integer.class.getClassLoader());
         this.createDate = (Long)in.readValue(Long.class.getClassLoader());
         this.updateDate = (Long)in.readValue(Long.class.getClassLoader());
+        this.uploadedByUserId = (Long)in.readValue(Long.class.getClassLoader());
+        int resultsSize = in.readInt();
+        if( resultsSize > -1) {
+            this.results = new ArrayList<>();
+            in.readList(this.results, BulkUploadResult.class.getClassLoader());
+        }
     }
 }
 

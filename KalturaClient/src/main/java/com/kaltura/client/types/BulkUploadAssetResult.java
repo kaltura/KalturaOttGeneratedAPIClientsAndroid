@@ -40,99 +40,68 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
-/**
- * User asset rule filter
- */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(UserAssetRuleFilter.Tokenizer.class)
-public class UserAssetRuleFilter extends Filter {
+@MultiRequestBuilder.Tokenizer(BulkUploadAssetResult.Tokenizer.class)
+public abstract class BulkUploadAssetResult extends BulkUploadResult {
 	
-	public interface Tokenizer extends Filter.Tokenizer {
-		String assetIdEqual();
-		String assetTypeEqual();
+	public interface Tokenizer extends BulkUploadResult.Tokenizer {
+		String type();
+		String externalId();
 	}
 
 	/**
-	 * Asset identifier to filter by
+	 * Identifies the asset type (EPG, Recording, Movie, TV Series, etc).              
+	  Possible values: 0 – EPG linear programs, 1 - Recording; or any asset type ID
+	  according to the asset types IDs defined in the system.
 	 */
-	private Long assetIdEqual;
+	private Integer type;
 	/**
-	 * Asset type to filter by - 0 = EPG, 1 = media, 2 = npvr
+	 * External identifier for the asset
 	 */
-	private Integer assetTypeEqual;
+	private String externalId;
 
-	// assetIdEqual:
-	public Long getAssetIdEqual(){
-		return this.assetIdEqual;
+	// type:
+	public Integer getType(){
+		return this.type;
 	}
-	public void setAssetIdEqual(Long assetIdEqual){
-		this.assetIdEqual = assetIdEqual;
-	}
-
-	public void assetIdEqual(String multirequestToken){
-		setToken("assetIdEqual", multirequestToken);
+	// externalId:
+	public String getExternalId(){
+		return this.externalId;
 	}
 
-	// assetTypeEqual:
-	public Integer getAssetTypeEqual(){
-		return this.assetTypeEqual;
-	}
-	public void setAssetTypeEqual(Integer assetTypeEqual){
-		this.assetTypeEqual = assetTypeEqual;
-	}
-
-	public void assetTypeEqual(String multirequestToken){
-		setToken("assetTypeEqual", multirequestToken);
-	}
-
-
-	public UserAssetRuleFilter() {
+	public BulkUploadAssetResult() {
 		super();
 	}
 
-	public UserAssetRuleFilter(JsonObject jsonObject) throws APIException {
+	public BulkUploadAssetResult(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		assetIdEqual = GsonParser.parseLong(jsonObject.get("assetIdEqual"));
-		assetTypeEqual = GsonParser.parseInt(jsonObject.get("assetTypeEqual"));
+		type = GsonParser.parseInt(jsonObject.get("type"));
+		externalId = GsonParser.parseString(jsonObject.get("externalId"));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaUserAssetRuleFilter");
-		kparams.add("assetIdEqual", this.assetIdEqual);
-		kparams.add("assetTypeEqual", this.assetTypeEqual);
+		kparams.add("objectType", "KalturaBulkUploadAssetResult");
 		return kparams;
 	}
 
 
-    public static final Creator<UserAssetRuleFilter> CREATOR = new Creator<UserAssetRuleFilter>() {
-        @Override
-        public UserAssetRuleFilter createFromParcel(Parcel source) {
-            return new UserAssetRuleFilter(source);
-        }
-
-        @Override
-        public UserAssetRuleFilter[] newArray(int size) {
-            return new UserAssetRuleFilter[size];
-        }
-    };
-
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeValue(this.assetIdEqual);
-        dest.writeValue(this.assetTypeEqual);
+        dest.writeValue(this.type);
+        dest.writeString(this.externalId);
     }
 
-    public UserAssetRuleFilter(Parcel in) {
+    public BulkUploadAssetResult(Parcel in) {
         super(in);
-        this.assetIdEqual = (Long)in.readValue(Long.class.getClassLoader());
-        this.assetTypeEqual = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.type = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.externalId = in.readString();
     }
 }
 

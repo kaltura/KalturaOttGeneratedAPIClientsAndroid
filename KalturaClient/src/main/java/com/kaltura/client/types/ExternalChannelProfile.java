@@ -59,6 +59,7 @@ public class ExternalChannelProfile extends ObjectBase {
 		String filterExpression();
 		String recommendationEngineId();
 		RequestBuilder.ListTokenizer<ChannelEnrichmentHolder.Tokenizer> enrichments();
+		String assetUserRuleId();
 	}
 
 	/**
@@ -89,6 +90,10 @@ public class ExternalChannelProfile extends ObjectBase {
 	 * Enrichments
 	 */
 	private List<ChannelEnrichmentHolder> enrichments;
+	/**
+	 * Asset user rule identifier
+	 */
+	private Long assetUserRuleId;
 
 	// id:
 	public Integer getId(){
@@ -162,6 +167,18 @@ public class ExternalChannelProfile extends ObjectBase {
 		this.enrichments = enrichments;
 	}
 
+	// assetUserRuleId:
+	public Long getAssetUserRuleId(){
+		return this.assetUserRuleId;
+	}
+	public void setAssetUserRuleId(Long assetUserRuleId){
+		this.assetUserRuleId = assetUserRuleId;
+	}
+
+	public void assetUserRuleId(String multirequestToken){
+		setToken("assetUserRuleId", multirequestToken);
+	}
+
 
 	public ExternalChannelProfile() {
 		super();
@@ -180,6 +197,7 @@ public class ExternalChannelProfile extends ObjectBase {
 		filterExpression = GsonParser.parseString(jsonObject.get("filterExpression"));
 		recommendationEngineId = GsonParser.parseInt(jsonObject.get("recommendationEngineId"));
 		enrichments = GsonParser.parseArray(jsonObject.getAsJsonArray("enrichments"), ChannelEnrichmentHolder.class);
+		assetUserRuleId = GsonParser.parseLong(jsonObject.get("assetUserRuleId"));
 
 	}
 
@@ -192,6 +210,7 @@ public class ExternalChannelProfile extends ObjectBase {
 		kparams.add("filterExpression", this.filterExpression);
 		kparams.add("recommendationEngineId", this.recommendationEngineId);
 		kparams.add("enrichments", this.enrichments);
+		kparams.add("assetUserRuleId", this.assetUserRuleId);
 		return kparams;
 	}
 
@@ -223,6 +242,7 @@ public class ExternalChannelProfile extends ObjectBase {
         } else {
             dest.writeInt(-1);
         }
+        dest.writeValue(this.assetUserRuleId);
     }
 
     public ExternalChannelProfile(Parcel in) {
@@ -238,6 +258,7 @@ public class ExternalChannelProfile extends ObjectBase {
             this.enrichments = new ArrayList<>();
             in.readList(this.enrichments, ChannelEnrichmentHolder.class.getClassLoader());
         }
+        this.assetUserRuleId = (Long)in.readValue(Long.class.getClassLoader());
     }
 }
 
