@@ -50,7 +50,7 @@ public class LoginSession extends ObjectBase {
 	
 	public interface Tokenizer extends ObjectBase.Tokenizer {
 		String ks();
-		String expiration();
+		String expiry();
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class LoginSession extends ObjectBase {
 	/**
 	 * Expiration
 	 */
-	private Long expiration;
+	private Long expiry;
 
 	// ks:
 	public String getKs(){
@@ -74,16 +74,16 @@ public class LoginSession extends ObjectBase {
 		setToken("ks", multirequestToken);
 	}
 
-	// expiration:
-	public Long getExpiration(){
-		return this.expiration;
+	// expiry:
+	public Long getExpiry(){
+		return this.expiry;
 	}
-	public void setExpiration(Long expiration){
-		this.expiration = expiration;
+	public void setExpiry(Long expiry){
+		this.expiry = expiry;
 	}
 
-	public void expiration(String multirequestToken){
-		setToken("expiration", multirequestToken);
+	public void expiry(String multirequestToken){
+		setToken("expiry", multirequestToken);
 	}
 
 
@@ -98,7 +98,7 @@ public class LoginSession extends ObjectBase {
 
 		// set members values:
 		ks = GsonParser.parseString(jsonObject.get("ks"));
-		expiration = GsonParser.parseLong(jsonObject.get("expiration"));
+		expiry = GsonParser.parseLong(jsonObject.get("expiry"));
 
 	}
 
@@ -106,7 +106,7 @@ public class LoginSession extends ObjectBase {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaLoginSession");
 		kparams.add("ks", this.ks);
-		kparams.add("expiration", this.expiration);
+		kparams.add("expiry", this.expiry);
 		return kparams;
 	}
 
@@ -127,13 +127,13 @@ public class LoginSession extends ObjectBase {
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeString(this.ks);
-        dest.writeValue(this.expiration);
+        dest.writeValue(this.expiry);
     }
 
     public LoginSession(Parcel in) {
         super(in);
         this.ks = in.readString();
-        this.expiration = (Long)in.readValue(Long.class.getClassLoader());
+        this.expiry = (Long)in.readValue(Long.class.getClassLoader());
     }
 }
 
