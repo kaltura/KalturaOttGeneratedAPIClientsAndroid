@@ -48,7 +48,6 @@ public class BulkUploadProgramAssetResult extends BulkUploadResult {
 		String programId();
 		String programExternalId();
 		String liveAssetId();
-		String liveAssetExternalId();
 	}
 
 	/**
@@ -64,10 +63,6 @@ public class BulkUploadProgramAssetResult extends BulkUploadResult {
 	  sent in bulk xml file
 	 */
 	private Integer liveAssetId;
-	/**
-	 * The external live asset Id as was sent in bulk xml file
-	 */
-	private String liveAssetExternalId;
 
 	// programId:
 	public Integer getProgramId(){
@@ -80,10 +75,6 @@ public class BulkUploadProgramAssetResult extends BulkUploadResult {
 	// liveAssetId:
 	public Integer getLiveAssetId(){
 		return this.liveAssetId;
-	}
-	// liveAssetExternalId:
-	public String getLiveAssetExternalId(){
-		return this.liveAssetExternalId;
 	}
 
 	public BulkUploadProgramAssetResult() {
@@ -99,7 +90,6 @@ public class BulkUploadProgramAssetResult extends BulkUploadResult {
 		programId = GsonParser.parseInt(jsonObject.get("programId"));
 		programExternalId = GsonParser.parseString(jsonObject.get("programExternalId"));
 		liveAssetId = GsonParser.parseInt(jsonObject.get("liveAssetId"));
-		liveAssetExternalId = GsonParser.parseString(jsonObject.get("liveAssetExternalId"));
 
 	}
 
@@ -128,7 +118,6 @@ public class BulkUploadProgramAssetResult extends BulkUploadResult {
         dest.writeValue(this.programId);
         dest.writeString(this.programExternalId);
         dest.writeValue(this.liveAssetId);
-        dest.writeString(this.liveAssetExternalId);
     }
 
     public BulkUploadProgramAssetResult(Parcel in) {
@@ -136,7 +125,6 @@ public class BulkUploadProgramAssetResult extends BulkUploadResult {
         this.programId = (Integer)in.readValue(Integer.class.getClassLoader());
         this.programExternalId = in.readString();
         this.liveAssetId = (Integer)in.readValue(Integer.class.getClassLoader());
-        this.liveAssetExternalId = in.readString();
     }
 }
 
