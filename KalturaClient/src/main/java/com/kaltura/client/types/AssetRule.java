@@ -30,6 +30,7 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
+import com.kaltura.client.enums.AssetRuleStatus;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 import com.kaltura.client.utils.request.RequestBuilder;
@@ -53,6 +54,7 @@ public class AssetRule extends AssetRuleBase {
 	public interface Tokenizer extends AssetRuleBase.Tokenizer {
 		RequestBuilder.ListTokenizer<Condition.Tokenizer> conditions();
 		RequestBuilder.ListTokenizer<AssetRuleAction.Tokenizer> actions();
+		String status();
 	}
 
 	/**
@@ -63,6 +65,10 @@ public class AssetRule extends AssetRuleBase {
 	 * List of actions for the rule
 	 */
 	private List<AssetRuleAction> actions;
+	/**
+	 * List of actions for the rule
+	 */
+	private AssetRuleStatus status;
 
 	// conditions:
 	public List<Condition> getConditions(){
@@ -80,6 +86,10 @@ public class AssetRule extends AssetRuleBase {
 		this.actions = actions;
 	}
 
+	// status:
+	public AssetRuleStatus getStatus(){
+		return this.status;
+	}
 
 	public AssetRule() {
 		super();
@@ -93,6 +103,7 @@ public class AssetRule extends AssetRuleBase {
 		// set members values:
 		conditions = GsonParser.parseArray(jsonObject.getAsJsonArray("conditions"), Condition.class);
 		actions = GsonParser.parseArray(jsonObject.getAsJsonArray("actions"), AssetRuleAction.class);
+		status = AssetRuleStatus.get(GsonParser.parseString(jsonObject.get("status")));
 
 	}
 
@@ -132,6 +143,7 @@ public class AssetRule extends AssetRuleBase {
         } else {
             dest.writeInt(-1);
         }
+        dest.writeInt(this.status == null ? -1 : this.status.ordinal());
     }
 
     public AssetRule(Parcel in) {
@@ -146,6 +158,8 @@ public class AssetRule extends AssetRuleBase {
             this.actions = new ArrayList<>();
             in.readList(this.actions, AssetRuleAction.class.getClassLoader());
         }
+        int tmpStatus = in.readInt();
+        this.status = tmpStatus == -1 ? null : AssetRuleStatus.values()[tmpStatus];
     }
 }
 
