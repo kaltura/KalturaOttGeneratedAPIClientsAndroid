@@ -64,6 +64,7 @@ public abstract class Asset extends ObjectBase {
 		RequestBuilder.ListTokenizer<MediaFile.Tokenizer> mediaFiles();
 		RequestBuilder.MapTokenizer<Value.Tokenizer> metas();
 		RequestBuilder.MapTokenizer<MultilingualStringValueArray.Tokenizer> tags();
+		RequestBuilder.MapTokenizer<RelatedEntityArray.Tokenizer> relatedEntities();
 		String startDate();
 		String endDate();
 		String createDate();
@@ -115,6 +116,11 @@ public abstract class Asset extends ObjectBase {
 	  system
 	 */
 	private Map<String, MultilingualStringValueArray> tags;
+	/**
+	 * Dynamic collection of key-value pairs according to the related entity defined in
+	  the system
+	 */
+	private Map<String, RelatedEntityArray> relatedEntities;
 	/**
 	 * Date and time represented as epoch. For VOD – since when the asset is
 	  available in the catalog. For EPG/Linear – when the program is aired (can be
@@ -203,6 +209,14 @@ public abstract class Asset extends ObjectBase {
 		this.tags = tags;
 	}
 
+	// relatedEntities:
+	public Map<String, RelatedEntityArray> getRelatedEntities(){
+		return this.relatedEntities;
+	}
+	public void setRelatedEntities(Map<String, RelatedEntityArray> relatedEntities){
+		this.relatedEntities = relatedEntities;
+	}
+
 	// startDate:
 	public Long getStartDate(){
 		return this.startDate;
@@ -268,6 +282,7 @@ public abstract class Asset extends ObjectBase {
 		mediaFiles = GsonParser.parseArray(jsonObject.getAsJsonArray("mediaFiles"), MediaFile.class);
 		metas = GsonParser.parseMap(jsonObject.getAsJsonObject("metas"), Value.class);
 		tags = GsonParser.parseMap(jsonObject.getAsJsonObject("tags"), MultilingualStringValueArray.class);
+		relatedEntities = GsonParser.parseMap(jsonObject.getAsJsonObject("relatedEntities"), RelatedEntityArray.class);
 		startDate = GsonParser.parseLong(jsonObject.get("startDate"));
 		endDate = GsonParser.parseLong(jsonObject.get("endDate"));
 		createDate = GsonParser.parseLong(jsonObject.get("createDate"));
@@ -284,6 +299,7 @@ public abstract class Asset extends ObjectBase {
 		kparams.add("multilingualDescription", this.multilingualDescription);
 		kparams.add("metas", this.metas);
 		kparams.add("tags", this.tags);
+		kparams.add("relatedEntities", this.relatedEntities);
 		kparams.add("startDate", this.startDate);
 		kparams.add("endDate", this.endDate);
 		kparams.add("externalId", this.externalId);
@@ -340,6 +356,15 @@ public abstract class Asset extends ObjectBase {
         } else {
             dest.writeInt(-1);
         }
+        if(this.relatedEntities != null) {
+            dest.writeInt(this.relatedEntities.size());
+            for (Map.Entry<String, RelatedEntityArray> entry : this.relatedEntities.entrySet()) {
+                dest.writeString(entry.getKey());
+                dest.writeParcelable(entry.getValue(), flags);
+            }
+        } else {
+            dest.writeInt(-1);
+        }
         dest.writeValue(this.startDate);
         dest.writeValue(this.endDate);
         dest.writeValue(this.createDate);
@@ -389,6 +414,15 @@ public abstract class Asset extends ObjectBase {
                 String key = in.readString();
                 MultilingualStringValueArray value = in.readParcelable(MultilingualStringValueArray.class.getClassLoader());
                 this.tags.put(key, value);
+            }
+        }
+        int relatedEntitiesSize = in.readInt();
+        if( relatedEntitiesSize > -1) {
+            this.relatedEntities = new HashMap<>();
+            for (int i = 0; i < relatedEntitiesSize; i++) {
+                String key = in.readString();
+                RelatedEntityArray value = in.readParcelable(RelatedEntityArray.class.getClassLoader());
+                this.relatedEntities.put(key, value);
             }
         }
         this.startDate = (Long)in.readValue(Long.class.getClassLoader());
