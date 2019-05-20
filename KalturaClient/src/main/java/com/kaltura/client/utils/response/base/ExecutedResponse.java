@@ -2,6 +2,10 @@ package com.kaltura.client.utils.response.base;
 
 import com.kaltura.client.utils.ErrorElement;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created by tehilarozin on 06/09/2016.
  *
@@ -71,6 +75,11 @@ public class ExecutedResponse implements ResponseElement {
 	public ErrorElement getError() {
 		return errorElement;
 	}
+
+    @Override
+    public Map<String, List<String>> getHeaders() {
+        return new HashMap<>();
+    }
 
 }
 
