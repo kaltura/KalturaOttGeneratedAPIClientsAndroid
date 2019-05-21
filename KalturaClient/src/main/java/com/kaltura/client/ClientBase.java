@@ -27,10 +27,11 @@
 // ===================================================================================================
 package com.kaltura.client;
 
+import android.util.Base64;
+
 import com.kaltura.client.enums.SessionType;
 import com.kaltura.client.utils.EncryptionUtils;
 import com.kaltura.client.utils.request.ConnectionConfiguration;
-import org.apache.commons.codec.binary.Base64;
 
 import java.net.URLEncoder;
 import java.security.GeneralSecurityException;
@@ -91,16 +92,11 @@ public class ClientBase extends ClientConfigBase {
 			String signature = convertToHex(infoSignature);
 			
 			// build final string to base64 encode
-			StringBuilder sbToEncode = new StringBuilder();
-			sbToEncode.append(signature.toString()).append("|").append(sbInfo.toString());
-			
+			final String signed = signature + "|" + sbInfo;
+
 			// encode the signature and info with base64
-			String hashedString = new String(Base64.encodeBase64(sbToEncode.toString().getBytes()));
-			
-			// remove line breaks in the session string
-			String ks = hashedString.replace("\n", "");
-			ks = hashedString.replace("\r", "");
-			
+			String ks = Base64.encodeToString(signed.getBytes(), Base64.NO_WRAP);
+
 			// return the generated session key (KS)
 			return ks;
 		} catch (NoSuchAlgorithmException ex)
@@ -173,12 +169,10 @@ public class ClientBase extends ClientConfigBase {
 		System.arraycopy(prefix.getBytes(), 0, output, 0, prefix.length());
 		System.arraycopy(encryptedFields,0,output,prefix.length(), encryptedFields.length);
 		
-		String encodedKs = new String(Base64.encodeBase64(output));
+		String encodedKs = Base64.encodeToString(output, Base64.NO_WRAP);
 		encodedKs = encodedKs.replaceAll("\\+", "-");
 		encodedKs = encodedKs.replaceAll("/", "_");
-		encodedKs = encodedKs.replace("\n", "");
-		encodedKs = encodedKs.replace("\r", "");
-		
+
 		return encodedKs;
 		} catch (GeneralSecurityException ex) {
 			logger.error("Failed to generate v2 session.");
