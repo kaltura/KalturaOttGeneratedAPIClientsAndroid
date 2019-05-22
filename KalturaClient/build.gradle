@@ -34,11 +34,13 @@ task sourcesJar(type: Jar) {
 }
 
 task javadoc(type: Javadoc) {
+    println("‼️ Note: Javadoc generation creates a lot of classpath errors, but they can be ignored")
     failOnError false
     source = android.sourceSets.main.java.sourceFiles
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
     classpath += configurations.compile
 }
+
 // build a jar with javadoc
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
