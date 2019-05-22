@@ -25,7 +25,13 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.client.enums;
+package com.kaltura.client.types;
+
+import android.os.Parcel;
+import com.google.gson.JsonObject;
+import com.kaltura.client.Params;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
  * This class was generated using exec.php
@@ -33,46 +39,45 @@ package com.kaltura.client.enums;
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
-public enum RuleActionType implements EnumAsString {
-	BLOCK("BLOCK"),
-	START_DATE_OFFSET("START_DATE_OFFSET"),
-	END_DATE_OFFSET("END_DATE_OFFSET"),
-	USER_BLOCK("USER_BLOCK"),
-	ALLOW_PLAYBACK("ALLOW_PLAYBACK"),
-	BLOCK_PLAYBACK("BLOCK_PLAYBACK"),
-	APPLY_DISCOUNT_MODULE("APPLY_DISCOUNT_MODULE"),
-	APPLY_PLAYBACK_ADAPTER("APPLY_PLAYBACK_ADAPTER"),
-	FILTER("FILTER"),
-	ASSET_LIFE_CYCLE_TRANSITION("ASSET_LIFE_CYCLE_TRANSITION");
 
-	private String value;
-
-	RuleActionType(String value) {
-		this.value = value;
+@SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(Trigger.Tokenizer.class)
+public class Trigger extends ObjectBase {
+	
+	public interface Tokenizer extends ObjectBase.Tokenizer {
 	}
 
-	@Override
-	public String getValue() {
-		return this.value;
+
+
+	public Trigger() {
+		super();
 	}
 
-	public void setValue(String value) {
-		this.value = value;
+	public Trigger(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
 	}
 
-	public static RuleActionType get(String value) {
-		if(value == null)
-		{
-			return null;
-		}
-		
-		// goes over RuleActionType defined values and compare the inner value with the given one:
-		for(RuleActionType item: values()) {
-			if(item.getValue().equals(value)) {
-				return item;
-			}
-		}
-		// in case the requested value was not found in the enum values, we return the first item as default.
-		return RuleActionType.values().length > 0 ? RuleActionType.values()[0]: null;
-   }
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaTrigger");
+		return kparams;
+	}
+
+
+    public static final Creator<Trigger> CREATOR = new Creator<Trigger>() {
+        @Override
+        public Trigger createFromParcel(Parcel source) {
+            return new Trigger(source);
+        }
+
+        @Override
+        public Trigger[] newArray(int size) {
+            return new Trigger[size];
+        }
+    };
+
+    public Trigger(Parcel in) {
+        super(in);
+    }
 }
+
