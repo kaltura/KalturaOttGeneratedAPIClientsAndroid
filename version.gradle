@@ -1,0 +1,27 @@
+// To create a maven publication, run:
+//      ./gradlew KalturaClient:publishReleasePublicationToMavenLocal
+
+// Upload to bintray:
+//      ./gradlew KalturaClient:bintrayUpload -PdryRun=false -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY
+
+// Library Version
+ext.kalturaClientVersion = '5.1.2.17632'
+
+// Publish to Bintray
+try {
+    apply plugin: 'bintray-release'
+
+    publish {
+        // If project name is "profiler", publish as "playkit-profiler"
+        artifactId = 'KalturaOttAndroidClient'
+        desc = 'Kaltura OTT Android Client Library'
+        publishVersion = kalturaClientVersion
+        repoName = 'android'
+        userOrg = 'kaltura'
+        groupId = 'com.kaltura'
+        version = kalturaClientVersion
+        autoPublish = false
+    }
+} catch (UnknownPluginException ignored) {
+    // Ignore - it's ok not to have this plugin - it's only used for bintray uploads.
+}

@@ -1,18 +1,14 @@
 
 apply plugin: 'com.android.library'
-
-try {
-    apply plugin: 'com.github.dcendents.android-maven'
-} catch (UnknownPluginException e) {
-    // That's ok
-}
+apply from: '../version.gradle'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 28
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 25
+        targetSdkVersion 28
+        versionName kalturaClientVersion
     }
 
     buildTypes {
@@ -27,31 +23,11 @@ android {
     }
 }
 
-// build a jar with source files
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
+tasks.withType(Javadoc) {
+    options.addBooleanOption('Xdoclint:none', true)
 }
 
-task javadoc(type: Javadoc) {
-    println("✳️🔴🔵️ Note: Javadoc generation creates a lot of classpath errors, but they are harmless 🔵🔴✳️")
-    failOnError false
-    source = android.sourceSets.main.java.sourceFiles
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-    classpath += configurations.compile
-}
-
-// build a jar with javadoc
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-artifacts {
-    archives sourcesJar
-    archives javadocJar
-}
 dependencies {
-    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.squareup.okhttp3:okhttp:3.12.1'
 }
