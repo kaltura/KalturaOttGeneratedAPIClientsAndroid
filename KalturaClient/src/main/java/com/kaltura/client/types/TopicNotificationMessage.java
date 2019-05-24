@@ -52,6 +52,7 @@ public class TopicNotificationMessage extends ObjectBase {
 	public interface Tokenizer extends ObjectBase.Tokenizer {
 		String id();
 		String message();
+		String imageUrl();
 		String topicNotificationId();
 		Trigger.Tokenizer trigger();
 		RequestBuilder.ListTokenizer<Dispatcher.Tokenizer> dispatchers();
@@ -65,6 +66,10 @@ public class TopicNotificationMessage extends ObjectBase {
 	 * Topic notification message
 	 */
 	private String message;
+	/**
+	 * Topic notification message image URL
+	 */
+	private String imageUrl;
 	/**
 	 * Topic notification ID
 	 */
@@ -92,6 +97,18 @@ public class TopicNotificationMessage extends ObjectBase {
 
 	public void message(String multirequestToken){
 		setToken("message", multirequestToken);
+	}
+
+	// imageUrl:
+	public String getImageUrl(){
+		return this.imageUrl;
+	}
+	public void setImageUrl(String imageUrl){
+		this.imageUrl = imageUrl;
+	}
+
+	public void imageUrl(String multirequestToken){
+		setToken("imageUrl", multirequestToken);
 	}
 
 	// topicNotificationId:
@@ -135,6 +152,7 @@ public class TopicNotificationMessage extends ObjectBase {
 		// set members values:
 		id = GsonParser.parseLong(jsonObject.get("id"));
 		message = GsonParser.parseString(jsonObject.get("message"));
+		imageUrl = GsonParser.parseString(jsonObject.get("imageUrl"));
 		topicNotificationId = GsonParser.parseLong(jsonObject.get("topicNotificationId"));
 		trigger = GsonParser.parseObject(jsonObject.getAsJsonObject("trigger"), Trigger.class);
 		dispatchers = GsonParser.parseArray(jsonObject.getAsJsonArray("dispatchers"), Dispatcher.class);
@@ -145,6 +163,7 @@ public class TopicNotificationMessage extends ObjectBase {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaTopicNotificationMessage");
 		kparams.add("message", this.message);
+		kparams.add("imageUrl", this.imageUrl);
 		kparams.add("topicNotificationId", this.topicNotificationId);
 		kparams.add("trigger", this.trigger);
 		kparams.add("dispatchers", this.dispatchers);
@@ -169,6 +188,7 @@ public class TopicNotificationMessage extends ObjectBase {
         super.writeToParcel(dest, flags);
         dest.writeValue(this.id);
         dest.writeString(this.message);
+        dest.writeString(this.imageUrl);
         dest.writeValue(this.topicNotificationId);
         dest.writeParcelable(this.trigger, flags);
         if(this.dispatchers != null) {
@@ -183,6 +203,7 @@ public class TopicNotificationMessage extends ObjectBase {
         super(in);
         this.id = (Long)in.readValue(Long.class.getClassLoader());
         this.message = in.readString();
+        this.imageUrl = in.readString();
         this.topicNotificationId = (Long)in.readValue(Long.class.getClassLoader());
         this.trigger = in.readParcelable(Trigger.class.getClassLoader());
         int dispatchersSize = in.readInt();
