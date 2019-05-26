@@ -27,15 +27,15 @@ if [[ ! $TAG_VERSION_NAME =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
 fi
 
 # Check that defined library version matches the tag.
-if ! grep -q "ext.kalturaClientVersion = '$TAG_VERSION_NAME'" playkit/version.gradle
+if ! grep -q "ext.kalturaClientVersion = '$TAG_VERSION_NAME'" KalturaClient/version.gradle
 then
     echo "Library version name in build.gradle does not match tag name; will perform a dry-run."
     DRY_RUN=true
 fi
 
 
-# Assuming a successful playkit:build, create javadoc jar, sources jar, pom
-./gradlew playkit:publishReleasePublicationToMavenLocal
+# Assuming a successful KalturaClient:build, create javadoc jar, sources jar, pom
+./gradlew KalturaClient:publishReleasePublicationToMavenLocal
 
 # Upload
-./gradlew playkit:bintrayUpload -PdryRun=$DRY_RUN -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY
+./gradlew KalturaClient:bintrayUpload -PdryRun=$DRY_RUN -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY
