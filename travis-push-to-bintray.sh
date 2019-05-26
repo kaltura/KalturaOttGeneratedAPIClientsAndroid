@@ -17,8 +17,8 @@ if [ -z "$TRAVIS_TAG" ]; then
     DRY_RUN=true
 fi
 
-# Strip the "v" prefix
-TAG_VERSION_NAME=${TRAVIS_TAG:1}    
+# The tag name is KalturaOttAndroidClient-VERSION -- remove that prefix (24 chars).
+TAG_VERSION_NAME=${TRAVIS_TAG:24}    
 
 # Only allow proper "digits.digits.digits.digits" versions.
 if [[ ! $TAG_VERSION_NAME =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
