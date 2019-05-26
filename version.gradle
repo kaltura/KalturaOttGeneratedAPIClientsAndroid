@@ -19,7 +19,7 @@ try {
         userOrg = 'kaltura'
         groupId = 'com.kaltura'
         version = kalturaClientVersion
-        autoPublish = false
+        autoPublish = true
     }
 } catch (UnknownPluginException ignored) {
     // Ignore - it's ok not to have this plugin - it's only used for bintray uploads.
