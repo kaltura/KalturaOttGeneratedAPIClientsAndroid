@@ -5,9 +5,9 @@ android:
     - build-tools-28.0.3
     - android-28
 script:
-  - ./gradlew KalturaClient:build
+  - sh ./gradlew KalturaClient:build
 after_success:
-  - if [ -n "$TRAVIS_TAG" ]; then ./travis-push-to-bintray.sh; fi
+  - if [ -n "$TRAVIS_TAG" ]; then sh ./travis-push-to-bintray.sh; fi
 notifications:
   email:
     recipients:
