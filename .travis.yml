@@ -7,7 +7,7 @@ android:
 script:
   - ./gradlew KalturaClient:build
 after_success:
-  - ./travis-push-to-bintray.sh
+  - if [ -n "$TRAVIS_TAG" ]; then ./travis-push-to-bintray.sh; fi
 notifications:
   email:
     recipients:
