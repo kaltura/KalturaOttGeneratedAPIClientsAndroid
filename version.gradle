@@ -12,8 +12,8 @@ try {
     apply plugin: 'bintray-release'
 
     publish {
-        artifactId = 'KalturaOttAndroidClient'
-        desc = 'Kaltura OTT Android Client Library'
+        artifactId = 'KalturaOttAndroidJavaClient'
+        desc = 'Kaltura OTT Android Java Client Library'
         publishVersion = kalturaClientVersion
         repoName = 'android'
         userOrg = 'kaltura'
