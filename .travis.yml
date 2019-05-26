@@ -7,7 +7,7 @@ android:
 script:
   - ./gradlew playkit:build
 after_success:
-  - ./travis-push-to-bintray.sh
+  - [ -n "$TRAVIS_TAG" ] && ./travis-push-to-bintray.sh
 notifications:
   email:
     recipients:
