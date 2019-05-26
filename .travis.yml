@@ -1,0 +1,17 @@
+language: android
+android:
+  components:
+    - tools
+    - build-tools-28.0.3
+    - android-28
+script:
+  - ./gradlew playkit:build
+after_success:
+  - ./travis-push-to-bintray.sh
+notifications:
+  email:
+    recipients:
+      - noam.tamim@kaltura.com
+      - gilad.nadav@kaltura.com
+    on_success: change
+    on_failure: always
