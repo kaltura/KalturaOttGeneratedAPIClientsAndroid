@@ -40,75 +40,78 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
+/**
+ * Filtering cloud external recordings
+ */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(ApplyDiscountModuleAction.Tokenizer.class)
-public class ApplyDiscountModuleAction extends BusinessModuleRuleAction {
+@MultiRequestBuilder.Tokenizer(CloudRecordingFilter.Tokenizer.class)
+public class CloudRecordingFilter extends ExternalRecordingFilter {
 	
-	public interface Tokenizer extends BusinessModuleRuleAction.Tokenizer {
-		String discountModuleId();
+	public interface Tokenizer extends ExternalRecordingFilter.Tokenizer {
+		String adapterData();
 	}
 
 	/**
-	 * Discount module ID
+	 * Adapter Data
 	 */
-	private Long discountModuleId;
+	private String adapterData;
 
-	// discountModuleId:
-	public Long getDiscountModuleId(){
-		return this.discountModuleId;
+	// adapterData:
+	public String getAdapterData(){
+		return this.adapterData;
 	}
-	public void setDiscountModuleId(Long discountModuleId){
-		this.discountModuleId = discountModuleId;
-	}
-
-	public void discountModuleId(String multirequestToken){
-		setToken("discountModuleId", multirequestToken);
+	public void setAdapterData(String adapterData){
+		this.adapterData = adapterData;
 	}
 
+	public void adapterData(String multirequestToken){
+		setToken("adapterData", multirequestToken);
+	}
 
-	public ApplyDiscountModuleAction() {
+
+	public CloudRecordingFilter() {
 		super();
 	}
 
-	public ApplyDiscountModuleAction(JsonObject jsonObject) throws APIException {
+	public CloudRecordingFilter(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		discountModuleId = GsonParser.parseLong(jsonObject.get("discountModuleId"));
+		adapterData = GsonParser.parseString(jsonObject.get("adapterData"));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaApplyDiscountModuleAction");
-		kparams.add("discountModuleId", this.discountModuleId);
+		kparams.add("objectType", "KalturaCloudRecordingFilter");
+		kparams.add("adapterData", this.adapterData);
 		return kparams;
 	}
 
 
-    public static final Creator<ApplyDiscountModuleAction> CREATOR = new Creator<ApplyDiscountModuleAction>() {
+    public static final Creator<CloudRecordingFilter> CREATOR = new Creator<CloudRecordingFilter>() {
         @Override
-        public ApplyDiscountModuleAction createFromParcel(Parcel source) {
-            return new ApplyDiscountModuleAction(source);
+        public CloudRecordingFilter createFromParcel(Parcel source) {
+            return new CloudRecordingFilter(source);
         }
 
         @Override
-        public ApplyDiscountModuleAction[] newArray(int size) {
-            return new ApplyDiscountModuleAction[size];
+        public CloudRecordingFilter[] newArray(int size) {
+            return new CloudRecordingFilter[size];
         }
     };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeValue(this.discountModuleId);
+        dest.writeString(this.adapterData);
     }
 
-    public ApplyDiscountModuleAction(Parcel in) {
+    public CloudRecordingFilter(Parcel in) {
         super(in);
-        this.discountModuleId = (Long)in.readValue(Long.class.getClassLoader());
+        this.adapterData = in.readString();
     }
 }
 

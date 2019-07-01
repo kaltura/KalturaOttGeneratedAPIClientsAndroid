@@ -40,75 +40,79 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
+/**
+ * UserRole Condition - indicates which users this rule is applied on by their
+  roles
+ */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(ApplyDiscountModuleAction.Tokenizer.class)
-public class ApplyDiscountModuleAction extends BusinessModuleRuleAction {
+@MultiRequestBuilder.Tokenizer(UserRoleCondition.Tokenizer.class)
+public class UserRoleCondition extends Condition {
 	
-	public interface Tokenizer extends BusinessModuleRuleAction.Tokenizer {
-		String discountModuleId();
+	public interface Tokenizer extends Condition.Tokenizer {
+		String idIn();
 	}
 
 	/**
-	 * Discount module ID
+	 * Comma separated user role IDs list
 	 */
-	private Long discountModuleId;
+	private String idIn;
 
-	// discountModuleId:
-	public Long getDiscountModuleId(){
-		return this.discountModuleId;
+	// idIn:
+	public String getIdIn(){
+		return this.idIn;
 	}
-	public void setDiscountModuleId(Long discountModuleId){
-		this.discountModuleId = discountModuleId;
-	}
-
-	public void discountModuleId(String multirequestToken){
-		setToken("discountModuleId", multirequestToken);
+	public void setIdIn(String idIn){
+		this.idIn = idIn;
 	}
 
+	public void idIn(String multirequestToken){
+		setToken("idIn", multirequestToken);
+	}
 
-	public ApplyDiscountModuleAction() {
+
+	public UserRoleCondition() {
 		super();
 	}
 
-	public ApplyDiscountModuleAction(JsonObject jsonObject) throws APIException {
+	public UserRoleCondition(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		discountModuleId = GsonParser.parseLong(jsonObject.get("discountModuleId"));
+		idIn = GsonParser.parseString(jsonObject.get("idIn"));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaApplyDiscountModuleAction");
-		kparams.add("discountModuleId", this.discountModuleId);
+		kparams.add("objectType", "KalturaUserRoleCondition");
+		kparams.add("idIn", this.idIn);
 		return kparams;
 	}
 
 
-    public static final Creator<ApplyDiscountModuleAction> CREATOR = new Creator<ApplyDiscountModuleAction>() {
+    public static final Creator<UserRoleCondition> CREATOR = new Creator<UserRoleCondition>() {
         @Override
-        public ApplyDiscountModuleAction createFromParcel(Parcel source) {
-            return new ApplyDiscountModuleAction(source);
+        public UserRoleCondition createFromParcel(Parcel source) {
+            return new UserRoleCondition(source);
         }
 
         @Override
-        public ApplyDiscountModuleAction[] newArray(int size) {
-            return new ApplyDiscountModuleAction[size];
+        public UserRoleCondition[] newArray(int size) {
+            return new UserRoleCondition[size];
         }
     };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeValue(this.discountModuleId);
+        dest.writeString(this.idIn);
     }
 
-    public ApplyDiscountModuleAction(Parcel in) {
+    public UserRoleCondition(Parcel in) {
         super(in);
-        this.discountModuleId = (Long)in.readValue(Long.class.getClassLoader());
+        this.idIn = in.readString();
     }
 }
 
