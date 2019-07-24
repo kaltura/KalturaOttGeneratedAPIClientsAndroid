@@ -56,6 +56,7 @@ public class MonetizationCondition extends BaseSegmentCondition {
 		String days();
 		String type();
 		String operator();
+		String businessModuleIdIn();
 	}
 
 	/**
@@ -78,6 +79,10 @@ public class MonetizationCondition extends BaseSegmentCondition {
 	 * Mathermtical operator to calculate
 	 */
 	private MathemticalOperatorType operator;
+	/**
+	 * Comma saperated list of business module IDs
+	 */
+	private String businessModuleIdIn;
 
 	// minValue:
 	public Integer getMinValue(){
@@ -139,6 +144,18 @@ public class MonetizationCondition extends BaseSegmentCondition {
 		setToken("operator", multirequestToken);
 	}
 
+	// businessModuleIdIn:
+	public String getBusinessModuleIdIn(){
+		return this.businessModuleIdIn;
+	}
+	public void setBusinessModuleIdIn(String businessModuleIdIn){
+		this.businessModuleIdIn = businessModuleIdIn;
+	}
+
+	public void businessModuleIdIn(String multirequestToken){
+		setToken("businessModuleIdIn", multirequestToken);
+	}
+
 
 	public MonetizationCondition() {
 		super();
@@ -155,6 +172,7 @@ public class MonetizationCondition extends BaseSegmentCondition {
 		days = GsonParser.parseInt(jsonObject.get("days"));
 		type = MonetizationType.get(GsonParser.parseString(jsonObject.get("type")));
 		operator = MathemticalOperatorType.get(GsonParser.parseString(jsonObject.get("operator")));
+		businessModuleIdIn = GsonParser.parseString(jsonObject.get("businessModuleIdIn"));
 
 	}
 
@@ -166,6 +184,7 @@ public class MonetizationCondition extends BaseSegmentCondition {
 		kparams.add("days", this.days);
 		kparams.add("type", this.type);
 		kparams.add("operator", this.operator);
+		kparams.add("businessModuleIdIn", this.businessModuleIdIn);
 		return kparams;
 	}
 
@@ -190,6 +209,7 @@ public class MonetizationCondition extends BaseSegmentCondition {
         dest.writeValue(this.days);
         dest.writeInt(this.type == null ? -1 : this.type.ordinal());
         dest.writeInt(this.operator == null ? -1 : this.operator.ordinal());
+        dest.writeString(this.businessModuleIdIn);
     }
 
     public MonetizationCondition(Parcel in) {
@@ -201,6 +221,7 @@ public class MonetizationCondition extends BaseSegmentCondition {
         this.type = tmpType == -1 ? null : MonetizationType.values()[tmpType];
         int tmpOperator = in.readInt();
         this.operator = tmpOperator == -1 ? null : MathemticalOperatorType.values()[tmpOperator];
+        this.businessModuleIdIn = in.readString();
     }
 }
 
