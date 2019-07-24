@@ -189,14 +189,6 @@ public class Household extends ObjectBase {
 	public Integer getRegionId(){
 		return this.regionId;
 	}
-	public void setRegionId(Integer regionId){
-		this.regionId = regionId;
-	}
-
-	public void regionId(String multirequestToken){
-		setToken("regionId", multirequestToken);
-	}
-
 	// state:
 	public HouseholdState getState(){
 		return this.state;
@@ -256,7 +248,6 @@ public class Household extends ObjectBase {
 		kparams.add("name", this.name);
 		kparams.add("description", this.description);
 		kparams.add("externalId", this.externalId);
-		kparams.add("regionId", this.regionId);
 		return kparams;
 	}
 
