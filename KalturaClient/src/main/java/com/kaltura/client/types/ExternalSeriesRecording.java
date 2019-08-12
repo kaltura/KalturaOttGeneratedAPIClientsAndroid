@@ -43,71 +43,68 @@ import java.util.Map;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
-/**
- * Filtering cloud external recordings
- */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(CloudRecordingFilter.Tokenizer.class)
-public class CloudRecordingFilter extends ExternalRecordingFilter {
+@MultiRequestBuilder.Tokenizer(ExternalSeriesRecording.Tokenizer.class)
+public class ExternalSeriesRecording extends SeriesRecording {
 	
-	public interface Tokenizer extends ExternalRecordingFilter.Tokenizer {
-		RequestBuilder.MapTokenizer<StringValue.Tokenizer> adapterData();
+	public interface Tokenizer extends SeriesRecording.Tokenizer {
+		RequestBuilder.MapTokenizer<StringValue.Tokenizer> metaData();
 	}
 
 	/**
-	 * Adapter Data
+	 * MetaData filtering
 	 */
-	private Map<String, StringValue> adapterData;
+	private Map<String, StringValue> metaData;
 
-	// adapterData:
-	public Map<String, StringValue> getAdapterData(){
-		return this.adapterData;
+	// metaData:
+	public Map<String, StringValue> getMetaData(){
+		return this.metaData;
 	}
-	public void setAdapterData(Map<String, StringValue> adapterData){
-		this.adapterData = adapterData;
+	public void setMetaData(Map<String, StringValue> metaData){
+		this.metaData = metaData;
 	}
 
 
-	public CloudRecordingFilter() {
+	public ExternalSeriesRecording() {
 		super();
 	}
 
-	public CloudRecordingFilter(JsonObject jsonObject) throws APIException {
+	public ExternalSeriesRecording(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		adapterData = GsonParser.parseMap(jsonObject.getAsJsonObject("adapterData"), StringValue.class);
+		metaData = GsonParser.parseMap(jsonObject.getAsJsonObject("metaData"), StringValue.class);
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaCloudRecordingFilter");
-		kparams.add("adapterData", this.adapterData);
+		kparams.add("objectType", "KalturaExternalSeriesRecording");
+		kparams.add("metaData", this.metaData);
 		return kparams;
 	}
 
 
-    public static final Creator<CloudRecordingFilter> CREATOR = new Creator<CloudRecordingFilter>() {
+    public static final Creator<ExternalSeriesRecording> CREATOR = new Creator<ExternalSeriesRecording>() {
         @Override
-        public CloudRecordingFilter createFromParcel(Parcel source) {
-            return new CloudRecordingFilter(source);
+        public ExternalSeriesRecording createFromParcel(Parcel source) {
+            return new ExternalSeriesRecording(source);
         }
 
         @Override
-        public CloudRecordingFilter[] newArray(int size) {
-            return new CloudRecordingFilter[size];
+        public ExternalSeriesRecording[] newArray(int size) {
+            return new ExternalSeriesRecording[size];
         }
     };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        if(this.adapterData != null) {
-            dest.writeInt(this.adapterData.size());
-            for (Map.Entry<String, StringValue> entry : this.adapterData.entrySet()) {
+        if(this.metaData != null) {
+            dest.writeInt(this.metaData.size());
+            for (Map.Entry<String, StringValue> entry : this.metaData.entrySet()) {
                 dest.writeString(entry.getKey());
                 dest.writeParcelable(entry.getValue(), flags);
             }
@@ -116,15 +113,15 @@ public class CloudRecordingFilter extends ExternalRecordingFilter {
         }
     }
 
-    public CloudRecordingFilter(Parcel in) {
+    public ExternalSeriesRecording(Parcel in) {
         super(in);
-        int adapterDataSize = in.readInt();
-        if( adapterDataSize > -1) {
-            this.adapterData = new HashMap<>();
-            for (int i = 0; i < adapterDataSize; i++) {
+        int metaDataSize = in.readInt();
+        if( metaDataSize > -1) {
+            this.metaData = new HashMap<>();
+            for (int i = 0; i < metaDataSize; i++) {
                 String key = in.readString();
                 StringValue value = in.readParcelable(StringValue.class.getClassLoader());
-                this.adapterData.put(key, value);
+                this.metaData.put(key, value);
             }
         }
     }

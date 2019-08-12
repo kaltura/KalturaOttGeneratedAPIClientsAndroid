@@ -32,6 +32,9 @@ import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.utils.request.RequestBuilder;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class was generated using exec.php
@@ -48,24 +51,20 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
 public class CloudSeriesRecordingFilter extends SeriesRecordingFilter {
 	
 	public interface Tokenizer extends SeriesRecordingFilter.Tokenizer {
-		String adapterData();
+		RequestBuilder.MapTokenizer<StringValue.Tokenizer> adapterData();
 	}
 
 	/**
 	 * Adapter Data
 	 */
-	private String adapterData;
+	private Map<String, StringValue> adapterData;
 
 	// adapterData:
-	public String getAdapterData(){
+	public Map<String, StringValue> getAdapterData(){
 		return this.adapterData;
 	}
-	public void setAdapterData(String adapterData){
+	public void setAdapterData(Map<String, StringValue> adapterData){
 		this.adapterData = adapterData;
-	}
-
-	public void adapterData(String multirequestToken){
-		setToken("adapterData", multirequestToken);
 	}
 
 
@@ -79,7 +78,7 @@ public class CloudSeriesRecordingFilter extends SeriesRecordingFilter {
 		if(jsonObject == null) return;
 
 		// set members values:
-		adapterData = GsonParser.parseString(jsonObject.get("adapterData"));
+		adapterData = GsonParser.parseMap(jsonObject.getAsJsonObject("adapterData"), StringValue.class);
 
 	}
 
@@ -106,12 +105,28 @@ public class CloudSeriesRecordingFilter extends SeriesRecordingFilter {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeString(this.adapterData);
+        if(this.adapterData != null) {
+            dest.writeInt(this.adapterData.size());
+            for (Map.Entry<String, StringValue> entry : this.adapterData.entrySet()) {
+                dest.writeString(entry.getKey());
+                dest.writeParcelable(entry.getValue(), flags);
+            }
+        } else {
+            dest.writeInt(-1);
+        }
     }
 
     public CloudSeriesRecordingFilter(Parcel in) {
         super(in);
-        this.adapterData = in.readString();
+        int adapterDataSize = in.readInt();
+        if( adapterDataSize > -1) {
+            this.adapterData = new HashMap<>();
+            for (int i = 0; i < adapterDataSize; i++) {
+                String key = in.readString();
+                StringValue value = in.readParcelable(StringValue.class.getClassLoader());
+                this.adapterData.put(key, value);
+            }
+        }
     }
 }
 

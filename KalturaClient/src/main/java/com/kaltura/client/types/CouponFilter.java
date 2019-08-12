@@ -32,9 +32,6 @@ import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
-import com.kaltura.client.utils.request.RequestBuilder;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * This class was generated using exec.php
@@ -43,90 +40,75 @@ import java.util.Map;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
-/**
- * Filtering cloud external recordings
- */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(CloudRecordingFilter.Tokenizer.class)
-public class CloudRecordingFilter extends ExternalRecordingFilter {
+@MultiRequestBuilder.Tokenizer(CouponFilter.Tokenizer.class)
+public class CouponFilter extends Filter {
 	
-	public interface Tokenizer extends ExternalRecordingFilter.Tokenizer {
-		RequestBuilder.MapTokenizer<StringValue.Tokenizer> adapterData();
+	public interface Tokenizer extends Filter.Tokenizer {
+		String couponCodesIn();
 	}
 
 	/**
-	 * Adapter Data
+	 * Comma separated list of coupon codes.
 	 */
-	private Map<String, StringValue> adapterData;
+	private String couponCodesIn;
 
-	// adapterData:
-	public Map<String, StringValue> getAdapterData(){
-		return this.adapterData;
+	// couponCodesIn:
+	public String getCouponCodesIn(){
+		return this.couponCodesIn;
 	}
-	public void setAdapterData(Map<String, StringValue> adapterData){
-		this.adapterData = adapterData;
+	public void setCouponCodesIn(String couponCodesIn){
+		this.couponCodesIn = couponCodesIn;
+	}
+
+	public void couponCodesIn(String multirequestToken){
+		setToken("couponCodesIn", multirequestToken);
 	}
 
 
-	public CloudRecordingFilter() {
+	public CouponFilter() {
 		super();
 	}
 
-	public CloudRecordingFilter(JsonObject jsonObject) throws APIException {
+	public CouponFilter(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		adapterData = GsonParser.parseMap(jsonObject.getAsJsonObject("adapterData"), StringValue.class);
+		couponCodesIn = GsonParser.parseString(jsonObject.get("couponCodesIn"));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaCloudRecordingFilter");
-		kparams.add("adapterData", this.adapterData);
+		kparams.add("objectType", "KalturaCouponFilter");
+		kparams.add("couponCodesIn", this.couponCodesIn);
 		return kparams;
 	}
 
 
-    public static final Creator<CloudRecordingFilter> CREATOR = new Creator<CloudRecordingFilter>() {
+    public static final Creator<CouponFilter> CREATOR = new Creator<CouponFilter>() {
         @Override
-        public CloudRecordingFilter createFromParcel(Parcel source) {
-            return new CloudRecordingFilter(source);
+        public CouponFilter createFromParcel(Parcel source) {
+            return new CouponFilter(source);
         }
 
         @Override
-        public CloudRecordingFilter[] newArray(int size) {
-            return new CloudRecordingFilter[size];
+        public CouponFilter[] newArray(int size) {
+            return new CouponFilter[size];
         }
     };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        if(this.adapterData != null) {
-            dest.writeInt(this.adapterData.size());
-            for (Map.Entry<String, StringValue> entry : this.adapterData.entrySet()) {
-                dest.writeString(entry.getKey());
-                dest.writeParcelable(entry.getValue(), flags);
-            }
-        } else {
-            dest.writeInt(-1);
-        }
+        dest.writeString(this.couponCodesIn);
     }
 
-    public CloudRecordingFilter(Parcel in) {
+    public CouponFilter(Parcel in) {
         super(in);
-        int adapterDataSize = in.readInt();
-        if( adapterDataSize > -1) {
-            this.adapterData = new HashMap<>();
-            for (int i = 0; i < adapterDataSize; i++) {
-                String key = in.readString();
-                StringValue value = in.readParcelable(StringValue.class.getClassLoader());
-                this.adapterData.put(key, value);
-            }
-        }
+        this.couponCodesIn = in.readString();
     }
 }
 

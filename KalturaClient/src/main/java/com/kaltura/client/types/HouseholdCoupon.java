@@ -32,9 +32,6 @@ import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
-import com.kaltura.client.utils.request.RequestBuilder;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * This class was generated using exec.php
@@ -44,89 +41,77 @@ import java.util.Map;
  */
 
 /**
- * Filtering cloud external recordings
+ * Household Coupon details
  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(CloudRecordingFilter.Tokenizer.class)
-public class CloudRecordingFilter extends ExternalRecordingFilter {
+@MultiRequestBuilder.Tokenizer(HouseholdCoupon.Tokenizer.class)
+public class HouseholdCoupon extends CrudObject {
 	
-	public interface Tokenizer extends ExternalRecordingFilter.Tokenizer {
-		RequestBuilder.MapTokenizer<StringValue.Tokenizer> adapterData();
+	public interface Tokenizer extends CrudObject.Tokenizer {
+		String code();
 	}
 
 	/**
-	 * Adapter Data
+	 * Coupon code
 	 */
-	private Map<String, StringValue> adapterData;
+	private String code;
 
-	// adapterData:
-	public Map<String, StringValue> getAdapterData(){
-		return this.adapterData;
+	// code:
+	public String getCode(){
+		return this.code;
 	}
-	public void setAdapterData(Map<String, StringValue> adapterData){
-		this.adapterData = adapterData;
+	public void setCode(String code){
+		this.code = code;
+	}
+
+	public void code(String multirequestToken){
+		setToken("code", multirequestToken);
 	}
 
 
-	public CloudRecordingFilter() {
+	public HouseholdCoupon() {
 		super();
 	}
 
-	public CloudRecordingFilter(JsonObject jsonObject) throws APIException {
+	public HouseholdCoupon(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		adapterData = GsonParser.parseMap(jsonObject.getAsJsonObject("adapterData"), StringValue.class);
+		code = GsonParser.parseString(jsonObject.get("code"));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaCloudRecordingFilter");
-		kparams.add("adapterData", this.adapterData);
+		kparams.add("objectType", "KalturaHouseholdCoupon");
+		kparams.add("code", this.code);
 		return kparams;
 	}
 
 
-    public static final Creator<CloudRecordingFilter> CREATOR = new Creator<CloudRecordingFilter>() {
+    public static final Creator<HouseholdCoupon> CREATOR = new Creator<HouseholdCoupon>() {
         @Override
-        public CloudRecordingFilter createFromParcel(Parcel source) {
-            return new CloudRecordingFilter(source);
+        public HouseholdCoupon createFromParcel(Parcel source) {
+            return new HouseholdCoupon(source);
         }
 
         @Override
-        public CloudRecordingFilter[] newArray(int size) {
-            return new CloudRecordingFilter[size];
+        public HouseholdCoupon[] newArray(int size) {
+            return new HouseholdCoupon[size];
         }
     };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        if(this.adapterData != null) {
-            dest.writeInt(this.adapterData.size());
-            for (Map.Entry<String, StringValue> entry : this.adapterData.entrySet()) {
-                dest.writeString(entry.getKey());
-                dest.writeParcelable(entry.getValue(), flags);
-            }
-        } else {
-            dest.writeInt(-1);
-        }
+        dest.writeString(this.code);
     }
 
-    public CloudRecordingFilter(Parcel in) {
+    public HouseholdCoupon(Parcel in) {
         super(in);
-        int adapterDataSize = in.readInt();
-        if( adapterDataSize > -1) {
-            this.adapterData = new HashMap<>();
-            for (int i = 0; i < adapterDataSize; i++) {
-                String key = in.readString();
-                StringValue value = in.readParcelable(StringValue.class.getClassLoader());
-                this.adapterData.put(key, value);
-            }
-        }
+        this.code = in.readString();
     }
 }
 
