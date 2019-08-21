@@ -32,6 +32,9 @@ import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.utils.request.RequestBuilder;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class was generated using exec.php
@@ -41,65 +44,86 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(GroupPermission.Tokenizer.class)
-public class GroupPermission extends Permission {
+@MultiRequestBuilder.Tokenizer(ExternalSeriesRecording.Tokenizer.class)
+public class ExternalSeriesRecording extends SeriesRecording {
 	
-	public interface Tokenizer extends Permission.Tokenizer {
-		String group();
+	public interface Tokenizer extends SeriesRecording.Tokenizer {
+		RequestBuilder.MapTokenizer<StringValue.Tokenizer> metaData();
 	}
 
 	/**
-	 * Permission identifier
+	 * MetaData filtering
 	 */
-	private String group;
+	private Map<String, StringValue> metaData;
 
-	// group:
-	public String getGroup(){
-		return this.group;
+	// metaData:
+	public Map<String, StringValue> getMetaData(){
+		return this.metaData;
+	}
+	public void setMetaData(Map<String, StringValue> metaData){
+		this.metaData = metaData;
 	}
 
-	public GroupPermission() {
+
+	public ExternalSeriesRecording() {
 		super();
 	}
 
-	public GroupPermission(JsonObject jsonObject) throws APIException {
+	public ExternalSeriesRecording(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		group = GsonParser.parseString(jsonObject.get("group"));
+		metaData = GsonParser.parseMap(jsonObject.getAsJsonObject("metaData"), StringValue.class);
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaGroupPermission");
+		kparams.add("objectType", "KalturaExternalSeriesRecording");
+		kparams.add("metaData", this.metaData);
 		return kparams;
 	}
 
 
-    public static final Creator<GroupPermission> CREATOR = new Creator<GroupPermission>() {
+    public static final Creator<ExternalSeriesRecording> CREATOR = new Creator<ExternalSeriesRecording>() {
         @Override
-        public GroupPermission createFromParcel(Parcel source) {
-            return new GroupPermission(source);
+        public ExternalSeriesRecording createFromParcel(Parcel source) {
+            return new ExternalSeriesRecording(source);
         }
 
         @Override
-        public GroupPermission[] newArray(int size) {
-            return new GroupPermission[size];
+        public ExternalSeriesRecording[] newArray(int size) {
+            return new ExternalSeriesRecording[size];
         }
     };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeString(this.group);
+        if(this.metaData != null) {
+            dest.writeInt(this.metaData.size());
+            for (Map.Entry<String, StringValue> entry : this.metaData.entrySet()) {
+                dest.writeString(entry.getKey());
+                dest.writeParcelable(entry.getValue(), flags);
+            }
+        } else {
+            dest.writeInt(-1);
+        }
     }
 
-    public GroupPermission(Parcel in) {
+    public ExternalSeriesRecording(Parcel in) {
         super(in);
-        this.group = in.readString();
+        int metaDataSize = in.readInt();
+        if( metaDataSize > -1) {
+            this.metaData = new HashMap<>();
+            for (int i = 0; i < metaDataSize; i++) {
+                String key = in.readString();
+                StringValue value = in.readParcelable(StringValue.class.getClassLoader());
+                this.metaData.put(key, value);
+            }
+        }
     }
 }
 

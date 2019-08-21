@@ -25,7 +25,10 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.client.enums;
+package com.kaltura.client.services;
+
+import com.kaltura.client.types.LoginSession;
+import com.kaltura.client.utils.request.RequestBuilder;
 
 /**
  * This class was generated using exec.php
@@ -33,48 +36,20 @@ package com.kaltura.client.enums;
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
-public enum RuleConditionType implements EnumAsString {
-	ASSET("ASSET"),
-	COUNTRY("COUNTRY"),
-	CONCURRENCY("CONCURRENCY"),
-	IP_RANGE("IP_RANGE"),
-	BUSINESS_MODULE("BUSINESS_MODULE"),
-	SEGMENTS("SEGMENTS"),
-	DATE("DATE"),
-	OR("OR"),
-	HEADER("HEADER"),
-	USER_SUBSCRIPTION("USER_SUBSCRIPTION"),
-	ASSET_SUBSCRIPTION("ASSET_SUBSCRIPTION"),
-	USER_ROLE("USER_ROLE");
 
-	private String value;
-
-	RuleConditionType(String value) {
-		this.value = value;
-	}
-
-	@Override
-	public String getValue() {
-		return this.value;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
-	}
-
-	public static RuleConditionType get(String value) {
-		if(value == null)
-		{
-			return null;
-		}
+public class PartnerService {
+	
+	public static class ExternalLoginPartnerBuilder extends RequestBuilder<LoginSession, LoginSession.Tokenizer, ExternalLoginPartnerBuilder> {
 		
-		// goes over RuleConditionType defined values and compare the inner value with the given one:
-		for(RuleConditionType item: values()) {
-			if(item.getValue().equals(value)) {
-				return item;
-			}
+		public ExternalLoginPartnerBuilder() {
+			super(LoginSession.class, "partner", "externalLogin");
 		}
-		// in case the requested value was not found in the enum values, we return the first item as default.
-		return RuleConditionType.values().length > 0 ? RuleConditionType.values()[0]: null;
-   }
+	}
+
+	/**
+	 * Returns a login session for external system (like OVP)
+	 */
+    public static ExternalLoginPartnerBuilder externalLogin()  {
+		return new ExternalLoginPartnerBuilder();
+	}
 }
