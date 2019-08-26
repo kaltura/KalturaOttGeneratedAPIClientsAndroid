@@ -40,66 +40,78 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
+/**
+ * Cloud series filtering recordings
+ */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(GroupPermission.Tokenizer.class)
-public class GroupPermission extends Permission {
+@MultiRequestBuilder.Tokenizer(CloudSeriesRecordingFilter.Tokenizer.class)
+public class CloudSeriesRecordingFilter extends SeriesRecordingFilter {
 	
-	public interface Tokenizer extends Permission.Tokenizer {
-		String group();
+	public interface Tokenizer extends SeriesRecordingFilter.Tokenizer {
+		String adapterData();
 	}
 
 	/**
-	 * Permission identifier
+	 * Adapter Data
 	 */
-	private String group;
+	private String adapterData;
 
-	// group:
-	public String getGroup(){
-		return this.group;
+	// adapterData:
+	public String getAdapterData(){
+		return this.adapterData;
+	}
+	public void setAdapterData(String adapterData){
+		this.adapterData = adapterData;
 	}
 
-	public GroupPermission() {
+	public void adapterData(String multirequestToken){
+		setToken("adapterData", multirequestToken);
+	}
+
+
+	public CloudSeriesRecordingFilter() {
 		super();
 	}
 
-	public GroupPermission(JsonObject jsonObject) throws APIException {
+	public CloudSeriesRecordingFilter(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		group = GsonParser.parseString(jsonObject.get("group"));
+		adapterData = GsonParser.parseString(jsonObject.get("adapterData"));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaGroupPermission");
+		kparams.add("objectType", "KalturaCloudSeriesRecordingFilter");
+		kparams.add("adapterData", this.adapterData);
 		return kparams;
 	}
 
 
-    public static final Creator<GroupPermission> CREATOR = new Creator<GroupPermission>() {
+    public static final Creator<CloudSeriesRecordingFilter> CREATOR = new Creator<CloudSeriesRecordingFilter>() {
         @Override
-        public GroupPermission createFromParcel(Parcel source) {
-            return new GroupPermission(source);
+        public CloudSeriesRecordingFilter createFromParcel(Parcel source) {
+            return new CloudSeriesRecordingFilter(source);
         }
 
         @Override
-        public GroupPermission[] newArray(int size) {
-            return new GroupPermission[size];
+        public CloudSeriesRecordingFilter[] newArray(int size) {
+            return new CloudSeriesRecordingFilter[size];
         }
     };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeString(this.group);
+        dest.writeString(this.adapterData);
     }
 
-    public GroupPermission(Parcel in) {
+    public CloudSeriesRecordingFilter(Parcel in) {
         super(in);
-        this.group = in.readString();
+        this.adapterData = in.readString();
     }
 }
 
