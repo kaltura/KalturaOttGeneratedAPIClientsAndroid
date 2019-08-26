@@ -49,7 +49,6 @@ public class TagFilter extends Filter {
 		String tagStartsWith();
 		String typeEqual();
 		String languageEqual();
-		String idIn();
 	}
 
 	/**
@@ -68,10 +67,6 @@ public class TagFilter extends Filter {
 	 * Language to filter by
 	 */
 	private String languageEqual;
-	/**
-	 * Comma separated identifiers
-	 */
-	private String idIn;
 
 	// tagEqual:
 	public String getTagEqual(){
@@ -121,18 +116,6 @@ public class TagFilter extends Filter {
 		setToken("languageEqual", multirequestToken);
 	}
 
-	// idIn:
-	public String getIdIn(){
-		return this.idIn;
-	}
-	public void setIdIn(String idIn){
-		this.idIn = idIn;
-	}
-
-	public void idIn(String multirequestToken){
-		setToken("idIn", multirequestToken);
-	}
-
 
 	public TagFilter() {
 		super();
@@ -148,7 +131,6 @@ public class TagFilter extends Filter {
 		tagStartsWith = GsonParser.parseString(jsonObject.get("tagStartsWith"));
 		typeEqual = GsonParser.parseInt(jsonObject.get("typeEqual"));
 		languageEqual = GsonParser.parseString(jsonObject.get("languageEqual"));
-		idIn = GsonParser.parseString(jsonObject.get("idIn"));
 
 	}
 
@@ -159,7 +141,6 @@ public class TagFilter extends Filter {
 		kparams.add("tagStartsWith", this.tagStartsWith);
 		kparams.add("typeEqual", this.typeEqual);
 		kparams.add("languageEqual", this.languageEqual);
-		kparams.add("idIn", this.idIn);
 		return kparams;
 	}
 
@@ -183,7 +164,6 @@ public class TagFilter extends Filter {
         dest.writeString(this.tagStartsWith);
         dest.writeValue(this.typeEqual);
         dest.writeString(this.languageEqual);
-        dest.writeString(this.idIn);
     }
 
     public TagFilter(Parcel in) {
@@ -192,7 +172,6 @@ public class TagFilter extends Filter {
         this.tagStartsWith = in.readString();
         this.typeEqual = (Integer)in.readValue(Integer.class.getClassLoader());
         this.languageEqual = in.readString();
-        this.idIn = in.readString();
     }
 }
 
