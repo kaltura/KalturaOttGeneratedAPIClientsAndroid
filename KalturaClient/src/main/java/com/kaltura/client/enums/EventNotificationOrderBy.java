@@ -33,16 +33,12 @@ package com.kaltura.client.enums;
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
-public enum LinearChannelType implements EnumAsString {
-	UNKNOWN("UNKNOWN"),
-	DTT("DTT"),
-	OTT("OTT"),
-	DTT_AND_OTT("DTT_AND_OTT"),
-	VRM_EXPORT("VRM_EXPORT");
+public enum EventNotificationOrderBy implements EnumAsString {
+	NONE("NONE");
 
 	private String value;
 
-	LinearChannelType(String value) {
+	EventNotificationOrderBy(String value) {
 		this.value = value;
 	}
 
@@ -55,19 +51,19 @@ public enum LinearChannelType implements EnumAsString {
 		this.value = value;
 	}
 
-	public static LinearChannelType get(String value) {
+	public static EventNotificationOrderBy get(String value) {
 		if(value == null)
 		{
 			return null;
 		}
 		
-		// goes over LinearChannelType defined values and compare the inner value with the given one:
-		for(LinearChannelType item: values()) {
+		// goes over EventNotificationOrderBy defined values and compare the inner value with the given one:
+		for(EventNotificationOrderBy item: values()) {
 			if(item.getValue().equals(value)) {
 				return item;
 			}
 		}
 		// in case the requested value was not found in the enum values, we return the first item as default.
-		return LinearChannelType.values().length > 0 ? LinearChannelType.values()[0]: null;
+		return EventNotificationOrderBy.values().length > 0 ? EventNotificationOrderBy.values()[0]: null;
    }
 }

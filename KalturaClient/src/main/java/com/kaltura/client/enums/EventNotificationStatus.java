@@ -33,16 +33,15 @@ package com.kaltura.client.enums;
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
-public enum LinearChannelType implements EnumAsString {
-	UNKNOWN("UNKNOWN"),
-	DTT("DTT"),
-	OTT("OTT"),
-	DTT_AND_OTT("DTT_AND_OTT"),
-	VRM_EXPORT("VRM_EXPORT");
+public enum EventNotificationStatus implements EnumAsString {
+	SENT("SENT"),
+	FAILED("FAILED"),
+	SUCCESS("SUCCESS"),
+	FAILED_TO_SEND("FAILED_TO_SEND");
 
 	private String value;
 
-	LinearChannelType(String value) {
+	EventNotificationStatus(String value) {
 		this.value = value;
 	}
 
@@ -55,19 +54,19 @@ public enum LinearChannelType implements EnumAsString {
 		this.value = value;
 	}
 
-	public static LinearChannelType get(String value) {
+	public static EventNotificationStatus get(String value) {
 		if(value == null)
 		{
 			return null;
 		}
 		
-		// goes over LinearChannelType defined values and compare the inner value with the given one:
-		for(LinearChannelType item: values()) {
+		// goes over EventNotificationStatus defined values and compare the inner value with the given one:
+		for(EventNotificationStatus item: values()) {
 			if(item.getValue().equals(value)) {
 				return item;
 			}
 		}
 		// in case the requested value was not found in the enum values, we return the first item as default.
-		return LinearChannelType.values().length > 0 ? LinearChannelType.values()[0]: null;
+		return EventNotificationStatus.values().length > 0 ? EventNotificationStatus.values()[0]: null;
    }
 }
