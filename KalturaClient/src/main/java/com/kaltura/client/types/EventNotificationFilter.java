@@ -47,7 +47,7 @@ public class EventNotificationFilter extends CrudFilter {
 	public interface Tokenizer extends CrudFilter.Tokenizer {
 		String idEqual();
 		String objectIdEqual();
-		String objectTypeEqual();
+		String eventObjectTypeEqual();
 	}
 
 	/**
@@ -61,7 +61,7 @@ public class EventNotificationFilter extends CrudFilter {
 	/**
 	 * Indicates which objectType to return by their event notifications.
 	 */
-	private String objectTypeEqual;
+	private String eventObjectTypeEqual;
 
 	// idEqual:
 	public String getIdEqual(){
@@ -87,16 +87,16 @@ public class EventNotificationFilter extends CrudFilter {
 		setToken("objectIdEqual", multirequestToken);
 	}
 
-	// objectTypeEqual:
-	public String getObjectTypeEqual(){
-		return this.objectTypeEqual;
+	// eventObjectTypeEqual:
+	public String getEventObjectTypeEqual(){
+		return this.eventObjectTypeEqual;
 	}
-	public void setObjectTypeEqual(String objectTypeEqual){
-		this.objectTypeEqual = objectTypeEqual;
+	public void setEventObjectTypeEqual(String eventObjectTypeEqual){
+		this.eventObjectTypeEqual = eventObjectTypeEqual;
 	}
 
-	public void objectTypeEqual(String multirequestToken){
-		setToken("objectTypeEqual", multirequestToken);
+	public void eventObjectTypeEqual(String multirequestToken){
+		setToken("eventObjectTypeEqual", multirequestToken);
 	}
 
 
@@ -112,7 +112,7 @@ public class EventNotificationFilter extends CrudFilter {
 		// set members values:
 		idEqual = GsonParser.parseString(jsonObject.get("idEqual"));
 		objectIdEqual = GsonParser.parseLong(jsonObject.get("objectIdEqual"));
-		objectTypeEqual = GsonParser.parseString(jsonObject.get("objectTypeEqual"));
+		eventObjectTypeEqual = GsonParser.parseString(jsonObject.get("eventObjectTypeEqual"));
 
 	}
 
@@ -121,7 +121,7 @@ public class EventNotificationFilter extends CrudFilter {
 		kparams.add("objectType", "KalturaEventNotificationFilter");
 		kparams.add("idEqual", this.idEqual);
 		kparams.add("objectIdEqual", this.objectIdEqual);
-		kparams.add("objectTypeEqual", this.objectTypeEqual);
+		kparams.add("eventObjectTypeEqual", this.eventObjectTypeEqual);
 		return kparams;
 	}
 
@@ -143,14 +143,14 @@ public class EventNotificationFilter extends CrudFilter {
         super.writeToParcel(dest, flags);
         dest.writeString(this.idEqual);
         dest.writeValue(this.objectIdEqual);
-        dest.writeString(this.objectTypeEqual);
+        dest.writeString(this.eventObjectTypeEqual);
     }
 
     public EventNotificationFilter(Parcel in) {
         super(in);
         this.idEqual = in.readString();
         this.objectIdEqual = (Long)in.readValue(Long.class.getClassLoader());
-        this.objectTypeEqual = in.readString();
+        this.eventObjectTypeEqual = in.readString();
     }
 }
 
