@@ -30,6 +30,7 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
+import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
@@ -40,66 +41,99 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
+/**
+ * KalturaRegex
+ */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(GroupPermission.Tokenizer.class)
-public class GroupPermission extends Permission {
+@MultiRequestBuilder.Tokenizer(Regex.Tokenizer.class)
+public class Regex extends ObjectBase {
 	
-	public interface Tokenizer extends Permission.Tokenizer {
-		String group();
+	public interface Tokenizer extends ObjectBase.Tokenizer {
+		String expression();
+		String description();
 	}
 
 	/**
-	 * Permission identifier
+	 * regex expression
 	 */
-	private String group;
+	private String expression;
+	/**
+	 * description
+	 */
+	private String description;
 
-	// group:
-	public String getGroup(){
-		return this.group;
+	// expression:
+	public String getExpression(){
+		return this.expression;
+	}
+	public void setExpression(String expression){
+		this.expression = expression;
 	}
 
-	public GroupPermission() {
+	public void expression(String multirequestToken){
+		setToken("expression", multirequestToken);
+	}
+
+	// description:
+	public String getDescription(){
+		return this.description;
+	}
+	public void setDescription(String description){
+		this.description = description;
+	}
+
+	public void description(String multirequestToken){
+		setToken("description", multirequestToken);
+	}
+
+
+	public Regex() {
 		super();
 	}
 
-	public GroupPermission(JsonObject jsonObject) throws APIException {
+	public Regex(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		group = GsonParser.parseString(jsonObject.get("group"));
+		expression = GsonParser.parseString(jsonObject.get("expression"));
+		description = GsonParser.parseString(jsonObject.get("description"));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaGroupPermission");
+		kparams.add("objectType", "KalturaRegex");
+		kparams.add("expression", this.expression);
+		kparams.add("description", this.description);
 		return kparams;
 	}
 
 
-    public static final Creator<GroupPermission> CREATOR = new Creator<GroupPermission>() {
+    public static final Creator<Regex> CREATOR = new Creator<Regex>() {
         @Override
-        public GroupPermission createFromParcel(Parcel source) {
-            return new GroupPermission(source);
+        public Regex createFromParcel(Parcel source) {
+            return new Regex(source);
         }
 
         @Override
-        public GroupPermission[] newArray(int size) {
-            return new GroupPermission[size];
+        public Regex[] newArray(int size) {
+            return new Regex[size];
         }
     };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeString(this.group);
+        dest.writeString(this.expression);
+        dest.writeString(this.description);
     }
 
-    public GroupPermission(Parcel in) {
+    public Regex(Parcel in) {
         super(in);
-        this.group = in.readString();
+        this.expression = in.readString();
+        this.description = in.readString();
     }
 }
 

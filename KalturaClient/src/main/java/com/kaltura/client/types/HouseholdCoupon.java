@@ -40,66 +40,78 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
+/**
+ * Household Coupon details
+ */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(GroupPermission.Tokenizer.class)
-public class GroupPermission extends Permission {
+@MultiRequestBuilder.Tokenizer(HouseholdCoupon.Tokenizer.class)
+public class HouseholdCoupon extends CrudObject {
 	
-	public interface Tokenizer extends Permission.Tokenizer {
-		String group();
+	public interface Tokenizer extends CrudObject.Tokenizer {
+		String code();
 	}
 
 	/**
-	 * Permission identifier
+	 * Coupon code
 	 */
-	private String group;
+	private String code;
 
-	// group:
-	public String getGroup(){
-		return this.group;
+	// code:
+	public String getCode(){
+		return this.code;
+	}
+	public void setCode(String code){
+		this.code = code;
 	}
 
-	public GroupPermission() {
+	public void code(String multirequestToken){
+		setToken("code", multirequestToken);
+	}
+
+
+	public HouseholdCoupon() {
 		super();
 	}
 
-	public GroupPermission(JsonObject jsonObject) throws APIException {
+	public HouseholdCoupon(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		group = GsonParser.parseString(jsonObject.get("group"));
+		code = GsonParser.parseString(jsonObject.get("code"));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaGroupPermission");
+		kparams.add("objectType", "KalturaHouseholdCoupon");
+		kparams.add("code", this.code);
 		return kparams;
 	}
 
 
-    public static final Creator<GroupPermission> CREATOR = new Creator<GroupPermission>() {
+    public static final Creator<HouseholdCoupon> CREATOR = new Creator<HouseholdCoupon>() {
         @Override
-        public GroupPermission createFromParcel(Parcel source) {
-            return new GroupPermission(source);
+        public HouseholdCoupon createFromParcel(Parcel source) {
+            return new HouseholdCoupon(source);
         }
 
         @Override
-        public GroupPermission[] newArray(int size) {
-            return new GroupPermission[size];
+        public HouseholdCoupon[] newArray(int size) {
+            return new HouseholdCoupon[size];
         }
     };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeString(this.group);
+        dest.writeString(this.code);
     }
 
-    public GroupPermission(Parcel in) {
+    public HouseholdCoupon(Parcel in) {
         super(in);
-        this.group = in.readString();
+        this.code = in.readString();
     }
 }
 

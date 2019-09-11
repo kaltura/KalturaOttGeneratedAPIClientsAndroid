@@ -33,23 +33,15 @@ package com.kaltura.client.enums;
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
-public enum RuleConditionType implements EnumAsString {
-	ASSET("ASSET"),
-	COUNTRY("COUNTRY"),
-	CONCURRENCY("CONCURRENCY"),
-	IP_RANGE("IP_RANGE"),
-	BUSINESS_MODULE("BUSINESS_MODULE"),
-	SEGMENTS("SEGMENTS"),
-	DATE("DATE"),
-	OR("OR"),
-	HEADER("HEADER"),
-	USER_SUBSCRIPTION("USER_SUBSCRIPTION"),
-	ASSET_SUBSCRIPTION("ASSET_SUBSCRIPTION"),
-	USER_ROLE("USER_ROLE");
+public enum EventNotificationStatus implements EnumAsString {
+	SENT("SENT"),
+	FAILED("FAILED"),
+	SUCCESS("SUCCESS"),
+	FAILED_TO_SEND("FAILED_TO_SEND");
 
 	private String value;
 
-	RuleConditionType(String value) {
+	EventNotificationStatus(String value) {
 		this.value = value;
 	}
 
@@ -62,19 +54,19 @@ public enum RuleConditionType implements EnumAsString {
 		this.value = value;
 	}
 
-	public static RuleConditionType get(String value) {
+	public static EventNotificationStatus get(String value) {
 		if(value == null)
 		{
 			return null;
 		}
 		
-		// goes over RuleConditionType defined values and compare the inner value with the given one:
-		for(RuleConditionType item: values()) {
+		// goes over EventNotificationStatus defined values and compare the inner value with the given one:
+		for(EventNotificationStatus item: values()) {
 			if(item.getValue().equals(value)) {
 				return item;
 			}
 		}
 		// in case the requested value was not found in the enum values, we return the first item as default.
-		return RuleConditionType.values().length > 0 ? RuleConditionType.values()[0]: null;
+		return EventNotificationStatus.values().length > 0 ? EventNotificationStatus.values()[0]: null;
    }
 }
