@@ -46,27 +46,12 @@ public class RegionFilter extends Filter {
 	
 	public interface Tokenizer extends Filter.Tokenizer {
 		String externalIdIn();
-		String idIn();
-		String parentIdEqual();
-		String liveAssetIdEqual();
 	}
 
 	/**
-	 * List of comma separated regions external IDs
+	 * List of comma separated regions external identifiers
 	 */
 	private String externalIdIn;
-	/**
-	 * List of comma separated regions Ids
-	 */
-	private String idIn;
-	/**
-	 * Region parent ID to filter by
-	 */
-	private Integer parentIdEqual;
-	/**
-	 * Region parent ID to filter by
-	 */
-	private Integer liveAssetIdEqual;
 
 	// externalIdIn:
 	public String getExternalIdIn(){
@@ -78,42 +63,6 @@ public class RegionFilter extends Filter {
 
 	public void externalIdIn(String multirequestToken){
 		setToken("externalIdIn", multirequestToken);
-	}
-
-	// idIn:
-	public String getIdIn(){
-		return this.idIn;
-	}
-	public void setIdIn(String idIn){
-		this.idIn = idIn;
-	}
-
-	public void idIn(String multirequestToken){
-		setToken("idIn", multirequestToken);
-	}
-
-	// parentIdEqual:
-	public Integer getParentIdEqual(){
-		return this.parentIdEqual;
-	}
-	public void setParentIdEqual(Integer parentIdEqual){
-		this.parentIdEqual = parentIdEqual;
-	}
-
-	public void parentIdEqual(String multirequestToken){
-		setToken("parentIdEqual", multirequestToken);
-	}
-
-	// liveAssetIdEqual:
-	public Integer getLiveAssetIdEqual(){
-		return this.liveAssetIdEqual;
-	}
-	public void setLiveAssetIdEqual(Integer liveAssetIdEqual){
-		this.liveAssetIdEqual = liveAssetIdEqual;
-	}
-
-	public void liveAssetIdEqual(String multirequestToken){
-		setToken("liveAssetIdEqual", multirequestToken);
 	}
 
 
@@ -128,9 +77,6 @@ public class RegionFilter extends Filter {
 
 		// set members values:
 		externalIdIn = GsonParser.parseString(jsonObject.get("externalIdIn"));
-		idIn = GsonParser.parseString(jsonObject.get("idIn"));
-		parentIdEqual = GsonParser.parseInt(jsonObject.get("parentIdEqual"));
-		liveAssetIdEqual = GsonParser.parseInt(jsonObject.get("liveAssetIdEqual"));
 
 	}
 
@@ -138,9 +84,6 @@ public class RegionFilter extends Filter {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaRegionFilter");
 		kparams.add("externalIdIn", this.externalIdIn);
-		kparams.add("idIn", this.idIn);
-		kparams.add("parentIdEqual", this.parentIdEqual);
-		kparams.add("liveAssetIdEqual", this.liveAssetIdEqual);
 		return kparams;
 	}
 
@@ -161,17 +104,11 @@ public class RegionFilter extends Filter {
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeString(this.externalIdIn);
-        dest.writeString(this.idIn);
-        dest.writeValue(this.parentIdEqual);
-        dest.writeValue(this.liveAssetIdEqual);
     }
 
     public RegionFilter(Parcel in) {
         super(in);
         this.externalIdIn = in.readString();
-        this.idIn = in.readString();
-        this.parentIdEqual = (Integer)in.readValue(Integer.class.getClassLoader());
-        this.liveAssetIdEqual = (Integer)in.readValue(Integer.class.getClassLoader());
     }
 }
 
