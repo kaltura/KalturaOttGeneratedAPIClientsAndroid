@@ -40,45 +40,45 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 /**
- * Kaltura asset first image per ratio filter
+ * Kaltura asset image per ratio filter
  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(AssetFirstImagePerRatioFilter.Tokenizer.class)
-public class AssetFirstImagePerRatioFilter extends RelatedObjectFilter {
+@MultiRequestBuilder.Tokenizer(AssetImagePerRatioFilter.Tokenizer.class)
+public class AssetImagePerRatioFilter extends RelatedObjectFilter {
 	
 	public interface Tokenizer extends RelatedObjectFilter.Tokenizer {
 	}
 
 
 
-	public AssetFirstImagePerRatioFilter() {
+	public AssetImagePerRatioFilter() {
 		super();
 	}
 
-	public AssetFirstImagePerRatioFilter(JsonObject jsonObject) throws APIException {
+	public AssetImagePerRatioFilter(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaAssetFirstImagePerRatioFilter");
+		kparams.add("objectType", "KalturaAssetImagePerRatioFilter");
 		return kparams;
 	}
 
 
-    public static final Creator<AssetFirstImagePerRatioFilter> CREATOR = new Creator<AssetFirstImagePerRatioFilter>() {
+    public static final Creator<AssetImagePerRatioFilter> CREATOR = new Creator<AssetImagePerRatioFilter>() {
         @Override
-        public AssetFirstImagePerRatioFilter createFromParcel(Parcel source) {
-            return new AssetFirstImagePerRatioFilter(source);
+        public AssetImagePerRatioFilter createFromParcel(Parcel source) {
+            return new AssetImagePerRatioFilter(source);
         }
 
         @Override
-        public AssetFirstImagePerRatioFilter[] newArray(int size) {
-            return new AssetFirstImagePerRatioFilter[size];
+        public AssetImagePerRatioFilter[] newArray(int size) {
+            return new AssetImagePerRatioFilter[size];
         }
     };
 
-    public AssetFirstImagePerRatioFilter(Parcel in) {
+    public AssetImagePerRatioFilter(Parcel in) {
         super(in);
     }
 }
