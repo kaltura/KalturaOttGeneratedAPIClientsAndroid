@@ -45,8 +45,8 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * KalturaRegex
  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(Regex.Tokenizer.class)
-public class Regex extends ObjectBase {
+@MultiRequestBuilder.Tokenizer(RegexExpression.Tokenizer.class)
+public class RegexExpression extends ObjectBase {
 	
 	public interface Tokenizer extends ObjectBase.Tokenizer {
 		String expression();
@@ -87,11 +87,11 @@ public class Regex extends ObjectBase {
 	}
 
 
-	public Regex() {
+	public RegexExpression() {
 		super();
 	}
 
-	public Regex(JsonObject jsonObject) throws APIException {
+	public RegexExpression(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
@@ -104,22 +104,22 @@ public class Regex extends ObjectBase {
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaRegex");
+		kparams.add("objectType", "KalturaRegexExpression");
 		kparams.add("expression", this.expression);
 		kparams.add("description", this.description);
 		return kparams;
 	}
 
 
-    public static final Creator<Regex> CREATOR = new Creator<Regex>() {
+    public static final Creator<RegexExpression> CREATOR = new Creator<RegexExpression>() {
         @Override
-        public Regex createFromParcel(Parcel source) {
-            return new Regex(source);
+        public RegexExpression createFromParcel(Parcel source) {
+            return new RegexExpression(source);
         }
 
         @Override
-        public Regex[] newArray(int size) {
-            return new Regex[size];
+        public RegexExpression[] newArray(int size) {
+            return new RegexExpression[size];
         }
     };
 
@@ -130,7 +130,7 @@ public class Regex extends ObjectBase {
         dest.writeString(this.description);
     }
 
-    public Regex(Parcel in) {
+    public RegexExpression(Parcel in) {
         super(in);
         this.expression = in.readString();
         this.description = in.readString();

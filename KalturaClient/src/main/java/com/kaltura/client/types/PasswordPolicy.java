@@ -56,7 +56,7 @@ public class PasswordPolicy extends CrudObject {
 		String userRoleIds();
 		String historyCount();
 		String expiration();
-		RequestBuilder.ListTokenizer<Regex.Tokenizer> complexities();
+		RequestBuilder.ListTokenizer<RegexExpression.Tokenizer> complexities();
 		String lockoutFailuresCount();
 	}
 
@@ -84,7 +84,7 @@ public class PasswordPolicy extends CrudObject {
 	/**
 	 * array of  KalturaRegex
 	 */
-	private List<Regex> complexities;
+	private List<RegexExpression> complexities;
 	/**
 	 * the number of passwords failures before the account is locked.
 	 */
@@ -143,10 +143,10 @@ public class PasswordPolicy extends CrudObject {
 	}
 
 	// complexities:
-	public List<Regex> getComplexities(){
+	public List<RegexExpression> getComplexities(){
 		return this.complexities;
 	}
-	public void setComplexities(List<Regex> complexities){
+	public void setComplexities(List<RegexExpression> complexities){
 		this.complexities = complexities;
 	}
 
@@ -178,7 +178,7 @@ public class PasswordPolicy extends CrudObject {
 		userRoleIds = GsonParser.parseString(jsonObject.get("userRoleIds"));
 		historyCount = GsonParser.parseInt(jsonObject.get("historyCount"));
 		expiration = GsonParser.parseInt(jsonObject.get("expiration"));
-		complexities = GsonParser.parseArray(jsonObject.getAsJsonArray("complexities"), Regex.class);
+		complexities = GsonParser.parseArray(jsonObject.getAsJsonArray("complexities"), RegexExpression.class);
 		lockoutFailuresCount = GsonParser.parseInt(jsonObject.get("lockoutFailuresCount"));
 
 	}
@@ -235,7 +235,7 @@ public class PasswordPolicy extends CrudObject {
         int complexitiesSize = in.readInt();
         if( complexitiesSize > -1) {
             this.complexities = new ArrayList<>();
-            in.readList(this.complexities, Regex.class.getClassLoader());
+            in.readList(this.complexities, RegexExpression.class.getClassLoader());
         }
         this.lockoutFailuresCount = (Integer)in.readValue(Integer.class.getClassLoader());
     }
