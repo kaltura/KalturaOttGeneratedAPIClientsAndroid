@@ -30,6 +30,7 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
+import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
@@ -41,98 +42,98 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 /**
- * Filtering Asset Struct Metas
+ * KalturaRegexExpression
  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(PpvFilter.Tokenizer.class)
-public class PpvFilter extends Filter {
+@MultiRequestBuilder.Tokenizer(RegexExpression.Tokenizer.class)
+public class RegexExpression extends ObjectBase {
 	
-	public interface Tokenizer extends Filter.Tokenizer {
-		String idIn();
-		String couponGroupIdEqual();
+	public interface Tokenizer extends ObjectBase.Tokenizer {
+		String expression();
+		String description();
 	}
 
 	/**
-	 * Comma separated identifiers
+	 * regex expression
 	 */
-	private String idIn;
+	private String expression;
 	/**
-	 * couponGroupIdEqual
+	 * description
 	 */
-	private Integer couponGroupIdEqual;
+	private String description;
 
-	// idIn:
-	public String getIdIn(){
-		return this.idIn;
+	// expression:
+	public String getExpression(){
+		return this.expression;
 	}
-	public void setIdIn(String idIn){
-		this.idIn = idIn;
-	}
-
-	public void idIn(String multirequestToken){
-		setToken("idIn", multirequestToken);
+	public void setExpression(String expression){
+		this.expression = expression;
 	}
 
-	// couponGroupIdEqual:
-	public Integer getCouponGroupIdEqual(){
-		return this.couponGroupIdEqual;
-	}
-	public void setCouponGroupIdEqual(Integer couponGroupIdEqual){
-		this.couponGroupIdEqual = couponGroupIdEqual;
+	public void expression(String multirequestToken){
+		setToken("expression", multirequestToken);
 	}
 
-	public void couponGroupIdEqual(String multirequestToken){
-		setToken("couponGroupIdEqual", multirequestToken);
+	// description:
+	public String getDescription(){
+		return this.description;
+	}
+	public void setDescription(String description){
+		this.description = description;
+	}
+
+	public void description(String multirequestToken){
+		setToken("description", multirequestToken);
 	}
 
 
-	public PpvFilter() {
+	public RegexExpression() {
 		super();
 	}
 
-	public PpvFilter(JsonObject jsonObject) throws APIException {
+	public RegexExpression(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		idIn = GsonParser.parseString(jsonObject.get("idIn"));
-		couponGroupIdEqual = GsonParser.parseInt(jsonObject.get("couponGroupIdEqual"));
+		expression = GsonParser.parseString(jsonObject.get("expression"));
+		description = GsonParser.parseString(jsonObject.get("description"));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaPpvFilter");
-		kparams.add("idIn", this.idIn);
-		kparams.add("couponGroupIdEqual", this.couponGroupIdEqual);
+		kparams.add("objectType", "KalturaRegexExpression");
+		kparams.add("expression", this.expression);
+		kparams.add("description", this.description);
 		return kparams;
 	}
 
 
-    public static final Creator<PpvFilter> CREATOR = new Creator<PpvFilter>() {
+    public static final Creator<RegexExpression> CREATOR = new Creator<RegexExpression>() {
         @Override
-        public PpvFilter createFromParcel(Parcel source) {
-            return new PpvFilter(source);
+        public RegexExpression createFromParcel(Parcel source) {
+            return new RegexExpression(source);
         }
 
         @Override
-        public PpvFilter[] newArray(int size) {
-            return new PpvFilter[size];
+        public RegexExpression[] newArray(int size) {
+            return new RegexExpression[size];
         }
     };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeString(this.idIn);
-        dest.writeValue(this.couponGroupIdEqual);
+        dest.writeString(this.expression);
+        dest.writeString(this.description);
     }
 
-    public PpvFilter(Parcel in) {
+    public RegexExpression(Parcel in) {
         super(in);
-        this.idIn = in.readString();
-        this.couponGroupIdEqual = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.expression = in.readString();
+        this.description = in.readString();
     }
 }
 

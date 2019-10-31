@@ -30,6 +30,7 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
+import com.kaltura.client.types.EventObject;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
@@ -41,98 +42,73 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 /**
- * Filtering Asset Struct Metas
+ * Kaltura event notification object scope
  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(PpvFilter.Tokenizer.class)
-public class PpvFilter extends Filter {
+@MultiRequestBuilder.Tokenizer(EventNotificationObjectScope.Tokenizer.class)
+public class EventNotificationObjectScope extends EventNotificationScope {
 	
-	public interface Tokenizer extends Filter.Tokenizer {
-		String idIn();
-		String couponGroupIdEqual();
+	public interface Tokenizer extends EventNotificationScope.Tokenizer {
+		EventObject.Tokenizer eventObject();
 	}
 
 	/**
-	 * Comma separated identifiers
+	 * Event object to fire
 	 */
-	private String idIn;
-	/**
-	 * couponGroupIdEqual
-	 */
-	private Integer couponGroupIdEqual;
+	private EventObject eventObject;
 
-	// idIn:
-	public String getIdIn(){
-		return this.idIn;
+	// eventObject:
+	public EventObject getEventObject(){
+		return this.eventObject;
 	}
-	public void setIdIn(String idIn){
-		this.idIn = idIn;
-	}
-
-	public void idIn(String multirequestToken){
-		setToken("idIn", multirequestToken);
-	}
-
-	// couponGroupIdEqual:
-	public Integer getCouponGroupIdEqual(){
-		return this.couponGroupIdEqual;
-	}
-	public void setCouponGroupIdEqual(Integer couponGroupIdEqual){
-		this.couponGroupIdEqual = couponGroupIdEqual;
-	}
-
-	public void couponGroupIdEqual(String multirequestToken){
-		setToken("couponGroupIdEqual", multirequestToken);
+	public void setEventObject(EventObject eventObject){
+		this.eventObject = eventObject;
 	}
 
 
-	public PpvFilter() {
+	public EventNotificationObjectScope() {
 		super();
 	}
 
-	public PpvFilter(JsonObject jsonObject) throws APIException {
+	public EventNotificationObjectScope(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		idIn = GsonParser.parseString(jsonObject.get("idIn"));
-		couponGroupIdEqual = GsonParser.parseInt(jsonObject.get("couponGroupIdEqual"));
+		eventObject = GsonParser.parseObject(jsonObject.getAsJsonObject("eventObject"), EventObject.class);
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaPpvFilter");
-		kparams.add("idIn", this.idIn);
-		kparams.add("couponGroupIdEqual", this.couponGroupIdEqual);
+		kparams.add("objectType", "KalturaEventNotificationObjectScope");
+		kparams.add("eventObject", this.eventObject);
 		return kparams;
 	}
 
 
-    public static final Creator<PpvFilter> CREATOR = new Creator<PpvFilter>() {
+    public static final Creator<EventNotificationObjectScope> CREATOR = new Creator<EventNotificationObjectScope>() {
         @Override
-        public PpvFilter createFromParcel(Parcel source) {
-            return new PpvFilter(source);
+        public EventNotificationObjectScope createFromParcel(Parcel source) {
+            return new EventNotificationObjectScope(source);
         }
 
         @Override
-        public PpvFilter[] newArray(int size) {
-            return new PpvFilter[size];
+        public EventNotificationObjectScope[] newArray(int size) {
+            return new EventNotificationObjectScope[size];
         }
     };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeString(this.idIn);
-        dest.writeValue(this.couponGroupIdEqual);
+        dest.writeParcelable(this.eventObject, flags);
     }
 
-    public PpvFilter(Parcel in) {
+    public EventNotificationObjectScope(Parcel in) {
         super(in);
-        this.idIn = in.readString();
-        this.couponGroupIdEqual = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.eventObject = in.readParcelable(EventObject.class.getClassLoader());
     }
 }
 

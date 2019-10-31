@@ -30,9 +30,11 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.utils.request.RequestBuilder;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class was generated using exec.php
@@ -42,98 +44,103 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 /**
- * KalturaRegex
+ * Asset order segment action
  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(Regex.Tokenizer.class)
-public class Regex extends ObjectBase {
+@MultiRequestBuilder.Tokenizer(AssetOrderSegmentAction.Tokenizer.class)
+public class AssetOrderSegmentAction extends BaseSegmentAction {
 	
-	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String expression();
-		String description();
+	public interface Tokenizer extends BaseSegmentAction.Tokenizer {
+		String name();
+		RequestBuilder.ListTokenizer<StringValue.Tokenizer> values();
 	}
 
 	/**
-	 * regex expression
+	 * Action name
 	 */
-	private String expression;
+	private String name;
 	/**
-	 * description
+	 * Action values
 	 */
-	private String description;
+	private List<StringValue> values;
 
-	// expression:
-	public String getExpression(){
-		return this.expression;
+	// name:
+	public String getName(){
+		return this.name;
 	}
-	public void setExpression(String expression){
-		this.expression = expression;
-	}
-
-	public void expression(String multirequestToken){
-		setToken("expression", multirequestToken);
+	public void setName(String name){
+		this.name = name;
 	}
 
-	// description:
-	public String getDescription(){
-		return this.description;
-	}
-	public void setDescription(String description){
-		this.description = description;
+	public void name(String multirequestToken){
+		setToken("name", multirequestToken);
 	}
 
-	public void description(String multirequestToken){
-		setToken("description", multirequestToken);
+	// values:
+	public List<StringValue> getValues(){
+		return this.values;
+	}
+	public void setValues(List<StringValue> values){
+		this.values = values;
 	}
 
 
-	public Regex() {
+	public AssetOrderSegmentAction() {
 		super();
 	}
 
-	public Regex(JsonObject jsonObject) throws APIException {
+	public AssetOrderSegmentAction(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		expression = GsonParser.parseString(jsonObject.get("expression"));
-		description = GsonParser.parseString(jsonObject.get("description"));
+		name = GsonParser.parseString(jsonObject.get("name"));
+		values = GsonParser.parseArray(jsonObject.getAsJsonArray("values"), StringValue.class);
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaRegex");
-		kparams.add("expression", this.expression);
-		kparams.add("description", this.description);
+		kparams.add("objectType", "KalturaAssetOrderSegmentAction");
+		kparams.add("name", this.name);
+		kparams.add("values", this.values);
 		return kparams;
 	}
 
 
-    public static final Creator<Regex> CREATOR = new Creator<Regex>() {
+    public static final Creator<AssetOrderSegmentAction> CREATOR = new Creator<AssetOrderSegmentAction>() {
         @Override
-        public Regex createFromParcel(Parcel source) {
-            return new Regex(source);
+        public AssetOrderSegmentAction createFromParcel(Parcel source) {
+            return new AssetOrderSegmentAction(source);
         }
 
         @Override
-        public Regex[] newArray(int size) {
-            return new Regex[size];
+        public AssetOrderSegmentAction[] newArray(int size) {
+            return new AssetOrderSegmentAction[size];
         }
     };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeString(this.expression);
-        dest.writeString(this.description);
+        dest.writeString(this.name);
+        if(this.values != null) {
+            dest.writeInt(this.values.size());
+            dest.writeList(this.values);
+        } else {
+            dest.writeInt(-1);
+        }
     }
 
-    public Regex(Parcel in) {
+    public AssetOrderSegmentAction(Parcel in) {
         super(in);
-        this.expression = in.readString();
-        this.description = in.readString();
+        this.name = in.readString();
+        int valuesSize = in.readInt();
+        if( valuesSize > -1) {
+            this.values = new ArrayList<>();
+            in.readList(this.values, StringValue.class.getClassLoader());
+        }
     }
 }
 
