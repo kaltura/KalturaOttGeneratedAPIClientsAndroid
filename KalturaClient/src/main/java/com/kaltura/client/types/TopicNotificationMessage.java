@@ -30,6 +30,7 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
+import com.kaltura.client.enums.AnnouncementStatus;
 import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.types.Trigger;
 import com.kaltura.client.utils.GsonParser;
@@ -56,6 +57,7 @@ public class TopicNotificationMessage extends ObjectBase {
 		String topicNotificationId();
 		Trigger.Tokenizer trigger();
 		RequestBuilder.ListTokenizer<Dispatcher.Tokenizer> dispatchers();
+		String status();
 	}
 
 	/**
@@ -82,6 +84,10 @@ public class TopicNotificationMessage extends ObjectBase {
 	 * Topic notification message dispatchers
 	 */
 	private List<Dispatcher> dispatchers;
+	/**
+	 * Message status
+	 */
+	private AnnouncementStatus status;
 
 	// id:
 	public Long getId(){
@@ -139,6 +145,10 @@ public class TopicNotificationMessage extends ObjectBase {
 		this.dispatchers = dispatchers;
 	}
 
+	// status:
+	public AnnouncementStatus getStatus(){
+		return this.status;
+	}
 
 	public TopicNotificationMessage() {
 		super();
@@ -156,6 +166,7 @@ public class TopicNotificationMessage extends ObjectBase {
 		topicNotificationId = GsonParser.parseLong(jsonObject.get("topicNotificationId"));
 		trigger = GsonParser.parseObject(jsonObject.getAsJsonObject("trigger"), Trigger.class);
 		dispatchers = GsonParser.parseArray(jsonObject.getAsJsonArray("dispatchers"), Dispatcher.class);
+		status = AnnouncementStatus.get(GsonParser.parseString(jsonObject.get("status")));
 
 	}
 
@@ -197,6 +208,7 @@ public class TopicNotificationMessage extends ObjectBase {
         } else {
             dest.writeInt(-1);
         }
+        dest.writeInt(this.status == null ? -1 : this.status.ordinal());
     }
 
     public TopicNotificationMessage(Parcel in) {
@@ -211,6 +223,8 @@ public class TopicNotificationMessage extends ObjectBase {
             this.dispatchers = new ArrayList<>();
             in.readList(this.dispatchers, Dispatcher.class.getClassLoader());
         }
+        int tmpStatus = in.readInt();
+        this.status = tmpStatus == -1 ? null : AnnouncementStatus.values()[tmpStatus];
     }
 }
 

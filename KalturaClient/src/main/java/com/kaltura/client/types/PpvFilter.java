@@ -49,12 +49,17 @@ public class PpvFilter extends Filter {
 	
 	public interface Tokenizer extends Filter.Tokenizer {
 		String idIn();
+		String couponGroupIdEqual();
 	}
 
 	/**
 	 * Comma separated identifiers
 	 */
 	private String idIn;
+	/**
+	 * couponGroupIdEqual
+	 */
+	private Integer couponGroupIdEqual;
 
 	// idIn:
 	public String getIdIn(){
@@ -66,6 +71,18 @@ public class PpvFilter extends Filter {
 
 	public void idIn(String multirequestToken){
 		setToken("idIn", multirequestToken);
+	}
+
+	// couponGroupIdEqual:
+	public Integer getCouponGroupIdEqual(){
+		return this.couponGroupIdEqual;
+	}
+	public void setCouponGroupIdEqual(Integer couponGroupIdEqual){
+		this.couponGroupIdEqual = couponGroupIdEqual;
+	}
+
+	public void couponGroupIdEqual(String multirequestToken){
+		setToken("couponGroupIdEqual", multirequestToken);
 	}
 
 
@@ -80,6 +97,7 @@ public class PpvFilter extends Filter {
 
 		// set members values:
 		idIn = GsonParser.parseString(jsonObject.get("idIn"));
+		couponGroupIdEqual = GsonParser.parseInt(jsonObject.get("couponGroupIdEqual"));
 
 	}
 
@@ -87,6 +105,7 @@ public class PpvFilter extends Filter {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaPpvFilter");
 		kparams.add("idIn", this.idIn);
+		kparams.add("couponGroupIdEqual", this.couponGroupIdEqual);
 		return kparams;
 	}
 
@@ -107,11 +126,13 @@ public class PpvFilter extends Filter {
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeString(this.idIn);
+        dest.writeValue(this.couponGroupIdEqual);
     }
 
     public PpvFilter(Parcel in) {
         super(in);
         this.idIn = in.readString();
+        this.couponGroupIdEqual = (Integer)in.readValue(Integer.class.getClassLoader());
     }
 }
 

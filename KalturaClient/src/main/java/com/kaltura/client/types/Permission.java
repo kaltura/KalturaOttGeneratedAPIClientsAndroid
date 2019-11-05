@@ -30,6 +30,7 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
+import com.kaltura.client.enums.PermissionType;
 import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
@@ -49,6 +50,8 @@ public class Permission extends ObjectBase {
 		String id();
 		String name();
 		String friendlyName();
+		String dependsOnPermissionNames();
+		String type();
 	}
 
 	/**
@@ -63,6 +66,14 @@ public class Permission extends ObjectBase {
 	 * Permission friendly name
 	 */
 	private String friendlyName;
+	/**
+	 * Comma separated permissions names from type SPECIAL_FEATURE
+	 */
+	private String dependsOnPermissionNames;
+	/**
+	 * Comma separated permissions names from type SPECIAL_FEATURE
+	 */
+	private PermissionType type;
 
 	// id:
 	public Long getId(){
@@ -92,6 +103,22 @@ public class Permission extends ObjectBase {
 		setToken("friendlyName", multirequestToken);
 	}
 
+	// dependsOnPermissionNames:
+	public String getDependsOnPermissionNames(){
+		return this.dependsOnPermissionNames;
+	}
+	// type:
+	public PermissionType getType(){
+		return this.type;
+	}
+	public void setType(PermissionType type){
+		this.type = type;
+	}
+
+	public void type(String multirequestToken){
+		setToken("type", multirequestToken);
+	}
+
 
 	public Permission() {
 		super();
@@ -106,6 +133,8 @@ public class Permission extends ObjectBase {
 		id = GsonParser.parseLong(jsonObject.get("id"));
 		name = GsonParser.parseString(jsonObject.get("name"));
 		friendlyName = GsonParser.parseString(jsonObject.get("friendlyName"));
+		dependsOnPermissionNames = GsonParser.parseString(jsonObject.get("dependsOnPermissionNames"));
+		type = PermissionType.get(GsonParser.parseString(jsonObject.get("type")));
 
 	}
 
@@ -114,6 +143,7 @@ public class Permission extends ObjectBase {
 		kparams.add("objectType", "KalturaPermission");
 		kparams.add("name", this.name);
 		kparams.add("friendlyName", this.friendlyName);
+		kparams.add("type", this.type);
 		return kparams;
 	}
 
@@ -136,6 +166,8 @@ public class Permission extends ObjectBase {
         dest.writeValue(this.id);
         dest.writeString(this.name);
         dest.writeString(this.friendlyName);
+        dest.writeString(this.dependsOnPermissionNames);
+        dest.writeInt(this.type == null ? -1 : this.type.ordinal());
     }
 
     public Permission(Parcel in) {
@@ -143,6 +175,9 @@ public class Permission extends ObjectBase {
         this.id = (Long)in.readValue(Long.class.getClassLoader());
         this.name = in.readString();
         this.friendlyName = in.readString();
+        this.dependsOnPermissionNames = in.readString();
+        int tmpType = in.readInt();
+        this.type = tmpType == -1 ? null : PermissionType.values()[tmpType];
     }
 }
 
