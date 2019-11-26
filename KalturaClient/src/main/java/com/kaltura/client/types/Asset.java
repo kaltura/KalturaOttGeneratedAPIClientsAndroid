@@ -30,6 +30,7 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
+import com.kaltura.client.enums.AssetIndexStatus;
 import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
@@ -70,6 +71,7 @@ public abstract class Asset extends ObjectBase {
 		String createDate();
 		String updateDate();
 		String externalId();
+		String indexStatus();
 	}
 
 	/**
@@ -144,6 +146,10 @@ public abstract class Asset extends ObjectBase {
 	 * External identifier for the asset
 	 */
 	private String externalId;
+	/**
+	 * The media asset index status
+	 */
+	private AssetIndexStatus indexStatus;
 
 	// id:
 	public Long getId(){
@@ -261,6 +267,10 @@ public abstract class Asset extends ObjectBase {
 		setToken("externalId", multirequestToken);
 	}
 
+	// indexStatus:
+	public AssetIndexStatus getIndexStatus(){
+		return this.indexStatus;
+	}
 
 	public Asset() {
 		super();
@@ -288,6 +298,7 @@ public abstract class Asset extends ObjectBase {
 		createDate = GsonParser.parseLong(jsonObject.get("createDate"));
 		updateDate = GsonParser.parseLong(jsonObject.get("updateDate"));
 		externalId = GsonParser.parseString(jsonObject.get("externalId"));
+		indexStatus = AssetIndexStatus.get(GsonParser.parseString(jsonObject.get("indexStatus")));
 
 	}
 
@@ -370,6 +381,7 @@ public abstract class Asset extends ObjectBase {
         dest.writeValue(this.createDate);
         dest.writeValue(this.updateDate);
         dest.writeString(this.externalId);
+        dest.writeInt(this.indexStatus == null ? -1 : this.indexStatus.ordinal());
     }
 
     public Asset(Parcel in) {
@@ -430,6 +442,8 @@ public abstract class Asset extends ObjectBase {
         this.createDate = (Long)in.readValue(Long.class.getClassLoader());
         this.updateDate = (Long)in.readValue(Long.class.getClassLoader());
         this.externalId = in.readString();
+        int tmpIndexStatus = in.readInt();
+        this.indexStatus = tmpIndexStatus == -1 ? null : AssetIndexStatus.values()[tmpIndexStatus];
     }
 }
 

@@ -63,6 +63,7 @@ public class BulkUpload extends ObjectBase {
 		String updateDate();
 		String uploadedByUserId();
 		RequestBuilder.ListTokenizer<BulkUploadResult.Tokenizer> results();
+		RequestBuilder.ListTokenizer<Message.Tokenizer> errors();
 	}
 
 	/**
@@ -102,6 +103,10 @@ public class BulkUpload extends ObjectBase {
 	 * A list of results
 	 */
 	private List<BulkUploadResult> results;
+	/**
+	 * A list of errors
+	 */
+	private List<Message> errors;
 
 	// id:
 	public Long getId(){
@@ -139,6 +144,10 @@ public class BulkUpload extends ObjectBase {
 	public List<BulkUploadResult> getResults(){
 		return this.results;
 	}
+	// errors:
+	public List<Message> getErrors(){
+		return this.errors;
+	}
 
 	public BulkUpload() {
 		super();
@@ -159,6 +168,7 @@ public class BulkUpload extends ObjectBase {
 		updateDate = GsonParser.parseLong(jsonObject.get("updateDate"));
 		uploadedByUserId = GsonParser.parseLong(jsonObject.get("uploadedByUserId"));
 		results = GsonParser.parseArray(jsonObject.getAsJsonArray("results"), BulkUploadResult.class);
+		errors = GsonParser.parseArray(jsonObject.getAsJsonArray("errors"), Message.class);
 
 	}
 
@@ -198,6 +208,12 @@ public class BulkUpload extends ObjectBase {
         } else {
             dest.writeInt(-1);
         }
+        if(this.errors != null) {
+            dest.writeInt(this.errors.size());
+            dest.writeList(this.errors);
+        } else {
+            dest.writeInt(-1);
+        }
     }
 
     public BulkUpload(Parcel in) {
@@ -216,6 +232,11 @@ public class BulkUpload extends ObjectBase {
         if( resultsSize > -1) {
             this.results = new ArrayList<>();
             in.readList(this.results, BulkUploadResult.class.getClassLoader());
+        }
+        int errorsSize = in.readInt();
+        if( errorsSize > -1) {
+            this.errors = new ArrayList<>();
+            in.readList(this.errors, Message.class.getClassLoader());
         }
     }
 }

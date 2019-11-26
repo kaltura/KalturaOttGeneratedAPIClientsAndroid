@@ -48,6 +48,7 @@ public class SubscriptionFilter extends Filter {
 		String subscriptionIdIn();
 		String mediaFileIdEqual();
 		String externalIdIn();
+		String couponGroupIdEqual();
 	}
 
 	/**
@@ -62,6 +63,10 @@ public class SubscriptionFilter extends Filter {
 	 * Comma separated subscription external IDs to get the subscriptions by
 	 */
 	private String externalIdIn;
+	/**
+	 * couponGroupIdEqual
+	 */
+	private Integer couponGroupIdEqual;
 
 	// subscriptionIdIn:
 	public String getSubscriptionIdIn(){
@@ -99,6 +104,18 @@ public class SubscriptionFilter extends Filter {
 		setToken("externalIdIn", multirequestToken);
 	}
 
+	// couponGroupIdEqual:
+	public Integer getCouponGroupIdEqual(){
+		return this.couponGroupIdEqual;
+	}
+	public void setCouponGroupIdEqual(Integer couponGroupIdEqual){
+		this.couponGroupIdEqual = couponGroupIdEqual;
+	}
+
+	public void couponGroupIdEqual(String multirequestToken){
+		setToken("couponGroupIdEqual", multirequestToken);
+	}
+
 
 	public SubscriptionFilter() {
 		super();
@@ -113,6 +130,7 @@ public class SubscriptionFilter extends Filter {
 		subscriptionIdIn = GsonParser.parseString(jsonObject.get("subscriptionIdIn"));
 		mediaFileIdEqual = GsonParser.parseInt(jsonObject.get("mediaFileIdEqual"));
 		externalIdIn = GsonParser.parseString(jsonObject.get("externalIdIn"));
+		couponGroupIdEqual = GsonParser.parseInt(jsonObject.get("couponGroupIdEqual"));
 
 	}
 
@@ -122,6 +140,7 @@ public class SubscriptionFilter extends Filter {
 		kparams.add("subscriptionIdIn", this.subscriptionIdIn);
 		kparams.add("mediaFileIdEqual", this.mediaFileIdEqual);
 		kparams.add("externalIdIn", this.externalIdIn);
+		kparams.add("couponGroupIdEqual", this.couponGroupIdEqual);
 		return kparams;
 	}
 
@@ -144,6 +163,7 @@ public class SubscriptionFilter extends Filter {
         dest.writeString(this.subscriptionIdIn);
         dest.writeValue(this.mediaFileIdEqual);
         dest.writeString(this.externalIdIn);
+        dest.writeValue(this.couponGroupIdEqual);
     }
 
     public SubscriptionFilter(Parcel in) {
@@ -151,6 +171,7 @@ public class SubscriptionFilter extends Filter {
         this.subscriptionIdIn = in.readString();
         this.mediaFileIdEqual = (Integer)in.readValue(Integer.class.getClassLoader());
         this.externalIdIn = in.readString();
+        this.couponGroupIdEqual = (Integer)in.readValue(Integer.class.getClassLoader());
     }
 }
 
