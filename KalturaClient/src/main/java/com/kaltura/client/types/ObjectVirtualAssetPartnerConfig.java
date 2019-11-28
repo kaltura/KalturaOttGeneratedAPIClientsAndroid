@@ -32,6 +32,9 @@ import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.utils.request.RequestBuilder;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class was generated using exec.php
@@ -40,99 +43,80 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
-/**
- * Filter for segmentation types
- */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(SegmentationTypeFilter.Tokenizer.class)
-public class SegmentationTypeFilter extends Filter {
+@MultiRequestBuilder.Tokenizer(ObjectVirtualAssetPartnerConfig.Tokenizer.class)
+public class ObjectVirtualAssetPartnerConfig extends PartnerConfiguration {
 	
-	public interface Tokenizer extends Filter.Tokenizer {
-		String idIn();
-		String kSql();
+	public interface Tokenizer extends PartnerConfiguration.Tokenizer {
+		RequestBuilder.ListTokenizer<ObjectVirtualAssetInfo.Tokenizer> objectVirtualAssets();
 	}
 
 	/**
-	 * Comma separated segmentation types identifieridentifiers
+	 * List of object virtual asset info
 	 */
-	private String idIn;
-	/**
-	 * KSQL expression
-	 */
-	private String kSql;
+	private List<ObjectVirtualAssetInfo> objectVirtualAssets;
 
-	// idIn:
-	public String getIdIn(){
-		return this.idIn;
+	// objectVirtualAssets:
+	public List<ObjectVirtualAssetInfo> getObjectVirtualAssets(){
+		return this.objectVirtualAssets;
 	}
-	public void setIdIn(String idIn){
-		this.idIn = idIn;
-	}
-
-	public void idIn(String multirequestToken){
-		setToken("idIn", multirequestToken);
-	}
-
-	// kSql:
-	public String getKSql(){
-		return this.kSql;
-	}
-	public void setKSql(String kSql){
-		this.kSql = kSql;
-	}
-
-	public void kSql(String multirequestToken){
-		setToken("kSql", multirequestToken);
+	public void setObjectVirtualAssets(List<ObjectVirtualAssetInfo> objectVirtualAssets){
+		this.objectVirtualAssets = objectVirtualAssets;
 	}
 
 
-	public SegmentationTypeFilter() {
+	public ObjectVirtualAssetPartnerConfig() {
 		super();
 	}
 
-	public SegmentationTypeFilter(JsonObject jsonObject) throws APIException {
+	public ObjectVirtualAssetPartnerConfig(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		idIn = GsonParser.parseString(jsonObject.get("idIn"));
-		kSql = GsonParser.parseString(jsonObject.get("kSql"));
+		objectVirtualAssets = GsonParser.parseArray(jsonObject.getAsJsonArray("objectVirtualAssets"), ObjectVirtualAssetInfo.class);
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaSegmentationTypeFilter");
-		kparams.add("idIn", this.idIn);
-		kparams.add("kSql", this.kSql);
+		kparams.add("objectType", "KalturaObjectVirtualAssetPartnerConfig");
+		kparams.add("objectVirtualAssets", this.objectVirtualAssets);
 		return kparams;
 	}
 
 
-    public static final Creator<SegmentationTypeFilter> CREATOR = new Creator<SegmentationTypeFilter>() {
+    public static final Creator<ObjectVirtualAssetPartnerConfig> CREATOR = new Creator<ObjectVirtualAssetPartnerConfig>() {
         @Override
-        public SegmentationTypeFilter createFromParcel(Parcel source) {
-            return new SegmentationTypeFilter(source);
+        public ObjectVirtualAssetPartnerConfig createFromParcel(Parcel source) {
+            return new ObjectVirtualAssetPartnerConfig(source);
         }
 
         @Override
-        public SegmentationTypeFilter[] newArray(int size) {
-            return new SegmentationTypeFilter[size];
+        public ObjectVirtualAssetPartnerConfig[] newArray(int size) {
+            return new ObjectVirtualAssetPartnerConfig[size];
         }
     };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeString(this.idIn);
-        dest.writeString(this.kSql);
+        if(this.objectVirtualAssets != null) {
+            dest.writeInt(this.objectVirtualAssets.size());
+            dest.writeList(this.objectVirtualAssets);
+        } else {
+            dest.writeInt(-1);
+        }
     }
 
-    public SegmentationTypeFilter(Parcel in) {
+    public ObjectVirtualAssetPartnerConfig(Parcel in) {
         super(in);
-        this.idIn = in.readString();
-        this.kSql = in.readString();
+        int objectVirtualAssetsSize = in.readInt();
+        if( objectVirtualAssetsSize > -1) {
+            this.objectVirtualAssets = new ArrayList<>();
+            in.readList(this.objectVirtualAssets, ObjectVirtualAssetInfo.class.getClassLoader());
+        }
     }
 }
 
