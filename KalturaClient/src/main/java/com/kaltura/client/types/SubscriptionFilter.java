@@ -49,6 +49,7 @@ public class SubscriptionFilter extends Filter {
 		String mediaFileIdEqual();
 		String externalIdIn();
 		String couponGroupIdEqual();
+		String kSql();
 	}
 
 	/**
@@ -67,6 +68,10 @@ public class SubscriptionFilter extends Filter {
 	 * couponGroupIdEqual
 	 */
 	private Integer couponGroupIdEqual;
+	/**
+	 * KSQL expression
+	 */
+	private String kSql;
 
 	// subscriptionIdIn:
 	public String getSubscriptionIdIn(){
@@ -116,6 +121,18 @@ public class SubscriptionFilter extends Filter {
 		setToken("couponGroupIdEqual", multirequestToken);
 	}
 
+	// kSql:
+	public String getKSql(){
+		return this.kSql;
+	}
+	public void setKSql(String kSql){
+		this.kSql = kSql;
+	}
+
+	public void kSql(String multirequestToken){
+		setToken("kSql", multirequestToken);
+	}
+
 
 	public SubscriptionFilter() {
 		super();
@@ -131,6 +148,7 @@ public class SubscriptionFilter extends Filter {
 		mediaFileIdEqual = GsonParser.parseInt(jsonObject.get("mediaFileIdEqual"));
 		externalIdIn = GsonParser.parseString(jsonObject.get("externalIdIn"));
 		couponGroupIdEqual = GsonParser.parseInt(jsonObject.get("couponGroupIdEqual"));
+		kSql = GsonParser.parseString(jsonObject.get("kSql"));
 
 	}
 
@@ -141,6 +159,7 @@ public class SubscriptionFilter extends Filter {
 		kparams.add("mediaFileIdEqual", this.mediaFileIdEqual);
 		kparams.add("externalIdIn", this.externalIdIn);
 		kparams.add("couponGroupIdEqual", this.couponGroupIdEqual);
+		kparams.add("kSql", this.kSql);
 		return kparams;
 	}
 
@@ -164,6 +183,7 @@ public class SubscriptionFilter extends Filter {
         dest.writeValue(this.mediaFileIdEqual);
         dest.writeString(this.externalIdIn);
         dest.writeValue(this.couponGroupIdEqual);
+        dest.writeString(this.kSql);
     }
 
     public SubscriptionFilter(Parcel in) {
@@ -172,6 +192,7 @@ public class SubscriptionFilter extends Filter {
         this.mediaFileIdEqual = (Integer)in.readValue(Integer.class.getClassLoader());
         this.externalIdIn = in.readString();
         this.couponGroupIdEqual = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.kSql = in.readString();
     }
 }
 
