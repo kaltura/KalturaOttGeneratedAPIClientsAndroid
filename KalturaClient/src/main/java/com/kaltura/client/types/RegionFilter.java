@@ -49,7 +49,6 @@ public class RegionFilter extends Filter {
 		String idIn();
 		String parentIdEqual();
 		String liveAssetIdEqual();
-		String parentOnly();
 	}
 
 	/**
@@ -68,10 +67,6 @@ public class RegionFilter extends Filter {
 	 * Region parent ID to filter by
 	 */
 	private Integer liveAssetIdEqual;
-	/**
-	 * Parent region to filter by
-	 */
-	private Boolean parentOnly;
 
 	// externalIdIn:
 	public String getExternalIdIn(){
@@ -121,18 +116,6 @@ public class RegionFilter extends Filter {
 		setToken("liveAssetIdEqual", multirequestToken);
 	}
 
-	// parentOnly:
-	public Boolean getParentOnly(){
-		return this.parentOnly;
-	}
-	public void setParentOnly(Boolean parentOnly){
-		this.parentOnly = parentOnly;
-	}
-
-	public void parentOnly(String multirequestToken){
-		setToken("parentOnly", multirequestToken);
-	}
-
 
 	public RegionFilter() {
 		super();
@@ -148,7 +131,6 @@ public class RegionFilter extends Filter {
 		idIn = GsonParser.parseString(jsonObject.get("idIn"));
 		parentIdEqual = GsonParser.parseInt(jsonObject.get("parentIdEqual"));
 		liveAssetIdEqual = GsonParser.parseInt(jsonObject.get("liveAssetIdEqual"));
-		parentOnly = GsonParser.parseBoolean(jsonObject.get("parentOnly"));
 
 	}
 
@@ -159,7 +141,6 @@ public class RegionFilter extends Filter {
 		kparams.add("idIn", this.idIn);
 		kparams.add("parentIdEqual", this.parentIdEqual);
 		kparams.add("liveAssetIdEqual", this.liveAssetIdEqual);
-		kparams.add("parentOnly", this.parentOnly);
 		return kparams;
 	}
 
@@ -183,7 +164,6 @@ public class RegionFilter extends Filter {
         dest.writeString(this.idIn);
         dest.writeValue(this.parentIdEqual);
         dest.writeValue(this.liveAssetIdEqual);
-        dest.writeValue(this.parentOnly);
     }
 
     public RegionFilter(Parcel in) {
@@ -192,7 +172,6 @@ public class RegionFilter extends Filter {
         this.idIn = in.readString();
         this.parentIdEqual = (Integer)in.readValue(Integer.class.getClassLoader());
         this.liveAssetIdEqual = (Integer)in.readValue(Integer.class.getClassLoader());
-        this.parentOnly = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
 
