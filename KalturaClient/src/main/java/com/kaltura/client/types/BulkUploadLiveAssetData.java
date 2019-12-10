@@ -39,43 +39,46 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
+/**
+ * indicates the media asset object type in the bulk file
+ */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(BulkUploadLiveAssetResult.Tokenizer.class)
-public class BulkUploadLiveAssetResult extends BulkUploadMediaAssetResult {
+@MultiRequestBuilder.Tokenizer(BulkUploadLiveAssetData.Tokenizer.class)
+public class BulkUploadLiveAssetData extends BulkUploadMediaAssetData {
 	
-	public interface Tokenizer extends BulkUploadMediaAssetResult.Tokenizer {
+	public interface Tokenizer extends BulkUploadMediaAssetData.Tokenizer {
 	}
 
 
 
-	public BulkUploadLiveAssetResult() {
+	public BulkUploadLiveAssetData() {
 		super();
 	}
 
-	public BulkUploadLiveAssetResult(JsonObject jsonObject) throws APIException {
+	public BulkUploadLiveAssetData(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaBulkUploadLiveAssetResult");
+		kparams.add("objectType", "KalturaBulkUploadLiveAssetData");
 		return kparams;
 	}
 
 
-    public static final Creator<BulkUploadLiveAssetResult> CREATOR = new Creator<BulkUploadLiveAssetResult>() {
+    public static final Creator<BulkUploadLiveAssetData> CREATOR = new Creator<BulkUploadLiveAssetData>() {
         @Override
-        public BulkUploadLiveAssetResult createFromParcel(Parcel source) {
-            return new BulkUploadLiveAssetResult(source);
+        public BulkUploadLiveAssetData createFromParcel(Parcel source) {
+            return new BulkUploadLiveAssetData(source);
         }
 
         @Override
-        public BulkUploadLiveAssetResult[] newArray(int size) {
-            return new BulkUploadLiveAssetResult[size];
+        public BulkUploadLiveAssetData[] newArray(int size) {
+            return new BulkUploadLiveAssetData[size];
         }
     };
 
-    public BulkUploadLiveAssetResult(Parcel in) {
+    public BulkUploadLiveAssetData(Parcel in) {
         super(in);
     }
 }
