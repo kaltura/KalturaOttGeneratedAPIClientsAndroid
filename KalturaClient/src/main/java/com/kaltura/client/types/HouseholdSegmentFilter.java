@@ -40,99 +40,75 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
-/**
- * Indicates a segment of a household
- */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(HouseholdSegment.Tokenizer.class)
-public class HouseholdSegment extends CrudObject {
+@MultiRequestBuilder.Tokenizer(HouseholdSegmentFilter.Tokenizer.class)
+public class HouseholdSegmentFilter extends CrudFilter {
 	
-	public interface Tokenizer extends CrudObject.Tokenizer {
-		String segmentId();
-		String householdId();
+	public interface Tokenizer extends CrudFilter.Tokenizer {
+		String kSql();
 	}
 
 	/**
-	 * Segment Id
+	 * KSQL expression
 	 */
-	private Long segmentId;
-	/**
-	 * Segment Id
-	 */
-	private Long householdId;
+	private String kSql;
 
-	// segmentId:
-	public Long getSegmentId(){
-		return this.segmentId;
+	// kSql:
+	public String getKSql(){
+		return this.kSql;
 	}
-	public void setSegmentId(Long segmentId){
-		this.segmentId = segmentId;
+	public void setKSql(String kSql){
+		this.kSql = kSql;
 	}
 
-	public void segmentId(String multirequestToken){
-		setToken("segmentId", multirequestToken);
-	}
-
-	// householdId:
-	public Long getHouseholdId(){
-		return this.householdId;
-	}
-	public void setHouseholdId(Long householdId){
-		this.householdId = householdId;
-	}
-
-	public void householdId(String multirequestToken){
-		setToken("householdId", multirequestToken);
+	public void kSql(String multirequestToken){
+		setToken("kSql", multirequestToken);
 	}
 
 
-	public HouseholdSegment() {
+	public HouseholdSegmentFilter() {
 		super();
 	}
 
-	public HouseholdSegment(JsonObject jsonObject) throws APIException {
+	public HouseholdSegmentFilter(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		segmentId = GsonParser.parseLong(jsonObject.get("segmentId"));
-		householdId = GsonParser.parseLong(jsonObject.get("householdId"));
+		kSql = GsonParser.parseString(jsonObject.get("kSql"));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaHouseholdSegment");
-		kparams.add("segmentId", this.segmentId);
-		kparams.add("householdId", this.householdId);
+		kparams.add("objectType", "KalturaHouseholdSegmentFilter");
+		kparams.add("kSql", this.kSql);
 		return kparams;
 	}
 
 
-    public static final Creator<HouseholdSegment> CREATOR = new Creator<HouseholdSegment>() {
+    public static final Creator<HouseholdSegmentFilter> CREATOR = new Creator<HouseholdSegmentFilter>() {
         @Override
-        public HouseholdSegment createFromParcel(Parcel source) {
-            return new HouseholdSegment(source);
+        public HouseholdSegmentFilter createFromParcel(Parcel source) {
+            return new HouseholdSegmentFilter(source);
         }
 
         @Override
-        public HouseholdSegment[] newArray(int size) {
-            return new HouseholdSegment[size];
+        public HouseholdSegmentFilter[] newArray(int size) {
+            return new HouseholdSegmentFilter[size];
         }
     };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeValue(this.segmentId);
-        dest.writeValue(this.householdId);
+        dest.writeString(this.kSql);
     }
 
-    public HouseholdSegment(Parcel in) {
+    public HouseholdSegmentFilter(Parcel in) {
         super(in);
-        this.segmentId = (Long)in.readValue(Long.class.getClassLoader());
-        this.householdId = (Long)in.readValue(Long.class.getClassLoader());
+        this.kSql = in.readString();
     }
 }
 

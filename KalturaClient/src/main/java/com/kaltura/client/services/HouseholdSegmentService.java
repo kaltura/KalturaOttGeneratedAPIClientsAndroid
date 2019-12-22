@@ -28,7 +28,9 @@
 package com.kaltura.client.services;
 
 import com.kaltura.client.types.HouseholdSegment;
+import com.kaltura.client.types.HouseholdSegmentFilter;
 import com.kaltura.client.utils.request.ListResponseRequestBuilder;
+import com.kaltura.client.utils.request.NullRequestBuilder;
 import com.kaltura.client.utils.request.RequestBuilder;
 
 /**
@@ -42,59 +44,60 @@ public class HouseholdSegmentService {
 	
 	public static class AddHouseholdSegmentBuilder extends RequestBuilder<HouseholdSegment, HouseholdSegment.Tokenizer, AddHouseholdSegmentBuilder> {
 		
-		public AddHouseholdSegmentBuilder(HouseholdSegment householdSegment) {
+		public AddHouseholdSegmentBuilder(HouseholdSegment objectToAdd) {
 			super(HouseholdSegment.class, "householdsegment", "add");
-			params.add("householdSegment", householdSegment);
+			params.add("objectToAdd", objectToAdd);
 		}
 	}
 
 	/**
-	 * Adds a segment to a household
+	 * householdSegment add
 	 * 
-	 * @param householdSegment Household segment
+	 * @param objectToAdd householdSegment details
 	 */
-    public static AddHouseholdSegmentBuilder add(HouseholdSegment householdSegment)  {
-		return new AddHouseholdSegmentBuilder(householdSegment);
+    public static AddHouseholdSegmentBuilder add(HouseholdSegment objectToAdd)  {
+		return new AddHouseholdSegmentBuilder(objectToAdd);
 	}
 	
-	public static class DeleteHouseholdSegmentBuilder extends RequestBuilder<Boolean, String, DeleteHouseholdSegmentBuilder> {
+	public static class DeleteHouseholdSegmentBuilder extends NullRequestBuilder {
 		
-		public DeleteHouseholdSegmentBuilder(long householdId, long segmentId) {
-			super(Boolean.class, "householdsegment", "delete");
-			params.add("householdId", householdId);
-			params.add("segmentId", segmentId);
+		public DeleteHouseholdSegmentBuilder(long id) {
+			super("householdsegment", "delete");
+			params.add("id", id);
 		}
 		
-		public void householdId(String multirequestToken) {
-			params.add("householdId", multirequestToken);
-		}
-		
-		public void segmentId(String multirequestToken) {
-			params.add("segmentId", multirequestToken);
+		public void id(String multirequestToken) {
+			params.add("id", multirequestToken);
 		}
 	}
 
 	/**
-	 * Deletes a segment from a household
+	 * Remove segment from household
 	 * 
-	 * @param householdId Household id
-	 * @param segmentId Segemnt id
+	 * @param id Segment identifier
 	 */
-    public static DeleteHouseholdSegmentBuilder delete(long householdId, long segmentId)  {
-		return new DeleteHouseholdSegmentBuilder(householdId, segmentId);
+    public static DeleteHouseholdSegmentBuilder delete(long id)  {
+		return new DeleteHouseholdSegmentBuilder(id);
 	}
 	
 	public static class ListHouseholdSegmentBuilder extends ListResponseRequestBuilder<HouseholdSegment, HouseholdSegment.Tokenizer, ListHouseholdSegmentBuilder> {
 		
-		public ListHouseholdSegmentBuilder() {
+		public ListHouseholdSegmentBuilder(HouseholdSegmentFilter filter) {
 			super(HouseholdSegment.class, "householdsegment", "list");
+			params.add("filter", filter);
 		}
 	}
 
+	public static ListHouseholdSegmentBuilder list()  {
+		return list(null);
+	}
+
 	/**
-	 * Retrieve all the segments that apply for given household
+	 * Gets all HouseholdSegment items for a household
+	 * 
+	 * @param filter Request filter
 	 */
-    public static ListHouseholdSegmentBuilder list()  {
-		return new ListHouseholdSegmentBuilder();
+    public static ListHouseholdSegmentBuilder list(HouseholdSegmentFilter filter)  {
+		return new ListHouseholdSegmentBuilder(filter);
 	}
 }
