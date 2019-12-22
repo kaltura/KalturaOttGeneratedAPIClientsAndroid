@@ -43,42 +43,42 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * segment asset filter for segment action
  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(SegementAssetFilterSegmentAction.Tokenizer.class)
-public class SegementAssetFilterSegmentAction extends SegementAssetFilterAction {
+@MultiRequestBuilder.Tokenizer(SegmentAssetFilterSegmentAction.Tokenizer.class)
+public class SegmentAssetFilterSegmentAction extends SegmentAssetFilterAction {
 	
-	public interface Tokenizer extends SegementAssetFilterAction.Tokenizer {
+	public interface Tokenizer extends SegmentAssetFilterAction.Tokenizer {
 	}
 
 
 
-	public SegementAssetFilterSegmentAction() {
+	public SegmentAssetFilterSegmentAction() {
 		super();
 	}
 
-	public SegementAssetFilterSegmentAction(JsonObject jsonObject) throws APIException {
+	public SegmentAssetFilterSegmentAction(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaSegementAssetFilterSegmentAction");
+		kparams.add("objectType", "KalturaSegmentAssetFilterSegmentAction");
 		return kparams;
 	}
 
 
-    public static final Creator<SegementAssetFilterSegmentAction> CREATOR = new Creator<SegementAssetFilterSegmentAction>() {
+    public static final Creator<SegmentAssetFilterSegmentAction> CREATOR = new Creator<SegmentAssetFilterSegmentAction>() {
         @Override
-        public SegementAssetFilterSegmentAction createFromParcel(Parcel source) {
-            return new SegementAssetFilterSegmentAction(source);
+        public SegmentAssetFilterSegmentAction createFromParcel(Parcel source) {
+            return new SegmentAssetFilterSegmentAction(source);
         }
 
         @Override
-        public SegementAssetFilterSegmentAction[] newArray(int size) {
-            return new SegementAssetFilterSegmentAction[size];
+        public SegmentAssetFilterSegmentAction[] newArray(int size) {
+            return new SegmentAssetFilterSegmentAction[size];
         }
     };
 
-    public SegementAssetFilterSegmentAction(Parcel in) {
+    public SegmentAssetFilterSegmentAction(Parcel in) {
         super(in);
     }
 }
