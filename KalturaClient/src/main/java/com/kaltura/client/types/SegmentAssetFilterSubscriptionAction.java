@@ -43,42 +43,42 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * segment asset filter for subscription action
  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(SegementAssetFilterSubscriptionAction.Tokenizer.class)
-public class SegementAssetFilterSubscriptionAction extends SegmentAssetFilterAction {
+@MultiRequestBuilder.Tokenizer(SegmentAssetFilterSubscriptionAction.Tokenizer.class)
+public class SegmentAssetFilterSubscriptionAction extends SegmentAssetFilterAction {
 	
 	public interface Tokenizer extends SegmentAssetFilterAction.Tokenizer {
 	}
 
 
 
-	public SegementAssetFilterSubscriptionAction() {
+	public SegmentAssetFilterSubscriptionAction() {
 		super();
 	}
 
-	public SegementAssetFilterSubscriptionAction(JsonObject jsonObject) throws APIException {
+	public SegmentAssetFilterSubscriptionAction(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaSegementAssetFilterSubscriptionAction");
+		kparams.add("objectType", "KalturaSegmentAssetFilterSubscriptionAction");
 		return kparams;
 	}
 
 
-    public static final Creator<SegementAssetFilterSubscriptionAction> CREATOR = new Creator<SegementAssetFilterSubscriptionAction>() {
+    public static final Creator<SegmentAssetFilterSubscriptionAction> CREATOR = new Creator<SegmentAssetFilterSubscriptionAction>() {
         @Override
-        public SegementAssetFilterSubscriptionAction createFromParcel(Parcel source) {
-            return new SegementAssetFilterSubscriptionAction(source);
+        public SegmentAssetFilterSubscriptionAction createFromParcel(Parcel source) {
+            return new SegmentAssetFilterSubscriptionAction(source);
         }
 
         @Override
-        public SegementAssetFilterSubscriptionAction[] newArray(int size) {
-            return new SegementAssetFilterSubscriptionAction[size];
+        public SegmentAssetFilterSubscriptionAction[] newArray(int size) {
+            return new SegmentAssetFilterSubscriptionAction[size];
         }
     };
 
-    public SegementAssetFilterSubscriptionAction(Parcel in) {
+    public SegmentAssetFilterSubscriptionAction(Parcel in) {
         super(in);
     }
 }
