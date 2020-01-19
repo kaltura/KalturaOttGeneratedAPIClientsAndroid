@@ -31,6 +31,7 @@ import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.enums.BookmarkActionType;
+import com.kaltura.client.enums.TransactionType;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
@@ -52,6 +53,8 @@ public class BookmarkEvent extends EventObject {
 		String fileId();
 		String position();
 		String action();
+		String productType();
+		String productId();
 	}
 
 	/**
@@ -78,6 +81,14 @@ public class BookmarkEvent extends EventObject {
 	 * Bookmark Action Type
 	 */
 	private BookmarkActionType action;
+	/**
+	 * Product Type
+	 */
+	private TransactionType productType;
+	/**
+	 * Product Id
+	 */
+	private Integer productId;
 
 	// userId:
 	public Long getUserId(){
@@ -151,6 +162,30 @@ public class BookmarkEvent extends EventObject {
 		setToken("action", multirequestToken);
 	}
 
+	// productType:
+	public TransactionType getProductType(){
+		return this.productType;
+	}
+	public void setProductType(TransactionType productType){
+		this.productType = productType;
+	}
+
+	public void productType(String multirequestToken){
+		setToken("productType", multirequestToken);
+	}
+
+	// productId:
+	public Integer getProductId(){
+		return this.productId;
+	}
+	public void setProductId(Integer productId){
+		this.productId = productId;
+	}
+
+	public void productId(String multirequestToken){
+		setToken("productId", multirequestToken);
+	}
+
 
 	public BookmarkEvent() {
 		super();
@@ -168,6 +203,8 @@ public class BookmarkEvent extends EventObject {
 		fileId = GsonParser.parseLong(jsonObject.get("fileId"));
 		position = GsonParser.parseInt(jsonObject.get("position"));
 		action = BookmarkActionType.get(GsonParser.parseString(jsonObject.get("action")));
+		productType = TransactionType.get(GsonParser.parseString(jsonObject.get("productType")));
+		productId = GsonParser.parseInt(jsonObject.get("productId"));
 
 	}
 
@@ -180,6 +217,8 @@ public class BookmarkEvent extends EventObject {
 		kparams.add("fileId", this.fileId);
 		kparams.add("position", this.position);
 		kparams.add("action", this.action);
+		kparams.add("productType", this.productType);
+		kparams.add("productId", this.productId);
 		return kparams;
 	}
 
@@ -205,6 +244,8 @@ public class BookmarkEvent extends EventObject {
         dest.writeValue(this.fileId);
         dest.writeValue(this.position);
         dest.writeInt(this.action == null ? -1 : this.action.ordinal());
+        dest.writeInt(this.productType == null ? -1 : this.productType.ordinal());
+        dest.writeValue(this.productId);
     }
 
     public BookmarkEvent(Parcel in) {
@@ -216,6 +257,9 @@ public class BookmarkEvent extends EventObject {
         this.position = (Integer)in.readValue(Integer.class.getClassLoader());
         int tmpAction = in.readInt();
         this.action = tmpAction == -1 ? null : BookmarkActionType.values()[tmpAction];
+        int tmpProductType = in.readInt();
+        this.productType = tmpProductType == -1 ? null : TransactionType.values()[tmpProductType];
+        this.productId = (Integer)in.readValue(Integer.class.getClassLoader());
     }
 }
 
