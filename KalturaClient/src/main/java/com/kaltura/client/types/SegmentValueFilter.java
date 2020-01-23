@@ -40,26 +40,18 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
-/**
- * Filter for segmentation types
- */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(SegmentationTypeFilter.Tokenizer.class)
-public class SegmentationTypeFilter extends BaseSegmentationTypeFilter {
+@MultiRequestBuilder.Tokenizer(SegmentValueFilter.Tokenizer.class)
+public class SegmentValueFilter extends BaseSegmentationTypeFilter {
 	
 	public interface Tokenizer extends BaseSegmentationTypeFilter.Tokenizer {
 		String idIn();
-		String kSql();
 	}
 
 	/**
-	 * Comma separated segmentation types identifiers
+	 * Comma separated segmentation identifiers
 	 */
 	private String idIn;
-	/**
-	 * KSQL expression
-	 */
-	private String kSql;
 
 	// idIn:
 	public String getIdIn(){
@@ -73,52 +65,38 @@ public class SegmentationTypeFilter extends BaseSegmentationTypeFilter {
 		setToken("idIn", multirequestToken);
 	}
 
-	// kSql:
-	public String getKSql(){
-		return this.kSql;
-	}
-	public void setKSql(String kSql){
-		this.kSql = kSql;
-	}
 
-	public void kSql(String multirequestToken){
-		setToken("kSql", multirequestToken);
-	}
-
-
-	public SegmentationTypeFilter() {
+	public SegmentValueFilter() {
 		super();
 	}
 
-	public SegmentationTypeFilter(JsonObject jsonObject) throws APIException {
+	public SegmentValueFilter(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
 		idIn = GsonParser.parseString(jsonObject.get("idIn"));
-		kSql = GsonParser.parseString(jsonObject.get("kSql"));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaSegmentationTypeFilter");
+		kparams.add("objectType", "KalturaSegmentValueFilter");
 		kparams.add("idIn", this.idIn);
-		kparams.add("kSql", this.kSql);
 		return kparams;
 	}
 
 
-    public static final Creator<SegmentationTypeFilter> CREATOR = new Creator<SegmentationTypeFilter>() {
+    public static final Creator<SegmentValueFilter> CREATOR = new Creator<SegmentValueFilter>() {
         @Override
-        public SegmentationTypeFilter createFromParcel(Parcel source) {
-            return new SegmentationTypeFilter(source);
+        public SegmentValueFilter createFromParcel(Parcel source) {
+            return new SegmentValueFilter(source);
         }
 
         @Override
-        public SegmentationTypeFilter[] newArray(int size) {
-            return new SegmentationTypeFilter[size];
+        public SegmentValueFilter[] newArray(int size) {
+            return new SegmentValueFilter[size];
         }
     };
 
@@ -126,13 +104,11 @@ public class SegmentationTypeFilter extends BaseSegmentationTypeFilter {
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeString(this.idIn);
-        dest.writeString(this.kSql);
     }
 
-    public SegmentationTypeFilter(Parcel in) {
+    public SegmentValueFilter(Parcel in) {
         super(in);
         this.idIn = in.readString();
-        this.kSql = in.readString();
     }
 }
 
