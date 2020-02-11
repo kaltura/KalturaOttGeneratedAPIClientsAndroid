@@ -8,7 +8,7 @@
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2019  Kaltura Inc.
+// Copyright (C) 2006-2020  Kaltura Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -30,6 +30,7 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
+import com.kaltura.client.enums.AssetIndexStatus;
 import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
@@ -40,7 +41,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * This class was generated using clients-generator\exec.php
+ * This class was generated using exec.php
  * against an XML schema provided by Kaltura.
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
@@ -64,11 +65,13 @@ public abstract class Asset extends ObjectBase {
 		RequestBuilder.ListTokenizer<MediaFile.Tokenizer> mediaFiles();
 		RequestBuilder.MapTokenizer<Value.Tokenizer> metas();
 		RequestBuilder.MapTokenizer<MultilingualStringValueArray.Tokenizer> tags();
+		RequestBuilder.MapTokenizer<RelatedEntityArray.Tokenizer> relatedEntities();
 		String startDate();
 		String endDate();
 		String createDate();
 		String updateDate();
 		String externalId();
+		String indexStatus();
 	}
 
 	/**
@@ -116,6 +119,11 @@ public abstract class Asset extends ObjectBase {
 	 */
 	private Map<String, MultilingualStringValueArray> tags;
 	/**
+	 * Dynamic collection of key-value pairs according to the related entity defined in
+	  the system
+	 */
+	private Map<String, RelatedEntityArray> relatedEntities;
+	/**
 	 * Date and time represented as epoch. For VOD – since when the asset is
 	  available in the catalog. For EPG/Linear – when the program is aired (can be
 	  in the future).
@@ -138,6 +146,10 @@ public abstract class Asset extends ObjectBase {
 	 * External identifier for the asset
 	 */
 	private String externalId;
+	/**
+	 * The media asset index status
+	 */
+	private AssetIndexStatus indexStatus;
 
 	// id:
 	public Long getId(){
@@ -203,6 +215,14 @@ public abstract class Asset extends ObjectBase {
 		this.tags = tags;
 	}
 
+	// relatedEntities:
+	public Map<String, RelatedEntityArray> getRelatedEntities(){
+		return this.relatedEntities;
+	}
+	public void setRelatedEntities(Map<String, RelatedEntityArray> relatedEntities){
+		this.relatedEntities = relatedEntities;
+	}
+
 	// startDate:
 	public Long getStartDate(){
 		return this.startDate;
@@ -247,6 +267,10 @@ public abstract class Asset extends ObjectBase {
 		setToken("externalId", multirequestToken);
 	}
 
+	// indexStatus:
+	public AssetIndexStatus getIndexStatus(){
+		return this.indexStatus;
+	}
 
 	public Asset() {
 		super();
@@ -268,11 +292,13 @@ public abstract class Asset extends ObjectBase {
 		mediaFiles = GsonParser.parseArray(jsonObject.getAsJsonArray("mediaFiles"), MediaFile.class);
 		metas = GsonParser.parseMap(jsonObject.getAsJsonObject("metas"), Value.class);
 		tags = GsonParser.parseMap(jsonObject.getAsJsonObject("tags"), MultilingualStringValueArray.class);
+		relatedEntities = GsonParser.parseMap(jsonObject.getAsJsonObject("relatedEntities"), RelatedEntityArray.class);
 		startDate = GsonParser.parseLong(jsonObject.get("startDate"));
 		endDate = GsonParser.parseLong(jsonObject.get("endDate"));
 		createDate = GsonParser.parseLong(jsonObject.get("createDate"));
 		updateDate = GsonParser.parseLong(jsonObject.get("updateDate"));
 		externalId = GsonParser.parseString(jsonObject.get("externalId"));
+		indexStatus = AssetIndexStatus.get(GsonParser.parseString(jsonObject.get("indexStatus")));
 
 	}
 
@@ -284,6 +310,7 @@ public abstract class Asset extends ObjectBase {
 		kparams.add("multilingualDescription", this.multilingualDescription);
 		kparams.add("metas", this.metas);
 		kparams.add("tags", this.tags);
+		kparams.add("relatedEntities", this.relatedEntities);
 		kparams.add("startDate", this.startDate);
 		kparams.add("endDate", this.endDate);
 		kparams.add("externalId", this.externalId);
@@ -340,11 +367,21 @@ public abstract class Asset extends ObjectBase {
         } else {
             dest.writeInt(-1);
         }
+        if(this.relatedEntities != null) {
+            dest.writeInt(this.relatedEntities.size());
+            for (Map.Entry<String, RelatedEntityArray> entry : this.relatedEntities.entrySet()) {
+                dest.writeString(entry.getKey());
+                dest.writeParcelable(entry.getValue(), flags);
+            }
+        } else {
+            dest.writeInt(-1);
+        }
         dest.writeValue(this.startDate);
         dest.writeValue(this.endDate);
         dest.writeValue(this.createDate);
         dest.writeValue(this.updateDate);
         dest.writeString(this.externalId);
+        dest.writeInt(this.indexStatus == null ? -1 : this.indexStatus.ordinal());
     }
 
     public Asset(Parcel in) {
@@ -391,11 +428,22 @@ public abstract class Asset extends ObjectBase {
                 this.tags.put(key, value);
             }
         }
+        int relatedEntitiesSize = in.readInt();
+        if( relatedEntitiesSize > -1) {
+            this.relatedEntities = new HashMap<>();
+            for (int i = 0; i < relatedEntitiesSize; i++) {
+                String key = in.readString();
+                RelatedEntityArray value = in.readParcelable(RelatedEntityArray.class.getClassLoader());
+                this.relatedEntities.put(key, value);
+            }
+        }
         this.startDate = (Long)in.readValue(Long.class.getClassLoader());
         this.endDate = (Long)in.readValue(Long.class.getClassLoader());
         this.createDate = (Long)in.readValue(Long.class.getClassLoader());
         this.updateDate = (Long)in.readValue(Long.class.getClassLoader());
         this.externalId = in.readString();
+        int tmpIndexStatus = in.readInt();
+        this.indexStatus = tmpIndexStatus == -1 ? null : AssetIndexStatus.values()[tmpIndexStatus];
     }
 }
 

@@ -8,7 +8,7 @@
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2019  Kaltura Inc.
+// Copyright (C) 2006-2020  Kaltura Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -37,7 +37,7 @@ import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
- * This class was generated using clients-generator\exec.php
+ * This class was generated using exec.php
  * against an XML schema provided by Kaltura.
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
@@ -129,6 +129,14 @@ public class Recording extends ObjectBase {
 	public Long getViewableUntilDate(){
 		return this.viewableUntilDate;
 	}
+	public void setViewableUntilDate(Long viewableUntilDate){
+		this.viewableUntilDate = viewableUntilDate;
+	}
+
+	public void viewableUntilDate(String multirequestToken){
+		setToken("viewableUntilDate", multirequestToken);
+	}
+
 	// isProtected:
 	public Boolean getIsProtected(){
 		return this.isProtected;
@@ -176,6 +184,7 @@ public class Recording extends ObjectBase {
 		kparams.add("objectType", "KalturaRecording");
 		kparams.add("assetId", this.assetId);
 		kparams.add("type", this.type);
+		kparams.add("viewableUntilDate", this.viewableUntilDate);
 		kparams.add("isProtected", this.isProtected);
 		return kparams;
 	}

@@ -8,7 +8,7 @@
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2019  Kaltura Inc.
+// Copyright (C) 2006-2020  Kaltura Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -35,10 +35,12 @@ import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 import com.kaltura.client.utils.request.RequestBuilder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
- * This class was generated using clients-generator\exec.php
+ * This class was generated using exec.php
  * against an XML schema provided by Kaltura.
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
@@ -59,6 +61,8 @@ public class ExternalChannelProfile extends ObjectBase {
 		String filterExpression();
 		String recommendationEngineId();
 		RequestBuilder.ListTokenizer<ChannelEnrichmentHolder.Tokenizer> enrichments();
+		String assetUserRuleId();
+		RequestBuilder.MapTokenizer<StringValue.Tokenizer> metaData();
 	}
 
 	/**
@@ -89,6 +93,14 @@ public class ExternalChannelProfile extends ObjectBase {
 	 * Enrichments
 	 */
 	private List<ChannelEnrichmentHolder> enrichments;
+	/**
+	 * Asset user rule identifier
+	 */
+	private Long assetUserRuleId;
+	/**
+	 * key/value map field for extra data
+	 */
+	private Map<String, StringValue> metaData;
 
 	// id:
 	public Integer getId(){
@@ -162,6 +174,26 @@ public class ExternalChannelProfile extends ObjectBase {
 		this.enrichments = enrichments;
 	}
 
+	// assetUserRuleId:
+	public Long getAssetUserRuleId(){
+		return this.assetUserRuleId;
+	}
+	public void setAssetUserRuleId(Long assetUserRuleId){
+		this.assetUserRuleId = assetUserRuleId;
+	}
+
+	public void assetUserRuleId(String multirequestToken){
+		setToken("assetUserRuleId", multirequestToken);
+	}
+
+	// metaData:
+	public Map<String, StringValue> getMetaData(){
+		return this.metaData;
+	}
+	public void setMetaData(Map<String, StringValue> metaData){
+		this.metaData = metaData;
+	}
+
 
 	public ExternalChannelProfile() {
 		super();
@@ -180,6 +212,8 @@ public class ExternalChannelProfile extends ObjectBase {
 		filterExpression = GsonParser.parseString(jsonObject.get("filterExpression"));
 		recommendationEngineId = GsonParser.parseInt(jsonObject.get("recommendationEngineId"));
 		enrichments = GsonParser.parseArray(jsonObject.getAsJsonArray("enrichments"), ChannelEnrichmentHolder.class);
+		assetUserRuleId = GsonParser.parseLong(jsonObject.get("assetUserRuleId"));
+		metaData = GsonParser.parseMap(jsonObject.getAsJsonObject("metaData"), StringValue.class);
 
 	}
 
@@ -192,6 +226,8 @@ public class ExternalChannelProfile extends ObjectBase {
 		kparams.add("filterExpression", this.filterExpression);
 		kparams.add("recommendationEngineId", this.recommendationEngineId);
 		kparams.add("enrichments", this.enrichments);
+		kparams.add("assetUserRuleId", this.assetUserRuleId);
+		kparams.add("metaData", this.metaData);
 		return kparams;
 	}
 
@@ -223,6 +259,16 @@ public class ExternalChannelProfile extends ObjectBase {
         } else {
             dest.writeInt(-1);
         }
+        dest.writeValue(this.assetUserRuleId);
+        if(this.metaData != null) {
+            dest.writeInt(this.metaData.size());
+            for (Map.Entry<String, StringValue> entry : this.metaData.entrySet()) {
+                dest.writeString(entry.getKey());
+                dest.writeParcelable(entry.getValue(), flags);
+            }
+        } else {
+            dest.writeInt(-1);
+        }
     }
 
     public ExternalChannelProfile(Parcel in) {
@@ -237,6 +283,16 @@ public class ExternalChannelProfile extends ObjectBase {
         if( enrichmentsSize > -1) {
             this.enrichments = new ArrayList<>();
             in.readList(this.enrichments, ChannelEnrichmentHolder.class.getClassLoader());
+        }
+        this.assetUserRuleId = (Long)in.readValue(Long.class.getClassLoader());
+        int metaDataSize = in.readInt();
+        if( metaDataSize > -1) {
+            this.metaData = new HashMap<>();
+            for (int i = 0; i < metaDataSize; i++) {
+                String key = in.readString();
+                StringValue value = in.readParcelable(StringValue.class.getClassLoader());
+                this.metaData.put(key, value);
+            }
         }
     }
 }

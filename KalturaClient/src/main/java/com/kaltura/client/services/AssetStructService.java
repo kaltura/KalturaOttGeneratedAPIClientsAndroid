@@ -8,7 +8,7 @@
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2019  Kaltura Inc.
+// Copyright (C) 2006-2020  Kaltura Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -33,7 +33,7 @@ import com.kaltura.client.utils.request.ListResponseRequestBuilder;
 import com.kaltura.client.utils.request.RequestBuilder;
 
 /**
- * This class was generated using clients-generator\exec.php
+ * This class was generated using exec.php
  * against an XML schema provided by Kaltura.
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
@@ -77,6 +77,27 @@ public class AssetStructService {
 	 */
     public static DeleteAssetStructBuilder delete(long id)  {
 		return new DeleteAssetStructBuilder(id);
+	}
+	
+	public static class GetAssetStructBuilder extends RequestBuilder<AssetStruct, AssetStruct.Tokenizer, GetAssetStructBuilder> {
+		
+		public GetAssetStructBuilder(long id) {
+			super(AssetStruct.class, "assetstruct", "get");
+			params.add("id", id);
+		}
+		
+		public void id(String multirequestToken) {
+			params.add("id", multirequestToken);
+		}
+	}
+
+	/**
+	 * Get AssetStruct by ID
+	 * 
+	 * @param id ID to get
+	 */
+    public static GetAssetStructBuilder get(long id)  {
+		return new GetAssetStructBuilder(id);
 	}
 	
 	public static class ListAssetStructBuilder extends ListResponseRequestBuilder<AssetStruct, AssetStruct.Tokenizer, ListAssetStructBuilder> {

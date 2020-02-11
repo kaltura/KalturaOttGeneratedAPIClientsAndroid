@@ -8,7 +8,7 @@
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2019  Kaltura Inc.
+// Copyright (C) 2006-2020  Kaltura Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -36,7 +36,7 @@ import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
- * This class was generated using clients-generator\exec.php
+ * This class was generated using exec.php
  * against an XML schema provided by Kaltura.
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
@@ -55,11 +55,13 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
 		String secondaryLanguages();
 		String deleteMediaPolicy();
 		String mainCurrency();
-		String secondaryCurrencys();
+		String secondaryCurrencies();
 		String downgradePolicy();
 		String mailSettings();
 		String dateFormat();
 		String householdLimitationModule();
+		String enableRegionFiltering();
+		String defaultRegion();
 	}
 
 	/**
@@ -83,9 +85,9 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
 	 */
 	private Integer mainCurrency;
 	/**
-	 * A list of comma separated currencys ids.
+	 * A list of comma separated currency ids.
 	 */
-	private String secondaryCurrencys;
+	private String secondaryCurrencies;
 	/**
 	 * Downgrade policy
 	 */
@@ -102,6 +104,14 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
 	 * Household limitation&amp;#160;module
 	 */
 	private Integer householdLimitationModule;
+	/**
+	 * Enable Region Filtering
+	 */
+	private Boolean enableRegionFiltering;
+	/**
+	 * Default Region
+	 */
+	private Integer defaultRegion;
 
 	// partnerName:
 	public String getPartnerName(){
@@ -163,16 +173,16 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
 		setToken("mainCurrency", multirequestToken);
 	}
 
-	// secondaryCurrencys:
-	public String getSecondaryCurrencys(){
-		return this.secondaryCurrencys;
+	// secondaryCurrencies:
+	public String getSecondaryCurrencies(){
+		return this.secondaryCurrencies;
 	}
-	public void setSecondaryCurrencys(String secondaryCurrencys){
-		this.secondaryCurrencys = secondaryCurrencys;
+	public void setSecondaryCurrencies(String secondaryCurrencies){
+		this.secondaryCurrencies = secondaryCurrencies;
 	}
 
-	public void secondaryCurrencys(String multirequestToken){
-		setToken("secondaryCurrencys", multirequestToken);
+	public void secondaryCurrencies(String multirequestToken){
+		setToken("secondaryCurrencies", multirequestToken);
 	}
 
 	// downgradePolicy:
@@ -223,6 +233,30 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
 		setToken("householdLimitationModule", multirequestToken);
 	}
 
+	// enableRegionFiltering:
+	public Boolean getEnableRegionFiltering(){
+		return this.enableRegionFiltering;
+	}
+	public void setEnableRegionFiltering(Boolean enableRegionFiltering){
+		this.enableRegionFiltering = enableRegionFiltering;
+	}
+
+	public void enableRegionFiltering(String multirequestToken){
+		setToken("enableRegionFiltering", multirequestToken);
+	}
+
+	// defaultRegion:
+	public Integer getDefaultRegion(){
+		return this.defaultRegion;
+	}
+	public void setDefaultRegion(Integer defaultRegion){
+		this.defaultRegion = defaultRegion;
+	}
+
+	public void defaultRegion(String multirequestToken){
+		setToken("defaultRegion", multirequestToken);
+	}
+
 
 	public GeneralPartnerConfig() {
 		super();
@@ -239,11 +273,13 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
 		secondaryLanguages = GsonParser.parseString(jsonObject.get("secondaryLanguages"));
 		deleteMediaPolicy = DeleteMediaPolicy.get(GsonParser.parseString(jsonObject.get("deleteMediaPolicy")));
 		mainCurrency = GsonParser.parseInt(jsonObject.get("mainCurrency"));
-		secondaryCurrencys = GsonParser.parseString(jsonObject.get("secondaryCurrencys"));
+		secondaryCurrencies = GsonParser.parseString(jsonObject.get("secondaryCurrencies"));
 		downgradePolicy = DowngradePolicy.get(GsonParser.parseString(jsonObject.get("downgradePolicy")));
 		mailSettings = GsonParser.parseString(jsonObject.get("mailSettings"));
 		dateFormat = GsonParser.parseString(jsonObject.get("dateFormat"));
 		householdLimitationModule = GsonParser.parseInt(jsonObject.get("householdLimitationModule"));
+		enableRegionFiltering = GsonParser.parseBoolean(jsonObject.get("enableRegionFiltering"));
+		defaultRegion = GsonParser.parseInt(jsonObject.get("defaultRegion"));
 
 	}
 
@@ -255,11 +291,13 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
 		kparams.add("secondaryLanguages", this.secondaryLanguages);
 		kparams.add("deleteMediaPolicy", this.deleteMediaPolicy);
 		kparams.add("mainCurrency", this.mainCurrency);
-		kparams.add("secondaryCurrencys", this.secondaryCurrencys);
+		kparams.add("secondaryCurrencies", this.secondaryCurrencies);
 		kparams.add("downgradePolicy", this.downgradePolicy);
 		kparams.add("mailSettings", this.mailSettings);
 		kparams.add("dateFormat", this.dateFormat);
 		kparams.add("householdLimitationModule", this.householdLimitationModule);
+		kparams.add("enableRegionFiltering", this.enableRegionFiltering);
+		kparams.add("defaultRegion", this.defaultRegion);
 		return kparams;
 	}
 
@@ -284,11 +322,13 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
         dest.writeString(this.secondaryLanguages);
         dest.writeInt(this.deleteMediaPolicy == null ? -1 : this.deleteMediaPolicy.ordinal());
         dest.writeValue(this.mainCurrency);
-        dest.writeString(this.secondaryCurrencys);
+        dest.writeString(this.secondaryCurrencies);
         dest.writeInt(this.downgradePolicy == null ? -1 : this.downgradePolicy.ordinal());
         dest.writeString(this.mailSettings);
         dest.writeString(this.dateFormat);
         dest.writeValue(this.householdLimitationModule);
+        dest.writeValue(this.enableRegionFiltering);
+        dest.writeValue(this.defaultRegion);
     }
 
     public GeneralPartnerConfig(Parcel in) {
@@ -299,12 +339,14 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
         int tmpDeleteMediaPolicy = in.readInt();
         this.deleteMediaPolicy = tmpDeleteMediaPolicy == -1 ? null : DeleteMediaPolicy.values()[tmpDeleteMediaPolicy];
         this.mainCurrency = (Integer)in.readValue(Integer.class.getClassLoader());
-        this.secondaryCurrencys = in.readString();
+        this.secondaryCurrencies = in.readString();
         int tmpDowngradePolicy = in.readInt();
         this.downgradePolicy = tmpDowngradePolicy == -1 ? null : DowngradePolicy.values()[tmpDowngradePolicy];
         this.mailSettings = in.readString();
         this.dateFormat = in.readString();
         this.householdLimitationModule = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.enableRegionFiltering = (Boolean)in.readValue(Boolean.class.getClassLoader());
+        this.defaultRegion = (Integer)in.readValue(Integer.class.getClassLoader());
     }
 }
 

@@ -8,7 +8,7 @@
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2019  Kaltura Inc.
+// Copyright (C) 2006-2020  Kaltura Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -34,7 +34,7 @@ import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
- * This class was generated using clients-generator\exec.php
+ * This class was generated using exec.php
  * against an XML schema provided by Kaltura.
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
@@ -49,12 +49,17 @@ public class LanguageFilter extends Filter {
 	
 	public interface Tokenizer extends Filter.Tokenizer {
 		String codeIn();
+		String excludePartner();
 	}
 
 	/**
 	 * Language codes
 	 */
 	private String codeIn;
+	/**
+	 * Exclude partner
+	 */
+	private Boolean excludePartner;
 
 	// codeIn:
 	public String getCodeIn(){
@@ -66,6 +71,18 @@ public class LanguageFilter extends Filter {
 
 	public void codeIn(String multirequestToken){
 		setToken("codeIn", multirequestToken);
+	}
+
+	// excludePartner:
+	public Boolean getExcludePartner(){
+		return this.excludePartner;
+	}
+	public void setExcludePartner(Boolean excludePartner){
+		this.excludePartner = excludePartner;
+	}
+
+	public void excludePartner(String multirequestToken){
+		setToken("excludePartner", multirequestToken);
 	}
 
 
@@ -80,6 +97,7 @@ public class LanguageFilter extends Filter {
 
 		// set members values:
 		codeIn = GsonParser.parseString(jsonObject.get("codeIn"));
+		excludePartner = GsonParser.parseBoolean(jsonObject.get("excludePartner"));
 
 	}
 
@@ -87,6 +105,7 @@ public class LanguageFilter extends Filter {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaLanguageFilter");
 		kparams.add("codeIn", this.codeIn);
+		kparams.add("excludePartner", this.excludePartner);
 		return kparams;
 	}
 
@@ -107,11 +126,13 @@ public class LanguageFilter extends Filter {
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeString(this.codeIn);
+        dest.writeValue(this.excludePartner);
     }
 
     public LanguageFilter(Parcel in) {
         super(in);
         this.codeIn = in.readString();
+        this.excludePartner = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
 

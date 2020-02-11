@@ -8,7 +8,7 @@
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2019  Kaltura Inc.
+// Copyright (C) 2006-2020  Kaltura Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -34,7 +34,7 @@ import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
- * This class was generated using clients-generator\exec.php
+ * This class was generated using exec.php
  * against an XML schema provided by Kaltura.
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
@@ -47,6 +47,7 @@ public class HouseholdDeviceFilter extends Filter {
 	public interface Tokenizer extends Filter.Tokenizer {
 		String householdIdEqual();
 		String deviceFamilyIdIn();
+		String externalIdEqual();
 	}
 
 	/**
@@ -57,6 +58,10 @@ public class HouseholdDeviceFilter extends Filter {
 	 * Device family Ids
 	 */
 	private String deviceFamilyIdIn;
+	/**
+	 * External Id
+	 */
+	private String externalIdEqual;
 
 	// householdIdEqual:
 	public Integer getHouseholdIdEqual(){
@@ -82,6 +87,18 @@ public class HouseholdDeviceFilter extends Filter {
 		setToken("deviceFamilyIdIn", multirequestToken);
 	}
 
+	// externalIdEqual:
+	public String getExternalIdEqual(){
+		return this.externalIdEqual;
+	}
+	public void setExternalIdEqual(String externalIdEqual){
+		this.externalIdEqual = externalIdEqual;
+	}
+
+	public void externalIdEqual(String multirequestToken){
+		setToken("externalIdEqual", multirequestToken);
+	}
+
 
 	public HouseholdDeviceFilter() {
 		super();
@@ -95,6 +112,7 @@ public class HouseholdDeviceFilter extends Filter {
 		// set members values:
 		householdIdEqual = GsonParser.parseInt(jsonObject.get("householdIdEqual"));
 		deviceFamilyIdIn = GsonParser.parseString(jsonObject.get("deviceFamilyIdIn"));
+		externalIdEqual = GsonParser.parseString(jsonObject.get("externalIdEqual"));
 
 	}
 
@@ -103,6 +121,7 @@ public class HouseholdDeviceFilter extends Filter {
 		kparams.add("objectType", "KalturaHouseholdDeviceFilter");
 		kparams.add("householdIdEqual", this.householdIdEqual);
 		kparams.add("deviceFamilyIdIn", this.deviceFamilyIdIn);
+		kparams.add("externalIdEqual", this.externalIdEqual);
 		return kparams;
 	}
 
@@ -124,12 +143,14 @@ public class HouseholdDeviceFilter extends Filter {
         super.writeToParcel(dest, flags);
         dest.writeValue(this.householdIdEqual);
         dest.writeString(this.deviceFamilyIdIn);
+        dest.writeString(this.externalIdEqual);
     }
 
     public HouseholdDeviceFilter(Parcel in) {
         super(in);
         this.householdIdEqual = (Integer)in.readValue(Integer.class.getClassLoader());
         this.deviceFamilyIdIn = in.readString();
+        this.externalIdEqual = in.readString();
     }
 }
 

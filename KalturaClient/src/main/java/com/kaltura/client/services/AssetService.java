@@ -8,7 +8,7 @@
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2019  Kaltura Inc.
+// Copyright (C) 2006-2020  Kaltura Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -27,21 +27,29 @@
 // ===================================================================================================
 package com.kaltura.client.services;
 
+import com.kaltura.client.FileHolder;
+import com.kaltura.client.Files;
 import com.kaltura.client.enums.AssetReferenceType;
 import com.kaltura.client.enums.AssetType;
 import com.kaltura.client.types.AdsContext;
 import com.kaltura.client.types.Asset;
 import com.kaltura.client.types.AssetCount;
 import com.kaltura.client.types.AssetFilter;
+import com.kaltura.client.types.BulkUpload;
+import com.kaltura.client.types.BulkUploadAssetData;
+import com.kaltura.client.types.BulkUploadJobData;
 import com.kaltura.client.types.FilterPager;
 import com.kaltura.client.types.PlaybackContext;
 import com.kaltura.client.types.PlaybackContextOptions;
 import com.kaltura.client.types.SearchAssetFilter;
 import com.kaltura.client.utils.request.ListResponseRequestBuilder;
 import com.kaltura.client.utils.request.RequestBuilder;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 /**
- * This class was generated using clients-generator\exec.php
+ * This class was generated using exec.php
  * against an XML schema provided by Kaltura.
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
@@ -66,6 +74,40 @@ public class AssetService {
 	 */
     public static AddAssetBuilder add(Asset asset)  {
 		return new AddAssetBuilder(asset);
+	}
+	
+	public static class AddFromBulkUploadAssetBuilder extends RequestBuilder<BulkUpload, BulkUpload.Tokenizer, AddFromBulkUploadAssetBuilder> {
+		
+		public AddFromBulkUploadAssetBuilder(FileHolder fileData, BulkUploadJobData bulkUploadJobData, BulkUploadAssetData bulkUploadAssetData) {
+			super(BulkUpload.class, "asset", "addFromBulkUpload");
+			files = new Files();
+			files.add("fileData", fileData);
+			params.add("bulkUploadJobData", bulkUploadJobData);
+			params.add("bulkUploadAssetData", bulkUploadAssetData);
+		}
+	}
+
+	public static AddFromBulkUploadAssetBuilder addFromBulkUpload(File fileData, BulkUploadJobData bulkUploadJobData, BulkUploadAssetData bulkUploadAssetData)  {
+		return addFromBulkUpload(new FileHolder(fileData), bulkUploadJobData, bulkUploadAssetData);
+	}
+
+	public static AddFromBulkUploadAssetBuilder addFromBulkUpload(InputStream fileData, String fileDataMimeType, String fileDataName, long fileDataSize, BulkUploadJobData bulkUploadJobData, BulkUploadAssetData bulkUploadAssetData)  {
+		return addFromBulkUpload(new FileHolder(fileData, fileDataMimeType, fileDataName, fileDataSize), bulkUploadJobData, bulkUploadAssetData);
+	}
+
+	public static AddFromBulkUploadAssetBuilder addFromBulkUpload(FileInputStream fileData, String fileDataMimeType, String fileDataName, BulkUploadJobData bulkUploadJobData, BulkUploadAssetData bulkUploadAssetData)  {
+		return addFromBulkUpload(new FileHolder(fileData, fileDataMimeType, fileDataName), bulkUploadJobData, bulkUploadAssetData);
+	}
+
+	/**
+	 * Add new bulk upload batch job Conversion profile id can be specified in the API.
+	 * 
+	 * @param fileData fileData
+	 * @param bulkUploadJobData bulkUploadJobData
+	 * @param bulkUploadAssetData bulkUploadAssetData
+	 */
+    public static AddFromBulkUploadAssetBuilder addFromBulkUpload(FileHolder fileData, BulkUploadJobData bulkUploadJobData, BulkUploadAssetData bulkUploadAssetData)  {
+		return new AddFromBulkUploadAssetBuilder(fileData, bulkUploadJobData, bulkUploadAssetData);
 	}
 	
 	public static class CountAssetBuilder extends RequestBuilder<AssetCount, AssetCount.Tokenizer, CountAssetBuilder> {
@@ -175,11 +217,12 @@ public class AssetService {
 	
 	public static class GetPlaybackContextAssetBuilder extends RequestBuilder<PlaybackContext, PlaybackContext.Tokenizer, GetPlaybackContextAssetBuilder> {
 		
-		public GetPlaybackContextAssetBuilder(String assetId, AssetType assetType, PlaybackContextOptions contextDataParams) {
+		public GetPlaybackContextAssetBuilder(String assetId, AssetType assetType, PlaybackContextOptions contextDataParams, String sourceType) {
 			super(PlaybackContext.class, "asset", "getPlaybackContext");
 			params.add("assetId", assetId);
 			params.add("assetType", assetType);
 			params.add("contextDataParams", contextDataParams);
+			params.add("sourceType", sourceType);
 		}
 		
 		public void assetId(String multirequestToken) {
@@ -189,6 +232,14 @@ public class AssetService {
 		public void assetType(String multirequestToken) {
 			params.add("assetType", multirequestToken);
 		}
+		
+		public void sourceType(String multirequestToken) {
+			params.add("sourceType", multirequestToken);
+		}
+	}
+
+	public static GetPlaybackContextAssetBuilder getPlaybackContext(String assetId, AssetType assetType, PlaybackContextOptions contextDataParams)  {
+		return getPlaybackContext(assetId, assetType, contextDataParams, null);
 	}
 
 	/**
@@ -197,9 +248,49 @@ public class AssetService {
 	 * @param assetId Asset identifier
 	 * @param assetType Asset type
 	 * @param contextDataParams Parameters for the request
+	 * @param sourceType Filter sources by type
 	 */
-    public static GetPlaybackContextAssetBuilder getPlaybackContext(String assetId, AssetType assetType, PlaybackContextOptions contextDataParams)  {
-		return new GetPlaybackContextAssetBuilder(assetId, assetType, contextDataParams);
+    public static GetPlaybackContextAssetBuilder getPlaybackContext(String assetId, AssetType assetType, PlaybackContextOptions contextDataParams, String sourceType)  {
+		return new GetPlaybackContextAssetBuilder(assetId, assetType, contextDataParams, sourceType);
+	}
+	
+	public static class GetPlaybackManifestAssetBuilder extends RequestBuilder<PlaybackContext, PlaybackContext.Tokenizer, GetPlaybackManifestAssetBuilder> {
+		
+		public GetPlaybackManifestAssetBuilder(String assetId, AssetType assetType, PlaybackContextOptions contextDataParams, String sourceType) {
+			super(PlaybackContext.class, "asset", "getPlaybackManifest");
+			params.add("assetId", assetId);
+			params.add("assetType", assetType);
+			params.add("contextDataParams", contextDataParams);
+			params.add("sourceType", sourceType);
+		}
+		
+		public void assetId(String multirequestToken) {
+			params.add("assetId", multirequestToken);
+		}
+		
+		public void assetType(String multirequestToken) {
+			params.add("assetType", multirequestToken);
+		}
+		
+		public void sourceType(String multirequestToken) {
+			params.add("sourceType", multirequestToken);
+		}
+	}
+
+	public static GetPlaybackManifestAssetBuilder getPlaybackManifest(String assetId, AssetType assetType, PlaybackContextOptions contextDataParams)  {
+		return getPlaybackManifest(assetId, assetType, contextDataParams, null);
+	}
+
+	/**
+	 * This action delivers all data relevant for player
+	 * 
+	 * @param assetId Asset identifier
+	 * @param assetType Asset type
+	 * @param contextDataParams Parameters for the request
+	 * @param sourceType Filter sources by type
+	 */
+    public static GetPlaybackManifestAssetBuilder getPlaybackManifest(String assetId, AssetType assetType, PlaybackContextOptions contextDataParams, String sourceType)  {
+		return new GetPlaybackManifestAssetBuilder(assetId, assetType, contextDataParams, sourceType);
 	}
 	
 	public static class ListAssetBuilder extends ListResponseRequestBuilder<Asset, Asset.Tokenizer, ListAssetBuilder> {

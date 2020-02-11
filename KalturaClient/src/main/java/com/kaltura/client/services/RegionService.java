@@ -8,7 +8,7 @@
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2019  Kaltura Inc.
+// Copyright (C) 2006-2020  Kaltura Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -27,12 +27,15 @@
 // ===================================================================================================
 package com.kaltura.client.services;
 
+import com.kaltura.client.types.BaseRegionFilter;
+import com.kaltura.client.types.FilterPager;
 import com.kaltura.client.types.Region;
-import com.kaltura.client.types.RegionFilter;
 import com.kaltura.client.utils.request.ListResponseRequestBuilder;
+import com.kaltura.client.utils.request.NullRequestBuilder;
+import com.kaltura.client.utils.request.RequestBuilder;
 
 /**
- * This class was generated using clients-generator\exec.php
+ * This class was generated using exec.php
  * against an XML schema provided by Kaltura.
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
@@ -40,20 +43,87 @@ import com.kaltura.client.utils.request.ListResponseRequestBuilder;
 
 public class RegionService {
 	
+	public static class AddRegionBuilder extends RequestBuilder<Region, Region.Tokenizer, AddRegionBuilder> {
+		
+		public AddRegionBuilder(Region region) {
+			super(Region.class, "region", "add");
+			params.add("region", region);
+		}
+	}
+
+	/**
+	 * Adds a new region for partner
+	 * 
+	 * @param region Region to add
+	 */
+    public static AddRegionBuilder add(Region region)  {
+		return new AddRegionBuilder(region);
+	}
+	
+	public static class DeleteRegionBuilder extends NullRequestBuilder {
+		
+		public DeleteRegionBuilder(int id) {
+			super("region", "delete");
+			params.add("id", id);
+		}
+		
+		public void id(String multirequestToken) {
+			params.add("id", multirequestToken);
+		}
+	}
+
+	/**
+	 * Delete an existing region
+	 * 
+	 * @param id Region ID to delete
+	 */
+    public static DeleteRegionBuilder delete(int id)  {
+		return new DeleteRegionBuilder(id);
+	}
+	
 	public static class ListRegionBuilder extends ListResponseRequestBuilder<Region, Region.Tokenizer, ListRegionBuilder> {
 		
-		public ListRegionBuilder(RegionFilter filter) {
+		public ListRegionBuilder(BaseRegionFilter filter, FilterPager pager) {
 			super(Region.class, "region", "list");
 			params.add("filter", filter);
+			params.add("pager", pager);
 		}
+	}
+
+	public static ListRegionBuilder list(BaseRegionFilter filter)  {
+		return list(filter, null);
 	}
 
 	/**
 	 * Returns all regions for the partner
 	 * 
 	 * @param filter Regions filter
+	 * @param pager Paging the request
 	 */
-    public static ListRegionBuilder list(RegionFilter filter)  {
-		return new ListRegionBuilder(filter);
+    public static ListRegionBuilder list(BaseRegionFilter filter, FilterPager pager)  {
+		return new ListRegionBuilder(filter, pager);
+	}
+	
+	public static class UpdateRegionBuilder extends RequestBuilder<Region, Region.Tokenizer, UpdateRegionBuilder> {
+		
+		public UpdateRegionBuilder(int id, Region region) {
+			super(Region.class, "region", "update");
+			params.add("id", id);
+			params.add("region", region);
+		}
+		
+		public void id(String multirequestToken) {
+			params.add("id", multirequestToken);
+		}
+	}
+
+	/**
+	 * Update an existing region
+	 * 
+	 * @param id Region ID to update
+	 * @param region Region to update
+	 */
+    public static UpdateRegionBuilder update(int id, Region region)  {
+		return new UpdateRegionBuilder(id, region);
 	}
 }

@@ -8,7 +8,7 @@
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2019  Kaltura Inc.
+// Copyright (C) 2006-2020  Kaltura Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -30,16 +30,55 @@ package com.kaltura.client.services;
 import com.kaltura.client.types.Permission;
 import com.kaltura.client.types.PermissionFilter;
 import com.kaltura.client.utils.request.ListResponseRequestBuilder;
+import com.kaltura.client.utils.request.NullRequestBuilder;
 import com.kaltura.client.utils.request.RequestBuilder;
 
 /**
- * This class was generated using clients-generator\exec.php
+ * This class was generated using exec.php
  * against an XML schema provided by Kaltura.
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
 public class PermissionService {
+	
+	public static class AddPermissionBuilder extends RequestBuilder<Permission, Permission.Tokenizer, AddPermissionBuilder> {
+		
+		public AddPermissionBuilder(Permission permission) {
+			super(Permission.class, "permission", "add");
+			params.add("permission", permission);
+		}
+	}
+
+	/**
+	 * Adds new permission
+	 * 
+	 * @param permission Permission to insert
+	 */
+    public static AddPermissionBuilder add(Permission permission)  {
+		return new AddPermissionBuilder(permission);
+	}
+	
+	public static class DeletePermissionBuilder extends NullRequestBuilder {
+		
+		public DeletePermissionBuilder(long id) {
+			super("permission", "delete");
+			params.add("id", id);
+		}
+		
+		public void id(String multirequestToken) {
+			params.add("id", multirequestToken);
+		}
+	}
+
+	/**
+	 * Deletes an existing permission
+	 * 
+	 * @param id Permission ID to delete
+	 */
+    public static DeletePermissionBuilder delete(long id)  {
+		return new DeletePermissionBuilder(id);
+	}
 	
 	public static class GetCurrentPermissionsPermissionBuilder extends RequestBuilder<String, String, GetCurrentPermissionsPermissionBuilder> {
 		

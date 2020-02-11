@@ -8,7 +8,7 @@
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2019  Kaltura Inc.
+// Copyright (C) 2006-2020  Kaltura Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -37,7 +37,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This class was generated using clients-generator\exec.php
+ * This class was generated using exec.php
  * against an XML schema provided by Kaltura.
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
@@ -50,6 +50,7 @@ public class ExternalRecording extends Recording {
 	public interface Tokenizer extends Recording.Tokenizer {
 		String externalId();
 		RequestBuilder.MapTokenizer<StringValue.Tokenizer> metaData();
+		String expiryDate();
 	}
 
 	/**
@@ -60,6 +61,11 @@ public class ExternalRecording extends Recording {
 	 * key/value map field for extra data
 	 */
 	private Map<String, StringValue> metaData;
+	/**
+	 * Specifies until when the recording is available. Date and time represented as
+	  epoch.
+	 */
+	private Long expiryDate;
 
 	// externalId:
 	public String getExternalId(){
@@ -81,6 +87,10 @@ public class ExternalRecording extends Recording {
 		this.metaData = metaData;
 	}
 
+	// expiryDate:
+	public Long getExpiryDate(){
+		return this.expiryDate;
+	}
 
 	public ExternalRecording() {
 		super();
@@ -94,6 +104,7 @@ public class ExternalRecording extends Recording {
 		// set members values:
 		externalId = GsonParser.parseString(jsonObject.get("externalId"));
 		metaData = GsonParser.parseMap(jsonObject.getAsJsonObject("metaData"), StringValue.class);
+		expiryDate = GsonParser.parseLong(jsonObject.get("expiryDate"));
 
 	}
 
@@ -131,6 +142,7 @@ public class ExternalRecording extends Recording {
         } else {
             dest.writeInt(-1);
         }
+        dest.writeValue(this.expiryDate);
     }
 
     public ExternalRecording(Parcel in) {
@@ -145,6 +157,7 @@ public class ExternalRecording extends Recording {
                 this.metaData.put(key, value);
             }
         }
+        this.expiryDate = (Long)in.readValue(Long.class.getClassLoader());
     }
 }
 

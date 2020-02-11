@@ -8,7 +8,7 @@
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2019  Kaltura Inc.
+// Copyright (C) 2006-2020  Kaltura Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -28,7 +28,7 @@
 package com.kaltura.client.enums;
 
 /**
- * This class was generated using clients-generator\exec.php
+ * This class was generated using exec.php
  * against an XML schema provided by Kaltura.
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
@@ -41,7 +41,10 @@ public enum RuleActionType implements EnumAsString {
 	ALLOW_PLAYBACK("ALLOW_PLAYBACK"),
 	BLOCK_PLAYBACK("BLOCK_PLAYBACK"),
 	APPLY_DISCOUNT_MODULE("APPLY_DISCOUNT_MODULE"),
-	APPLY_PLAYBACK_ADAPTER("APPLY_PLAYBACK_ADAPTER");
+	APPLY_PLAYBACK_ADAPTER("APPLY_PLAYBACK_ADAPTER"),
+	FILTER("FILTER"),
+	ASSET_LIFE_CYCLE_TRANSITION("ASSET_LIFE_CYCLE_TRANSITION"),
+	APPLY_FREE_PLAYBACK("APPLY_FREE_PLAYBACK");
 
 	private String value;
 

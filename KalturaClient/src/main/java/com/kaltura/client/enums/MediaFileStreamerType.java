@@ -8,7 +8,7 @@
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2019  Kaltura Inc.
+// Copyright (C) 2006-2020  Kaltura Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -28,7 +28,7 @@
 package com.kaltura.client.enums;
 
 /**
- * This class was generated using clients-generator\exec.php
+ * This class was generated using exec.php
  * against an XML schema provided by Kaltura.
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
@@ -37,7 +37,8 @@ public enum MediaFileStreamerType implements EnumAsString {
 	APPLE_HTTP("APPLE_HTTP"),
 	MPEG_DASH("MPEG_DASH"),
 	URL("URL"),
-	SMOOTH_STREAMING("SMOOTH_STREAMING");
+	SMOOTH_STREAMING("SMOOTH_STREAMING"),
+	NONE("NONE");
 
 	private String value;
 

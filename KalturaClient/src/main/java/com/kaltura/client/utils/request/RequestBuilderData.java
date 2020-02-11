@@ -8,7 +8,7 @@
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2019  Kaltura Inc.
+// Copyright (C) 2006-2020  Kaltura Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -32,7 +32,7 @@ import com.kaltura.client.types.BaseResponseProfile;
 import com.kaltura.client.types.SkipCondition;
 
 /**
- * This class was generated using clients-generator\exec.php
+ * This class was generated using exec.php
  * against an XML schema provided by Kaltura.
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
@@ -58,14 +58,6 @@ public abstract class RequestBuilderData<SelfType> {
 	 */
 	public SelfType setApiVersion(String apiVersion){
 		params.add("apiVersion", apiVersion);
-		return (SelfType) this;
-	}
-	
-	/**
-	 * @param abortOnError Abort the Multireuqset call if any error occurs in one of the requests
-	 */
-	public SelfType setAbortOnError(Boolean abortOnError){
-		params.add("abortOnError", abortOnError);
 		return (SelfType) this;
 	}
 	
@@ -122,6 +114,14 @@ public abstract class RequestBuilderData<SelfType> {
 	 */
 	public SelfType setResponseProfile(BaseResponseProfile responseProfile){
 		params.add("responseProfile", responseProfile);
+		return (SelfType) this;
+	}
+	
+	/**
+	 * @param abortOnError Abort the Multireuqset call if any error occurs in one of the requests
+	 */
+	public SelfType setAbortOnError(Boolean abortOnError){
+		params.add("abortOnError", abortOnError);
 		return (SelfType) this;
 	}
 	

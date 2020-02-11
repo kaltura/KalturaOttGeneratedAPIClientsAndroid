@@ -8,7 +8,7 @@
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2019  Kaltura Inc.
+// Copyright (C) 2006-2020  Kaltura Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -35,7 +35,7 @@ import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
- * This class was generated using clients-generator\exec.php
+ * This class was generated using exec.php
  * against an XML schema provided by Kaltura.
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
@@ -50,12 +50,17 @@ public class LoginSession extends ObjectBase {
 	
 	public interface Tokenizer extends ObjectBase.Tokenizer {
 		String ks();
+		String expiry();
 	}
 
 	/**
 	 * Access token in a KS format
 	 */
 	private String ks;
+	/**
+	 * Expiration
+	 */
+	private Long expiry;
 
 	// ks:
 	public String getKs(){
@@ -67,6 +72,18 @@ public class LoginSession extends ObjectBase {
 
 	public void ks(String multirequestToken){
 		setToken("ks", multirequestToken);
+	}
+
+	// expiry:
+	public Long getExpiry(){
+		return this.expiry;
+	}
+	public void setExpiry(Long expiry){
+		this.expiry = expiry;
+	}
+
+	public void expiry(String multirequestToken){
+		setToken("expiry", multirequestToken);
 	}
 
 
@@ -81,6 +98,7 @@ public class LoginSession extends ObjectBase {
 
 		// set members values:
 		ks = GsonParser.parseString(jsonObject.get("ks"));
+		expiry = GsonParser.parseLong(jsonObject.get("expiry"));
 
 	}
 
@@ -88,6 +106,7 @@ public class LoginSession extends ObjectBase {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaLoginSession");
 		kparams.add("ks", this.ks);
+		kparams.add("expiry", this.expiry);
 		return kparams;
 	}
 
@@ -108,11 +127,13 @@ public class LoginSession extends ObjectBase {
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeString(this.ks);
+        dest.writeValue(this.expiry);
     }
 
     public LoginSession(Parcel in) {
         super(in);
         this.ks = in.readString();
+        this.expiry = (Long)in.readValue(Long.class.getClassLoader());
     }
 }
 

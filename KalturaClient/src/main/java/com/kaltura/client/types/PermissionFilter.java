@@ -8,7 +8,7 @@
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2019  Kaltura Inc.
+// Copyright (C) 2006-2020  Kaltura Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -34,7 +34,7 @@ import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
- * This class was generated using clients-generator\exec.php
+ * This class was generated using exec.php
  * against an XML schema provided by Kaltura.
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
@@ -49,12 +49,17 @@ public class PermissionFilter extends Filter {
 	
 	public interface Tokenizer extends Filter.Tokenizer {
 		String currentUserPermissionsContains();
+		String roleIdIn();
 	}
 
 	/**
 	 * Indicates whether the results should be filtered by userId using the current
 	 */
 	private Boolean currentUserPermissionsContains;
+	/**
+	 * Return permissions by role ID
+	 */
+	private Long roleIdIn;
 
 	// currentUserPermissionsContains:
 	public Boolean getCurrentUserPermissionsContains(){
@@ -66,6 +71,18 @@ public class PermissionFilter extends Filter {
 
 	public void currentUserPermissionsContains(String multirequestToken){
 		setToken("currentUserPermissionsContains", multirequestToken);
+	}
+
+	// roleIdIn:
+	public Long getRoleIdIn(){
+		return this.roleIdIn;
+	}
+	public void setRoleIdIn(Long roleIdIn){
+		this.roleIdIn = roleIdIn;
+	}
+
+	public void roleIdIn(String multirequestToken){
+		setToken("roleIdIn", multirequestToken);
 	}
 
 
@@ -80,6 +97,7 @@ public class PermissionFilter extends Filter {
 
 		// set members values:
 		currentUserPermissionsContains = GsonParser.parseBoolean(jsonObject.get("currentUserPermissionsContains"));
+		roleIdIn = GsonParser.parseLong(jsonObject.get("roleIdIn"));
 
 	}
 
@@ -87,6 +105,7 @@ public class PermissionFilter extends Filter {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaPermissionFilter");
 		kparams.add("currentUserPermissionsContains", this.currentUserPermissionsContains);
+		kparams.add("roleIdIn", this.roleIdIn);
 		return kparams;
 	}
 
@@ -107,11 +126,13 @@ public class PermissionFilter extends Filter {
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeValue(this.currentUserPermissionsContains);
+        dest.writeValue(this.roleIdIn);
     }
 
     public PermissionFilter(Parcel in) {
         super(in);
         this.currentUserPermissionsContains = (Boolean)in.readValue(Boolean.class.getClassLoader());
+        this.roleIdIn = (Long)in.readValue(Long.class.getClassLoader());
     }
 }
 

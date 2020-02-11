@@ -8,7 +8,7 @@
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2019  Kaltura Inc.
+// Copyright (C) 2006-2020  Kaltura Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -34,7 +34,7 @@ import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
- * This class was generated using clients-generator\exec.php
+ * This class was generated using exec.php
  * against an XML schema provided by Kaltura.
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
@@ -49,12 +49,17 @@ public class UserSegmentFilter extends Filter {
 	
 	public interface Tokenizer extends Filter.Tokenizer {
 		String userIdEqual();
+		String kSql();
 	}
 
 	/**
 	 * User ID
 	 */
 	private String userIdEqual;
+	/**
+	 * KSQL expression
+	 */
+	private String kSql;
 
 	// userIdEqual:
 	public String getUserIdEqual(){
@@ -66,6 +71,18 @@ public class UserSegmentFilter extends Filter {
 
 	public void userIdEqual(String multirequestToken){
 		setToken("userIdEqual", multirequestToken);
+	}
+
+	// kSql:
+	public String getKSql(){
+		return this.kSql;
+	}
+	public void setKSql(String kSql){
+		this.kSql = kSql;
+	}
+
+	public void kSql(String multirequestToken){
+		setToken("kSql", multirequestToken);
 	}
 
 
@@ -80,6 +97,7 @@ public class UserSegmentFilter extends Filter {
 
 		// set members values:
 		userIdEqual = GsonParser.parseString(jsonObject.get("userIdEqual"));
+		kSql = GsonParser.parseString(jsonObject.get("kSql"));
 
 	}
 
@@ -87,6 +105,7 @@ public class UserSegmentFilter extends Filter {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaUserSegmentFilter");
 		kparams.add("userIdEqual", this.userIdEqual);
+		kparams.add("kSql", this.kSql);
 		return kparams;
 	}
 
@@ -107,11 +126,13 @@ public class UserSegmentFilter extends Filter {
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeString(this.userIdEqual);
+        dest.writeString(this.kSql);
     }
 
     public UserSegmentFilter(Parcel in) {
         super(in);
         this.userIdEqual = in.readString();
+        this.kSql = in.readString();
     }
 }
 

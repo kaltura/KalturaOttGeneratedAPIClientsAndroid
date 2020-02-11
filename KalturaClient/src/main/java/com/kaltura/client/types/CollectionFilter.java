@@ -8,7 +8,7 @@
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2019  Kaltura Inc.
+// Copyright (C) 2006-2020  Kaltura Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -34,7 +34,7 @@ import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
- * This class was generated using clients-generator\exec.php
+ * This class was generated using exec.php
  * against an XML schema provided by Kaltura.
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
@@ -50,6 +50,7 @@ public class CollectionFilter extends Filter {
 	public interface Tokenizer extends Filter.Tokenizer {
 		String collectionIdIn();
 		String mediaFileIdEqual();
+		String couponGroupIdEqual();
 	}
 
 	/**
@@ -60,6 +61,10 @@ public class CollectionFilter extends Filter {
 	 * Media-file ID to get the subscriptions by
 	 */
 	private Integer mediaFileIdEqual;
+	/**
+	 * couponGroupIdEqual
+	 */
+	private Integer couponGroupIdEqual;
 
 	// collectionIdIn:
 	public String getCollectionIdIn(){
@@ -85,6 +90,18 @@ public class CollectionFilter extends Filter {
 		setToken("mediaFileIdEqual", multirequestToken);
 	}
 
+	// couponGroupIdEqual:
+	public Integer getCouponGroupIdEqual(){
+		return this.couponGroupIdEqual;
+	}
+	public void setCouponGroupIdEqual(Integer couponGroupIdEqual){
+		this.couponGroupIdEqual = couponGroupIdEqual;
+	}
+
+	public void couponGroupIdEqual(String multirequestToken){
+		setToken("couponGroupIdEqual", multirequestToken);
+	}
+
 
 	public CollectionFilter() {
 		super();
@@ -98,6 +115,7 @@ public class CollectionFilter extends Filter {
 		// set members values:
 		collectionIdIn = GsonParser.parseString(jsonObject.get("collectionIdIn"));
 		mediaFileIdEqual = GsonParser.parseInt(jsonObject.get("mediaFileIdEqual"));
+		couponGroupIdEqual = GsonParser.parseInt(jsonObject.get("couponGroupIdEqual"));
 
 	}
 
@@ -106,6 +124,7 @@ public class CollectionFilter extends Filter {
 		kparams.add("objectType", "KalturaCollectionFilter");
 		kparams.add("collectionIdIn", this.collectionIdIn);
 		kparams.add("mediaFileIdEqual", this.mediaFileIdEqual);
+		kparams.add("couponGroupIdEqual", this.couponGroupIdEqual);
 		return kparams;
 	}
 
@@ -127,12 +146,14 @@ public class CollectionFilter extends Filter {
         super.writeToParcel(dest, flags);
         dest.writeString(this.collectionIdIn);
         dest.writeValue(this.mediaFileIdEqual);
+        dest.writeValue(this.couponGroupIdEqual);
     }
 
     public CollectionFilter(Parcel in) {
         super(in);
         this.collectionIdIn = in.readString();
         this.mediaFileIdEqual = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.couponGroupIdEqual = (Integer)in.readValue(Integer.class.getClassLoader());
     }
 }
 

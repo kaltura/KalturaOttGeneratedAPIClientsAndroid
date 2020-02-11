@@ -8,7 +8,7 @@
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2019  Kaltura Inc.
+// Copyright (C) 2006-2020  Kaltura Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -35,10 +35,12 @@ import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 import com.kaltura.client.utils.request.RequestBuilder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
- * This class was generated using clients-generator\exec.php
+ * This class was generated using exec.php
  * against an XML schema provided by Kaltura.
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
@@ -64,6 +66,8 @@ public class Channel extends BaseChannel {
 		String createDate();
 		String updateDate();
 		String supportSegmentBasedOrdering();
+		String assetUserRuleId();
+		RequestBuilder.MapTokenizer<StringValue.Tokenizer> metaData();
 	}
 
 	/**
@@ -115,6 +119,14 @@ public class Channel extends BaseChannel {
 	  match to the user&amp;#39;s segments (see BEO-5524)
 	 */
 	private Boolean supportSegmentBasedOrdering;
+	/**
+	 * Asset user rule identifier
+	 */
+	private Long assetUserRuleId;
+	/**
+	 * key/value map field for extra data
+	 */
+	private Map<String, StringValue> metaData;
 
 	// name:
 	public String getName(){
@@ -216,6 +228,26 @@ public class Channel extends BaseChannel {
 		setToken("supportSegmentBasedOrdering", multirequestToken);
 	}
 
+	// assetUserRuleId:
+	public Long getAssetUserRuleId(){
+		return this.assetUserRuleId;
+	}
+	public void setAssetUserRuleId(Long assetUserRuleId){
+		this.assetUserRuleId = assetUserRuleId;
+	}
+
+	public void assetUserRuleId(String multirequestToken){
+		setToken("assetUserRuleId", multirequestToken);
+	}
+
+	// metaData:
+	public Map<String, StringValue> getMetaData(){
+		return this.metaData;
+	}
+	public void setMetaData(Map<String, StringValue> metaData){
+		this.metaData = metaData;
+	}
+
 
 	public Channel() {
 		super();
@@ -239,6 +271,8 @@ public class Channel extends BaseChannel {
 		createDate = GsonParser.parseLong(jsonObject.get("createDate"));
 		updateDate = GsonParser.parseLong(jsonObject.get("updateDate"));
 		supportSegmentBasedOrdering = GsonParser.parseBoolean(jsonObject.get("supportSegmentBasedOrdering"));
+		assetUserRuleId = GsonParser.parseLong(jsonObject.get("assetUserRuleId"));
+		metaData = GsonParser.parseMap(jsonObject.getAsJsonObject("metaData"), StringValue.class);
 
 	}
 
@@ -253,6 +287,8 @@ public class Channel extends BaseChannel {
 		kparams.add("isActive", this.isActive);
 		kparams.add("orderBy", this.orderBy);
 		kparams.add("supportSegmentBasedOrdering", this.supportSegmentBasedOrdering);
+		kparams.add("assetUserRuleId", this.assetUserRuleId);
+		kparams.add("metaData", this.metaData);
 		return kparams;
 	}
 
@@ -294,6 +330,16 @@ public class Channel extends BaseChannel {
         dest.writeValue(this.createDate);
         dest.writeValue(this.updateDate);
         dest.writeValue(this.supportSegmentBasedOrdering);
+        dest.writeValue(this.assetUserRuleId);
+        if(this.metaData != null) {
+            dest.writeInt(this.metaData.size());
+            for (Map.Entry<String, StringValue> entry : this.metaData.entrySet()) {
+                dest.writeString(entry.getKey());
+                dest.writeParcelable(entry.getValue(), flags);
+            }
+        } else {
+            dest.writeInt(-1);
+        }
     }
 
     public Channel(Parcel in) {
@@ -318,6 +364,16 @@ public class Channel extends BaseChannel {
         this.createDate = (Long)in.readValue(Long.class.getClassLoader());
         this.updateDate = (Long)in.readValue(Long.class.getClassLoader());
         this.supportSegmentBasedOrdering = (Boolean)in.readValue(Boolean.class.getClassLoader());
+        this.assetUserRuleId = (Long)in.readValue(Long.class.getClassLoader());
+        int metaDataSize = in.readInt();
+        if( metaDataSize > -1) {
+            this.metaData = new HashMap<>();
+            for (int i = 0; i < metaDataSize; i++) {
+                String key = in.readString();
+                StringValue value = in.readParcelable(StringValue.class.getClassLoader());
+                this.metaData.put(key, value);
+            }
+        }
     }
 }
 

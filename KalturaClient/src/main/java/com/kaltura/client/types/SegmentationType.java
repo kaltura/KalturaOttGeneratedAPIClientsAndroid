@@ -8,7 +8,7 @@
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2019  Kaltura Inc.
+// Copyright (C) 2006-2020  Kaltura Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -39,7 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class was generated using clients-generator\exec.php
+ * This class was generated using exec.php
  * against an XML schema provided by Kaltura.
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
@@ -57,6 +57,7 @@ public class SegmentationType extends ObjectBase {
 		String name();
 		String description();
 		RequestBuilder.ListTokenizer<BaseSegmentCondition.Tokenizer> conditions();
+		RequestBuilder.ListTokenizer<BaseSegmentAction.Tokenizer> actions();
 		BaseSegmentValue.Tokenizer value();
 		String createDate();
 		String version();
@@ -78,6 +79,10 @@ public class SegmentationType extends ObjectBase {
 	 * Segmentation conditions - can be empty
 	 */
 	private List<BaseSegmentCondition> conditions;
+	/**
+	 * Segmentation conditions - can be empty
+	 */
+	private List<BaseSegmentAction> actions;
 	/**
 	 * Segmentation values - can be empty (so only one segment will be created)
 	 */
@@ -127,6 +132,14 @@ public class SegmentationType extends ObjectBase {
 		this.conditions = conditions;
 	}
 
+	// actions:
+	public List<BaseSegmentAction> getActions(){
+		return this.actions;
+	}
+	public void setActions(List<BaseSegmentAction> actions){
+		this.actions = actions;
+	}
+
 	// value:
 	public BaseSegmentValue getValue(){
 		return this.value;
@@ -158,6 +171,7 @@ public class SegmentationType extends ObjectBase {
 		name = GsonParser.parseString(jsonObject.get("name"));
 		description = GsonParser.parseString(jsonObject.get("description"));
 		conditions = GsonParser.parseArray(jsonObject.getAsJsonArray("conditions"), BaseSegmentCondition.class);
+		actions = GsonParser.parseArray(jsonObject.getAsJsonArray("actions"), BaseSegmentAction.class);
 		value = GsonParser.parseObject(jsonObject.getAsJsonObject("value"), BaseSegmentValue.class);
 		createDate = GsonParser.parseLong(jsonObject.get("createDate"));
 		version = GsonParser.parseLong(jsonObject.get("version"));
@@ -170,6 +184,7 @@ public class SegmentationType extends ObjectBase {
 		kparams.add("name", this.name);
 		kparams.add("description", this.description);
 		kparams.add("conditions", this.conditions);
+		kparams.add("actions", this.actions);
 		kparams.add("value", this.value);
 		return kparams;
 	}
@@ -199,6 +214,12 @@ public class SegmentationType extends ObjectBase {
         } else {
             dest.writeInt(-1);
         }
+        if(this.actions != null) {
+            dest.writeInt(this.actions.size());
+            dest.writeList(this.actions);
+        } else {
+            dest.writeInt(-1);
+        }
         dest.writeParcelable(this.value, flags);
         dest.writeValue(this.createDate);
         dest.writeValue(this.version);
@@ -213,6 +234,11 @@ public class SegmentationType extends ObjectBase {
         if( conditionsSize > -1) {
             this.conditions = new ArrayList<>();
             in.readList(this.conditions, BaseSegmentCondition.class.getClassLoader());
+        }
+        int actionsSize = in.readInt();
+        if( actionsSize > -1) {
+            this.actions = new ArrayList<>();
+            in.readList(this.actions, BaseSegmentAction.class.getClassLoader());
         }
         this.value = in.readParcelable(BaseSegmentValue.class.getClassLoader());
         this.createDate = (Long)in.readValue(Long.class.getClassLoader());

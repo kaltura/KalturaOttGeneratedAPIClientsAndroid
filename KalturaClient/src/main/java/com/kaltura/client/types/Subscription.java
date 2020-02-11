@@ -8,7 +8,7 @@
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2019  Kaltura Inc.
+// Copyright (C) 2006-2020  Kaltura Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -42,7 +42,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class was generated using clients-generator\exec.php
+ * This class was generated using exec.php
  * against an XML schema provided by Kaltura.
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
@@ -87,6 +87,7 @@ public class Subscription extends ObjectBase {
 		String dependencyType();
 		String externalId();
 		String isCancellationBlocked();
+		String preSaleDate();
 	}
 
 	/**
@@ -216,6 +217,10 @@ public class Subscription extends ObjectBase {
 	 * Is cancellation blocked for the subscription
 	 */
 	private Boolean isCancellationBlocked;
+	/**
+	 * The Pre-Sale date the subscription is available for purchasing
+	 */
+	private Long preSaleDate;
 
 	// id:
 	public String getId(){
@@ -529,6 +534,18 @@ public class Subscription extends ObjectBase {
 		setToken("isCancellationBlocked", multirequestToken);
 	}
 
+	// preSaleDate:
+	public Long getPreSaleDate(){
+		return this.preSaleDate;
+	}
+	public void setPreSaleDate(Long preSaleDate){
+		this.preSaleDate = preSaleDate;
+	}
+
+	public void preSaleDate(String multirequestToken){
+		setToken("preSaleDate", multirequestToken);
+	}
+
 
 	public Subscription() {
 		super();
@@ -571,6 +588,7 @@ public class Subscription extends ObjectBase {
 		dependencyType = SubscriptionDependencyType.get(GsonParser.parseString(jsonObject.get("dependencyType")));
 		externalId = GsonParser.parseString(jsonObject.get("externalId"));
 		isCancellationBlocked = GsonParser.parseBoolean(jsonObject.get("isCancellationBlocked"));
+		preSaleDate = GsonParser.parseLong(jsonObject.get("preSaleDate"));
 
 	}
 
@@ -606,6 +624,7 @@ public class Subscription extends ObjectBase {
 		kparams.add("dependencyType", this.dependencyType);
 		kparams.add("externalId", this.externalId);
 		kparams.add("isCancellationBlocked", this.isCancellationBlocked);
+		kparams.add("preSaleDate", this.preSaleDate);
 		return kparams;
 	}
 
@@ -696,6 +715,7 @@ public class Subscription extends ObjectBase {
         dest.writeInt(this.dependencyType == null ? -1 : this.dependencyType.ordinal());
         dest.writeString(this.externalId);
         dest.writeValue(this.isCancellationBlocked);
+        dest.writeValue(this.preSaleDate);
     }
 
     public Subscription(Parcel in) {
@@ -764,6 +784,7 @@ public class Subscription extends ObjectBase {
         this.dependencyType = tmpDependencyType == -1 ? null : SubscriptionDependencyType.values()[tmpDependencyType];
         this.externalId = in.readString();
         this.isCancellationBlocked = (Boolean)in.readValue(Boolean.class.getClassLoader());
+        this.preSaleDate = (Long)in.readValue(Long.class.getClassLoader());
     }
 }
 

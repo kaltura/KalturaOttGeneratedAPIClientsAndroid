@@ -8,7 +8,7 @@
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2019  Kaltura Inc.
+// Copyright (C) 2006-2020  Kaltura Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -34,7 +34,7 @@ import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
- * This class was generated using clients-generator\exec.php
+ * This class was generated using exec.php
  * against an XML schema provided by Kaltura.
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
@@ -48,6 +48,8 @@ public class SubscriptionFilter extends Filter {
 		String subscriptionIdIn();
 		String mediaFileIdEqual();
 		String externalIdIn();
+		String couponGroupIdEqual();
+		String kSql();
 	}
 
 	/**
@@ -62,6 +64,14 @@ public class SubscriptionFilter extends Filter {
 	 * Comma separated subscription external IDs to get the subscriptions by
 	 */
 	private String externalIdIn;
+	/**
+	 * couponGroupIdEqual
+	 */
+	private Integer couponGroupIdEqual;
+	/**
+	 * KSQL expression
+	 */
+	private String kSql;
 
 	// subscriptionIdIn:
 	public String getSubscriptionIdIn(){
@@ -99,6 +109,30 @@ public class SubscriptionFilter extends Filter {
 		setToken("externalIdIn", multirequestToken);
 	}
 
+	// couponGroupIdEqual:
+	public Integer getCouponGroupIdEqual(){
+		return this.couponGroupIdEqual;
+	}
+	public void setCouponGroupIdEqual(Integer couponGroupIdEqual){
+		this.couponGroupIdEqual = couponGroupIdEqual;
+	}
+
+	public void couponGroupIdEqual(String multirequestToken){
+		setToken("couponGroupIdEqual", multirequestToken);
+	}
+
+	// kSql:
+	public String getKSql(){
+		return this.kSql;
+	}
+	public void setKSql(String kSql){
+		this.kSql = kSql;
+	}
+
+	public void kSql(String multirequestToken){
+		setToken("kSql", multirequestToken);
+	}
+
 
 	public SubscriptionFilter() {
 		super();
@@ -113,6 +147,8 @@ public class SubscriptionFilter extends Filter {
 		subscriptionIdIn = GsonParser.parseString(jsonObject.get("subscriptionIdIn"));
 		mediaFileIdEqual = GsonParser.parseInt(jsonObject.get("mediaFileIdEqual"));
 		externalIdIn = GsonParser.parseString(jsonObject.get("externalIdIn"));
+		couponGroupIdEqual = GsonParser.parseInt(jsonObject.get("couponGroupIdEqual"));
+		kSql = GsonParser.parseString(jsonObject.get("kSql"));
 
 	}
 
@@ -122,6 +158,8 @@ public class SubscriptionFilter extends Filter {
 		kparams.add("subscriptionIdIn", this.subscriptionIdIn);
 		kparams.add("mediaFileIdEqual", this.mediaFileIdEqual);
 		kparams.add("externalIdIn", this.externalIdIn);
+		kparams.add("couponGroupIdEqual", this.couponGroupIdEqual);
+		kparams.add("kSql", this.kSql);
 		return kparams;
 	}
 
@@ -144,6 +182,8 @@ public class SubscriptionFilter extends Filter {
         dest.writeString(this.subscriptionIdIn);
         dest.writeValue(this.mediaFileIdEqual);
         dest.writeString(this.externalIdIn);
+        dest.writeValue(this.couponGroupIdEqual);
+        dest.writeString(this.kSql);
     }
 
     public SubscriptionFilter(Parcel in) {
@@ -151,6 +191,8 @@ public class SubscriptionFilter extends Filter {
         this.subscriptionIdIn = in.readString();
         this.mediaFileIdEqual = (Integer)in.readValue(Integer.class.getClassLoader());
         this.externalIdIn = in.readString();
+        this.couponGroupIdEqual = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.kSql = in.readString();
     }
 }
 

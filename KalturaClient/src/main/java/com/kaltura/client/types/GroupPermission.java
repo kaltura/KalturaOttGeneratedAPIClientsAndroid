@@ -8,7 +8,7 @@
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2019  Kaltura Inc.
+// Copyright (C) 2006-2020  Kaltura Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -34,7 +34,7 @@ import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
- * This class was generated using clients-generator\exec.php
+ * This class was generated using exec.php
  * against an XML schema provided by Kaltura.
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
@@ -57,14 +57,6 @@ public class GroupPermission extends Permission {
 	public String getGroup(){
 		return this.group;
 	}
-	public void setGroup(String group){
-		this.group = group;
-	}
-
-	public void group(String multirequestToken){
-		setToken("group", multirequestToken);
-	}
-
 
 	public GroupPermission() {
 		super();
@@ -83,7 +75,6 @@ public class GroupPermission extends Permission {
 	public Params toParams() {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaGroupPermission");
-		kparams.add("group", this.group);
 		return kparams;
 	}
 

@@ -8,7 +8,7 @@
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2019  Kaltura Inc.
+// Copyright (C) 2006-2020  Kaltura Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -30,12 +30,13 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
+import com.kaltura.client.enums.RuleActionType;
 import com.kaltura.client.enums.TransactionType;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
- * This class was generated using clients-generator\exec.php
+ * This class was generated using exec.php
  * against an XML schema provided by Kaltura.
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
@@ -52,6 +53,7 @@ public class BusinessModuleRuleFilter extends Filter {
 		String businessModuleTypeApplied();
 		String businessModuleIdApplied();
 		String segmentIdsApplied();
+		String actionsContainType();
 	}
 
 	/**
@@ -66,6 +68,10 @@ public class BusinessModuleRuleFilter extends Filter {
 	 * Comma separated segment IDs the rules applied on
 	 */
 	private String segmentIdsApplied;
+	/**
+	 * Indicates which business module rule list to return by their action.
+	 */
+	private RuleActionType actionsContainType;
 
 	// businessModuleTypeApplied:
 	public TransactionType getBusinessModuleTypeApplied(){
@@ -103,6 +109,18 @@ public class BusinessModuleRuleFilter extends Filter {
 		setToken("segmentIdsApplied", multirequestToken);
 	}
 
+	// actionsContainType:
+	public RuleActionType getActionsContainType(){
+		return this.actionsContainType;
+	}
+	public void setActionsContainType(RuleActionType actionsContainType){
+		this.actionsContainType = actionsContainType;
+	}
+
+	public void actionsContainType(String multirequestToken){
+		setToken("actionsContainType", multirequestToken);
+	}
+
 
 	public BusinessModuleRuleFilter() {
 		super();
@@ -117,6 +135,7 @@ public class BusinessModuleRuleFilter extends Filter {
 		businessModuleTypeApplied = TransactionType.get(GsonParser.parseString(jsonObject.get("businessModuleTypeApplied")));
 		businessModuleIdApplied = GsonParser.parseLong(jsonObject.get("businessModuleIdApplied"));
 		segmentIdsApplied = GsonParser.parseString(jsonObject.get("segmentIdsApplied"));
+		actionsContainType = RuleActionType.get(GsonParser.parseString(jsonObject.get("actionsContainType")));
 
 	}
 
@@ -126,6 +145,7 @@ public class BusinessModuleRuleFilter extends Filter {
 		kparams.add("businessModuleTypeApplied", this.businessModuleTypeApplied);
 		kparams.add("businessModuleIdApplied", this.businessModuleIdApplied);
 		kparams.add("segmentIdsApplied", this.segmentIdsApplied);
+		kparams.add("actionsContainType", this.actionsContainType);
 		return kparams;
 	}
 
@@ -148,6 +168,7 @@ public class BusinessModuleRuleFilter extends Filter {
         dest.writeInt(this.businessModuleTypeApplied == null ? -1 : this.businessModuleTypeApplied.ordinal());
         dest.writeValue(this.businessModuleIdApplied);
         dest.writeString(this.segmentIdsApplied);
+        dest.writeInt(this.actionsContainType == null ? -1 : this.actionsContainType.ordinal());
     }
 
     public BusinessModuleRuleFilter(Parcel in) {
@@ -156,6 +177,8 @@ public class BusinessModuleRuleFilter extends Filter {
         this.businessModuleTypeApplied = tmpBusinessModuleTypeApplied == -1 ? null : TransactionType.values()[tmpBusinessModuleTypeApplied];
         this.businessModuleIdApplied = (Long)in.readValue(Long.class.getClassLoader());
         this.segmentIdsApplied = in.readString();
+        int tmpActionsContainType = in.readInt();
+        this.actionsContainType = tmpActionsContainType == -1 ? null : RuleActionType.values()[tmpActionsContainType];
     }
 }
 

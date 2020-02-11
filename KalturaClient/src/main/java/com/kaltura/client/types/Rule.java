@@ -8,7 +8,7 @@
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2019  Kaltura Inc.
+// Copyright (C) 2006-2020  Kaltura Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -30,12 +30,11 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
- * This class was generated using clients-generator\exec.php
+ * This class was generated using exec.php
  * against an XML schema provided by Kaltura.
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
@@ -46,12 +45,13 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(Rule.Tokenizer.class)
-public abstract class Rule extends ObjectBase {
+public abstract class Rule extends OTTObjectSupportNullable {
 	
-	public interface Tokenizer extends ObjectBase.Tokenizer {
+	public interface Tokenizer extends OTTObjectSupportNullable.Tokenizer {
 		String id();
 		String name();
 		String description();
+		String label();
 	}
 
 	/**
@@ -66,6 +66,10 @@ public abstract class Rule extends ObjectBase {
 	 * Description
 	 */
 	private String description;
+	/**
+	 * Label
+	 */
+	private String label;
 
 	// id:
 	public Long getId(){
@@ -95,6 +99,18 @@ public abstract class Rule extends ObjectBase {
 		setToken("description", multirequestToken);
 	}
 
+	// label:
+	public String getLabel(){
+		return this.label;
+	}
+	public void setLabel(String label){
+		this.label = label;
+	}
+
+	public void label(String multirequestToken){
+		setToken("label", multirequestToken);
+	}
+
 
 	public Rule() {
 		super();
@@ -109,6 +125,7 @@ public abstract class Rule extends ObjectBase {
 		id = GsonParser.parseLong(jsonObject.get("id"));
 		name = GsonParser.parseString(jsonObject.get("name"));
 		description = GsonParser.parseString(jsonObject.get("description"));
+		label = GsonParser.parseString(jsonObject.get("label"));
 
 	}
 
@@ -117,6 +134,7 @@ public abstract class Rule extends ObjectBase {
 		kparams.add("objectType", "KalturaRule");
 		kparams.add("name", this.name);
 		kparams.add("description", this.description);
+		kparams.add("label", this.label);
 		return kparams;
 	}
 
@@ -127,6 +145,7 @@ public abstract class Rule extends ObjectBase {
         dest.writeValue(this.id);
         dest.writeString(this.name);
         dest.writeString(this.description);
+        dest.writeString(this.label);
     }
 
     public Rule(Parcel in) {
@@ -134,6 +153,7 @@ public abstract class Rule extends ObjectBase {
         this.id = (Long)in.readValue(Long.class.getClassLoader());
         this.name = in.readString();
         this.description = in.readString();
+        this.label = in.readString();
     }
 }
 

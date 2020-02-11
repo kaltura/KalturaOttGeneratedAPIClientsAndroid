@@ -8,7 +8,7 @@
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2019  Kaltura Inc.
+// Copyright (C) 2006-2020  Kaltura Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -28,10 +28,12 @@
 package com.kaltura.client.services;
 
 import com.kaltura.client.types.Coupon;
+import com.kaltura.client.types.CouponFilter;
+import com.kaltura.client.utils.request.ListResponseRequestBuilder;
 import com.kaltura.client.utils.request.RequestBuilder;
 
 /**
- * This class was generated using clients-generator\exec.php
+ * This class was generated using exec.php
  * against an XML schema provided by Kaltura.
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
@@ -58,5 +60,22 @@ public class CouponService {
 	 */
     public static GetCouponBuilder get(String code)  {
 		return new GetCouponBuilder(code);
+	}
+	
+	public static class ListCouponBuilder extends ListResponseRequestBuilder<Coupon, Coupon.Tokenizer, ListCouponBuilder> {
+		
+		public ListCouponBuilder(CouponFilter filter) {
+			super(Coupon.class, "coupon", "list");
+			params.add("filter", filter);
+		}
+	}
+
+	/**
+	 * Lists coupon codes.
+	 * 
+	 * @param filter Filter options
+	 */
+    public static ListCouponBuilder list(CouponFilter filter)  {
+		return new ListCouponBuilder(filter);
 	}
 }

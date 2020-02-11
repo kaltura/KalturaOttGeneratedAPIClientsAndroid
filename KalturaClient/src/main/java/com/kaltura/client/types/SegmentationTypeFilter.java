@@ -8,7 +8,7 @@
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2019  Kaltura Inc.
+// Copyright (C) 2006-2020  Kaltura Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -34,7 +34,7 @@ import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
- * This class was generated using clients-generator\exec.php
+ * This class was generated using exec.php
  * against an XML schema provided by Kaltura.
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
@@ -45,16 +45,21 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(SegmentationTypeFilter.Tokenizer.class)
-public class SegmentationTypeFilter extends Filter {
+public class SegmentationTypeFilter extends BaseSegmentationTypeFilter {
 	
-	public interface Tokenizer extends Filter.Tokenizer {
+	public interface Tokenizer extends BaseSegmentationTypeFilter.Tokenizer {
 		String idIn();
+		String kSql();
 	}
 
 	/**
-	 * Comma separated segmentation types identifieridentifiers
+	 * Comma separated segmentation types identifiers
 	 */
 	private String idIn;
+	/**
+	 * KSQL expression
+	 */
+	private String kSql;
 
 	// idIn:
 	public String getIdIn(){
@@ -66,6 +71,18 @@ public class SegmentationTypeFilter extends Filter {
 
 	public void idIn(String multirequestToken){
 		setToken("idIn", multirequestToken);
+	}
+
+	// kSql:
+	public String getKSql(){
+		return this.kSql;
+	}
+	public void setKSql(String kSql){
+		this.kSql = kSql;
+	}
+
+	public void kSql(String multirequestToken){
+		setToken("kSql", multirequestToken);
 	}
 
 
@@ -80,6 +97,7 @@ public class SegmentationTypeFilter extends Filter {
 
 		// set members values:
 		idIn = GsonParser.parseString(jsonObject.get("idIn"));
+		kSql = GsonParser.parseString(jsonObject.get("kSql"));
 
 	}
 
@@ -87,6 +105,7 @@ public class SegmentationTypeFilter extends Filter {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaSegmentationTypeFilter");
 		kparams.add("idIn", this.idIn);
+		kparams.add("kSql", this.kSql);
 		return kparams;
 	}
 
@@ -107,11 +126,13 @@ public class SegmentationTypeFilter extends Filter {
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeString(this.idIn);
+        dest.writeString(this.kSql);
     }
 
     public SegmentationTypeFilter(Parcel in) {
         super(in);
         this.idIn = in.readString();
+        this.kSql = in.readString();
     }
 }
 

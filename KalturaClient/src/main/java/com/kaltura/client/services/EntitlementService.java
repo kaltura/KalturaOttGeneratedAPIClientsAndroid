@@ -8,7 +8,7 @@
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2019  Kaltura Inc.
+// Copyright (C) 2006-2020  Kaltura Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -37,13 +37,40 @@ import com.kaltura.client.utils.request.NullRequestBuilder;
 import com.kaltura.client.utils.request.RequestBuilder;
 
 /**
- * This class was generated using clients-generator\exec.php
+ * This class was generated using exec.php
  * against an XML schema provided by Kaltura.
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
 public class EntitlementService {
+	
+	public static class ApplyCouponEntitlementBuilder extends NullRequestBuilder {
+		
+		public ApplyCouponEntitlementBuilder(long purchaseId, String couponCode) {
+			super("entitlement", "applyCoupon");
+			params.add("purchaseId", purchaseId);
+			params.add("couponCode", couponCode);
+		}
+		
+		public void purchaseId(String multirequestToken) {
+			params.add("purchaseId", multirequestToken);
+		}
+		
+		public void couponCode(String multirequestToken) {
+			params.add("couponCode", multirequestToken);
+		}
+	}
+
+	/**
+	 * Apply new coupon for existing subscription
+	 * 
+	 * @param purchaseId purchase Id
+	 * @param couponCode coupon Code
+	 */
+    public static ApplyCouponEntitlementBuilder applyCoupon(long purchaseId, String couponCode)  {
+		return new ApplyCouponEntitlementBuilder(purchaseId, couponCode);
+	}
 	
 	public static class CancelEntitlementBuilder extends RequestBuilder<Boolean, String, CancelEntitlementBuilder> {
 		
