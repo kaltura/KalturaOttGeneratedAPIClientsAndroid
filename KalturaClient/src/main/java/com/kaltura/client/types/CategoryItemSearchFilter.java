@@ -41,17 +41,22 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(CategoryItemByKsqlFilter.Tokenizer.class)
-public class CategoryItemByKsqlFilter extends CategoryItemFilter {
+@MultiRequestBuilder.Tokenizer(CategoryItemSearchFilter.Tokenizer.class)
+public class CategoryItemSearchFilter extends CategoryItemFilter {
 	
 	public interface Tokenizer extends CategoryItemFilter.Tokenizer {
 		String kSql();
+		String rootOnly();
 	}
 
 	/**
 	 * KSQL expression
 	 */
 	private String kSql;
+	/**
+	 * Root only
+	 */
+	private Boolean rootOnly;
 
 	// kSql:
 	public String getKSql(){
@@ -65,38 +70,52 @@ public class CategoryItemByKsqlFilter extends CategoryItemFilter {
 		setToken("kSql", multirequestToken);
 	}
 
+	// rootOnly:
+	public Boolean getRootOnly(){
+		return this.rootOnly;
+	}
+	public void setRootOnly(Boolean rootOnly){
+		this.rootOnly = rootOnly;
+	}
 
-	public CategoryItemByKsqlFilter() {
+	public void rootOnly(String multirequestToken){
+		setToken("rootOnly", multirequestToken);
+	}
+
+
+	public CategoryItemSearchFilter() {
 		super();
 	}
 
-	public CategoryItemByKsqlFilter(JsonObject jsonObject) throws APIException {
+	public CategoryItemSearchFilter(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
 		kSql = GsonParser.parseString(jsonObject.get("kSql"));
+		rootOnly = GsonParser.parseBoolean(jsonObject.get("rootOnly"));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaCategoryItemByKsqlFilter");
+		kparams.add("objectType", "KalturaCategoryItemSearchFilter");
 		kparams.add("kSql", this.kSql);
+		kparams.add("rootOnly", this.rootOnly);
 		return kparams;
 	}
 
 
-    public static final Creator<CategoryItemByKsqlFilter> CREATOR = new Creator<CategoryItemByKsqlFilter>() {
+    public static final Creator<CategoryItemSearchFilter> CREATOR = new Creator<CategoryItemSearchFilter>() {
         @Override
-        public CategoryItemByKsqlFilter createFromParcel(Parcel source) {
-            return new CategoryItemByKsqlFilter(source);
+        public CategoryItemSearchFilter createFromParcel(Parcel source) {
+            return new CategoryItemSearchFilter(source);
         }
 
         @Override
-        public CategoryItemByKsqlFilter[] newArray(int size) {
-            return new CategoryItemByKsqlFilter[size];
+        public CategoryItemSearchFilter[] newArray(int size) {
+            return new CategoryItemSearchFilter[size];
         }
     };
 
@@ -104,11 +123,13 @@ public class CategoryItemByKsqlFilter extends CategoryItemFilter {
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeString(this.kSql);
+        dest.writeValue(this.rootOnly);
     }
 
-    public CategoryItemByKsqlFilter(Parcel in) {
+    public CategoryItemSearchFilter(Parcel in) {
         super(in);
         this.kSql = in.readString();
+        this.rootOnly = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
 
