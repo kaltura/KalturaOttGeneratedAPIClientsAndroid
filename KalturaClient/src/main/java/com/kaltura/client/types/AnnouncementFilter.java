@@ -30,6 +30,7 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
+import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
@@ -47,8 +48,25 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
 public class AnnouncementFilter extends Filter {
 	
 	public interface Tokenizer extends Filter.Tokenizer {
+		String idIn();
 	}
 
+	/**
+	 * A list of comma separated announcement ids.
+	 */
+	private String idIn;
+
+	// idIn:
+	public String getIdIn(){
+		return this.idIn;
+	}
+	public void setIdIn(String idIn){
+		this.idIn = idIn;
+	}
+
+	public void idIn(String multirequestToken){
+		setToken("idIn", multirequestToken);
+	}
 
 
 	public AnnouncementFilter() {
@@ -57,11 +75,18 @@ public class AnnouncementFilter extends Filter {
 
 	public AnnouncementFilter(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		idIn = GsonParser.parseString(jsonObject.get("idIn"));
+
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaAnnouncementFilter");
+		kparams.add("idIn", this.idIn);
 		return kparams;
 	}
 
@@ -78,8 +103,15 @@ public class AnnouncementFilter extends Filter {
         }
     };
 
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(this.idIn);
+    }
+
     public AnnouncementFilter(Parcel in) {
         super(in);
+        this.idIn = in.readString();
     }
 }
 
