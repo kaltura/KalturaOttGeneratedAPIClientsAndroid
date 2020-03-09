@@ -60,6 +60,7 @@ public class CategoryItem extends CrudObject {
 		String childrenIds();
 		RequestBuilder.ListTokenizer<UnifiedChannel.Tokenizer> unifiedChannels();
 		RequestBuilder.MapTokenizer<StringValue.Tokenizer> dynamicData();
+		String updateDate();
 	}
 
 	/**
@@ -90,6 +91,11 @@ public class CategoryItem extends CrudObject {
 	 * Dynamic data
 	 */
 	private Map<String, StringValue> dynamicData;
+	/**
+	 * Specifies when was the Category last updated. Date and time represented as
+	  epoch.
+	 */
+	private Long updateDate;
 
 	// id:
 	public Long getId(){
@@ -139,6 +145,10 @@ public class CategoryItem extends CrudObject {
 		this.dynamicData = dynamicData;
 	}
 
+	// updateDate:
+	public Long getUpdateDate(){
+		return this.updateDate;
+	}
 
 	public CategoryItem() {
 		super();
@@ -157,6 +167,7 @@ public class CategoryItem extends CrudObject {
 		childrenIds = GsonParser.parseString(jsonObject.get("childrenIds"));
 		unifiedChannels = GsonParser.parseArray(jsonObject.getAsJsonArray("unifiedChannels"), UnifiedChannel.class);
 		dynamicData = GsonParser.parseMap(jsonObject.getAsJsonObject("dynamicData"), StringValue.class);
+		updateDate = GsonParser.parseLong(jsonObject.get("updateDate"));
 
 	}
 
@@ -211,6 +222,7 @@ public class CategoryItem extends CrudObject {
         } else {
             dest.writeInt(-1);
         }
+        dest.writeValue(this.updateDate);
     }
 
     public CategoryItem(Parcel in) {
@@ -238,6 +250,7 @@ public class CategoryItem extends CrudObject {
                 this.dynamicData.put(key, value);
             }
         }
+        this.updateDate = (Long)in.readValue(Long.class.getClassLoader());
     }
 }
 
