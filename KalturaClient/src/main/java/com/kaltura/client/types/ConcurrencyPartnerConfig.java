@@ -51,6 +51,7 @@ public class ConcurrencyPartnerConfig extends PartnerConfiguration {
 	public interface Tokenizer extends PartnerConfiguration.Tokenizer {
 		String deviceFamilyIds();
 		String evictionPolicy();
+		String devicePlayDataExpirationTTL();
 	}
 
 	/**
@@ -61,6 +62,10 @@ public class ConcurrencyPartnerConfig extends PartnerConfiguration {
 	 * Policy of eviction devices
 	 */
 	private EvictionPolicyType evictionPolicy;
+	/**
+	 * Device play data expiration TTL
+	 */
+	private Long devicePlayDataExpirationTTL;
 
 	// deviceFamilyIds:
 	public String getDeviceFamilyIds(){
@@ -86,6 +91,18 @@ public class ConcurrencyPartnerConfig extends PartnerConfiguration {
 		setToken("evictionPolicy", multirequestToken);
 	}
 
+	// devicePlayDataExpirationTTL:
+	public Long getDevicePlayDataExpirationTTL(){
+		return this.devicePlayDataExpirationTTL;
+	}
+	public void setDevicePlayDataExpirationTTL(Long devicePlayDataExpirationTTL){
+		this.devicePlayDataExpirationTTL = devicePlayDataExpirationTTL;
+	}
+
+	public void devicePlayDataExpirationTTL(String multirequestToken){
+		setToken("devicePlayDataExpirationTTL", multirequestToken);
+	}
+
 
 	public ConcurrencyPartnerConfig() {
 		super();
@@ -99,6 +116,7 @@ public class ConcurrencyPartnerConfig extends PartnerConfiguration {
 		// set members values:
 		deviceFamilyIds = GsonParser.parseString(jsonObject.get("deviceFamilyIds"));
 		evictionPolicy = EvictionPolicyType.get(GsonParser.parseString(jsonObject.get("evictionPolicy")));
+		devicePlayDataExpirationTTL = GsonParser.parseLong(jsonObject.get("devicePlayDataExpirationTTL"));
 
 	}
 
@@ -107,6 +125,7 @@ public class ConcurrencyPartnerConfig extends PartnerConfiguration {
 		kparams.add("objectType", "KalturaConcurrencyPartnerConfig");
 		kparams.add("deviceFamilyIds", this.deviceFamilyIds);
 		kparams.add("evictionPolicy", this.evictionPolicy);
+		kparams.add("devicePlayDataExpirationTTL", this.devicePlayDataExpirationTTL);
 		return kparams;
 	}
 
@@ -128,6 +147,7 @@ public class ConcurrencyPartnerConfig extends PartnerConfiguration {
         super.writeToParcel(dest, flags);
         dest.writeString(this.deviceFamilyIds);
         dest.writeInt(this.evictionPolicy == null ? -1 : this.evictionPolicy.ordinal());
+        dest.writeValue(this.devicePlayDataExpirationTTL);
     }
 
     public ConcurrencyPartnerConfig(Parcel in) {
@@ -135,6 +155,7 @@ public class ConcurrencyPartnerConfig extends PartnerConfiguration {
         this.deviceFamilyIds = in.readString();
         int tmpEvictionPolicy = in.readInt();
         this.evictionPolicy = tmpEvictionPolicy == -1 ? null : EvictionPolicyType.values()[tmpEvictionPolicy];
+        this.devicePlayDataExpirationTTL = (Long)in.readValue(Long.class.getClassLoader());
     }
 }
 
