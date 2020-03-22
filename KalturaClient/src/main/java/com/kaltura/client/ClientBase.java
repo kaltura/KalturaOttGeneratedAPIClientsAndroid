@@ -32,7 +32,7 @@ import com.kaltura.client.utils.request.ConnectionConfiguration;
 @SuppressWarnings("serial")
 public class ClientBase extends ClientConfigBase {
 
-	public ClientBase(ConnectionConfiguration configuration) {
+	public ClientBase(ConnectionConfiguration configuration ) {
 		super(configuration);
 	}
 }
