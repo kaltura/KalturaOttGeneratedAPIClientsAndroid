@@ -55,7 +55,6 @@ public class IotProfileAws extends CrudObject {
 		String brokerPort();
 		String accessKeyId();
 		String secretAccessKey();
-		String tTL();
 		String iotPolicyName();
 		String userPoolId();
 		String clientId();
@@ -92,10 +91,6 @@ public class IotProfileAws extends CrudObject {
 	 * secretAccessKey
 	 */
 	private String secretAccessKey;
-	/**
-	 * tTL
-	 */
-	private String tTL;
 	/**
 	 * iotPolicyName
 	 */
@@ -205,18 +200,6 @@ public class IotProfileAws extends CrudObject {
 		setToken("secretAccessKey", multirequestToken);
 	}
 
-	// tTL:
-	public String getTTL(){
-		return this.tTL;
-	}
-	public void setTTL(String tTL){
-		this.tTL = tTL;
-	}
-
-	public void tTL(String multirequestToken){
-		setToken("tTL", multirequestToken);
-	}
-
 	// iotPolicyName:
 	public String getIotPolicyName(){
 		return this.iotPolicyName;
@@ -307,7 +290,6 @@ public class IotProfileAws extends CrudObject {
 		brokerPort = GsonParser.parseInt(jsonObject.get("brokerPort"));
 		accessKeyId = GsonParser.parseString(jsonObject.get("accessKeyId"));
 		secretAccessKey = GsonParser.parseString(jsonObject.get("secretAccessKey"));
-		tTL = GsonParser.parseString(jsonObject.get("tTL"));
 		iotPolicyName = GsonParser.parseString(jsonObject.get("iotPolicyName"));
 		userPoolId = GsonParser.parseString(jsonObject.get("userPoolId"));
 		clientId = GsonParser.parseString(jsonObject.get("clientId"));
@@ -327,7 +309,6 @@ public class IotProfileAws extends CrudObject {
 		kparams.add("brokerPort", this.brokerPort);
 		kparams.add("accessKeyId", this.accessKeyId);
 		kparams.add("secretAccessKey", this.secretAccessKey);
-		kparams.add("tTL", this.tTL);
 		kparams.add("iotPolicyName", this.iotPolicyName);
 		kparams.add("userPoolId", this.userPoolId);
 		kparams.add("clientId", this.clientId);
@@ -360,7 +341,6 @@ public class IotProfileAws extends CrudObject {
         dest.writeValue(this.brokerPort);
         dest.writeString(this.accessKeyId);
         dest.writeString(this.secretAccessKey);
-        dest.writeString(this.tTL);
         dest.writeString(this.iotPolicyName);
         dest.writeString(this.userPoolId);
         dest.writeString(this.clientId);
@@ -378,7 +358,6 @@ public class IotProfileAws extends CrudObject {
         this.brokerPort = (Integer)in.readValue(Integer.class.getClassLoader());
         this.accessKeyId = in.readString();
         this.secretAccessKey = in.readString();
-        this.tTL = in.readString();
         this.iotPolicyName = in.readString();
         this.userPoolId = in.readString();
         this.clientId = in.readString();
