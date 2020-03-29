@@ -63,6 +63,8 @@ public class NotificationsPartnerSettings extends ObjectBase {
 		String mailSenderName();
 		String mailNotificationAdapterId();
 		String smsEnabled();
+		String iotEnabled();
+		String iotAdapterUrl();
 	}
 
 	/**
@@ -133,6 +135,14 @@ public class NotificationsPartnerSettings extends ObjectBase {
 	 * SMS capability is enabled for the account
 	 */
 	private Boolean smsEnabled;
+	/**
+	 * IOT capability is enabled for the account
+	 */
+	private Boolean iotEnabled;
+	/**
+	 * IOT adapter url and port
+	 */
+	private String iotAdapterUrl;
 
 	// pushNotificationEnabled:
 	public Boolean getPushNotificationEnabled(){
@@ -338,6 +348,30 @@ public class NotificationsPartnerSettings extends ObjectBase {
 		setToken("smsEnabled", multirequestToken);
 	}
 
+	// iotEnabled:
+	public Boolean getIotEnabled(){
+		return this.iotEnabled;
+	}
+	public void setIotEnabled(Boolean iotEnabled){
+		this.iotEnabled = iotEnabled;
+	}
+
+	public void iotEnabled(String multirequestToken){
+		setToken("iotEnabled", multirequestToken);
+	}
+
+	// iotAdapterUrl:
+	public String getIotAdapterUrl(){
+		return this.iotAdapterUrl;
+	}
+	public void setIotAdapterUrl(String iotAdapterUrl){
+		this.iotAdapterUrl = iotAdapterUrl;
+	}
+
+	public void iotAdapterUrl(String multirequestToken){
+		setToken("iotAdapterUrl", multirequestToken);
+	}
+
 
 	public NotificationsPartnerSettings() {
 		super();
@@ -366,6 +400,8 @@ public class NotificationsPartnerSettings extends ObjectBase {
 		mailSenderName = GsonParser.parseString(jsonObject.get("mailSenderName"));
 		mailNotificationAdapterId = GsonParser.parseLong(jsonObject.get("mailNotificationAdapterId"));
 		smsEnabled = GsonParser.parseBoolean(jsonObject.get("smsEnabled"));
+		iotEnabled = GsonParser.parseBoolean(jsonObject.get("iotEnabled"));
+		iotAdapterUrl = GsonParser.parseString(jsonObject.get("iotAdapterUrl"));
 
 	}
 
@@ -389,6 +425,8 @@ public class NotificationsPartnerSettings extends ObjectBase {
 		kparams.add("mailSenderName", this.mailSenderName);
 		kparams.add("mailNotificationAdapterId", this.mailNotificationAdapterId);
 		kparams.add("smsEnabled", this.smsEnabled);
+		kparams.add("iotEnabled", this.iotEnabled);
+		kparams.add("iotAdapterUrl", this.iotAdapterUrl);
 		return kparams;
 	}
 
@@ -425,6 +463,8 @@ public class NotificationsPartnerSettings extends ObjectBase {
         dest.writeString(this.mailSenderName);
         dest.writeValue(this.mailNotificationAdapterId);
         dest.writeValue(this.smsEnabled);
+        dest.writeValue(this.iotEnabled);
+        dest.writeString(this.iotAdapterUrl);
     }
 
     public NotificationsPartnerSettings(Parcel in) {
@@ -446,6 +486,8 @@ public class NotificationsPartnerSettings extends ObjectBase {
         this.mailSenderName = in.readString();
         this.mailNotificationAdapterId = (Long)in.readValue(Long.class.getClassLoader());
         this.smsEnabled = (Boolean)in.readValue(Boolean.class.getClassLoader());
+        this.iotEnabled = (Boolean)in.readValue(Boolean.class.getClassLoader());
+        this.iotAdapterUrl = in.readString();
     }
 }
 

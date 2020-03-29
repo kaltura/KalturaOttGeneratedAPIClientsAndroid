@@ -50,6 +50,8 @@ public class PushMessage extends ObjectBase {
 		String sound();
 		String action();
 		String url();
+		String udid();
+		String pushChannels();
 	}
 
 	/**
@@ -69,6 +71,14 @@ public class PushMessage extends ObjectBase {
 	 * Optional. Used to direct the application to the relevant page.
 	 */
 	private String url;
+	/**
+	 * Device unique identifier
+	 */
+	private String udid;
+	/**
+	 * PushChannels - separated with comma
+	 */
+	private String pushChannels;
 
 	// message:
 	public String getMessage(){
@@ -118,6 +128,30 @@ public class PushMessage extends ObjectBase {
 		setToken("url", multirequestToken);
 	}
 
+	// udid:
+	public String getUdid(){
+		return this.udid;
+	}
+	public void setUdid(String udid){
+		this.udid = udid;
+	}
+
+	public void udid(String multirequestToken){
+		setToken("udid", multirequestToken);
+	}
+
+	// pushChannels:
+	public String getPushChannels(){
+		return this.pushChannels;
+	}
+	public void setPushChannels(String pushChannels){
+		this.pushChannels = pushChannels;
+	}
+
+	public void pushChannels(String multirequestToken){
+		setToken("pushChannels", multirequestToken);
+	}
+
 
 	public PushMessage() {
 		super();
@@ -133,6 +167,8 @@ public class PushMessage extends ObjectBase {
 		sound = GsonParser.parseString(jsonObject.get("sound"));
 		action = GsonParser.parseString(jsonObject.get("action"));
 		url = GsonParser.parseString(jsonObject.get("url"));
+		udid = GsonParser.parseString(jsonObject.get("udid"));
+		pushChannels = GsonParser.parseString(jsonObject.get("pushChannels"));
 
 	}
 
@@ -143,6 +179,8 @@ public class PushMessage extends ObjectBase {
 		kparams.add("sound", this.sound);
 		kparams.add("action", this.action);
 		kparams.add("url", this.url);
+		kparams.add("udid", this.udid);
+		kparams.add("pushChannels", this.pushChannels);
 		return kparams;
 	}
 
@@ -166,6 +204,8 @@ public class PushMessage extends ObjectBase {
         dest.writeString(this.sound);
         dest.writeString(this.action);
         dest.writeString(this.url);
+        dest.writeString(this.udid);
+        dest.writeString(this.pushChannels);
     }
 
     public PushMessage(Parcel in) {
@@ -174,6 +214,8 @@ public class PushMessage extends ObjectBase {
         this.sound = in.readString();
         this.action = in.readString();
         this.url = in.readString();
+        this.udid = in.readString();
+        this.pushChannels = in.readString();
     }
 }
 
