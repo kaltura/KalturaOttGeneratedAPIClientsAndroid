@@ -11,6 +11,9 @@ import com.kaltura.client.types.APIException;
 import com.kaltura.client.types.APIException.FailureStep;
 import com.kaltura.client.types.ListResponse;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -194,11 +197,12 @@ public class GsonParser {
 
 		if(jsonElement.isJsonObject()) {
 			JsonObject jsonObject = jsonElement.getAsJsonObject();
+			Object resultKeyobject = jsonObject.get(ResultKey);
 
-			if(jsonObject.get(ResultKey) != null && jsonObject.get(ObjectTypeKey) == null) {
-				jsonObject = jsonObject.getAsJsonObject(ResultKey);
+			if(resultKeyobject != null && jsonObject.get(ObjectTypeKey) == null) {
 
-				if(jsonObject.isJsonObject()) {
+				if(resultKeyobject instanceof JsonObject) {
+					jsonObject = (JsonObject) resultKeyobject;
 					if (jsonObject.get("error") != null && jsonObject.get(ObjectTypeKey) == null) {
 						jsonObject = jsonObject.getAsJsonObject("error");
 						String objectType = jsonObject.getAsJsonPrimitive(ObjectTypeKey).getAsString();
@@ -206,8 +210,12 @@ public class GsonParser {
 							throw parseException(jsonObject);
 						}
 					}
-				} else if(jsonObject.isJsonArray()) {
-					return parseArray(jsonObject.getAsJsonArray(), clz);
+
+				} else if(resultKeyobject instanceof JsonArray) {
+					JsonArray ja = ((JsonArray) resultKeyobject).getAsJsonArray();
+					if (ja != null) {
+						return parseArray(ja.getAsJsonArray(), clz);
+					}
 				}
 			}
 		}
