@@ -8,7 +8,7 @@
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2011  Kaltura Inc.
+// Copyright (C) 2006-2020  Kaltura Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,40 +25,45 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.client;
+package com.kaltura.client.enums;
 
-import com.kaltura.client.LoggerAndroid;
+/**
+ * This class was generated using exec.php
+ * against an XML schema provided by Kaltura.
+ * 
+ * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
+ */
+public enum IotProfileOrderBy implements EnumAsString {
+	NONE("NONE");
 
-abstract public class Logger implements ILogger
-{
-	// Creation & retrieval methods:
-	public static Logger getLogger(String name)
-	{
-		return LoggerAndroid.getLogger(name);
-	}
-	
-	public static Logger getLogger(Class<?> clazz)
-	{
-		return getLogger(clazz.getName());
-	}
-	
-	public boolean isEnabled()
-	{
-		return true;
+	private String value;
+
+	IotProfileOrderBy(String value) {
+		this.value = value;
 	}
 
-	// printing methods:
-	abstract public void trace(Object message);
-	abstract public void debug(Object message);
-	abstract public void info(Object message);
-	abstract public void warn(Object message);
-	abstract public void error(Object message);
-	abstract public void fatal(Object message);
+	@Override
+	public String getValue() {
+		return this.value;
+	}
 
-	abstract public void trace(Object message, Throwable t);
-	abstract public void debug(Object message, Throwable t);
-	abstract public void info(Object message, Throwable t);
-	abstract public void warn(Object message, Throwable t);
-	abstract public void error(Object message, Throwable t);
-	abstract public void fatal(Object message, Throwable t);
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	public static IotProfileOrderBy get(String value) {
+		if(value == null)
+		{
+			return null;
+		}
+		
+		// goes over IotProfileOrderBy defined values and compare the inner value with the given one:
+		for(IotProfileOrderBy item: values()) {
+			if(item.getValue().equals(value)) {
+				return item;
+			}
+		}
+		// in case the requested value was not found in the enum values, we return the first item as default.
+		return IotProfileOrderBy.values().length > 0 ? IotProfileOrderBy.values()[0]: null;
+   }
 }

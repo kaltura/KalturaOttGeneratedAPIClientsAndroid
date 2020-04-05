@@ -8,7 +8,7 @@
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2011  Kaltura Inc.
+// Copyright (C) 2006-2020  Kaltura Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,40 +25,61 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.client;
+package com.kaltura.client.types;
 
-import com.kaltura.client.LoggerAndroid;
+import android.os.Parcel;
+import com.google.gson.JsonObject;
+import com.kaltura.client.Params;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
 
-abstract public class Logger implements ILogger
-{
-	// Creation & retrieval methods:
-	public static Logger getLogger(String name)
-	{
-		return LoggerAndroid.getLogger(name);
-	}
+/**
+ * This class was generated using exec.php
+ * against an XML schema provided by Kaltura.
+ * 
+ * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
+ */
+
+/**
+ * Iot settings filter
+ */
+@SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(IotFilter.Tokenizer.class)
+public class IotFilter extends CrudFilter {
 	
-	public static Logger getLogger(Class<?> clazz)
-	{
-		return getLogger(clazz.getName());
-	}
-	
-	public boolean isEnabled()
-	{
-		return true;
+	public interface Tokenizer extends CrudFilter.Tokenizer {
 	}
 
-	// printing methods:
-	abstract public void trace(Object message);
-	abstract public void debug(Object message);
-	abstract public void info(Object message);
-	abstract public void warn(Object message);
-	abstract public void error(Object message);
-	abstract public void fatal(Object message);
 
-	abstract public void trace(Object message, Throwable t);
-	abstract public void debug(Object message, Throwable t);
-	abstract public void info(Object message, Throwable t);
-	abstract public void warn(Object message, Throwable t);
-	abstract public void error(Object message, Throwable t);
-	abstract public void fatal(Object message, Throwable t);
+
+	public IotFilter() {
+		super();
+	}
+
+	public IotFilter(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaIotFilter");
+		return kparams;
+	}
+
+
+    public static final Creator<IotFilter> CREATOR = new Creator<IotFilter>() {
+        @Override
+        public IotFilter createFromParcel(Parcel source) {
+            return new IotFilter(source);
+        }
+
+        @Override
+        public IotFilter[] newArray(int size) {
+            return new IotFilter[size];
+        }
+    };
+
+    public IotFilter(Parcel in) {
+        super(in);
+    }
 }
+
