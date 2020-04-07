@@ -30,7 +30,7 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.types.Default;
+import com.kaltura.client.types.IotDefault;
 import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
@@ -47,20 +47,20 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
 public class CognitoIdentity extends ObjectBase {
 	
 	public interface Tokenizer extends ObjectBase.Tokenizer {
-		Default.Tokenizer default();
+		IotDefault.Tokenizer iotDefault();
 	}
 
 	/**
 	 * Default
 	 */
-	private Default default;
+	private IotDefault iotDefault;
 
-	// default:
-	public Default getDefault(){
-		return this.default;
+	// iotDefault:
+	public IotDefault getIotDefault(){
+		return this.iotDefault;
 	}
-	public void setDefault(Default default){
-		this.default = default;
+	public void setIotDefault(IotDefault iotDefault){
+		this.iotDefault = iotDefault;
 	}
 
 
@@ -74,14 +74,14 @@ public class CognitoIdentity extends ObjectBase {
 		if(jsonObject == null) return;
 
 		// set members values:
-		default = GsonParser.parseObject(jsonObject.getAsJsonObject("default"), Default.class);
+		iotDefault = GsonParser.parseObject(jsonObject.getAsJsonObject("iotDefault"), IotDefault.class);
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaCognitoIdentity");
-		kparams.add("default", this.default);
+		kparams.add("iotDefault", this.iotDefault);
 		return kparams;
 	}
 
@@ -101,12 +101,12 @@ public class CognitoIdentity extends ObjectBase {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeParcelable(this.default, flags);
+        dest.writeParcelable(this.iotDefault, flags);
     }
 
     public CognitoIdentity(Parcel in) {
         super(in);
-        this.default = in.readParcelable(Default.class.getClassLoader());
+        this.iotDefault = in.readParcelable(IotDefault.class.getClassLoader());
     }
 }
 
