@@ -46,12 +46,22 @@ public class UnifiedChannelInfo extends UnifiedChannel {
 	
 	public interface Tokenizer extends UnifiedChannel.Tokenizer {
 		String name();
+		String startDateInSeconds();
+		String endDateInSeconds();
 	}
 
 	/**
 	 * Channel&amp;#160;name
 	 */
 	private String name;
+	/**
+	 * Start date in seconds
+	 */
+	private Long startDateInSeconds;
+	/**
+	 * End date in seconds
+	 */
+	private Long endDateInSeconds;
 
 	// name:
 	public String getName(){
@@ -63,6 +73,30 @@ public class UnifiedChannelInfo extends UnifiedChannel {
 
 	public void name(String multirequestToken){
 		setToken("name", multirequestToken);
+	}
+
+	// startDateInSeconds:
+	public Long getStartDateInSeconds(){
+		return this.startDateInSeconds;
+	}
+	public void setStartDateInSeconds(Long startDateInSeconds){
+		this.startDateInSeconds = startDateInSeconds;
+	}
+
+	public void startDateInSeconds(String multirequestToken){
+		setToken("startDateInSeconds", multirequestToken);
+	}
+
+	// endDateInSeconds:
+	public Long getEndDateInSeconds(){
+		return this.endDateInSeconds;
+	}
+	public void setEndDateInSeconds(Long endDateInSeconds){
+		this.endDateInSeconds = endDateInSeconds;
+	}
+
+	public void endDateInSeconds(String multirequestToken){
+		setToken("endDateInSeconds", multirequestToken);
 	}
 
 
@@ -77,6 +111,8 @@ public class UnifiedChannelInfo extends UnifiedChannel {
 
 		// set members values:
 		name = GsonParser.parseString(jsonObject.get("name"));
+		startDateInSeconds = GsonParser.parseLong(jsonObject.get("startDateInSeconds"));
+		endDateInSeconds = GsonParser.parseLong(jsonObject.get("endDateInSeconds"));
 
 	}
 
@@ -84,6 +120,8 @@ public class UnifiedChannelInfo extends UnifiedChannel {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaUnifiedChannelInfo");
 		kparams.add("name", this.name);
+		kparams.add("startDateInSeconds", this.startDateInSeconds);
+		kparams.add("endDateInSeconds", this.endDateInSeconds);
 		return kparams;
 	}
 
@@ -104,11 +142,15 @@ public class UnifiedChannelInfo extends UnifiedChannel {
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeString(this.name);
+        dest.writeValue(this.startDateInSeconds);
+        dest.writeValue(this.endDateInSeconds);
     }
 
     public UnifiedChannelInfo(Parcel in) {
         super(in);
         this.name = in.readString();
+        this.startDateInSeconds = (Long)in.readValue(Long.class.getClassLoader());
+        this.endDateInSeconds = (Long)in.readValue(Long.class.getClassLoader());
     }
 }
 

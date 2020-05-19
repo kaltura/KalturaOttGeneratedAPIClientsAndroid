@@ -61,6 +61,9 @@ public class CategoryItem extends CrudObject {
 		RequestBuilder.ListTokenizer<UnifiedChannel.Tokenizer> unifiedChannels();
 		RequestBuilder.MapTokenizer<StringValue.Tokenizer> dynamicData();
 		String updateDate();
+		String isActive();
+		String startDateInSeconds();
+		String endDateInSeconds();
 	}
 
 	/**
@@ -96,6 +99,18 @@ public class CategoryItem extends CrudObject {
 	  epoch.
 	 */
 	private Long updateDate;
+	/**
+	 * Category active status
+	 */
+	private Boolean isActive;
+	/**
+	 * Start date in seconds
+	 */
+	private Long startDateInSeconds;
+	/**
+	 * End date in seconds
+	 */
+	private Long endDateInSeconds;
 
 	// id:
 	public Long getId(){
@@ -149,6 +164,42 @@ public class CategoryItem extends CrudObject {
 	public Long getUpdateDate(){
 		return this.updateDate;
 	}
+	// isActive:
+	public Boolean getIsActive(){
+		return this.isActive;
+	}
+	public void setIsActive(Boolean isActive){
+		this.isActive = isActive;
+	}
+
+	public void isActive(String multirequestToken){
+		setToken("isActive", multirequestToken);
+	}
+
+	// startDateInSeconds:
+	public Long getStartDateInSeconds(){
+		return this.startDateInSeconds;
+	}
+	public void setStartDateInSeconds(Long startDateInSeconds){
+		this.startDateInSeconds = startDateInSeconds;
+	}
+
+	public void startDateInSeconds(String multirequestToken){
+		setToken("startDateInSeconds", multirequestToken);
+	}
+
+	// endDateInSeconds:
+	public Long getEndDateInSeconds(){
+		return this.endDateInSeconds;
+	}
+	public void setEndDateInSeconds(Long endDateInSeconds){
+		this.endDateInSeconds = endDateInSeconds;
+	}
+
+	public void endDateInSeconds(String multirequestToken){
+		setToken("endDateInSeconds", multirequestToken);
+	}
+
 
 	public CategoryItem() {
 		super();
@@ -168,6 +219,9 @@ public class CategoryItem extends CrudObject {
 		unifiedChannels = GsonParser.parseArray(jsonObject.getAsJsonArray("unifiedChannels"), UnifiedChannel.class);
 		dynamicData = GsonParser.parseMap(jsonObject.getAsJsonObject("dynamicData"), StringValue.class);
 		updateDate = GsonParser.parseLong(jsonObject.get("updateDate"));
+		isActive = GsonParser.parseBoolean(jsonObject.get("isActive"));
+		startDateInSeconds = GsonParser.parseLong(jsonObject.get("startDateInSeconds"));
+		endDateInSeconds = GsonParser.parseLong(jsonObject.get("endDateInSeconds"));
 
 	}
 
@@ -178,6 +232,9 @@ public class CategoryItem extends CrudObject {
 		kparams.add("childrenIds", this.childrenIds);
 		kparams.add("unifiedChannels", this.unifiedChannels);
 		kparams.add("dynamicData", this.dynamicData);
+		kparams.add("isActive", this.isActive);
+		kparams.add("startDateInSeconds", this.startDateInSeconds);
+		kparams.add("endDateInSeconds", this.endDateInSeconds);
 		return kparams;
 	}
 
@@ -223,6 +280,9 @@ public class CategoryItem extends CrudObject {
             dest.writeInt(-1);
         }
         dest.writeValue(this.updateDate);
+        dest.writeValue(this.isActive);
+        dest.writeValue(this.startDateInSeconds);
+        dest.writeValue(this.endDateInSeconds);
     }
 
     public CategoryItem(Parcel in) {
@@ -251,6 +311,9 @@ public class CategoryItem extends CrudObject {
             }
         }
         this.updateDate = (Long)in.readValue(Long.class.getClassLoader());
+        this.isActive = (Boolean)in.readValue(Boolean.class.getClassLoader());
+        this.startDateInSeconds = (Long)in.readValue(Long.class.getClassLoader());
+        this.endDateInSeconds = (Long)in.readValue(Long.class.getClassLoader());
     }
 }
 
