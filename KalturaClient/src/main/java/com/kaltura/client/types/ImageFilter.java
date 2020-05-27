@@ -50,6 +50,7 @@ public class ImageFilter extends Filter {
 		String imageObjectIdEqual();
 		String imageObjectTypeEqual();
 		String isDefaultEqual();
+		String imageObjectIdIn();
 	}
 
 	/**
@@ -68,6 +69,10 @@ public class ImageFilter extends Filter {
 	 * Filter images that are default on at least on image type or not default at any
 	 */
 	private Boolean isDefaultEqual;
+	/**
+	 * Comma separated imageObject ids list
+	 */
+	private String imageObjectIdIn;
 
 	// idIn:
 	public String getIdIn(){
@@ -117,6 +122,18 @@ public class ImageFilter extends Filter {
 		setToken("isDefaultEqual", multirequestToken);
 	}
 
+	// imageObjectIdIn:
+	public String getImageObjectIdIn(){
+		return this.imageObjectIdIn;
+	}
+	public void setImageObjectIdIn(String imageObjectIdIn){
+		this.imageObjectIdIn = imageObjectIdIn;
+	}
+
+	public void imageObjectIdIn(String multirequestToken){
+		setToken("imageObjectIdIn", multirequestToken);
+	}
+
 
 	public ImageFilter() {
 		super();
@@ -132,6 +149,7 @@ public class ImageFilter extends Filter {
 		imageObjectIdEqual = GsonParser.parseLong(jsonObject.get("imageObjectIdEqual"));
 		imageObjectTypeEqual = ImageObjectType.get(GsonParser.parseString(jsonObject.get("imageObjectTypeEqual")));
 		isDefaultEqual = GsonParser.parseBoolean(jsonObject.get("isDefaultEqual"));
+		imageObjectIdIn = GsonParser.parseString(jsonObject.get("imageObjectIdIn"));
 
 	}
 
@@ -142,6 +160,7 @@ public class ImageFilter extends Filter {
 		kparams.add("imageObjectIdEqual", this.imageObjectIdEqual);
 		kparams.add("imageObjectTypeEqual", this.imageObjectTypeEqual);
 		kparams.add("isDefaultEqual", this.isDefaultEqual);
+		kparams.add("imageObjectIdIn", this.imageObjectIdIn);
 		return kparams;
 	}
 
@@ -165,6 +184,7 @@ public class ImageFilter extends Filter {
         dest.writeValue(this.imageObjectIdEqual);
         dest.writeInt(this.imageObjectTypeEqual == null ? -1 : this.imageObjectTypeEqual.ordinal());
         dest.writeValue(this.isDefaultEqual);
+        dest.writeString(this.imageObjectIdIn);
     }
 
     public ImageFilter(Parcel in) {
@@ -174,6 +194,7 @@ public class ImageFilter extends Filter {
         int tmpImageObjectTypeEqual = in.readInt();
         this.imageObjectTypeEqual = tmpImageObjectTypeEqual == -1 ? null : ImageObjectType.values()[tmpImageObjectTypeEqual];
         this.isDefaultEqual = (Boolean)in.readValue(Boolean.class.getClassLoader());
+        this.imageObjectIdIn = in.readString();
     }
 }
 

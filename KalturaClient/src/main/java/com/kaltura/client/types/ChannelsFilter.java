@@ -49,6 +49,7 @@ public class ChannelsFilter extends Filter {
 		String mediaIdEqual();
 		String nameEqual();
 		String nameStartsWith();
+		String idIn();
 	}
 
 	/**
@@ -67,6 +68,10 @@ public class ChannelsFilter extends Filter {
 	 * Channel name starts with (auto-complete)
 	 */
 	private String nameStartsWith;
+	/**
+	 * Comma separated channel ids
+	 */
+	private String idIn;
 
 	// idEqual:
 	public Integer getIdEqual(){
@@ -116,6 +121,18 @@ public class ChannelsFilter extends Filter {
 		setToken("nameStartsWith", multirequestToken);
 	}
 
+	// idIn:
+	public String getIdIn(){
+		return this.idIn;
+	}
+	public void setIdIn(String idIn){
+		this.idIn = idIn;
+	}
+
+	public void idIn(String multirequestToken){
+		setToken("idIn", multirequestToken);
+	}
+
 
 	public ChannelsFilter() {
 		super();
@@ -131,6 +148,7 @@ public class ChannelsFilter extends Filter {
 		mediaIdEqual = GsonParser.parseLong(jsonObject.get("mediaIdEqual"));
 		nameEqual = GsonParser.parseString(jsonObject.get("nameEqual"));
 		nameStartsWith = GsonParser.parseString(jsonObject.get("nameStartsWith"));
+		idIn = GsonParser.parseString(jsonObject.get("idIn"));
 
 	}
 
@@ -141,6 +159,7 @@ public class ChannelsFilter extends Filter {
 		kparams.add("mediaIdEqual", this.mediaIdEqual);
 		kparams.add("nameEqual", this.nameEqual);
 		kparams.add("nameStartsWith", this.nameStartsWith);
+		kparams.add("idIn", this.idIn);
 		return kparams;
 	}
 
@@ -164,6 +183,7 @@ public class ChannelsFilter extends Filter {
         dest.writeValue(this.mediaIdEqual);
         dest.writeString(this.nameEqual);
         dest.writeString(this.nameStartsWith);
+        dest.writeString(this.idIn);
     }
 
     public ChannelsFilter(Parcel in) {
@@ -172,6 +192,7 @@ public class ChannelsFilter extends Filter {
         this.mediaIdEqual = (Long)in.readValue(Long.class.getClassLoader());
         this.nameEqual = in.readString();
         this.nameStartsWith = in.readString();
+        this.idIn = in.readString();
     }
 }
 
