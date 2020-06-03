@@ -49,13 +49,8 @@ public class IotProfileAws extends CrudObject {
 	
 	public interface Tokenizer extends CrudObject.Tokenizer {
 		String iotEndPoint();
-		String pfxPath();
-		String pfxPassword();
-		String certificatePath();
-		String brokerPort();
 		String accessKeyId();
 		String secretAccessKey();
-		String iotPolicyName();
 		String userPoolId();
 		String clientId();
 		String identityPoolId();
@@ -68,22 +63,6 @@ public class IotProfileAws extends CrudObject {
 	 */
 	private String iotEndPoint;
 	/**
-	 * pfxPath
-	 */
-	private String pfxPath;
-	/**
-	 * pfxPassword
-	 */
-	private String pfxPassword;
-	/**
-	 * certificatePath
-	 */
-	private String certificatePath;
-	/**
-	 * brokerPort
-	 */
-	private Integer brokerPort;
-	/**
 	 * accessKeyId
 	 */
 	private String accessKeyId;
@@ -91,10 +70,6 @@ public class IotProfileAws extends CrudObject {
 	 * secretAccessKey
 	 */
 	private String secretAccessKey;
-	/**
-	 * iotPolicyName
-	 */
-	private String iotPolicyName;
 	/**
 	 * userPoolId
 	 */
@@ -128,54 +103,6 @@ public class IotProfileAws extends CrudObject {
 		setToken("iotEndPoint", multirequestToken);
 	}
 
-	// pfxPath:
-	public String getPfxPath(){
-		return this.pfxPath;
-	}
-	public void setPfxPath(String pfxPath){
-		this.pfxPath = pfxPath;
-	}
-
-	public void pfxPath(String multirequestToken){
-		setToken("pfxPath", multirequestToken);
-	}
-
-	// pfxPassword:
-	public String getPfxPassword(){
-		return this.pfxPassword;
-	}
-	public void setPfxPassword(String pfxPassword){
-		this.pfxPassword = pfxPassword;
-	}
-
-	public void pfxPassword(String multirequestToken){
-		setToken("pfxPassword", multirequestToken);
-	}
-
-	// certificatePath:
-	public String getCertificatePath(){
-		return this.certificatePath;
-	}
-	public void setCertificatePath(String certificatePath){
-		this.certificatePath = certificatePath;
-	}
-
-	public void certificatePath(String multirequestToken){
-		setToken("certificatePath", multirequestToken);
-	}
-
-	// brokerPort:
-	public Integer getBrokerPort(){
-		return this.brokerPort;
-	}
-	public void setBrokerPort(Integer brokerPort){
-		this.brokerPort = brokerPort;
-	}
-
-	public void brokerPort(String multirequestToken){
-		setToken("brokerPort", multirequestToken);
-	}
-
 	// accessKeyId:
 	public String getAccessKeyId(){
 		return this.accessKeyId;
@@ -198,18 +125,6 @@ public class IotProfileAws extends CrudObject {
 
 	public void secretAccessKey(String multirequestToken){
 		setToken("secretAccessKey", multirequestToken);
-	}
-
-	// iotPolicyName:
-	public String getIotPolicyName(){
-		return this.iotPolicyName;
-	}
-	public void setIotPolicyName(String iotPolicyName){
-		this.iotPolicyName = iotPolicyName;
-	}
-
-	public void iotPolicyName(String multirequestToken){
-		setToken("iotPolicyName", multirequestToken);
 	}
 
 	// userPoolId:
@@ -284,13 +199,8 @@ public class IotProfileAws extends CrudObject {
 
 		// set members values:
 		iotEndPoint = GsonParser.parseString(jsonObject.get("iotEndPoint"));
-		pfxPath = GsonParser.parseString(jsonObject.get("pfxPath"));
-		pfxPassword = GsonParser.parseString(jsonObject.get("pfxPassword"));
-		certificatePath = GsonParser.parseString(jsonObject.get("certificatePath"));
-		brokerPort = GsonParser.parseInt(jsonObject.get("brokerPort"));
 		accessKeyId = GsonParser.parseString(jsonObject.get("accessKeyId"));
 		secretAccessKey = GsonParser.parseString(jsonObject.get("secretAccessKey"));
-		iotPolicyName = GsonParser.parseString(jsonObject.get("iotPolicyName"));
 		userPoolId = GsonParser.parseString(jsonObject.get("userPoolId"));
 		clientId = GsonParser.parseString(jsonObject.get("clientId"));
 		identityPoolId = GsonParser.parseString(jsonObject.get("identityPoolId"));
@@ -303,13 +213,8 @@ public class IotProfileAws extends CrudObject {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaIotProfileAws");
 		kparams.add("iotEndPoint", this.iotEndPoint);
-		kparams.add("pfxPath", this.pfxPath);
-		kparams.add("pfxPassword", this.pfxPassword);
-		kparams.add("certificatePath", this.certificatePath);
-		kparams.add("brokerPort", this.brokerPort);
 		kparams.add("accessKeyId", this.accessKeyId);
 		kparams.add("secretAccessKey", this.secretAccessKey);
-		kparams.add("iotPolicyName", this.iotPolicyName);
 		kparams.add("userPoolId", this.userPoolId);
 		kparams.add("clientId", this.clientId);
 		kparams.add("identityPoolId", this.identityPoolId);
@@ -335,13 +240,8 @@ public class IotProfileAws extends CrudObject {
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeString(this.iotEndPoint);
-        dest.writeString(this.pfxPath);
-        dest.writeString(this.pfxPassword);
-        dest.writeString(this.certificatePath);
-        dest.writeValue(this.brokerPort);
         dest.writeString(this.accessKeyId);
         dest.writeString(this.secretAccessKey);
-        dest.writeString(this.iotPolicyName);
         dest.writeString(this.userPoolId);
         dest.writeString(this.clientId);
         dest.writeString(this.identityPoolId);
@@ -352,13 +252,8 @@ public class IotProfileAws extends CrudObject {
     public IotProfileAws(Parcel in) {
         super(in);
         this.iotEndPoint = in.readString();
-        this.pfxPath = in.readString();
-        this.pfxPassword = in.readString();
-        this.certificatePath = in.readString();
-        this.brokerPort = (Integer)in.readValue(Integer.class.getClassLoader());
         this.accessKeyId = in.readString();
         this.secretAccessKey = in.readString();
-        this.iotPolicyName = in.readString();
         this.userPoolId = in.readString();
         this.clientId = in.readString();
         this.identityPoolId = in.readString();

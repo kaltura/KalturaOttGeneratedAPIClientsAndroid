@@ -30,7 +30,6 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.enums.ChannelType;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
@@ -42,96 +41,74 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(UnifiedChannel.Tokenizer.class)
-public class UnifiedChannel extends OTTObjectSupportNullable {
+@MultiRequestBuilder.Tokenizer(ExternalChannelProfileByIdInFilter.Tokenizer.class)
+public class ExternalChannelProfileByIdInFilter extends ExternalChannelProfileFilter {
 	
-	public interface Tokenizer extends OTTObjectSupportNullable.Tokenizer {
-		String id();
-		String type();
+	public interface Tokenizer extends ExternalChannelProfileFilter.Tokenizer {
+		String idIn();
 	}
 
 	/**
-	 * Channel&amp;#160;identifier
+	 * Comma separated external channel profile ids
 	 */
-	private Long id;
-	/**
-	 * Channel Type
-	 */
-	private ChannelType type;
+	private String idIn;
 
-	// id:
-	public Long getId(){
-		return this.id;
+	// idIn:
+	public String getIdIn(){
+		return this.idIn;
 	}
-	public void setId(Long id){
-		this.id = id;
+	public void setIdIn(String idIn){
+		this.idIn = idIn;
 	}
 
-	public void id(String multirequestToken){
-		setToken("id", multirequestToken);
-	}
-
-	// type:
-	public ChannelType getType(){
-		return this.type;
-	}
-	public void setType(ChannelType type){
-		this.type = type;
-	}
-
-	public void type(String multirequestToken){
-		setToken("type", multirequestToken);
+	public void idIn(String multirequestToken){
+		setToken("idIn", multirequestToken);
 	}
 
 
-	public UnifiedChannel() {
+	public ExternalChannelProfileByIdInFilter() {
 		super();
 	}
 
-	public UnifiedChannel(JsonObject jsonObject) throws APIException {
+	public ExternalChannelProfileByIdInFilter(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		id = GsonParser.parseLong(jsonObject.get("id"));
-		type = ChannelType.get(GsonParser.parseString(jsonObject.get("type")));
+		idIn = GsonParser.parseString(jsonObject.get("idIn"));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaUnifiedChannel");
-		kparams.add("id", this.id);
-		kparams.add("type", this.type);
+		kparams.add("objectType", "KalturaExternalChannelProfileByIdInFilter");
+		kparams.add("idIn", this.idIn);
 		return kparams;
 	}
 
 
-    public static final Creator<UnifiedChannel> CREATOR = new Creator<UnifiedChannel>() {
+    public static final Creator<ExternalChannelProfileByIdInFilter> CREATOR = new Creator<ExternalChannelProfileByIdInFilter>() {
         @Override
-        public UnifiedChannel createFromParcel(Parcel source) {
-            return new UnifiedChannel(source);
+        public ExternalChannelProfileByIdInFilter createFromParcel(Parcel source) {
+            return new ExternalChannelProfileByIdInFilter(source);
         }
 
         @Override
-        public UnifiedChannel[] newArray(int size) {
-            return new UnifiedChannel[size];
+        public ExternalChannelProfileByIdInFilter[] newArray(int size) {
+            return new ExternalChannelProfileByIdInFilter[size];
         }
     };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeValue(this.id);
-        dest.writeInt(this.type == null ? -1 : this.type.ordinal());
+        dest.writeString(this.idIn);
     }
 
-    public UnifiedChannel(Parcel in) {
+    public ExternalChannelProfileByIdInFilter(Parcel in) {
         super(in);
-        this.id = (Long)in.readValue(Long.class.getClassLoader());
-        int tmpType = in.readInt();
-        this.type = tmpType == -1 ? null : ChannelType.values()[tmpType];
+        this.idIn = in.readString();
     }
 }
 
