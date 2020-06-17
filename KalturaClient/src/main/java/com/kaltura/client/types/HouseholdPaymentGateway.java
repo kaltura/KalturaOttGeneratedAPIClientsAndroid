@@ -32,6 +32,7 @@ import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.enums.HouseholdPaymentGatewaySelectedBy;
 import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.types.SuspendSettings;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
@@ -51,6 +52,7 @@ public class HouseholdPaymentGateway extends ObjectBase {
 		String name();
 		String isDefault();
 		String selectedBy();
+		SuspendSettings.Tokenizer suspendSettings();
 	}
 
 	/**
@@ -69,6 +71,10 @@ public class HouseholdPaymentGateway extends ObjectBase {
 	 * distinction payment gateway selected by account or household
 	 */
 	private HouseholdPaymentGatewaySelectedBy selectedBy;
+	/**
+	 * suspend settings
+	 */
+	private SuspendSettings suspendSettings;
 
 	// id:
 	public Integer getId(){
@@ -110,6 +116,10 @@ public class HouseholdPaymentGateway extends ObjectBase {
 		setToken("selectedBy", multirequestToken);
 	}
 
+	// suspendSettings:
+	public SuspendSettings getSuspendSettings(){
+		return this.suspendSettings;
+	}
 
 	public HouseholdPaymentGateway() {
 		super();
@@ -125,6 +135,7 @@ public class HouseholdPaymentGateway extends ObjectBase {
 		name = GsonParser.parseString(jsonObject.get("name"));
 		isDefault = GsonParser.parseBoolean(jsonObject.get("isDefault"));
 		selectedBy = HouseholdPaymentGatewaySelectedBy.get(GsonParser.parseString(jsonObject.get("selectedBy")));
+		suspendSettings = GsonParser.parseObject(jsonObject.getAsJsonObject("suspendSettings"), SuspendSettings.class);
 
 	}
 
@@ -157,6 +168,7 @@ public class HouseholdPaymentGateway extends ObjectBase {
         dest.writeString(this.name);
         dest.writeValue(this.isDefault);
         dest.writeInt(this.selectedBy == null ? -1 : this.selectedBy.ordinal());
+        dest.writeParcelable(this.suspendSettings, flags);
     }
 
     public HouseholdPaymentGateway(Parcel in) {
@@ -166,6 +178,7 @@ public class HouseholdPaymentGateway extends ObjectBase {
         this.isDefault = (Boolean)in.readValue(Boolean.class.getClassLoader());
         int tmpSelectedBy = in.readInt();
         this.selectedBy = tmpSelectedBy == -1 ? null : HouseholdPaymentGatewaySelectedBy.values()[tmpSelectedBy];
+        this.suspendSettings = in.readParcelable(SuspendSettings.class.getClassLoader());
     }
 }
 
