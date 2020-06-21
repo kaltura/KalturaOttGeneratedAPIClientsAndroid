@@ -64,6 +64,7 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
 		String enableRegionFiltering();
 		String defaultRegion();
 		RollingDeviceRemovalData.Tokenizer rollingDeviceData();
+		String finishedPercentThreshold();
 	}
 
 	/**
@@ -118,6 +119,10 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
 	 * Rolling Device Policy
 	 */
 	private RollingDeviceRemovalData rollingDeviceData;
+	/**
+	 * Finished PercentThreshold
+	 */
+	private Integer finishedPercentThreshold;
 
 	// partnerName:
 	public String getPartnerName(){
@@ -271,6 +276,18 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
 		this.rollingDeviceData = rollingDeviceData;
 	}
 
+	// finishedPercentThreshold:
+	public Integer getFinishedPercentThreshold(){
+		return this.finishedPercentThreshold;
+	}
+	public void setFinishedPercentThreshold(Integer finishedPercentThreshold){
+		this.finishedPercentThreshold = finishedPercentThreshold;
+	}
+
+	public void finishedPercentThreshold(String multirequestToken){
+		setToken("finishedPercentThreshold", multirequestToken);
+	}
+
 
 	public GeneralPartnerConfig() {
 		super();
@@ -295,6 +312,7 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
 		enableRegionFiltering = GsonParser.parseBoolean(jsonObject.get("enableRegionFiltering"));
 		defaultRegion = GsonParser.parseInt(jsonObject.get("defaultRegion"));
 		rollingDeviceData = GsonParser.parseObject(jsonObject.getAsJsonObject("rollingDeviceData"), RollingDeviceRemovalData.class);
+		finishedPercentThreshold = GsonParser.parseInt(jsonObject.get("finishedPercentThreshold"));
 
 	}
 
@@ -314,6 +332,7 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
 		kparams.add("enableRegionFiltering", this.enableRegionFiltering);
 		kparams.add("defaultRegion", this.defaultRegion);
 		kparams.add("rollingDeviceData", this.rollingDeviceData);
+		kparams.add("finishedPercentThreshold", this.finishedPercentThreshold);
 		return kparams;
 	}
 
@@ -346,6 +365,7 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
         dest.writeValue(this.enableRegionFiltering);
         dest.writeValue(this.defaultRegion);
         dest.writeParcelable(this.rollingDeviceData, flags);
+        dest.writeValue(this.finishedPercentThreshold);
     }
 
     public GeneralPartnerConfig(Parcel in) {
@@ -365,6 +385,7 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
         this.enableRegionFiltering = (Boolean)in.readValue(Boolean.class.getClassLoader());
         this.defaultRegion = (Integer)in.readValue(Integer.class.getClassLoader());
         this.rollingDeviceData = in.readParcelable(RollingDeviceRemovalData.class.getClassLoader());
+        this.finishedPercentThreshold = (Integer)in.readValue(Integer.class.getClassLoader());
     }
 }
 

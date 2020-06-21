@@ -57,6 +57,7 @@ public class AssetStructMeta extends ObjectBase {
 		String createDate();
 		String updateDate();
 		String isInherited();
+		String isLocationTag();
 	}
 
 	/**
@@ -93,6 +94,10 @@ public class AssetStructMeta extends ObjectBase {
 	 * Is inherited
 	 */
 	private Boolean isInherited;
+	/**
+	 * Is Location Tag
+	 */
+	private Boolean isLocationTag;
 
 	// assetStructId:
 	public Long getAssetStructId(){
@@ -158,6 +163,18 @@ public class AssetStructMeta extends ObjectBase {
 		setToken("isInherited", multirequestToken);
 	}
 
+	// isLocationTag:
+	public Boolean getIsLocationTag(){
+		return this.isLocationTag;
+	}
+	public void setIsLocationTag(Boolean isLocationTag){
+		this.isLocationTag = isLocationTag;
+	}
+
+	public void isLocationTag(String multirequestToken){
+		setToken("isLocationTag", multirequestToken);
+	}
+
 
 	public AssetStructMeta() {
 		super();
@@ -177,6 +194,7 @@ public class AssetStructMeta extends ObjectBase {
 		createDate = GsonParser.parseLong(jsonObject.get("createDate"));
 		updateDate = GsonParser.parseLong(jsonObject.get("updateDate"));
 		isInherited = GsonParser.parseBoolean(jsonObject.get("isInherited"));
+		isLocationTag = GsonParser.parseBoolean(jsonObject.get("isLocationTag"));
 
 	}
 
@@ -187,6 +205,7 @@ public class AssetStructMeta extends ObjectBase {
 		kparams.add("protectFromIngest", this.protectFromIngest);
 		kparams.add("defaultIngestValue", this.defaultIngestValue);
 		kparams.add("isInherited", this.isInherited);
+		kparams.add("isLocationTag", this.isLocationTag);
 		return kparams;
 	}
 
@@ -214,6 +233,7 @@ public class AssetStructMeta extends ObjectBase {
         dest.writeValue(this.createDate);
         dest.writeValue(this.updateDate);
         dest.writeValue(this.isInherited);
+        dest.writeValue(this.isLocationTag);
     }
 
     public AssetStructMeta(Parcel in) {
@@ -226,6 +246,7 @@ public class AssetStructMeta extends ObjectBase {
         this.createDate = (Long)in.readValue(Long.class.getClassLoader());
         this.updateDate = (Long)in.readValue(Long.class.getClassLoader());
         this.isInherited = (Boolean)in.readValue(Boolean.class.getClassLoader());
+        this.isLocationTag = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
 
