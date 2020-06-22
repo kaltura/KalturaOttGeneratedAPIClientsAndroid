@@ -68,18 +68,13 @@ public class CategoryTreeService {
 	
 	public static class GetCategoryTreeBuilder extends RequestBuilder<CategoryTree, CategoryTree.Tokenizer, GetCategoryTreeBuilder> {
 		
-		public GetCategoryTreeBuilder(long categoryItemId, boolean filter) {
+		public GetCategoryTreeBuilder(long categoryItemId) {
 			super(CategoryTree.class, "categorytree", "get");
 			params.add("categoryItemId", categoryItemId);
-			params.add("filter", filter);
 		}
 		
 		public void categoryItemId(String multirequestToken) {
 			params.add("categoryItemId", multirequestToken);
-		}
-		
-		public void filter(String multirequestToken) {
-			params.add("filter", multirequestToken);
 		}
 	}
 
@@ -87,9 +82,8 @@ public class CategoryTreeService {
 	 * Retrive category tree.
 	 * 
 	 * @param categoryItemId Category item identifier
-	 * @param filter filter categories dates
 	 */
-    public static GetCategoryTreeBuilder get(long categoryItemId, boolean filter)  {
-		return new GetCategoryTreeBuilder(categoryItemId, filter);
+    public static GetCategoryTreeBuilder get(long categoryItemId)  {
+		return new GetCategoryTreeBuilder(categoryItemId);
 	}
 }
