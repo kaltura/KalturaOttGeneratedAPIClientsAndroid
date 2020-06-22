@@ -183,36 +183,42 @@ public class GsonParser {
     	return array;
     }
 
-    public static <T> List<T> parseArray(String result, Class<T> clz) throws APIException {
-        JsonParser jsonParser = new JsonParser();
-        JsonElement jsonElement;
-        try{
-        	jsonElement = jsonParser.parse(result);
-        }
-        catch(JsonSyntaxException | IllegalStateException e) {
-        	throw new APIException(FailureStep.OnResponse, "Invalid JSON response: " + result);
-        }
+	public static <T> List<T> parseArray(String result, Class<T> clz) throws APIException {
+		JsonParser jsonParser = new JsonParser();
+		JsonElement jsonElement;
+		try{
+			jsonElement = jsonParser.parse(result);
+		} catch(JsonSyntaxException | IllegalStateException e) {
+			throw new APIException(FailureStep.OnResponse, "Invalid JSON response: " + result);
+		}
 
-        if(jsonElement.isJsonObject()) {
+		if(jsonElement.isJsonObject()) {
 			JsonObject jsonObject = jsonElement.getAsJsonObject();
-			if (jsonObject.has(ResultKey)){
-				jsonElement = jsonObject.getAsJsonArray(ResultKey);
+			Object resultKeyobject = jsonObject.get(ResultKey);
+
+			if(resultKeyobject != null && jsonObject.get(ObjectTypeKey) == null) {
+
+				if(resultKeyobject instanceof JsonObject) {
+					jsonObject = (JsonObject) resultKeyobject;
+					if (jsonObject.get("error") != null && jsonObject.get(ObjectTypeKey) == null) {
+						jsonObject = jsonObject.getAsJsonObject("error");
+						String objectType = jsonObject.getAsJsonPrimitive(ObjectTypeKey).getAsString();
+						if (objectType.equals("KalturaAPIException")) {
+							throw parseException(jsonObject);
+						}
+					}
+
+				} else if(resultKeyobject instanceof JsonArray) {
+					JsonArray ja = ((JsonArray) resultKeyobject).getAsJsonArray();
+					if (ja != null) {
+						return parseArray(ja.getAsJsonArray(), clz);
+					}
+				}
 			}
 		}
 
-        if(jsonElement.isJsonObject()) {
-        	JsonObject jsonObject = jsonElement.getAsJsonObject();
-	        String objectType = jsonObject.getAsJsonPrimitive(ObjectTypeKey).getAsString();
-	        if(objectType.equals("KalturaAPIException")) {
-	        	throw parseException(jsonObject);
-	        }
-        }
-        else if(jsonElement.isJsonArray()) {
-        	return parseArray(jsonElement.getAsJsonArray(), clz);
-        }
-
-       	throw new APIException(FailureStep.OnResponse, "Invalid JSON response type, expected array of " + clz.getName() + ": " + result);
-    }
+		throw new APIException(FailureStep.OnResponse, "Invalid JSON response type, expected array of " + clz.getName() + ": " + result);
+	}
 
     public static <T> List<T> parseArray(JsonArray jsonArray, Class<T> clz) throws APIException {
     	if(jsonArray == null)
