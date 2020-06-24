@@ -19,7 +19,7 @@ jobs:
         java-version: 1.8
     - name: Tag
       run: |
-        GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} sh .github/tag.sh
+        GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} bash .github/tag.sh
     - name: Build and Publish
       run: |
-        BINTRAY_USER=${{ secrets.BINTRAY_USER }} BINTRAY_PASS=${{ secrets.BINTRAY_PASS }} sh .github/publish.sh
+        BINTRAY_USER=${{ secrets.BINTRAY_USER }} BINTRAY_PASS=${{ secrets.BINTRAY_PASS }} bash .github/publish.sh
