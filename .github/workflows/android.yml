@@ -2,7 +2,9 @@ name: Android Build and Publish
 
 on:
   push:
-    branches: '[0-9]+_[0-9]+_[0-9]+'
+    branches: 
+    - '[0-9]+_[0-9]+_[0-9]+'
+    - '5_2_8_Actions'
 
 jobs:
   build:
