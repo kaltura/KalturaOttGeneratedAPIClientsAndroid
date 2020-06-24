@@ -22,4 +22,4 @@ jobs:
         GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} bash .github/tag.sh
     - name: Build and Publish
       run: |
-        BINTRAY_USER=${{ secrets.BINTRAY_USER }} BINTRAY_PASS=${{ secrets.BINTRAY_PASS }} bash .github/publish.sh
+        BINTRAY_USER=${{ secrets.BINTRAY_USER }} BINTRAY_KEY=${{ secrets.BINTRAY_KEY }} bash .github/publish.sh
