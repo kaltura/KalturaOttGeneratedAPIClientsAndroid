@@ -5,7 +5,9 @@ fail() {
   exit 1
 }
 
-# Create javadoc jar, sources jar, pom
+ chmod +x gradlew
+ 
+ # Create javadoc jar, sources jar, pom
 ./gradlew KalturaClient:build
 ./gradlew KalturaClient:publishReleasePublicationToMavenLocal
 
