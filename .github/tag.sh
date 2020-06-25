@@ -19,7 +19,7 @@ TARGET_TAG="$VERSION"
 cat << EOF > post.json
 {
   "name": "v$VERSION",
-  "body": "# Kaltura OTT Client Library\n\n## Gradle line (JCenter)\n\`implementation 'com.kaltura:KalturaOttAndroidJavaClient:$VERSION'\`",
+  "body": "# Kaltura OTT Client Library\n\n## Gradle line (JCenter)\n\n\`implementation 'com.kaltura:KalturaOttAndroidJavaClient:$VERSION'\`",
   "tag_name": "$TARGET_TAG",
   "target_commitish": "$GITHUB_SHA"
 }
