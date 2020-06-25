@@ -1,4 +1,4 @@
-name: Tag Generated Branch
+name: Tag and publish build
 
 on:
   push:
