@@ -1,0 +1,17 @@
+name: Tag Generated Branch
+
+on:
+  push:
+    branches: 
+    - '[0-9]+_[0-9]+_[0-9]+'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Tag
+      run: |
+        GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} bash .github/tag.sh
