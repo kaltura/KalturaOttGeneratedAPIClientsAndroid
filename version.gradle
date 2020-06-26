@@ -1,3 +1,4 @@
+
 // To create a maven publication, run:
 //      ./gradlew KalturaClient:publishReleasePublicationToMavenLocal
 
@@ -5,7 +6,7 @@
 //      ./gradlew KalturaClient:bintrayUpload -PdryRun=false -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY
 
 // Library Version
-ext.kalturaClientVersion = '5.2.8.14101'
+ext.kalturaClientVersion = '5.3.7.28143'
 
 // Publish to Bintray
 try {
