@@ -118,6 +118,5 @@ public class ListResponse<T> extends ObjectBase {
         this.objects = new ArrayList<T>();
         in.readList(this.objects, null);
     }
-
 }
 
