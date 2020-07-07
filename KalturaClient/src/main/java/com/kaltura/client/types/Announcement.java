@@ -61,6 +61,7 @@ public class Announcement extends ObjectBase {
 		String mailTemplate();
 		String mailSubject();
 		String includeSms();
+		String includeIot();
 	}
 
 	/**
@@ -115,6 +116,10 @@ public class Announcement extends ObjectBase {
 	 * Include SMS
 	 */
 	private Boolean includeSms;
+	/**
+	 * Include IOT
+	 */
+	private Boolean includeIot;
 
 	// name:
 	public String getName(){
@@ -256,6 +261,18 @@ public class Announcement extends ObjectBase {
 		setToken("includeSms", multirequestToken);
 	}
 
+	// includeIot:
+	public Boolean getIncludeIot(){
+		return this.includeIot;
+	}
+	public void setIncludeIot(Boolean includeIot){
+		this.includeIot = includeIot;
+	}
+
+	public void includeIot(String multirequestToken){
+		setToken("includeIot", multirequestToken);
+	}
+
 
 	public Announcement() {
 		super();
@@ -280,6 +297,7 @@ public class Announcement extends ObjectBase {
 		mailTemplate = GsonParser.parseString(jsonObject.get("mailTemplate"));
 		mailSubject = GsonParser.parseString(jsonObject.get("mailSubject"));
 		includeSms = GsonParser.parseBoolean(jsonObject.get("includeSms"));
+		includeIot = GsonParser.parseBoolean(jsonObject.get("includeIot"));
 
 	}
 
@@ -297,6 +315,7 @@ public class Announcement extends ObjectBase {
 		kparams.add("mailTemplate", this.mailTemplate);
 		kparams.add("mailSubject", this.mailSubject);
 		kparams.add("includeSms", this.includeSms);
+		kparams.add("includeIot", this.includeIot);
 		return kparams;
 	}
 
@@ -329,6 +348,7 @@ public class Announcement extends ObjectBase {
         dest.writeString(this.mailTemplate);
         dest.writeString(this.mailSubject);
         dest.writeValue(this.includeSms);
+        dest.writeValue(this.includeIot);
     }
 
     public Announcement(Parcel in) {
@@ -348,6 +368,7 @@ public class Announcement extends ObjectBase {
         this.mailTemplate = in.readString();
         this.mailSubject = in.readString();
         this.includeSms = (Boolean)in.readValue(Boolean.class.getClassLoader());
+        this.includeIot = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
 

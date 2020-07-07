@@ -32,7 +32,6 @@ import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.enums.DeviceStatus;
 import com.kaltura.client.types.CustomDrmPlaybackPluginData;
-import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
@@ -48,9 +47,9 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(HouseholdDevice.Tokenizer.class)
-public class HouseholdDevice extends ObjectBase {
+public class HouseholdDevice extends OTTObjectSupportNullable {
 	
-	public interface Tokenizer extends ObjectBase.Tokenizer {
+	public interface Tokenizer extends OTTObjectSupportNullable.Tokenizer {
 		String householdId();
 		String udid();
 		String name();
@@ -59,6 +58,7 @@ public class HouseholdDevice extends ObjectBase {
 		String status();
 		String deviceFamilyId();
 		CustomDrmPlaybackPluginData.Tokenizer drm();
+		String externalId();
 	}
 
 	/**
@@ -93,6 +93,10 @@ public class HouseholdDevice extends ObjectBase {
 	 * Device DRM data
 	 */
 	private CustomDrmPlaybackPluginData drm;
+	/**
+	 * external Id
+	 */
+	private String externalId;
 
 	// householdId:
 	public Integer getHouseholdId(){
@@ -166,6 +170,18 @@ public class HouseholdDevice extends ObjectBase {
 	public CustomDrmPlaybackPluginData getDrm(){
 		return this.drm;
 	}
+	// externalId:
+	public String getExternalId(){
+		return this.externalId;
+	}
+	public void setExternalId(String externalId){
+		this.externalId = externalId;
+	}
+
+	public void externalId(String multirequestToken){
+		setToken("externalId", multirequestToken);
+	}
+
 
 	public HouseholdDevice() {
 		super();
@@ -185,6 +201,7 @@ public class HouseholdDevice extends ObjectBase {
 		status = DeviceStatus.get(GsonParser.parseString(jsonObject.get("status")));
 		deviceFamilyId = GsonParser.parseLong(jsonObject.get("deviceFamilyId"));
 		drm = GsonParser.parseObject(jsonObject.getAsJsonObject("drm"), CustomDrmPlaybackPluginData.class);
+		externalId = GsonParser.parseString(jsonObject.get("externalId"));
 
 	}
 
@@ -196,6 +213,7 @@ public class HouseholdDevice extends ObjectBase {
 		kparams.add("name", this.name);
 		kparams.add("brandId", this.brandId);
 		kparams.add("activatedOn", this.activatedOn);
+		kparams.add("externalId", this.externalId);
 		return kparams;
 	}
 
@@ -223,6 +241,7 @@ public class HouseholdDevice extends ObjectBase {
         dest.writeInt(this.status == null ? -1 : this.status.ordinal());
         dest.writeValue(this.deviceFamilyId);
         dest.writeParcelable(this.drm, flags);
+        dest.writeString(this.externalId);
     }
 
     public HouseholdDevice(Parcel in) {
@@ -236,6 +255,7 @@ public class HouseholdDevice extends ObjectBase {
         this.status = tmpStatus == -1 ? null : DeviceStatus.values()[tmpStatus];
         this.deviceFamilyId = (Long)in.readValue(Long.class.getClassLoader());
         this.drm = in.readParcelable(CustomDrmPlaybackPluginData.class.getClassLoader());
+        this.externalId = in.readString();
     }
 }
 
