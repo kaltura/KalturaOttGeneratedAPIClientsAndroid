@@ -6,7 +6,7 @@
 //      ./gradlew KalturaClient:bintrayUpload -PdryRun=false -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY
 
 // Library Version
-ext.kalturaClientVersion = '5.7.0.28415'
+ext.kalturaClientVersion = '5.7.0.28417'
 
 // Publish to Bintray
 try {
