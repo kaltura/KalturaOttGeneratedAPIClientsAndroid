@@ -50,6 +50,7 @@ public class AssetHistoryFilter extends Filter {
 		String assetIdIn();
 		String statusEqual();
 		String daysLessThanOrEqual();
+		String kSql();
 	}
 
 	/**
@@ -75,6 +76,10 @@ public class AssetHistoryFilter extends Filter {
 	 * How many days back to return the watched media. If omitted, default to 7 days
 	 */
 	private Integer daysLessThanOrEqual;
+	/**
+	 * KSQL expression
+	 */
+	private String kSql;
 
 	// typeIn:
 	public String getTypeIn(){
@@ -124,6 +129,18 @@ public class AssetHistoryFilter extends Filter {
 		setToken("daysLessThanOrEqual", multirequestToken);
 	}
 
+	// kSql:
+	public String getKSql(){
+		return this.kSql;
+	}
+	public void setKSql(String kSql){
+		this.kSql = kSql;
+	}
+
+	public void kSql(String multirequestToken){
+		setToken("kSql", multirequestToken);
+	}
+
 
 	public AssetHistoryFilter() {
 		super();
@@ -139,6 +156,7 @@ public class AssetHistoryFilter extends Filter {
 		assetIdIn = GsonParser.parseString(jsonObject.get("assetIdIn"));
 		statusEqual = WatchStatus.get(GsonParser.parseString(jsonObject.get("statusEqual")));
 		daysLessThanOrEqual = GsonParser.parseInt(jsonObject.get("daysLessThanOrEqual"));
+		kSql = GsonParser.parseString(jsonObject.get("kSql"));
 
 	}
 
@@ -149,6 +167,7 @@ public class AssetHistoryFilter extends Filter {
 		kparams.add("assetIdIn", this.assetIdIn);
 		kparams.add("statusEqual", this.statusEqual);
 		kparams.add("daysLessThanOrEqual", this.daysLessThanOrEqual);
+		kparams.add("kSql", this.kSql);
 		return kparams;
 	}
 
@@ -172,6 +191,7 @@ public class AssetHistoryFilter extends Filter {
         dest.writeString(this.assetIdIn);
         dest.writeInt(this.statusEqual == null ? -1 : this.statusEqual.ordinal());
         dest.writeValue(this.daysLessThanOrEqual);
+        dest.writeString(this.kSql);
     }
 
     public AssetHistoryFilter(Parcel in) {
@@ -181,6 +201,7 @@ public class AssetHistoryFilter extends Filter {
         int tmpStatusEqual = in.readInt();
         this.statusEqual = tmpStatusEqual == -1 ? null : WatchStatus.values()[tmpStatusEqual];
         this.daysLessThanOrEqual = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.kSql = in.readString();
     }
 }
 
