@@ -49,7 +49,8 @@ public class EpgNotificationSettings extends ObjectBase {
 		String enabled();
 		String deviceFamilyIds();
 		String liveAssetIds();
-		String timeRange();
+		String backwardTimeRange();
+		String forwardTimeRange();
 	}
 
 	/**
@@ -65,11 +66,17 @@ public class EpgNotificationSettings extends ObjectBase {
 	 */
 	private String liveAssetIds;
 	/**
-	 * The range (in hours), in which, EPG updates triggers a notification,            
-	   every program that is updated and it’s starts time falls within this range
-	  shall trigger a notification
+	 * The backward range (in hours), in which, EPG updates triggers a notification,   
+	            every program that is updated and it’s starts time falls within this
+	  range shall trigger a notification
 	 */
-	private Integer timeRange;
+	private Integer backwardTimeRange;
+	/**
+	 * The forward range (in hours), in which, EPG updates triggers a notification,    
+	           every program that is updated and it’s starts time falls within this
+	  range shall trigger a notification
+	 */
+	private Integer forwardTimeRange;
 
 	// enabled:
 	public Boolean getEnabled(){
@@ -107,16 +114,28 @@ public class EpgNotificationSettings extends ObjectBase {
 		setToken("liveAssetIds", multirequestToken);
 	}
 
-	// timeRange:
-	public Integer getTimeRange(){
-		return this.timeRange;
+	// backwardTimeRange:
+	public Integer getBackwardTimeRange(){
+		return this.backwardTimeRange;
 	}
-	public void setTimeRange(Integer timeRange){
-		this.timeRange = timeRange;
+	public void setBackwardTimeRange(Integer backwardTimeRange){
+		this.backwardTimeRange = backwardTimeRange;
 	}
 
-	public void timeRange(String multirequestToken){
-		setToken("timeRange", multirequestToken);
+	public void backwardTimeRange(String multirequestToken){
+		setToken("backwardTimeRange", multirequestToken);
+	}
+
+	// forwardTimeRange:
+	public Integer getForwardTimeRange(){
+		return this.forwardTimeRange;
+	}
+	public void setForwardTimeRange(Integer forwardTimeRange){
+		this.forwardTimeRange = forwardTimeRange;
+	}
+
+	public void forwardTimeRange(String multirequestToken){
+		setToken("forwardTimeRange", multirequestToken);
 	}
 
 
@@ -133,7 +152,8 @@ public class EpgNotificationSettings extends ObjectBase {
 		enabled = GsonParser.parseBoolean(jsonObject.get("enabled"));
 		deviceFamilyIds = GsonParser.parseString(jsonObject.get("deviceFamilyIds"));
 		liveAssetIds = GsonParser.parseString(jsonObject.get("liveAssetIds"));
-		timeRange = GsonParser.parseInt(jsonObject.get("timeRange"));
+		backwardTimeRange = GsonParser.parseInt(jsonObject.get("backwardTimeRange"));
+		forwardTimeRange = GsonParser.parseInt(jsonObject.get("forwardTimeRange"));
 
 	}
 
@@ -143,7 +163,8 @@ public class EpgNotificationSettings extends ObjectBase {
 		kparams.add("enabled", this.enabled);
 		kparams.add("deviceFamilyIds", this.deviceFamilyIds);
 		kparams.add("liveAssetIds", this.liveAssetIds);
-		kparams.add("timeRange", this.timeRange);
+		kparams.add("backwardTimeRange", this.backwardTimeRange);
+		kparams.add("forwardTimeRange", this.forwardTimeRange);
 		return kparams;
 	}
 
@@ -166,7 +187,8 @@ public class EpgNotificationSettings extends ObjectBase {
         dest.writeValue(this.enabled);
         dest.writeString(this.deviceFamilyIds);
         dest.writeString(this.liveAssetIds);
-        dest.writeValue(this.timeRange);
+        dest.writeValue(this.backwardTimeRange);
+        dest.writeValue(this.forwardTimeRange);
     }
 
     public EpgNotificationSettings(Parcel in) {
@@ -174,7 +196,8 @@ public class EpgNotificationSettings extends ObjectBase {
         this.enabled = (Boolean)in.readValue(Boolean.class.getClassLoader());
         this.deviceFamilyIds = in.readString();
         this.liveAssetIds = in.readString();
-        this.timeRange = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.backwardTimeRange = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.forwardTimeRange = (Integer)in.readValue(Integer.class.getClassLoader());
     }
 }
 
