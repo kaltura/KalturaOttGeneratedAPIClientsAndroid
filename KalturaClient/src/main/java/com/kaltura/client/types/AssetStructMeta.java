@@ -58,6 +58,7 @@ public class AssetStructMeta extends ObjectBase {
 		String updateDate();
 		String isInherited();
 		String isLocationTag();
+		String suppressedOrder();
 	}
 
 	/**
@@ -98,6 +99,10 @@ public class AssetStructMeta extends ObjectBase {
 	 * Is Location Tag
 	 */
 	private Boolean isLocationTag;
+	/**
+	 * suppressed Order, ascending
+	 */
+	private Integer suppressedOrder;
 
 	// assetStructId:
 	public Long getAssetStructId(){
@@ -175,6 +180,18 @@ public class AssetStructMeta extends ObjectBase {
 		setToken("isLocationTag", multirequestToken);
 	}
 
+	// suppressedOrder:
+	public Integer getSuppressedOrder(){
+		return this.suppressedOrder;
+	}
+	public void setSuppressedOrder(Integer suppressedOrder){
+		this.suppressedOrder = suppressedOrder;
+	}
+
+	public void suppressedOrder(String multirequestToken){
+		setToken("suppressedOrder", multirequestToken);
+	}
+
 
 	public AssetStructMeta() {
 		super();
@@ -195,6 +212,7 @@ public class AssetStructMeta extends ObjectBase {
 		updateDate = GsonParser.parseLong(jsonObject.get("updateDate"));
 		isInherited = GsonParser.parseBoolean(jsonObject.get("isInherited"));
 		isLocationTag = GsonParser.parseBoolean(jsonObject.get("isLocationTag"));
+		suppressedOrder = GsonParser.parseInt(jsonObject.get("suppressedOrder"));
 
 	}
 
@@ -206,6 +224,7 @@ public class AssetStructMeta extends ObjectBase {
 		kparams.add("defaultIngestValue", this.defaultIngestValue);
 		kparams.add("isInherited", this.isInherited);
 		kparams.add("isLocationTag", this.isLocationTag);
+		kparams.add("suppressedOrder", this.suppressedOrder);
 		return kparams;
 	}
 
@@ -234,6 +253,7 @@ public class AssetStructMeta extends ObjectBase {
         dest.writeValue(this.updateDate);
         dest.writeValue(this.isInherited);
         dest.writeValue(this.isLocationTag);
+        dest.writeValue(this.suppressedOrder);
     }
 
     public AssetStructMeta(Parcel in) {
@@ -247,6 +267,7 @@ public class AssetStructMeta extends ObjectBase {
         this.updateDate = (Long)in.readValue(Long.class.getClassLoader());
         this.isInherited = (Boolean)in.readValue(Boolean.class.getClassLoader());
         this.isLocationTag = (Boolean)in.readValue(Boolean.class.getClassLoader());
+        this.suppressedOrder = (Integer)in.readValue(Integer.class.getClassLoader());
     }
 }
 
