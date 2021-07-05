@@ -42,25 +42,30 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 /**
- * Premium service
+ * Coupons group details
  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(PremiumService.Tokenizer.class)
-public class PremiumService extends ObjectBase {
+@MultiRequestBuilder.Tokenizer(SubscriptionCouponGroup.Tokenizer.class)
+public class SubscriptionCouponGroup extends ObjectBase {
 	
 	public interface Tokenizer extends ObjectBase.Tokenizer {
 		String id();
-		String name();
+		String startDate();
+		String endDate();
 	}
 
 	/**
-	 * Service identifier
+	 * Coupon group identifier
 	 */
 	private Long id;
 	/**
-	 * Service name / description
+	 * The first date the coupons in this coupons group are valid
 	 */
-	private String name;
+	private Long startDate;
+	/**
+	 * The last date the coupons in this coupons group are valid
+	 */
+	private Long endDate;
 
 	// id:
 	public Long getId(){
@@ -74,52 +79,66 @@ public class PremiumService extends ObjectBase {
 		setToken("id", multirequestToken);
 	}
 
-	// name:
-	public String getName(){
-		return this.name;
+	// startDate:
+	public Long getStartDate(){
+		return this.startDate;
 	}
-	public void setName(String name){
-		this.name = name;
-	}
-
-	public void name(String multirequestToken){
-		setToken("name", multirequestToken);
+	public void setStartDate(Long startDate){
+		this.startDate = startDate;
 	}
 
+	public void startDate(String multirequestToken){
+		setToken("startDate", multirequestToken);
+	}
 
-	public PremiumService() {
+	// endDate:
+	public Long getEndDate(){
+		return this.endDate;
+	}
+	public void setEndDate(Long endDate){
+		this.endDate = endDate;
+	}
+
+	public void endDate(String multirequestToken){
+		setToken("endDate", multirequestToken);
+	}
+
+
+	public SubscriptionCouponGroup() {
 		super();
 	}
 
-	public PremiumService(JsonObject jsonObject) throws APIException {
+	public SubscriptionCouponGroup(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
 		id = GsonParser.parseLong(jsonObject.get("id"));
-		name = GsonParser.parseString(jsonObject.get("name"));
+		startDate = GsonParser.parseLong(jsonObject.get("startDate"));
+		endDate = GsonParser.parseLong(jsonObject.get("endDate"));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaPremiumService");
+		kparams.add("objectType", "KalturaSubscriptionCouponGroup");
 		kparams.add("id", this.id);
-		kparams.add("name", this.name);
+		kparams.add("startDate", this.startDate);
+		kparams.add("endDate", this.endDate);
 		return kparams;
 	}
 
 
-    public static final Creator<PremiumService> CREATOR = new Creator<PremiumService>() {
+    public static final Creator<SubscriptionCouponGroup> CREATOR = new Creator<SubscriptionCouponGroup>() {
         @Override
-        public PremiumService createFromParcel(Parcel source) {
-            return new PremiumService(source);
+        public SubscriptionCouponGroup createFromParcel(Parcel source) {
+            return new SubscriptionCouponGroup(source);
         }
 
         @Override
-        public PremiumService[] newArray(int size) {
-            return new PremiumService[size];
+        public SubscriptionCouponGroup[] newArray(int size) {
+            return new SubscriptionCouponGroup[size];
         }
     };
 
@@ -127,13 +146,15 @@ public class PremiumService extends ObjectBase {
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeValue(this.id);
-        dest.writeString(this.name);
+        dest.writeValue(this.startDate);
+        dest.writeValue(this.endDate);
     }
 
-    public PremiumService(Parcel in) {
+    public SubscriptionCouponGroup(Parcel in) {
         super(in);
         this.id = (Long)in.readValue(Long.class.getClassLoader());
-        this.name = in.readString();
+        this.startDate = (Long)in.readValue(Long.class.getClassLoader());
+        this.endDate = (Long)in.readValue(Long.class.getClassLoader());
     }
 }
 
