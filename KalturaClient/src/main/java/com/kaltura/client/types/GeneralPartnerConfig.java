@@ -67,6 +67,7 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
 		RollingDeviceRemovalData.Tokenizer rollingDeviceData();
 		String finishedPercentThreshold();
 		String suspensionProfileInheritanceType();
+		String allowDeviceMobility();
 	}
 
 	/**
@@ -129,6 +130,10 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
 	 * Suspension Profile Inheritance
 	 */
 	private SuspensionProfileInheritanceType suspensionProfileInheritanceType;
+	/**
+	 * Allow Device Mobility
+	 */
+	private Boolean allowDeviceMobility;
 
 	// partnerName:
 	public String getPartnerName(){
@@ -306,6 +311,18 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
 		setToken("suspensionProfileInheritanceType", multirequestToken);
 	}
 
+	// allowDeviceMobility:
+	public Boolean getAllowDeviceMobility(){
+		return this.allowDeviceMobility;
+	}
+	public void setAllowDeviceMobility(Boolean allowDeviceMobility){
+		this.allowDeviceMobility = allowDeviceMobility;
+	}
+
+	public void allowDeviceMobility(String multirequestToken){
+		setToken("allowDeviceMobility", multirequestToken);
+	}
+
 
 	public GeneralPartnerConfig() {
 		super();
@@ -332,6 +349,7 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
 		rollingDeviceData = GsonParser.parseObject(jsonObject.getAsJsonObject("rollingDeviceData"), RollingDeviceRemovalData.class);
 		finishedPercentThreshold = GsonParser.parseInt(jsonObject.get("finishedPercentThreshold"));
 		suspensionProfileInheritanceType = SuspensionProfileInheritanceType.get(GsonParser.parseString(jsonObject.get("suspensionProfileInheritanceType")));
+		allowDeviceMobility = GsonParser.parseBoolean(jsonObject.get("allowDeviceMobility"));
 
 	}
 
@@ -353,6 +371,7 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
 		kparams.add("rollingDeviceData", this.rollingDeviceData);
 		kparams.add("finishedPercentThreshold", this.finishedPercentThreshold);
 		kparams.add("suspensionProfileInheritanceType", this.suspensionProfileInheritanceType);
+		kparams.add("allowDeviceMobility", this.allowDeviceMobility);
 		return kparams;
 	}
 
@@ -387,6 +406,7 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
         dest.writeParcelable(this.rollingDeviceData, flags);
         dest.writeValue(this.finishedPercentThreshold);
         dest.writeInt(this.suspensionProfileInheritanceType == null ? -1 : this.suspensionProfileInheritanceType.ordinal());
+        dest.writeValue(this.allowDeviceMobility);
     }
 
     public GeneralPartnerConfig(Parcel in) {
@@ -409,6 +429,7 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
         this.finishedPercentThreshold = (Integer)in.readValue(Integer.class.getClassLoader());
         int tmpSuspensionProfileInheritanceType = in.readInt();
         this.suspensionProfileInheritanceType = tmpSuspensionProfileInheritanceType == -1 ? null : SuspensionProfileInheritanceType.values()[tmpSuspensionProfileInheritanceType];
+        this.allowDeviceMobility = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
 

@@ -52,6 +52,7 @@ public class CommercePartnerConfig extends PartnerConfiguration {
 	
 	public interface Tokenizer extends PartnerConfiguration.Tokenizer {
 		RequestBuilder.ListTokenizer<BookmarkEventThreshold.Tokenizer> bookmarkEventThresholds();
+		String keepSubscriptionAddOns();
 	}
 
 	/**
@@ -59,6 +60,10 @@ public class CommercePartnerConfig extends PartnerConfiguration {
 	  seconds.
 	 */
 	private List<BookmarkEventThreshold> bookmarkEventThresholds;
+	/**
+	 * configuration for keep add-ons after subscription deletion
+	 */
+	private Boolean keepSubscriptionAddOns;
 
 	// bookmarkEventThresholds:
 	public List<BookmarkEventThreshold> getBookmarkEventThresholds(){
@@ -66,6 +71,18 @@ public class CommercePartnerConfig extends PartnerConfiguration {
 	}
 	public void setBookmarkEventThresholds(List<BookmarkEventThreshold> bookmarkEventThresholds){
 		this.bookmarkEventThresholds = bookmarkEventThresholds;
+	}
+
+	// keepSubscriptionAddOns:
+	public Boolean getKeepSubscriptionAddOns(){
+		return this.keepSubscriptionAddOns;
+	}
+	public void setKeepSubscriptionAddOns(Boolean keepSubscriptionAddOns){
+		this.keepSubscriptionAddOns = keepSubscriptionAddOns;
+	}
+
+	public void keepSubscriptionAddOns(String multirequestToken){
+		setToken("keepSubscriptionAddOns", multirequestToken);
 	}
 
 
@@ -80,6 +97,7 @@ public class CommercePartnerConfig extends PartnerConfiguration {
 
 		// set members values:
 		bookmarkEventThresholds = GsonParser.parseArray(jsonObject.getAsJsonArray("bookmarkEventThresholds"), BookmarkEventThreshold.class);
+		keepSubscriptionAddOns = GsonParser.parseBoolean(jsonObject.get("keepSubscriptionAddOns"));
 
 	}
 
@@ -87,6 +105,7 @@ public class CommercePartnerConfig extends PartnerConfiguration {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaCommercePartnerConfig");
 		kparams.add("bookmarkEventThresholds", this.bookmarkEventThresholds);
+		kparams.add("keepSubscriptionAddOns", this.keepSubscriptionAddOns);
 		return kparams;
 	}
 
@@ -112,6 +131,7 @@ public class CommercePartnerConfig extends PartnerConfiguration {
         } else {
             dest.writeInt(-1);
         }
+        dest.writeValue(this.keepSubscriptionAddOns);
     }
 
     public CommercePartnerConfig(Parcel in) {
@@ -121,6 +141,7 @@ public class CommercePartnerConfig extends PartnerConfiguration {
             this.bookmarkEventThresholds = new ArrayList<>();
             in.readList(this.bookmarkEventThresholds, BookmarkEventThreshold.class.getClassLoader());
         }
+        this.keepSubscriptionAddOns = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
 
