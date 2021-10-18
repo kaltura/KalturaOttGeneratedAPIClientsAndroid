@@ -33,37 +33,14 @@ package com.kaltura.client.enums;
  * 
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
-public enum RuleActionType implements EnumAsString {
-	BLOCK("BLOCK"),
-	START_DATE_OFFSET("START_DATE_OFFSET"),
-	END_DATE_OFFSET("END_DATE_OFFSET"),
-	USER_BLOCK("USER_BLOCK"),
-	ALLOW_PLAYBACK("ALLOW_PLAYBACK"),
-	BLOCK_PLAYBACK("BLOCK_PLAYBACK"),
-	APPLY_DISCOUNT_MODULE("APPLY_DISCOUNT_MODULE"),
-	APPLY_PLAYBACK_ADAPTER("APPLY_PLAYBACK_ADAPTER"),
-	FILTER("FILTER"),
-	ASSET_LIFE_CYCLE_TRANSITION("ASSET_LIFE_CYCLE_TRANSITION"),
-	APPLY_FREE_PLAYBACK("APPLY_FREE_PLAYBACK"),
-	FILTERASSETBYKSQL("FilterAssetByKsql"),
-	FILTERFILEBYQUALITYINDISCOVERY("FilterFileByQualityInDiscovery"),
-	FILTERFILEBYQUALITYINPLAYBACK("FilterFileByQualityInPlayback"),
-	FILTERFILEBYFILETYPEIDFORASSETTYPEINDISCOVERY("FilterFileByFileTypeIdForAssetTypeInDiscovery"),
-	FILTERFILEBYFILETYPEIDFORASSETTYPEINPLAYBACK("FilterFileByFileTypeIdForAssetTypeInPlayback"),
-	FILTERFILEBYFILETYPEIDINDISCOVERY("FilterFileByFileTypeIdInDiscovery"),
-	FILTERFILEBYFILETYPEIDINPLAYBACK("FilterFileByFileTypeIdInPlayback"),
-	FILTERFILEBYAUDIOCODECINDISCOVERY("FilterFileByAudioCodecInDiscovery"),
-	FILTERFILEBYAUDIOCODECINPLAYBACK("FilterFileByAudioCodecInPlayback"),
-	FILTERFILEBYVIDEOCODECINDISCOVERY("FilterFileByVideoCodecInDiscovery"),
-	FILTERFILEBYVIDEOCODECINPLAYBACK("FilterFileByVideoCodecInPlayback"),
-	FILTERFILEBYSTREAMERTYPEINDISCOVERY("FilterFileByStreamerTypeInDiscovery"),
-	FILTERFILEBYSTREAMERTYPEINPLAYBACK("FilterFileByStreamerTypeInPlayback"),
-	FILTERFILEBYLABELINDISCOVERY("FilterFileByLabelInDiscovery"),
-	FILTERFILEBYLABELINPLAYBACK("FilterFileByLabelInPlayback");
+public enum ChronologicalRecordStartTime implements EnumAsString {
+	NONE("NONE"),
+	NOW("NOW"),
+	EPG_START_TIME("EPG_START_TIME");
 
 	private String value;
 
-	RuleActionType(String value) {
+	ChronologicalRecordStartTime(String value) {
 		this.value = value;
 	}
 
@@ -76,19 +53,19 @@ public enum RuleActionType implements EnumAsString {
 		this.value = value;
 	}
 
-	public static RuleActionType get(String value) {
+	public static ChronologicalRecordStartTime get(String value) {
 		if(value == null)
 		{
 			return null;
 		}
 		
-		// goes over RuleActionType defined values and compare the inner value with the given one:
-		for(RuleActionType item: values()) {
+		// goes over ChronologicalRecordStartTime defined values and compare the inner value with the given one:
+		for(ChronologicalRecordStartTime item: values()) {
 			if(item.getValue().equals(value)) {
 				return item;
 			}
 		}
 		// in case the requested value was not found in the enum values, we return the first item as default.
-		return RuleActionType.values().length > 0 ? RuleActionType.values()[0]: null;
+		return ChronologicalRecordStartTime.values().length > 0 ? ChronologicalRecordStartTime.values()[0]: null;
    }
 }
