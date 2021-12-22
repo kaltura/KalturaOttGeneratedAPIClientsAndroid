@@ -62,6 +62,7 @@ public class Announcement extends ObjectBase {
 		String mailSubject();
 		String includeSms();
 		String includeIot();
+		String includeUserInbox();
 	}
 
 	/**
@@ -120,6 +121,10 @@ public class Announcement extends ObjectBase {
 	 * Include IOT
 	 */
 	private Boolean includeIot;
+	/**
+	 * Should add to user inbox
+	 */
+	private Boolean includeUserInbox;
 
 	// name:
 	public String getName(){
@@ -273,6 +278,18 @@ public class Announcement extends ObjectBase {
 		setToken("includeIot", multirequestToken);
 	}
 
+	// includeUserInbox:
+	public Boolean getIncludeUserInbox(){
+		return this.includeUserInbox;
+	}
+	public void setIncludeUserInbox(Boolean includeUserInbox){
+		this.includeUserInbox = includeUserInbox;
+	}
+
+	public void includeUserInbox(String multirequestToken){
+		setToken("includeUserInbox", multirequestToken);
+	}
+
 
 	public Announcement() {
 		super();
@@ -298,6 +315,7 @@ public class Announcement extends ObjectBase {
 		mailSubject = GsonParser.parseString(jsonObject.get("mailSubject"));
 		includeSms = GsonParser.parseBoolean(jsonObject.get("includeSms"));
 		includeIot = GsonParser.parseBoolean(jsonObject.get("includeIot"));
+		includeUserInbox = GsonParser.parseBoolean(jsonObject.get("includeUserInbox"));
 
 	}
 
@@ -316,6 +334,7 @@ public class Announcement extends ObjectBase {
 		kparams.add("mailSubject", this.mailSubject);
 		kparams.add("includeSms", this.includeSms);
 		kparams.add("includeIot", this.includeIot);
+		kparams.add("includeUserInbox", this.includeUserInbox);
 		return kparams;
 	}
 
@@ -349,6 +368,7 @@ public class Announcement extends ObjectBase {
         dest.writeString(this.mailSubject);
         dest.writeValue(this.includeSms);
         dest.writeValue(this.includeIot);
+        dest.writeValue(this.includeUserInbox);
     }
 
     public Announcement(Parcel in) {
@@ -369,6 +389,7 @@ public class Announcement extends ObjectBase {
         this.mailSubject = in.readString();
         this.includeSms = (Boolean)in.readValue(Boolean.class.getClassLoader());
         this.includeIot = (Boolean)in.readValue(Boolean.class.getClassLoader());
+        this.includeUserInbox = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
 
