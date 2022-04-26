@@ -1,0 +1,32 @@
+apply plugin: 'com.android.library'
+apply from: '../version.gradle'
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 28
+        versionName kalturaClientVersion
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+}
+
+tasks.withType(Javadoc) {
+    options.addBooleanOption('Xdoclint:none', true)
+}
+
+dependencies {
+    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.squareup.okhttp3:okhttp:3.12.1'
+}
