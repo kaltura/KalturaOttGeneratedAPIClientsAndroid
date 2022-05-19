@@ -30,6 +30,7 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
+import com.kaltura.client.enums.TransactionType;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 import com.kaltura.client.utils.request.RequestBuilder;
@@ -52,6 +53,8 @@ public class PlaybackSource extends MediaFile {
 		String protocols();
 		RequestBuilder.ListTokenizer<DrmPlaybackPluginData.Tokenizer> drm();
 		String isTokenized();
+		String businessModuleId();
+		String businessModuleType();
 	}
 
 	/**
@@ -72,6 +75,14 @@ public class PlaybackSource extends MediaFile {
 	 * Is Tokenized
 	 */
 	private Boolean isTokenized;
+	/**
+	 * Business Module Id
+	 */
+	private Integer businessModuleId;
+	/**
+	 * Business Module Type
+	 */
+	private TransactionType businessModuleType;
 
 	// format:
 	public String getFormat(){
@@ -117,6 +128,14 @@ public class PlaybackSource extends MediaFile {
 		setToken("isTokenized", multirequestToken);
 	}
 
+	// businessModuleId:
+	public Integer getBusinessModuleId(){
+		return this.businessModuleId;
+	}
+	// businessModuleType:
+	public TransactionType getBusinessModuleType(){
+		return this.businessModuleType;
+	}
 
 	public PlaybackSource() {
 		super();
@@ -132,6 +151,8 @@ public class PlaybackSource extends MediaFile {
 		protocols = GsonParser.parseString(jsonObject.get("protocols"));
 		drm = GsonParser.parseArray(jsonObject.getAsJsonArray("drm"), DrmPlaybackPluginData.class);
 		isTokenized = GsonParser.parseBoolean(jsonObject.get("isTokenized"));
+		businessModuleId = GsonParser.parseInt(jsonObject.get("businessModuleId"));
+		businessModuleType = TransactionType.get(GsonParser.parseString(jsonObject.get("businessModuleType")));
 
 	}
 
@@ -170,6 +191,8 @@ public class PlaybackSource extends MediaFile {
             dest.writeInt(-1);
         }
         dest.writeValue(this.isTokenized);
+        dest.writeValue(this.businessModuleId);
+        dest.writeInt(this.businessModuleType == null ? -1 : this.businessModuleType.ordinal());
     }
 
     public PlaybackSource(Parcel in) {
@@ -182,6 +205,9 @@ public class PlaybackSource extends MediaFile {
             in.readList(this.drm, DrmPlaybackPluginData.class.getClassLoader());
         }
         this.isTokenized = (Boolean)in.readValue(Boolean.class.getClassLoader());
+        this.businessModuleId = (Integer)in.readValue(Integer.class.getClassLoader());
+        int tmpBusinessModuleType = in.readInt();
+        this.businessModuleType = tmpBusinessModuleType == -1 ? null : TransactionType.values()[tmpBusinessModuleType];
     }
 }
 

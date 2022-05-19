@@ -51,6 +51,7 @@ public class CollectionFilter extends Filter {
 		String collectionIdIn();
 		String mediaFileIdEqual();
 		String couponGroupIdEqual();
+		String alsoInactive();
 	}
 
 	/**
@@ -58,13 +59,17 @@ public class CollectionFilter extends Filter {
 	 */
 	private String collectionIdIn;
 	/**
-	 * Media-file ID to get the subscriptions by
+	 * Media-file ID to get the collections by
 	 */
 	private Integer mediaFileIdEqual;
 	/**
 	 * couponGroupIdEqual
 	 */
 	private Integer couponGroupIdEqual;
+	/**
+	 * return also inactive
+	 */
+	private Boolean alsoInactive;
 
 	// collectionIdIn:
 	public String getCollectionIdIn(){
@@ -102,6 +107,18 @@ public class CollectionFilter extends Filter {
 		setToken("couponGroupIdEqual", multirequestToken);
 	}
 
+	// alsoInactive:
+	public Boolean getAlsoInactive(){
+		return this.alsoInactive;
+	}
+	public void setAlsoInactive(Boolean alsoInactive){
+		this.alsoInactive = alsoInactive;
+	}
+
+	public void alsoInactive(String multirequestToken){
+		setToken("alsoInactive", multirequestToken);
+	}
+
 
 	public CollectionFilter() {
 		super();
@@ -116,6 +133,7 @@ public class CollectionFilter extends Filter {
 		collectionIdIn = GsonParser.parseString(jsonObject.get("collectionIdIn"));
 		mediaFileIdEqual = GsonParser.parseInt(jsonObject.get("mediaFileIdEqual"));
 		couponGroupIdEqual = GsonParser.parseInt(jsonObject.get("couponGroupIdEqual"));
+		alsoInactive = GsonParser.parseBoolean(jsonObject.get("alsoInactive"));
 
 	}
 
@@ -125,6 +143,7 @@ public class CollectionFilter extends Filter {
 		kparams.add("collectionIdIn", this.collectionIdIn);
 		kparams.add("mediaFileIdEqual", this.mediaFileIdEqual);
 		kparams.add("couponGroupIdEqual", this.couponGroupIdEqual);
+		kparams.add("alsoInactive", this.alsoInactive);
 		return kparams;
 	}
 
@@ -147,6 +166,7 @@ public class CollectionFilter extends Filter {
         dest.writeString(this.collectionIdIn);
         dest.writeValue(this.mediaFileIdEqual);
         dest.writeValue(this.couponGroupIdEqual);
+        dest.writeValue(this.alsoInactive);
     }
 
     public CollectionFilter(Parcel in) {
@@ -154,6 +174,7 @@ public class CollectionFilter extends Filter {
         this.collectionIdIn = in.readString();
         this.mediaFileIdEqual = (Integer)in.readValue(Integer.class.getClassLoader());
         this.couponGroupIdEqual = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.alsoInactive = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
 

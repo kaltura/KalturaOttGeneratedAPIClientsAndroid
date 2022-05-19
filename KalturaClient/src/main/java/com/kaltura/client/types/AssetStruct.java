@@ -35,7 +35,9 @@ import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 import com.kaltura.client.utils.request.RequestBuilder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This class was generated using exec.php
@@ -62,6 +64,7 @@ public class AssetStruct extends ObjectBase {
 		String parentId();
 		String connectingMetaId();
 		String connectedParentMetaId();
+		RequestBuilder.MapTokenizer<StringValue.Tokenizer> dynamicData();
 	}
 
 	/**
@@ -119,6 +122,10 @@ public class AssetStruct extends ObjectBase {
 	 * connectedParentMetaId
 	 */
 	private Long connectedParentMetaId;
+	/**
+	 * Dynamic data
+	 */
+	private Map<String, StringValue> dynamicData;
 
 	// id:
 	public Long getId(){
@@ -240,6 +247,14 @@ public class AssetStruct extends ObjectBase {
 		setToken("connectedParentMetaId", multirequestToken);
 	}
 
+	// dynamicData:
+	public Map<String, StringValue> getDynamicData(){
+		return this.dynamicData;
+	}
+	public void setDynamicData(Map<String, StringValue> dynamicData){
+		this.dynamicData = dynamicData;
+	}
+
 
 	public AssetStruct() {
 		super();
@@ -264,6 +279,7 @@ public class AssetStruct extends ObjectBase {
 		parentId = GsonParser.parseLong(jsonObject.get("parentId"));
 		connectingMetaId = GsonParser.parseLong(jsonObject.get("connectingMetaId"));
 		connectedParentMetaId = GsonParser.parseLong(jsonObject.get("connectedParentMetaId"));
+		dynamicData = GsonParser.parseMap(jsonObject.getAsJsonObject("dynamicData"), StringValue.class);
 
 	}
 
@@ -279,6 +295,7 @@ public class AssetStruct extends ObjectBase {
 		kparams.add("parentId", this.parentId);
 		kparams.add("connectingMetaId", this.connectingMetaId);
 		kparams.add("connectedParentMetaId", this.connectedParentMetaId);
+		kparams.add("dynamicData", this.dynamicData);
 		return kparams;
 	}
 
@@ -316,6 +333,15 @@ public class AssetStruct extends ObjectBase {
         dest.writeValue(this.parentId);
         dest.writeValue(this.connectingMetaId);
         dest.writeValue(this.connectedParentMetaId);
+        if(this.dynamicData != null) {
+            dest.writeInt(this.dynamicData.size());
+            for (Map.Entry<String, StringValue> entry : this.dynamicData.entrySet()) {
+                dest.writeString(entry.getKey());
+                dest.writeParcelable(entry.getValue(), flags);
+            }
+        } else {
+            dest.writeInt(-1);
+        }
     }
 
     public AssetStruct(Parcel in) {
@@ -337,6 +363,15 @@ public class AssetStruct extends ObjectBase {
         this.parentId = (Long)in.readValue(Long.class.getClassLoader());
         this.connectingMetaId = (Long)in.readValue(Long.class.getClassLoader());
         this.connectedParentMetaId = (Long)in.readValue(Long.class.getClassLoader());
+        int dynamicDataSize = in.readInt();
+        if( dynamicDataSize > -1) {
+            this.dynamicData = new HashMap<>();
+            for (int i = 0; i < dynamicDataSize; i++) {
+                String key = in.readString();
+                StringValue value = in.readParcelable(StringValue.class.getClassLoader());
+                this.dynamicData.put(key, value);
+            }
+        }
     }
 }
 

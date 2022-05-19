@@ -70,6 +70,7 @@ public class TimeShiftedTvPartnerSettings extends ObjectBase {
 		String protectionPolicy();
 		String recoveryGracePeriod();
 		String privateCopyEnabled();
+		String defaultQuota();
 	}
 
 	/**
@@ -165,6 +166,10 @@ public class TimeShiftedTvPartnerSettings extends ObjectBase {
 	 * Is private copy enabled for the account
 	 */
 	private Boolean privateCopyEnabled;
+	/**
+	 * Quota in seconds
+	 */
+	private Integer defaultQuota;
 
 	// catchUpEnabled:
 	public Boolean getCatchUpEnabled(){
@@ -430,6 +435,18 @@ public class TimeShiftedTvPartnerSettings extends ObjectBase {
 		setToken("privateCopyEnabled", multirequestToken);
 	}
 
+	// defaultQuota:
+	public Integer getDefaultQuota(){
+		return this.defaultQuota;
+	}
+	public void setDefaultQuota(Integer defaultQuota){
+		this.defaultQuota = defaultQuota;
+	}
+
+	public void defaultQuota(String multirequestToken){
+		setToken("defaultQuota", multirequestToken);
+	}
+
 
 	public TimeShiftedTvPartnerSettings() {
 		super();
@@ -463,6 +480,7 @@ public class TimeShiftedTvPartnerSettings extends ObjectBase {
 		protectionPolicy = ProtectionPolicy.get(GsonParser.parseString(jsonObject.get("protectionPolicy")));
 		recoveryGracePeriod = GsonParser.parseInt(jsonObject.get("recoveryGracePeriod"));
 		privateCopyEnabled = GsonParser.parseBoolean(jsonObject.get("privateCopyEnabled"));
+		defaultQuota = GsonParser.parseInt(jsonObject.get("defaultQuota"));
 
 	}
 
@@ -491,6 +509,7 @@ public class TimeShiftedTvPartnerSettings extends ObjectBase {
 		kparams.add("protectionPolicy", this.protectionPolicy);
 		kparams.add("recoveryGracePeriod", this.recoveryGracePeriod);
 		kparams.add("privateCopyEnabled", this.privateCopyEnabled);
+		kparams.add("defaultQuota", this.defaultQuota);
 		return kparams;
 	}
 
@@ -532,6 +551,7 @@ public class TimeShiftedTvPartnerSettings extends ObjectBase {
         dest.writeInt(this.protectionPolicy == null ? -1 : this.protectionPolicy.ordinal());
         dest.writeValue(this.recoveryGracePeriod);
         dest.writeValue(this.privateCopyEnabled);
+        dest.writeValue(this.defaultQuota);
     }
 
     public TimeShiftedTvPartnerSettings(Parcel in) {
@@ -560,6 +580,7 @@ public class TimeShiftedTvPartnerSettings extends ObjectBase {
         this.protectionPolicy = tmpProtectionPolicy == -1 ? null : ProtectionPolicy.values()[tmpProtectionPolicy];
         this.recoveryGracePeriod = (Integer)in.readValue(Integer.class.getClassLoader());
         this.privateCopyEnabled = (Boolean)in.readValue(Boolean.class.getClassLoader());
+        this.defaultQuota = (Integer)in.readValue(Integer.class.getClassLoader());
     }
 }
 

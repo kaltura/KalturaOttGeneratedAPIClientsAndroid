@@ -30,6 +30,8 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
+import com.kaltura.client.enums.UserRoleProfile;
+import com.kaltura.client.enums.UserRoleType;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
@@ -50,6 +52,8 @@ public class UserRoleFilter extends Filter {
 	public interface Tokenizer extends Filter.Tokenizer {
 		String idIn();
 		String currentUserRoleIdsContains();
+		String typeEqual();
+		String profileEqual();
 	}
 
 	/**
@@ -60,6 +64,14 @@ public class UserRoleFilter extends Filter {
 	 * Indicates whether the results should be filtered by userId using the current
 	 */
 	private Boolean currentUserRoleIdsContains;
+	/**
+	 * User role type
+	 */
+	private UserRoleType typeEqual;
+	/**
+	 * User role profile
+	 */
+	private UserRoleProfile profileEqual;
 
 	// idIn:
 	public String getIdIn(){
@@ -85,6 +97,30 @@ public class UserRoleFilter extends Filter {
 		setToken("currentUserRoleIdsContains", multirequestToken);
 	}
 
+	// typeEqual:
+	public UserRoleType getTypeEqual(){
+		return this.typeEqual;
+	}
+	public void setTypeEqual(UserRoleType typeEqual){
+		this.typeEqual = typeEqual;
+	}
+
+	public void typeEqual(String multirequestToken){
+		setToken("typeEqual", multirequestToken);
+	}
+
+	// profileEqual:
+	public UserRoleProfile getProfileEqual(){
+		return this.profileEqual;
+	}
+	public void setProfileEqual(UserRoleProfile profileEqual){
+		this.profileEqual = profileEqual;
+	}
+
+	public void profileEqual(String multirequestToken){
+		setToken("profileEqual", multirequestToken);
+	}
+
 
 	public UserRoleFilter() {
 		super();
@@ -98,6 +134,8 @@ public class UserRoleFilter extends Filter {
 		// set members values:
 		idIn = GsonParser.parseString(jsonObject.get("idIn"));
 		currentUserRoleIdsContains = GsonParser.parseBoolean(jsonObject.get("currentUserRoleIdsContains"));
+		typeEqual = UserRoleType.get(GsonParser.parseString(jsonObject.get("typeEqual")));
+		profileEqual = UserRoleProfile.get(GsonParser.parseString(jsonObject.get("profileEqual")));
 
 	}
 
@@ -106,6 +144,8 @@ public class UserRoleFilter extends Filter {
 		kparams.add("objectType", "KalturaUserRoleFilter");
 		kparams.add("idIn", this.idIn);
 		kparams.add("currentUserRoleIdsContains", this.currentUserRoleIdsContains);
+		kparams.add("typeEqual", this.typeEqual);
+		kparams.add("profileEqual", this.profileEqual);
 		return kparams;
 	}
 
@@ -127,12 +167,18 @@ public class UserRoleFilter extends Filter {
         super.writeToParcel(dest, flags);
         dest.writeString(this.idIn);
         dest.writeValue(this.currentUserRoleIdsContains);
+        dest.writeInt(this.typeEqual == null ? -1 : this.typeEqual.ordinal());
+        dest.writeInt(this.profileEqual == null ? -1 : this.profileEqual.ordinal());
     }
 
     public UserRoleFilter(Parcel in) {
         super(in);
         this.idIn = in.readString();
         this.currentUserRoleIdsContains = (Boolean)in.readValue(Boolean.class.getClassLoader());
+        int tmpTypeEqual = in.readInt();
+        this.typeEqual = tmpTypeEqual == -1 ? null : UserRoleType.values()[tmpTypeEqual];
+        int tmpProfileEqual = in.readInt();
+        this.profileEqual = tmpProfileEqual == -1 ? null : UserRoleProfile.values()[tmpProfileEqual];
     }
 }
 

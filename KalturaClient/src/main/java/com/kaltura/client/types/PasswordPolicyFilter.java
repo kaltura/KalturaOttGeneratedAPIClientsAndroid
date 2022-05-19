@@ -45,9 +45,9 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(PasswordPolicyFilter.Tokenizer.class)
-public class PasswordPolicyFilter extends CrudFilter {
+public class PasswordPolicyFilter extends Filter {
 	
-	public interface Tokenizer extends CrudFilter.Tokenizer {
+	public interface Tokenizer extends Filter.Tokenizer {
 		String userRoleIdIn();
 	}
 

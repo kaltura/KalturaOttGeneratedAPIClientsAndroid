@@ -49,11 +49,16 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
 public class DiscountModule extends ObjectBase {
 	
 	public interface Tokenizer extends ObjectBase.Tokenizer {
+		String id();
 		String percent();
 		String startDate();
 		String endDate();
 	}
 
+	/**
+	 * Discount module identifier
+	 */
+	private Long id;
 	/**
 	 * The discount percentage
 	 */
@@ -66,6 +71,18 @@ public class DiscountModule extends ObjectBase {
 	 * The last date the discount is available
 	 */
 	private Long endDate;
+
+	// id:
+	public Long getId(){
+		return this.id;
+	}
+	public void setId(Long id){
+		this.id = id;
+	}
+
+	public void id(String multirequestToken){
+		setToken("id", multirequestToken);
+	}
 
 	// percent:
 	public Double getPercent(){
@@ -114,6 +131,7 @@ public class DiscountModule extends ObjectBase {
 		if(jsonObject == null) return;
 
 		// set members values:
+		id = GsonParser.parseLong(jsonObject.get("id"));
 		percent = GsonParser.parseDouble(jsonObject.get("percent"));
 		startDate = GsonParser.parseLong(jsonObject.get("startDate"));
 		endDate = GsonParser.parseLong(jsonObject.get("endDate"));
@@ -123,6 +141,7 @@ public class DiscountModule extends ObjectBase {
 	public Params toParams() {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaDiscountModule");
+		kparams.add("id", this.id);
 		kparams.add("percent", this.percent);
 		kparams.add("startDate", this.startDate);
 		kparams.add("endDate", this.endDate);
@@ -145,6 +164,7 @@ public class DiscountModule extends ObjectBase {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
+        dest.writeValue(this.id);
         dest.writeValue(this.percent);
         dest.writeValue(this.startDate);
         dest.writeValue(this.endDate);
@@ -152,6 +172,7 @@ public class DiscountModule extends ObjectBase {
 
     public DiscountModule(Parcel in) {
         super(in);
+        this.id = (Long)in.readValue(Long.class.getClassLoader());
         this.percent = (Double)in.readValue(Double.class.getClassLoader());
         this.startDate = (Long)in.readValue(Long.class.getClassLoader());
         this.endDate = (Long)in.readValue(Long.class.getClassLoader());

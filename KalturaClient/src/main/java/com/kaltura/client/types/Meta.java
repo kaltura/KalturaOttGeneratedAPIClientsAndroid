@@ -36,7 +36,9 @@ import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 import com.kaltura.client.utils.request.RequestBuilder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This class was generated using exec.php
@@ -65,6 +67,7 @@ public class Meta extends ObjectBase {
 		String parentId();
 		String createDate();
 		String updateDate();
+		RequestBuilder.MapTokenizer<StringValue.Tokenizer> dynamicData();
 	}
 
 	/**
@@ -115,6 +118,10 @@ public class Meta extends ObjectBase {
 	 * Specifies when was the meta last updated. Date and time represented as epoch.
 	 */
 	private Long updateDate;
+	/**
+	 * Dynamic data
+	 */
+	private Map<String, StringValue> dynamicData;
 
 	// id:
 	public String getId(){
@@ -224,6 +231,14 @@ public class Meta extends ObjectBase {
 	public Long getUpdateDate(){
 		return this.updateDate;
 	}
+	// dynamicData:
+	public Map<String, StringValue> getDynamicData(){
+		return this.dynamicData;
+	}
+	public void setDynamicData(Map<String, StringValue> dynamicData){
+		this.dynamicData = dynamicData;
+	}
+
 
 	public Meta() {
 		super();
@@ -247,6 +262,7 @@ public class Meta extends ObjectBase {
 		parentId = GsonParser.parseString(jsonObject.get("parentId"));
 		createDate = GsonParser.parseLong(jsonObject.get("createDate"));
 		updateDate = GsonParser.parseLong(jsonObject.get("updateDate"));
+		dynamicData = GsonParser.parseMap(jsonObject.getAsJsonObject("dynamicData"), StringValue.class);
 
 	}
 
@@ -261,6 +277,7 @@ public class Meta extends ObjectBase {
 		kparams.add("helpText", this.helpText);
 		kparams.add("features", this.features);
 		kparams.add("parentId", this.parentId);
+		kparams.add("dynamicData", this.dynamicData);
 		return kparams;
 	}
 
@@ -297,6 +314,15 @@ public class Meta extends ObjectBase {
         dest.writeString(this.parentId);
         dest.writeValue(this.createDate);
         dest.writeValue(this.updateDate);
+        if(this.dynamicData != null) {
+            dest.writeInt(this.dynamicData.size());
+            for (Map.Entry<String, StringValue> entry : this.dynamicData.entrySet()) {
+                dest.writeString(entry.getKey());
+                dest.writeParcelable(entry.getValue(), flags);
+            }
+        } else {
+            dest.writeInt(-1);
+        }
     }
 
     public Meta(Parcel in) {
@@ -318,6 +344,15 @@ public class Meta extends ObjectBase {
         this.parentId = in.readString();
         this.createDate = (Long)in.readValue(Long.class.getClassLoader());
         this.updateDate = (Long)in.readValue(Long.class.getClassLoader());
+        int dynamicDataSize = in.readInt();
+        if( dynamicDataSize > -1) {
+            this.dynamicData = new HashMap<>();
+            for (int i = 0; i < dynamicDataSize; i++) {
+                String key = in.readString();
+                StringValue value = in.readParcelable(StringValue.class.getClassLoader());
+                this.dynamicData.put(key, value);
+            }
+        }
     }
 }
 

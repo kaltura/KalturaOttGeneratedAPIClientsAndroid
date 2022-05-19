@@ -33,6 +33,9 @@ import com.kaltura.client.Params;
 import com.kaltura.client.enums.DrmSchemeName;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.utils.request.RequestBuilder;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class was generated using exec.php
@@ -48,6 +51,7 @@ public class DrmPlaybackPluginData extends PluginData {
 	public interface Tokenizer extends PluginData.Tokenizer {
 		String scheme();
 		String licenseURL();
+		RequestBuilder.MapTokenizer<StringValue.Tokenizer> dynamicData();
 	}
 
 	/**
@@ -58,6 +62,10 @@ public class DrmPlaybackPluginData extends PluginData {
 	 * License URL
 	 */
 	private String licenseURL;
+	/**
+	 * Dynamic data
+	 */
+	private Map<String, StringValue> dynamicData;
 
 	// scheme:
 	public DrmSchemeName getScheme(){
@@ -83,6 +91,14 @@ public class DrmPlaybackPluginData extends PluginData {
 		setToken("licenseURL", multirequestToken);
 	}
 
+	// dynamicData:
+	public Map<String, StringValue> getDynamicData(){
+		return this.dynamicData;
+	}
+	public void setDynamicData(Map<String, StringValue> dynamicData){
+		this.dynamicData = dynamicData;
+	}
+
 
 	public DrmPlaybackPluginData() {
 		super();
@@ -96,6 +112,7 @@ public class DrmPlaybackPluginData extends PluginData {
 		// set members values:
 		scheme = DrmSchemeName.get(GsonParser.parseString(jsonObject.get("scheme")));
 		licenseURL = GsonParser.parseString(jsonObject.get("licenseURL"));
+		dynamicData = GsonParser.parseMap(jsonObject.getAsJsonObject("dynamicData"), StringValue.class);
 
 	}
 
@@ -104,6 +121,7 @@ public class DrmPlaybackPluginData extends PluginData {
 		kparams.add("objectType", "KalturaDrmPlaybackPluginData");
 		kparams.add("scheme", this.scheme);
 		kparams.add("licenseURL", this.licenseURL);
+		kparams.add("dynamicData", this.dynamicData);
 		return kparams;
 	}
 
@@ -125,6 +143,15 @@ public class DrmPlaybackPluginData extends PluginData {
         super.writeToParcel(dest, flags);
         dest.writeInt(this.scheme == null ? -1 : this.scheme.ordinal());
         dest.writeString(this.licenseURL);
+        if(this.dynamicData != null) {
+            dest.writeInt(this.dynamicData.size());
+            for (Map.Entry<String, StringValue> entry : this.dynamicData.entrySet()) {
+                dest.writeString(entry.getKey());
+                dest.writeParcelable(entry.getValue(), flags);
+            }
+        } else {
+            dest.writeInt(-1);
+        }
     }
 
     public DrmPlaybackPluginData(Parcel in) {
@@ -132,6 +159,15 @@ public class DrmPlaybackPluginData extends PluginData {
         int tmpScheme = in.readInt();
         this.scheme = tmpScheme == -1 ? null : DrmSchemeName.values()[tmpScheme];
         this.licenseURL = in.readString();
+        int dynamicDataSize = in.readInt();
+        if( dynamicDataSize > -1) {
+            this.dynamicData = new HashMap<>();
+            for (int i = 0; i < dynamicDataSize; i++) {
+                String key = in.readString();
+                StringValue value = in.readParcelable(StringValue.class.getClassLoader());
+                this.dynamicData.put(key, value);
+            }
+        }
     }
 }
 

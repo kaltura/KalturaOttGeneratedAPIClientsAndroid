@@ -57,6 +57,9 @@ public class AssetStructMeta extends ObjectBase {
 		String createDate();
 		String updateDate();
 		String isInherited();
+		String isLocationTag();
+		String suppressedOrder();
+		String aliasName();
 	}
 
 	/**
@@ -93,6 +96,18 @@ public class AssetStructMeta extends ObjectBase {
 	 * Is inherited
 	 */
 	private Boolean isInherited;
+	/**
+	 * Is Location Tag
+	 */
+	private Boolean isLocationTag;
+	/**
+	 * suppressed Order, ascending
+	 */
+	private Integer suppressedOrder;
+	/**
+	 * Case sensitive alias value
+	 */
+	private String aliasName;
 
 	// assetStructId:
 	public Long getAssetStructId(){
@@ -158,6 +173,42 @@ public class AssetStructMeta extends ObjectBase {
 		setToken("isInherited", multirequestToken);
 	}
 
+	// isLocationTag:
+	public Boolean getIsLocationTag(){
+		return this.isLocationTag;
+	}
+	public void setIsLocationTag(Boolean isLocationTag){
+		this.isLocationTag = isLocationTag;
+	}
+
+	public void isLocationTag(String multirequestToken){
+		setToken("isLocationTag", multirequestToken);
+	}
+
+	// suppressedOrder:
+	public Integer getSuppressedOrder(){
+		return this.suppressedOrder;
+	}
+	public void setSuppressedOrder(Integer suppressedOrder){
+		this.suppressedOrder = suppressedOrder;
+	}
+
+	public void suppressedOrder(String multirequestToken){
+		setToken("suppressedOrder", multirequestToken);
+	}
+
+	// aliasName:
+	public String getAliasName(){
+		return this.aliasName;
+	}
+	public void setAliasName(String aliasName){
+		this.aliasName = aliasName;
+	}
+
+	public void aliasName(String multirequestToken){
+		setToken("aliasName", multirequestToken);
+	}
+
 
 	public AssetStructMeta() {
 		super();
@@ -177,6 +228,9 @@ public class AssetStructMeta extends ObjectBase {
 		createDate = GsonParser.parseLong(jsonObject.get("createDate"));
 		updateDate = GsonParser.parseLong(jsonObject.get("updateDate"));
 		isInherited = GsonParser.parseBoolean(jsonObject.get("isInherited"));
+		isLocationTag = GsonParser.parseBoolean(jsonObject.get("isLocationTag"));
+		suppressedOrder = GsonParser.parseInt(jsonObject.get("suppressedOrder"));
+		aliasName = GsonParser.parseString(jsonObject.get("aliasName"));
 
 	}
 
@@ -187,6 +241,9 @@ public class AssetStructMeta extends ObjectBase {
 		kparams.add("protectFromIngest", this.protectFromIngest);
 		kparams.add("defaultIngestValue", this.defaultIngestValue);
 		kparams.add("isInherited", this.isInherited);
+		kparams.add("isLocationTag", this.isLocationTag);
+		kparams.add("suppressedOrder", this.suppressedOrder);
+		kparams.add("aliasName", this.aliasName);
 		return kparams;
 	}
 
@@ -214,6 +271,9 @@ public class AssetStructMeta extends ObjectBase {
         dest.writeValue(this.createDate);
         dest.writeValue(this.updateDate);
         dest.writeValue(this.isInherited);
+        dest.writeValue(this.isLocationTag);
+        dest.writeValue(this.suppressedOrder);
+        dest.writeString(this.aliasName);
     }
 
     public AssetStructMeta(Parcel in) {
@@ -226,6 +286,9 @@ public class AssetStructMeta extends ObjectBase {
         this.createDate = (Long)in.readValue(Long.class.getClassLoader());
         this.updateDate = (Long)in.readValue(Long.class.getClassLoader());
         this.isInherited = (Boolean)in.readValue(Boolean.class.getClassLoader());
+        this.isLocationTag = (Boolean)in.readValue(Boolean.class.getClassLoader());
+        this.suppressedOrder = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.aliasName = in.readString();
     }
 }
 

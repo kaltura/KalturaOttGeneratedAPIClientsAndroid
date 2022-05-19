@@ -66,6 +66,8 @@ public class Household extends ObjectBase {
 		String frequencyNextUserAction();
 		String restriction();
 		String roleId();
+		String createDate();
+		String updateDate();
 	}
 
 	/**
@@ -128,6 +130,14 @@ public class Household extends ObjectBase {
 	 * suspended roleId
 	 */
 	private Integer roleId;
+	/**
+	 * create date
+	 */
+	private Long createDate;
+	/**
+	 * update date
+	 */
+	private Long updateDate;
 
 	// id:
 	public Long getId(){
@@ -221,6 +231,14 @@ public class Household extends ObjectBase {
 	public Integer getRoleId(){
 		return this.roleId;
 	}
+	// createDate:
+	public Long getCreateDate(){
+		return this.createDate;
+	}
+	// updateDate:
+	public Long getUpdateDate(){
+		return this.updateDate;
+	}
 
 	public Household() {
 		super();
@@ -247,6 +265,8 @@ public class Household extends ObjectBase {
 		frequencyNextUserAction = GsonParser.parseLong(jsonObject.get("frequencyNextUserAction"));
 		restriction = HouseholdRestriction.get(GsonParser.parseString(jsonObject.get("restriction")));
 		roleId = GsonParser.parseInt(jsonObject.get("roleId"));
+		createDate = GsonParser.parseLong(jsonObject.get("createDate"));
+		updateDate = GsonParser.parseLong(jsonObject.get("updateDate"));
 
 	}
 
@@ -291,6 +311,8 @@ public class Household extends ObjectBase {
         dest.writeValue(this.frequencyNextUserAction);
         dest.writeInt(this.restriction == null ? -1 : this.restriction.ordinal());
         dest.writeValue(this.roleId);
+        dest.writeValue(this.createDate);
+        dest.writeValue(this.updateDate);
     }
 
     public Household(Parcel in) {
@@ -312,6 +334,8 @@ public class Household extends ObjectBase {
         int tmpRestriction = in.readInt();
         this.restriction = tmpRestriction == -1 ? null : HouseholdRestriction.values()[tmpRestriction];
         this.roleId = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.createDate = (Long)in.readValue(Long.class.getClassLoader());
+        this.updateDate = (Long)in.readValue(Long.class.getClassLoader());
     }
 }
 

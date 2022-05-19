@@ -49,12 +49,17 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
 public class Price extends ObjectBase {
 	
 	public interface Tokenizer extends ObjectBase.Tokenizer {
+		String currencyId();
 		String amount();
 		String currency();
 		String currencySign();
 		String countryId();
 	}
 
+	/**
+	 * Currency ID
+	 */
+	private Long currencyId;
 	/**
 	 * Price
 	 */
@@ -72,6 +77,10 @@ public class Price extends ObjectBase {
 	 */
 	private Long countryId;
 
+	// currencyId:
+	public Long getCurrencyId(){
+		return this.currencyId;
+	}
 	// amount:
 	public Double getAmount(){
 		return this.amount;
@@ -131,6 +140,7 @@ public class Price extends ObjectBase {
 		if(jsonObject == null) return;
 
 		// set members values:
+		currencyId = GsonParser.parseLong(jsonObject.get("currencyId"));
 		amount = GsonParser.parseDouble(jsonObject.get("amount"));
 		currency = GsonParser.parseString(jsonObject.get("currency"));
 		currencySign = GsonParser.parseString(jsonObject.get("currencySign"));
@@ -164,6 +174,7 @@ public class Price extends ObjectBase {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
+        dest.writeValue(this.currencyId);
         dest.writeValue(this.amount);
         dest.writeString(this.currency);
         dest.writeString(this.currencySign);
@@ -172,6 +183,7 @@ public class Price extends ObjectBase {
 
     public Price(Parcel in) {
         super(in);
+        this.currencyId = (Long)in.readValue(Long.class.getClassLoader());
         this.amount = (Double)in.readValue(Double.class.getClassLoader());
         this.currency = in.readString();
         this.currencySign = in.readString();

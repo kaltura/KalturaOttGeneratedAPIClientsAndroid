@@ -30,6 +30,8 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
@@ -40,31 +42,74 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(CrudObject.Tokenizer.class)
-public abstract class CrudObject extends OTTObjectSupportNullable {
+@MultiRequestBuilder.Tokenizer(LineupNotificationSettings.Tokenizer.class)
+public class LineupNotificationSettings extends ObjectBase {
 	
-	public interface Tokenizer extends OTTObjectSupportNullable.Tokenizer {
+	public interface Tokenizer extends ObjectBase.Tokenizer {
+		String enabled();
+	}
+
+	/**
+	 * if lineup notifications are enabled.
+	 */
+	private Boolean enabled;
+
+	// enabled:
+	public Boolean getEnabled(){
+		return this.enabled;
+	}
+	public void setEnabled(Boolean enabled){
+		this.enabled = enabled;
+	}
+
+	public void enabled(String multirequestToken){
+		setToken("enabled", multirequestToken);
 	}
 
 
-
-	public CrudObject() {
+	public LineupNotificationSettings() {
 		super();
 	}
 
-	public CrudObject(JsonObject jsonObject) throws APIException {
+	public LineupNotificationSettings(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		enabled = GsonParser.parseBoolean(jsonObject.get("enabled"));
+
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaCrudObject");
+		kparams.add("objectType", "KalturaLineupNotificationSettings");
+		kparams.add("enabled", this.enabled);
 		return kparams;
 	}
 
 
-    public CrudObject(Parcel in) {
+    public static final Creator<LineupNotificationSettings> CREATOR = new Creator<LineupNotificationSettings>() {
+        @Override
+        public LineupNotificationSettings createFromParcel(Parcel source) {
+            return new LineupNotificationSettings(source);
+        }
+
+        @Override
+        public LineupNotificationSettings[] newArray(int size) {
+            return new LineupNotificationSettings[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeValue(this.enabled);
+    }
+
+    public LineupNotificationSettings(Parcel in) {
         super(in);
+        this.enabled = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
 

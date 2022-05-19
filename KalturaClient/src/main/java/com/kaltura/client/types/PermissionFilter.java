@@ -45,9 +45,9 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(PermissionFilter.Tokenizer.class)
-public class PermissionFilter extends Filter {
+public class PermissionFilter extends BasePermissionFilter {
 	
-	public interface Tokenizer extends Filter.Tokenizer {
+	public interface Tokenizer extends BasePermissionFilter.Tokenizer {
 		String currentUserPermissionsContains();
 		String roleIdIn();
 	}

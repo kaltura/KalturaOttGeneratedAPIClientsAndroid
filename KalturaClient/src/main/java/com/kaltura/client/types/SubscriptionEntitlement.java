@@ -30,6 +30,7 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
+import com.kaltura.client.types.EntitlementPriceDetails;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
@@ -57,6 +58,7 @@ public class SubscriptionEntitlement extends Entitlement {
 		String scheduledSubscriptionId();
 		String unifiedPaymentId();
 		String isSuspended();
+		EntitlementPriceDetails.Tokenizer priceDetails();
 	}
 
 	/**
@@ -96,6 +98,10 @@ public class SubscriptionEntitlement extends Entitlement {
 	 * Indicates if the subscription suspended
 	 */
 	private Boolean isSuspended;
+	/**
+	 * Price details
+	 */
+	private EntitlementPriceDetails priceDetails;
 
 	// nextRenewalDate:
 	public Long getNextRenewalDate(){
@@ -149,6 +155,10 @@ public class SubscriptionEntitlement extends Entitlement {
 	public Boolean getIsSuspended(){
 		return this.isSuspended;
 	}
+	// priceDetails:
+	public EntitlementPriceDetails getPriceDetails(){
+		return this.priceDetails;
+	}
 
 	public SubscriptionEntitlement() {
 		super();
@@ -169,6 +179,7 @@ public class SubscriptionEntitlement extends Entitlement {
 		scheduledSubscriptionId = GsonParser.parseLong(jsonObject.get("scheduledSubscriptionId"));
 		unifiedPaymentId = GsonParser.parseLong(jsonObject.get("unifiedPaymentId"));
 		isSuspended = GsonParser.parseBoolean(jsonObject.get("isSuspended"));
+		priceDetails = GsonParser.parseObject(jsonObject.getAsJsonObject("priceDetails"), EntitlementPriceDetails.class);
 
 	}
 
@@ -205,6 +216,7 @@ public class SubscriptionEntitlement extends Entitlement {
         dest.writeValue(this.scheduledSubscriptionId);
         dest.writeValue(this.unifiedPaymentId);
         dest.writeValue(this.isSuspended);
+        dest.writeParcelable(this.priceDetails, flags);
     }
 
     public SubscriptionEntitlement(Parcel in) {
@@ -218,6 +230,7 @@ public class SubscriptionEntitlement extends Entitlement {
         this.scheduledSubscriptionId = (Long)in.readValue(Long.class.getClassLoader());
         this.unifiedPaymentId = (Long)in.readValue(Long.class.getClassLoader());
         this.isSuspended = (Boolean)in.readValue(Boolean.class.getClassLoader());
+        this.priceDetails = in.readParcelable(EntitlementPriceDetails.class.getClassLoader());
     }
 }
 

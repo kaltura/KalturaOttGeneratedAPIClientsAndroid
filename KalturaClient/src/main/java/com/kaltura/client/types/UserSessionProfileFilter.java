@@ -30,6 +30,7 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
+import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
@@ -39,32 +40,78 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
+/**
+ * User Session Profile filter
+ */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(CrudFilter.Tokenizer.class)
-public abstract class CrudFilter extends Filter {
+@MultiRequestBuilder.Tokenizer(UserSessionProfileFilter.Tokenizer.class)
+public class UserSessionProfileFilter extends Filter {
 	
 	public interface Tokenizer extends Filter.Tokenizer {
+		String idEqual();
+	}
+
+	/**
+	 * UserSessionProfile identifier to filter by
+	 */
+	private Long idEqual;
+
+	// idEqual:
+	public Long getIdEqual(){
+		return this.idEqual;
+	}
+	public void setIdEqual(Long idEqual){
+		this.idEqual = idEqual;
+	}
+
+	public void idEqual(String multirequestToken){
+		setToken("idEqual", multirequestToken);
 	}
 
 
-
-	public CrudFilter() {
+	public UserSessionProfileFilter() {
 		super();
 	}
 
-	public CrudFilter(JsonObject jsonObject) throws APIException {
+	public UserSessionProfileFilter(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		idEqual = GsonParser.parseLong(jsonObject.get("idEqual"));
+
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaCrudFilter");
+		kparams.add("objectType", "KalturaUserSessionProfileFilter");
+		kparams.add("idEqual", this.idEqual);
 		return kparams;
 	}
 
 
-    public CrudFilter(Parcel in) {
+    public static final Creator<UserSessionProfileFilter> CREATOR = new Creator<UserSessionProfileFilter>() {
+        @Override
+        public UserSessionProfileFilter createFromParcel(Parcel source) {
+            return new UserSessionProfileFilter(source);
+        }
+
+        @Override
+        public UserSessionProfileFilter[] newArray(int size) {
+            return new UserSessionProfileFilter[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeValue(this.idEqual);
+    }
+
+    public UserSessionProfileFilter(Parcel in) {
         super(in);
+        this.idEqual = (Long)in.readValue(Long.class.getClassLoader());
     }
 }
 

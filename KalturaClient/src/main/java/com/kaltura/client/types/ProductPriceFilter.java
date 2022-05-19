@@ -50,6 +50,7 @@ public class ProductPriceFilter extends Filter {
 		String collectionIdIn();
 		String isLowest();
 		String couponCodeEqual();
+		String programAssetGroupOfferIdIn();
 	}
 
 	/**
@@ -72,6 +73,10 @@ public class ProductPriceFilter extends Filter {
 	 * Discount coupon code
 	 */
 	private String couponCodeEqual;
+	/**
+	 * Comma separated ProgramAssetGroupOffer identifiers
+	 */
+	private String programAssetGroupOfferIdIn;
 
 	// subscriptionIdIn:
 	public String getSubscriptionIdIn(){
@@ -133,6 +138,18 @@ public class ProductPriceFilter extends Filter {
 		setToken("couponCodeEqual", multirequestToken);
 	}
 
+	// programAssetGroupOfferIdIn:
+	public String getProgramAssetGroupOfferIdIn(){
+		return this.programAssetGroupOfferIdIn;
+	}
+	public void setProgramAssetGroupOfferIdIn(String programAssetGroupOfferIdIn){
+		this.programAssetGroupOfferIdIn = programAssetGroupOfferIdIn;
+	}
+
+	public void programAssetGroupOfferIdIn(String multirequestToken){
+		setToken("programAssetGroupOfferIdIn", multirequestToken);
+	}
+
 
 	public ProductPriceFilter() {
 		super();
@@ -149,6 +166,7 @@ public class ProductPriceFilter extends Filter {
 		collectionIdIn = GsonParser.parseString(jsonObject.get("collectionIdIn"));
 		isLowest = GsonParser.parseBoolean(jsonObject.get("isLowest"));
 		couponCodeEqual = GsonParser.parseString(jsonObject.get("couponCodeEqual"));
+		programAssetGroupOfferIdIn = GsonParser.parseString(jsonObject.get("programAssetGroupOfferIdIn"));
 
 	}
 
@@ -160,6 +178,7 @@ public class ProductPriceFilter extends Filter {
 		kparams.add("collectionIdIn", this.collectionIdIn);
 		kparams.add("isLowest", this.isLowest);
 		kparams.add("couponCodeEqual", this.couponCodeEqual);
+		kparams.add("programAssetGroupOfferIdIn", this.programAssetGroupOfferIdIn);
 		return kparams;
 	}
 
@@ -184,6 +203,7 @@ public class ProductPriceFilter extends Filter {
         dest.writeString(this.collectionIdIn);
         dest.writeValue(this.isLowest);
         dest.writeString(this.couponCodeEqual);
+        dest.writeString(this.programAssetGroupOfferIdIn);
     }
 
     public ProductPriceFilter(Parcel in) {
@@ -193,6 +213,7 @@ public class ProductPriceFilter extends Filter {
         this.collectionIdIn = in.readString();
         this.isLowest = (Boolean)in.readValue(Boolean.class.getClassLoader());
         this.couponCodeEqual = in.readString();
+        this.programAssetGroupOfferIdIn = in.readString();
     }
 }
 

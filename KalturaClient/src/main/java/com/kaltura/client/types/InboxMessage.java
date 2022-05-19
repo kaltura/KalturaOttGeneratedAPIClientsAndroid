@@ -54,6 +54,7 @@ public class InboxMessage extends ObjectBase {
 		String type();
 		String createdAt();
 		String url();
+		String campaignId();
 	}
 
 	/**
@@ -80,6 +81,10 @@ public class InboxMessage extends ObjectBase {
 	 * url
 	 */
 	private String url;
+	/**
+	 * campaignId
+	 */
+	private Long campaignId;
 
 	// id:
 	public String getId(){
@@ -129,6 +134,10 @@ public class InboxMessage extends ObjectBase {
 		setToken("url", multirequestToken);
 	}
 
+	// campaignId:
+	public Long getCampaignId(){
+		return this.campaignId;
+	}
 
 	public InboxMessage() {
 		super();
@@ -146,6 +155,7 @@ public class InboxMessage extends ObjectBase {
 		type = InboxMessageType.get(GsonParser.parseString(jsonObject.get("type")));
 		createdAt = GsonParser.parseLong(jsonObject.get("createdAt"));
 		url = GsonParser.parseString(jsonObject.get("url"));
+		campaignId = GsonParser.parseLong(jsonObject.get("campaignId"));
 
 	}
 
@@ -180,6 +190,7 @@ public class InboxMessage extends ObjectBase {
         dest.writeInt(this.type == null ? -1 : this.type.ordinal());
         dest.writeValue(this.createdAt);
         dest.writeString(this.url);
+        dest.writeValue(this.campaignId);
     }
 
     public InboxMessage(Parcel in) {
@@ -192,6 +203,7 @@ public class InboxMessage extends ObjectBase {
         this.type = tmpType == -1 ? null : InboxMessageType.values()[tmpType];
         this.createdAt = (Long)in.readValue(Long.class.getClassLoader());
         this.url = in.readString();
+        this.campaignId = (Long)in.readValue(Long.class.getClassLoader());
     }
 }
 

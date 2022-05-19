@@ -30,7 +30,6 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
@@ -46,9 +45,9 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(BaseChannel.Tokenizer.class)
-public class BaseChannel extends ObjectBase {
+public class BaseChannel extends OTTObjectSupportNullable {
 	
-	public interface Tokenizer extends ObjectBase.Tokenizer {
+	public interface Tokenizer extends OTTObjectSupportNullable.Tokenizer {
 		String id();
 	}
 
@@ -61,6 +60,14 @@ public class BaseChannel extends ObjectBase {
 	public Long getId(){
 		return this.id;
 	}
+	public void setId(Long id){
+		this.id = id;
+	}
+
+	public void id(String multirequestToken){
+		setToken("id", multirequestToken);
+	}
+
 
 	public BaseChannel() {
 		super();
@@ -79,6 +86,7 @@ public class BaseChannel extends ObjectBase {
 	public Params toParams() {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaBaseChannel");
+		kparams.add("id", this.id);
 		return kparams;
 	}
 

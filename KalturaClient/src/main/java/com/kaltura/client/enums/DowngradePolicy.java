@@ -35,7 +35,8 @@ package com.kaltura.client.enums;
  */
 public enum DowngradePolicy implements EnumAsString {
 	LIFO("LIFO"),
-	FIFO("FIFO");
+	FIFO("FIFO"),
+	ACTIVE_DATE("ACTIVE_DATE");
 
 	private String value;
 

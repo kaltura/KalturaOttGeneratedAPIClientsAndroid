@@ -63,11 +63,13 @@ public class Channel extends BaseChannel {
 		String oldDescription();
 		String isActive();
 		ChannelOrder.Tokenizer orderBy();
+		RequestBuilder.ListTokenizer<BaseChannelOrder.Tokenizer> orderingParametersEqual();
 		String createDate();
 		String updateDate();
 		String supportSegmentBasedOrdering();
 		String assetUserRuleId();
 		RequestBuilder.MapTokenizer<StringValue.Tokenizer> metaData();
+		String virtualAssetId();
 	}
 
 	/**
@@ -107,6 +109,10 @@ public class Channel extends BaseChannel {
 	 */
 	private ChannelOrder orderBy;
 	/**
+	 * Parameters for asset list sorting.
+	 */
+	private List<BaseChannelOrder> orderingParametersEqual;
+	/**
 	 * Specifies when was the Channel was created. Date and time represented as epoch.
 	 */
 	private Long createDate;
@@ -127,6 +133,10 @@ public class Channel extends BaseChannel {
 	 * key/value map field for extra data
 	 */
 	private Map<String, StringValue> metaData;
+	/**
+	 * Virtual asset id
+	 */
+	private Long virtualAssetId;
 
 	// name:
 	public String getName(){
@@ -208,6 +218,14 @@ public class Channel extends BaseChannel {
 		this.orderBy = orderBy;
 	}
 
+	// orderingParametersEqual:
+	public List<BaseChannelOrder> getOrderingParametersEqual(){
+		return this.orderingParametersEqual;
+	}
+	public void setOrderingParametersEqual(List<BaseChannelOrder> orderingParametersEqual){
+		this.orderingParametersEqual = orderingParametersEqual;
+	}
+
 	// createDate:
 	public Long getCreateDate(){
 		return this.createDate;
@@ -248,6 +266,10 @@ public class Channel extends BaseChannel {
 		this.metaData = metaData;
 	}
 
+	// virtualAssetId:
+	public Long getVirtualAssetId(){
+		return this.virtualAssetId;
+	}
 
 	public Channel() {
 		super();
@@ -268,11 +290,13 @@ public class Channel extends BaseChannel {
 		oldDescription = GsonParser.parseString(jsonObject.get("oldDescription"));
 		isActive = GsonParser.parseBoolean(jsonObject.get("isActive"));
 		orderBy = GsonParser.parseObject(jsonObject.getAsJsonObject("orderBy"), ChannelOrder.class);
+		orderingParametersEqual = GsonParser.parseArray(jsonObject.getAsJsonArray("orderingParametersEqual"), BaseChannelOrder.class);
 		createDate = GsonParser.parseLong(jsonObject.get("createDate"));
 		updateDate = GsonParser.parseLong(jsonObject.get("updateDate"));
 		supportSegmentBasedOrdering = GsonParser.parseBoolean(jsonObject.get("supportSegmentBasedOrdering"));
 		assetUserRuleId = GsonParser.parseLong(jsonObject.get("assetUserRuleId"));
 		metaData = GsonParser.parseMap(jsonObject.getAsJsonObject("metaData"), StringValue.class);
+		virtualAssetId = GsonParser.parseLong(jsonObject.get("virtualAssetId"));
 
 	}
 
@@ -286,6 +310,7 @@ public class Channel extends BaseChannel {
 		kparams.add("oldDescription", this.oldDescription);
 		kparams.add("isActive", this.isActive);
 		kparams.add("orderBy", this.orderBy);
+		kparams.add("orderingParametersEqual", this.orderingParametersEqual);
 		kparams.add("supportSegmentBasedOrdering", this.supportSegmentBasedOrdering);
 		kparams.add("assetUserRuleId", this.assetUserRuleId);
 		kparams.add("metaData", this.metaData);
@@ -327,6 +352,12 @@ public class Channel extends BaseChannel {
         dest.writeString(this.oldDescription);
         dest.writeValue(this.isActive);
         dest.writeParcelable(this.orderBy, flags);
+        if(this.orderingParametersEqual != null) {
+            dest.writeInt(this.orderingParametersEqual.size());
+            dest.writeList(this.orderingParametersEqual);
+        } else {
+            dest.writeInt(-1);
+        }
         dest.writeValue(this.createDate);
         dest.writeValue(this.updateDate);
         dest.writeValue(this.supportSegmentBasedOrdering);
@@ -340,6 +371,7 @@ public class Channel extends BaseChannel {
         } else {
             dest.writeInt(-1);
         }
+        dest.writeValue(this.virtualAssetId);
     }
 
     public Channel(Parcel in) {
@@ -361,6 +393,11 @@ public class Channel extends BaseChannel {
         this.oldDescription = in.readString();
         this.isActive = (Boolean)in.readValue(Boolean.class.getClassLoader());
         this.orderBy = in.readParcelable(ChannelOrder.class.getClassLoader());
+        int orderingParametersEqualSize = in.readInt();
+        if( orderingParametersEqualSize > -1) {
+            this.orderingParametersEqual = new ArrayList<>();
+            in.readList(this.orderingParametersEqual, BaseChannelOrder.class.getClassLoader());
+        }
         this.createDate = (Long)in.readValue(Long.class.getClassLoader());
         this.updateDate = (Long)in.readValue(Long.class.getClassLoader());
         this.supportSegmentBasedOrdering = (Boolean)in.readValue(Boolean.class.getClassLoader());
@@ -374,6 +411,7 @@ public class Channel extends BaseChannel {
                 this.metaData.put(key, value);
             }
         }
+        this.virtualAssetId = (Long)in.readValue(Long.class.getClassLoader());
     }
 }
 

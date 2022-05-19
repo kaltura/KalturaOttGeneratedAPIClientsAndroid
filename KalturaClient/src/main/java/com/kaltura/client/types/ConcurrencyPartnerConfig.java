@@ -52,6 +52,7 @@ public class ConcurrencyPartnerConfig extends PartnerConfiguration {
 		String deviceFamilyIds();
 		String evictionPolicy();
 		String concurrencyThresholdInSeconds();
+		String revokeOnDeviceDelete();
 	}
 
 	/**
@@ -66,6 +67,10 @@ public class ConcurrencyPartnerConfig extends PartnerConfiguration {
 	 * Concurrency threshold in seconds
 	 */
 	private Long concurrencyThresholdInSeconds;
+	/**
+	 * Revoke on device delete
+	 */
+	private Boolean revokeOnDeviceDelete;
 
 	// deviceFamilyIds:
 	public String getDeviceFamilyIds(){
@@ -103,6 +108,18 @@ public class ConcurrencyPartnerConfig extends PartnerConfiguration {
 		setToken("concurrencyThresholdInSeconds", multirequestToken);
 	}
 
+	// revokeOnDeviceDelete:
+	public Boolean getRevokeOnDeviceDelete(){
+		return this.revokeOnDeviceDelete;
+	}
+	public void setRevokeOnDeviceDelete(Boolean revokeOnDeviceDelete){
+		this.revokeOnDeviceDelete = revokeOnDeviceDelete;
+	}
+
+	public void revokeOnDeviceDelete(String multirequestToken){
+		setToken("revokeOnDeviceDelete", multirequestToken);
+	}
+
 
 	public ConcurrencyPartnerConfig() {
 		super();
@@ -117,6 +134,7 @@ public class ConcurrencyPartnerConfig extends PartnerConfiguration {
 		deviceFamilyIds = GsonParser.parseString(jsonObject.get("deviceFamilyIds"));
 		evictionPolicy = EvictionPolicyType.get(GsonParser.parseString(jsonObject.get("evictionPolicy")));
 		concurrencyThresholdInSeconds = GsonParser.parseLong(jsonObject.get("concurrencyThresholdInSeconds"));
+		revokeOnDeviceDelete = GsonParser.parseBoolean(jsonObject.get("revokeOnDeviceDelete"));
 
 	}
 
@@ -126,6 +144,7 @@ public class ConcurrencyPartnerConfig extends PartnerConfiguration {
 		kparams.add("deviceFamilyIds", this.deviceFamilyIds);
 		kparams.add("evictionPolicy", this.evictionPolicy);
 		kparams.add("concurrencyThresholdInSeconds", this.concurrencyThresholdInSeconds);
+		kparams.add("revokeOnDeviceDelete", this.revokeOnDeviceDelete);
 		return kparams;
 	}
 
@@ -148,6 +167,7 @@ public class ConcurrencyPartnerConfig extends PartnerConfiguration {
         dest.writeString(this.deviceFamilyIds);
         dest.writeInt(this.evictionPolicy == null ? -1 : this.evictionPolicy.ordinal());
         dest.writeValue(this.concurrencyThresholdInSeconds);
+        dest.writeValue(this.revokeOnDeviceDelete);
     }
 
     public ConcurrencyPartnerConfig(Parcel in) {
@@ -156,6 +176,7 @@ public class ConcurrencyPartnerConfig extends PartnerConfiguration {
         int tmpEvictionPolicy = in.readInt();
         this.evictionPolicy = tmpEvictionPolicy == -1 ? null : EvictionPolicyType.values()[tmpEvictionPolicy];
         this.concurrencyThresholdInSeconds = (Long)in.readValue(Long.class.getClassLoader());
+        this.revokeOnDeviceDelete = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
 

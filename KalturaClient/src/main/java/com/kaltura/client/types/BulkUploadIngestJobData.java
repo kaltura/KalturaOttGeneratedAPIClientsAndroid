@@ -49,6 +49,7 @@ public class BulkUploadIngestJobData extends BulkUploadJobData {
 	
 	public interface Tokenizer extends BulkUploadJobData.Tokenizer {
 		String ingestProfileId();
+		String disableEpgNotification();
 	}
 
 	/**
@@ -56,6 +57,11 @@ public class BulkUploadIngestJobData extends BulkUploadJobData {
 	    Ingest profiles are created separately using the ingest profile service
 	 */
 	private Integer ingestProfileId;
+	/**
+	 * By default, after the successful ingest, devices will be notified about changes
+	  in epg channels.              This parameter disables this notification.
+	 */
+	private Boolean disableEpgNotification;
 
 	// ingestProfileId:
 	public Integer getIngestProfileId(){
@@ -67,6 +73,18 @@ public class BulkUploadIngestJobData extends BulkUploadJobData {
 
 	public void ingestProfileId(String multirequestToken){
 		setToken("ingestProfileId", multirequestToken);
+	}
+
+	// disableEpgNotification:
+	public Boolean getDisableEpgNotification(){
+		return this.disableEpgNotification;
+	}
+	public void setDisableEpgNotification(Boolean disableEpgNotification){
+		this.disableEpgNotification = disableEpgNotification;
+	}
+
+	public void disableEpgNotification(String multirequestToken){
+		setToken("disableEpgNotification", multirequestToken);
 	}
 
 
@@ -81,6 +99,7 @@ public class BulkUploadIngestJobData extends BulkUploadJobData {
 
 		// set members values:
 		ingestProfileId = GsonParser.parseInt(jsonObject.get("ingestProfileId"));
+		disableEpgNotification = GsonParser.parseBoolean(jsonObject.get("disableEpgNotification"));
 
 	}
 
@@ -88,6 +107,7 @@ public class BulkUploadIngestJobData extends BulkUploadJobData {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaBulkUploadIngestJobData");
 		kparams.add("ingestProfileId", this.ingestProfileId);
+		kparams.add("disableEpgNotification", this.disableEpgNotification);
 		return kparams;
 	}
 
@@ -108,11 +128,13 @@ public class BulkUploadIngestJobData extends BulkUploadJobData {
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeValue(this.ingestProfileId);
+        dest.writeValue(this.disableEpgNotification);
     }
 
     public BulkUploadIngestJobData(Parcel in) {
         super(in);
         this.ingestProfileId = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.disableEpgNotification = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
 

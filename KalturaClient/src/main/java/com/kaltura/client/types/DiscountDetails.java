@@ -57,6 +57,8 @@ public class DiscountDetails extends ObjectBase {
 		RequestBuilder.ListTokenizer<Discount.Tokenizer> multiCurrencyDiscount();
 		String startDate();
 		String endDate();
+		String whenAlgoTimes();
+		String whenAlgoType();
 	}
 
 	/**
@@ -79,6 +81,14 @@ public class DiscountDetails extends ObjectBase {
 	 * End date represented as epoch
 	 */
 	private Long endDate;
+	/**
+	 * End date represented as epoch
+	 */
+	private Integer whenAlgoTimes;
+	/**
+	 * End date represented as epoch
+	 */
+	private Integer whenAlgoType;
 
 	// id:
 	public Integer getId(){
@@ -128,6 +138,30 @@ public class DiscountDetails extends ObjectBase {
 		setToken("endDate", multirequestToken);
 	}
 
+	// whenAlgoTimes:
+	public Integer getWhenAlgoTimes(){
+		return this.whenAlgoTimes;
+	}
+	public void setWhenAlgoTimes(Integer whenAlgoTimes){
+		this.whenAlgoTimes = whenAlgoTimes;
+	}
+
+	public void whenAlgoTimes(String multirequestToken){
+		setToken("whenAlgoTimes", multirequestToken);
+	}
+
+	// whenAlgoType:
+	public Integer getWhenAlgoType(){
+		return this.whenAlgoType;
+	}
+	public void setWhenAlgoType(Integer whenAlgoType){
+		this.whenAlgoType = whenAlgoType;
+	}
+
+	public void whenAlgoType(String multirequestToken){
+		setToken("whenAlgoType", multirequestToken);
+	}
+
 
 	public DiscountDetails() {
 		super();
@@ -144,6 +178,8 @@ public class DiscountDetails extends ObjectBase {
 		multiCurrencyDiscount = GsonParser.parseArray(jsonObject.getAsJsonArray("multiCurrencyDiscount"), Discount.class);
 		startDate = GsonParser.parseLong(jsonObject.get("startDate"));
 		endDate = GsonParser.parseLong(jsonObject.get("endDate"));
+		whenAlgoTimes = GsonParser.parseInt(jsonObject.get("whenAlgoTimes"));
+		whenAlgoType = GsonParser.parseInt(jsonObject.get("whenAlgoType"));
 
 	}
 
@@ -154,6 +190,8 @@ public class DiscountDetails extends ObjectBase {
 		kparams.add("multiCurrencyDiscount", this.multiCurrencyDiscount);
 		kparams.add("startDate", this.startDate);
 		kparams.add("endDate", this.endDate);
+		kparams.add("whenAlgoTimes", this.whenAlgoTimes);
+		kparams.add("whenAlgoType", this.whenAlgoType);
 		return kparams;
 	}
 
@@ -183,6 +221,8 @@ public class DiscountDetails extends ObjectBase {
         }
         dest.writeValue(this.startDate);
         dest.writeValue(this.endDate);
+        dest.writeValue(this.whenAlgoTimes);
+        dest.writeValue(this.whenAlgoType);
     }
 
     public DiscountDetails(Parcel in) {
@@ -196,6 +236,8 @@ public class DiscountDetails extends ObjectBase {
         }
         this.startDate = (Long)in.readValue(Long.class.getClassLoader());
         this.endDate = (Long)in.readValue(Long.class.getClassLoader());
+        this.whenAlgoTimes = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.whenAlgoType = (Integer)in.readValue(Integer.class.getClassLoader());
     }
 }
 

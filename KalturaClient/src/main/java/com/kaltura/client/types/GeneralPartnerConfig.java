@@ -32,6 +32,7 @@ import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.enums.DeleteMediaPolicy;
 import com.kaltura.client.enums.DowngradePolicy;
+import com.kaltura.client.enums.SuspensionProfileInheritanceType;
 import com.kaltura.client.types.RollingDeviceRemovalData;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
@@ -58,12 +59,18 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
 		String mainCurrency();
 		String secondaryCurrencies();
 		String downgradePolicy();
+		String downgradePriorityFamilyIds();
 		String mailSettings();
 		String dateFormat();
 		String householdLimitationModule();
 		String enableRegionFiltering();
 		String defaultRegion();
 		RollingDeviceRemovalData.Tokenizer rollingDeviceData();
+		String linearWatchHistoryThreshold();
+		String finishedPercentThreshold();
+		String suspensionProfileInheritanceType();
+		String allowDeviceMobility();
+		String enableMultiLcns();
 	}
 
 	/**
@@ -95,6 +102,11 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
 	 */
 	private DowngradePolicy downgradePolicy;
 	/**
+	 * Priority Family Ids to remove devices on downgrade (first in the list first to
+	  remove)
+	 */
+	private String downgradePriorityFamilyIds;
+	/**
 	 * Mail settings
 	 */
 	private String mailSettings;
@@ -118,6 +130,26 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
 	 * Rolling Device Policy
 	 */
 	private RollingDeviceRemovalData rollingDeviceData;
+	/**
+	 * minimum bookmark position of a linear channel to be included in a watch history
+	 */
+	private Integer linearWatchHistoryThreshold;
+	/**
+	 * Finished PercentThreshold
+	 */
+	private Integer finishedPercentThreshold;
+	/**
+	 * Suspension Profile Inheritance
+	 */
+	private SuspensionProfileInheritanceType suspensionProfileInheritanceType;
+	/**
+	 * Allow Device Mobility
+	 */
+	private Boolean allowDeviceMobility;
+	/**
+	 * Enable multi LCNs per linear channel
+	 */
+	private Boolean enableMultiLcns;
 
 	// partnerName:
 	public String getPartnerName(){
@@ -203,6 +235,18 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
 		setToken("downgradePolicy", multirequestToken);
 	}
 
+	// downgradePriorityFamilyIds:
+	public String getDowngradePriorityFamilyIds(){
+		return this.downgradePriorityFamilyIds;
+	}
+	public void setDowngradePriorityFamilyIds(String downgradePriorityFamilyIds){
+		this.downgradePriorityFamilyIds = downgradePriorityFamilyIds;
+	}
+
+	public void downgradePriorityFamilyIds(String multirequestToken){
+		setToken("downgradePriorityFamilyIds", multirequestToken);
+	}
+
 	// mailSettings:
 	public String getMailSettings(){
 		return this.mailSettings;
@@ -271,6 +315,66 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
 		this.rollingDeviceData = rollingDeviceData;
 	}
 
+	// linearWatchHistoryThreshold:
+	public Integer getLinearWatchHistoryThreshold(){
+		return this.linearWatchHistoryThreshold;
+	}
+	public void setLinearWatchHistoryThreshold(Integer linearWatchHistoryThreshold){
+		this.linearWatchHistoryThreshold = linearWatchHistoryThreshold;
+	}
+
+	public void linearWatchHistoryThreshold(String multirequestToken){
+		setToken("linearWatchHistoryThreshold", multirequestToken);
+	}
+
+	// finishedPercentThreshold:
+	public Integer getFinishedPercentThreshold(){
+		return this.finishedPercentThreshold;
+	}
+	public void setFinishedPercentThreshold(Integer finishedPercentThreshold){
+		this.finishedPercentThreshold = finishedPercentThreshold;
+	}
+
+	public void finishedPercentThreshold(String multirequestToken){
+		setToken("finishedPercentThreshold", multirequestToken);
+	}
+
+	// suspensionProfileInheritanceType:
+	public SuspensionProfileInheritanceType getSuspensionProfileInheritanceType(){
+		return this.suspensionProfileInheritanceType;
+	}
+	public void setSuspensionProfileInheritanceType(SuspensionProfileInheritanceType suspensionProfileInheritanceType){
+		this.suspensionProfileInheritanceType = suspensionProfileInheritanceType;
+	}
+
+	public void suspensionProfileInheritanceType(String multirequestToken){
+		setToken("suspensionProfileInheritanceType", multirequestToken);
+	}
+
+	// allowDeviceMobility:
+	public Boolean getAllowDeviceMobility(){
+		return this.allowDeviceMobility;
+	}
+	public void setAllowDeviceMobility(Boolean allowDeviceMobility){
+		this.allowDeviceMobility = allowDeviceMobility;
+	}
+
+	public void allowDeviceMobility(String multirequestToken){
+		setToken("allowDeviceMobility", multirequestToken);
+	}
+
+	// enableMultiLcns:
+	public Boolean getEnableMultiLcns(){
+		return this.enableMultiLcns;
+	}
+	public void setEnableMultiLcns(Boolean enableMultiLcns){
+		this.enableMultiLcns = enableMultiLcns;
+	}
+
+	public void enableMultiLcns(String multirequestToken){
+		setToken("enableMultiLcns", multirequestToken);
+	}
+
 
 	public GeneralPartnerConfig() {
 		super();
@@ -289,12 +393,18 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
 		mainCurrency = GsonParser.parseInt(jsonObject.get("mainCurrency"));
 		secondaryCurrencies = GsonParser.parseString(jsonObject.get("secondaryCurrencies"));
 		downgradePolicy = DowngradePolicy.get(GsonParser.parseString(jsonObject.get("downgradePolicy")));
+		downgradePriorityFamilyIds = GsonParser.parseString(jsonObject.get("downgradePriorityFamilyIds"));
 		mailSettings = GsonParser.parseString(jsonObject.get("mailSettings"));
 		dateFormat = GsonParser.parseString(jsonObject.get("dateFormat"));
 		householdLimitationModule = GsonParser.parseInt(jsonObject.get("householdLimitationModule"));
 		enableRegionFiltering = GsonParser.parseBoolean(jsonObject.get("enableRegionFiltering"));
 		defaultRegion = GsonParser.parseInt(jsonObject.get("defaultRegion"));
 		rollingDeviceData = GsonParser.parseObject(jsonObject.getAsJsonObject("rollingDeviceData"), RollingDeviceRemovalData.class);
+		linearWatchHistoryThreshold = GsonParser.parseInt(jsonObject.get("linearWatchHistoryThreshold"));
+		finishedPercentThreshold = GsonParser.parseInt(jsonObject.get("finishedPercentThreshold"));
+		suspensionProfileInheritanceType = SuspensionProfileInheritanceType.get(GsonParser.parseString(jsonObject.get("suspensionProfileInheritanceType")));
+		allowDeviceMobility = GsonParser.parseBoolean(jsonObject.get("allowDeviceMobility"));
+		enableMultiLcns = GsonParser.parseBoolean(jsonObject.get("enableMultiLcns"));
 
 	}
 
@@ -308,12 +418,18 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
 		kparams.add("mainCurrency", this.mainCurrency);
 		kparams.add("secondaryCurrencies", this.secondaryCurrencies);
 		kparams.add("downgradePolicy", this.downgradePolicy);
+		kparams.add("downgradePriorityFamilyIds", this.downgradePriorityFamilyIds);
 		kparams.add("mailSettings", this.mailSettings);
 		kparams.add("dateFormat", this.dateFormat);
 		kparams.add("householdLimitationModule", this.householdLimitationModule);
 		kparams.add("enableRegionFiltering", this.enableRegionFiltering);
 		kparams.add("defaultRegion", this.defaultRegion);
 		kparams.add("rollingDeviceData", this.rollingDeviceData);
+		kparams.add("linearWatchHistoryThreshold", this.linearWatchHistoryThreshold);
+		kparams.add("finishedPercentThreshold", this.finishedPercentThreshold);
+		kparams.add("suspensionProfileInheritanceType", this.suspensionProfileInheritanceType);
+		kparams.add("allowDeviceMobility", this.allowDeviceMobility);
+		kparams.add("enableMultiLcns", this.enableMultiLcns);
 		return kparams;
 	}
 
@@ -340,12 +456,18 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
         dest.writeValue(this.mainCurrency);
         dest.writeString(this.secondaryCurrencies);
         dest.writeInt(this.downgradePolicy == null ? -1 : this.downgradePolicy.ordinal());
+        dest.writeString(this.downgradePriorityFamilyIds);
         dest.writeString(this.mailSettings);
         dest.writeString(this.dateFormat);
         dest.writeValue(this.householdLimitationModule);
         dest.writeValue(this.enableRegionFiltering);
         dest.writeValue(this.defaultRegion);
         dest.writeParcelable(this.rollingDeviceData, flags);
+        dest.writeValue(this.linearWatchHistoryThreshold);
+        dest.writeValue(this.finishedPercentThreshold);
+        dest.writeInt(this.suspensionProfileInheritanceType == null ? -1 : this.suspensionProfileInheritanceType.ordinal());
+        dest.writeValue(this.allowDeviceMobility);
+        dest.writeValue(this.enableMultiLcns);
     }
 
     public GeneralPartnerConfig(Parcel in) {
@@ -359,12 +481,19 @@ public class GeneralPartnerConfig extends PartnerConfiguration {
         this.secondaryCurrencies = in.readString();
         int tmpDowngradePolicy = in.readInt();
         this.downgradePolicy = tmpDowngradePolicy == -1 ? null : DowngradePolicy.values()[tmpDowngradePolicy];
+        this.downgradePriorityFamilyIds = in.readString();
         this.mailSettings = in.readString();
         this.dateFormat = in.readString();
         this.householdLimitationModule = (Integer)in.readValue(Integer.class.getClassLoader());
         this.enableRegionFiltering = (Boolean)in.readValue(Boolean.class.getClassLoader());
         this.defaultRegion = (Integer)in.readValue(Integer.class.getClassLoader());
         this.rollingDeviceData = in.readParcelable(RollingDeviceRemovalData.class.getClassLoader());
+        this.linearWatchHistoryThreshold = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.finishedPercentThreshold = (Integer)in.readValue(Integer.class.getClassLoader());
+        int tmpSuspensionProfileInheritanceType = in.readInt();
+        this.suspensionProfileInheritanceType = tmpSuspensionProfileInheritanceType == -1 ? null : SuspensionProfileInheritanceType.values()[tmpSuspensionProfileInheritanceType];
+        this.allowDeviceMobility = (Boolean)in.readValue(Boolean.class.getClassLoader());
+        this.enableMultiLcns = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
 

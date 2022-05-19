@@ -57,6 +57,7 @@ public class ProgramAsset extends Asset {
 		String enableCatchUp();
 		String enableStartOver();
 		String enableTrickPlay();
+		String externalOfferIds();
 	}
 
 	/**
@@ -80,21 +81,42 @@ public class ProgramAsset extends Asset {
 	 */
 	private Long linearAssetId;
 	/**
-	 * Is CDVR enabled for this asset
+	 * Is CDVR enabled for this asset              Please, note that value of this
+	  property is strictly connected with CDV-R setting on Partner and
+	  KalturaLiveAsset levels.              In order to enable CDV-R for
+	  KalturaProgramAsset, Partner and KalturaLiveAsset CDV-R settings should be
+	  enabled.
 	 */
 	private Boolean enableCdvr;
 	/**
-	 * Is catch-up enabled for this asset
+	 * Is catch-up enabled for this asset              Please, note that value of this
+	  property is strictly connected with Catch Up setting on Partner and
+	  KalturaLiveAsset levels.              In order to enable Catch Up for
+	  KalturaProgramAsset, Partner and KalturaLiveAsset Catch Up settings should be
+	  enabled.
 	 */
 	private Boolean enableCatchUp;
 	/**
-	 * Is start over enabled for this asset
+	 * Is start over enabled for this asset              Please, note that value of
+	  this property is strictly connected with Start Over setting on Partner and
+	  KalturaLiveAsset levels.              In order to enable Start Over for
+	  KalturaProgramAsset, Partner and KalturaLiveAsset Start Over settings should be
+	  enabled.
 	 */
 	private Boolean enableStartOver;
 	/**
-	 * Is trick-play enabled for this asset
+	 * Is trick-play enabled for this asset              Please, note that value of
+	  this property is strictly connected with Trick Play setting on Partner and
+	  KalturaLiveAsset levels.              In order to enable Trick Play for
+	  KalturaProgramAsset, Partner and KalturaLiveAsset Trick Play settings should be
+	  enabled.
 	 */
 	private Boolean enableTrickPlay;
+	/**
+	 * Contains comma separate list of KalturaProgramAssetGroupOffer.externalOfferId
+	  values indicating the PAGOs to which the Program Asset is bound.
+	 */
+	private String externalOfferIds;
 
 	// epgChannelId:
 	public Long getEpgChannelId(){
@@ -188,6 +210,18 @@ public class ProgramAsset extends Asset {
 		setToken("enableTrickPlay", multirequestToken);
 	}
 
+	// externalOfferIds:
+	public String getExternalOfferIds(){
+		return this.externalOfferIds;
+	}
+	public void setExternalOfferIds(String externalOfferIds){
+		this.externalOfferIds = externalOfferIds;
+	}
+
+	public void externalOfferIds(String multirequestToken){
+		setToken("externalOfferIds", multirequestToken);
+	}
+
 
 	public ProgramAsset() {
 		super();
@@ -208,6 +242,7 @@ public class ProgramAsset extends Asset {
 		enableCatchUp = GsonParser.parseBoolean(jsonObject.get("enableCatchUp"));
 		enableStartOver = GsonParser.parseBoolean(jsonObject.get("enableStartOver"));
 		enableTrickPlay = GsonParser.parseBoolean(jsonObject.get("enableTrickPlay"));
+		externalOfferIds = GsonParser.parseString(jsonObject.get("externalOfferIds"));
 
 	}
 
@@ -221,6 +256,7 @@ public class ProgramAsset extends Asset {
 		kparams.add("enableCatchUp", this.enableCatchUp);
 		kparams.add("enableStartOver", this.enableStartOver);
 		kparams.add("enableTrickPlay", this.enableTrickPlay);
+		kparams.add("externalOfferIds", this.externalOfferIds);
 		return kparams;
 	}
 
@@ -249,6 +285,7 @@ public class ProgramAsset extends Asset {
         dest.writeValue(this.enableCatchUp);
         dest.writeValue(this.enableStartOver);
         dest.writeValue(this.enableTrickPlay);
+        dest.writeString(this.externalOfferIds);
     }
 
     public ProgramAsset(Parcel in) {
@@ -262,6 +299,7 @@ public class ProgramAsset extends Asset {
         this.enableCatchUp = (Boolean)in.readValue(Boolean.class.getClassLoader());
         this.enableStartOver = (Boolean)in.readValue(Boolean.class.getClassLoader());
         this.enableTrickPlay = (Boolean)in.readValue(Boolean.class.getClassLoader());
+        this.externalOfferIds = in.readString();
     }
 }
 

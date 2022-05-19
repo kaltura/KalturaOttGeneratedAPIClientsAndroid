@@ -30,7 +30,6 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
@@ -41,42 +40,30 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(T.Tokenizer.class)
-public class T extends ObjectBase {
+@MultiRequestBuilder.Tokenizer(BulkUploadDynamicListResult.Tokenizer.class)
+public abstract class BulkUploadDynamicListResult extends BulkUploadResult {
 	
-	public interface Tokenizer extends ObjectBase.Tokenizer {
+	public interface Tokenizer extends BulkUploadResult.Tokenizer {
 	}
 
 
 
-	public T() {
+	public BulkUploadDynamicListResult() {
 		super();
 	}
 
-	public T(JsonObject jsonObject) throws APIException {
+	public BulkUploadDynamicListResult(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaT");
+		kparams.add("objectType", "KalturaBulkUploadDynamicListResult");
 		return kparams;
 	}
 
 
-    public static final Creator<T> CREATOR = new Creator<T>() {
-        @Override
-        public T createFromParcel(Parcel source) {
-            return new T(source);
-        }
-
-        @Override
-        public T[] newArray(int size) {
-            return new T[size];
-        }
-    };
-
-    public T(Parcel in) {
+    public BulkUploadDynamicListResult(Parcel in) {
         super(in);
     }
 }

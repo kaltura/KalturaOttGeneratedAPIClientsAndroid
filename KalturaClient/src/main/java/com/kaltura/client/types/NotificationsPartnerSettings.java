@@ -30,6 +30,8 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
+import com.kaltura.client.types.EpgNotificationSettings;
+import com.kaltura.client.types.LineupNotificationSettings;
 import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
@@ -64,6 +66,8 @@ public class NotificationsPartnerSettings extends ObjectBase {
 		String mailNotificationAdapterId();
 		String smsEnabled();
 		String iotEnabled();
+		EpgNotificationSettings.Tokenizer epgNotification();
+		LineupNotificationSettings.Tokenizer lineupNotification();
 	}
 
 	/**
@@ -138,6 +142,14 @@ public class NotificationsPartnerSettings extends ObjectBase {
 	 * IOT capability is enabled for the account
 	 */
 	private Boolean iotEnabled;
+	/**
+	 * Settings for epg notifications
+	 */
+	private EpgNotificationSettings epgNotification;
+	/**
+	 * Settings for lineup notifications
+	 */
+	private LineupNotificationSettings lineupNotification;
 
 	// pushNotificationEnabled:
 	public Boolean getPushNotificationEnabled(){
@@ -355,6 +367,22 @@ public class NotificationsPartnerSettings extends ObjectBase {
 		setToken("iotEnabled", multirequestToken);
 	}
 
+	// epgNotification:
+	public EpgNotificationSettings getEpgNotification(){
+		return this.epgNotification;
+	}
+	public void setEpgNotification(EpgNotificationSettings epgNotification){
+		this.epgNotification = epgNotification;
+	}
+
+	// lineupNotification:
+	public LineupNotificationSettings getLineupNotification(){
+		return this.lineupNotification;
+	}
+	public void setLineupNotification(LineupNotificationSettings lineupNotification){
+		this.lineupNotification = lineupNotification;
+	}
+
 
 	public NotificationsPartnerSettings() {
 		super();
@@ -384,6 +412,8 @@ public class NotificationsPartnerSettings extends ObjectBase {
 		mailNotificationAdapterId = GsonParser.parseLong(jsonObject.get("mailNotificationAdapterId"));
 		smsEnabled = GsonParser.parseBoolean(jsonObject.get("smsEnabled"));
 		iotEnabled = GsonParser.parseBoolean(jsonObject.get("iotEnabled"));
+		epgNotification = GsonParser.parseObject(jsonObject.getAsJsonObject("epgNotification"), EpgNotificationSettings.class);
+		lineupNotification = GsonParser.parseObject(jsonObject.getAsJsonObject("lineupNotification"), LineupNotificationSettings.class);
 
 	}
 
@@ -408,6 +438,8 @@ public class NotificationsPartnerSettings extends ObjectBase {
 		kparams.add("mailNotificationAdapterId", this.mailNotificationAdapterId);
 		kparams.add("smsEnabled", this.smsEnabled);
 		kparams.add("iotEnabled", this.iotEnabled);
+		kparams.add("epgNotification", this.epgNotification);
+		kparams.add("lineupNotification", this.lineupNotification);
 		return kparams;
 	}
 
@@ -445,6 +477,8 @@ public class NotificationsPartnerSettings extends ObjectBase {
         dest.writeValue(this.mailNotificationAdapterId);
         dest.writeValue(this.smsEnabled);
         dest.writeValue(this.iotEnabled);
+        dest.writeParcelable(this.epgNotification, flags);
+        dest.writeParcelable(this.lineupNotification, flags);
     }
 
     public NotificationsPartnerSettings(Parcel in) {
@@ -467,6 +501,8 @@ public class NotificationsPartnerSettings extends ObjectBase {
         this.mailNotificationAdapterId = (Long)in.readValue(Long.class.getClassLoader());
         this.smsEnabled = (Boolean)in.readValue(Boolean.class.getClassLoader());
         this.iotEnabled = (Boolean)in.readValue(Boolean.class.getClassLoader());
+        this.epgNotification = in.readParcelable(EpgNotificationSettings.class.getClassLoader());
+        this.lineupNotification = in.readParcelable(LineupNotificationSettings.class.getClassLoader());
     }
 }
 

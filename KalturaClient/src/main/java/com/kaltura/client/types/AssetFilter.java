@@ -33,6 +33,9 @@ import com.kaltura.client.Params;
 import com.kaltura.client.types.DynamicOrderBy;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.utils.request.RequestBuilder;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class was generated using exec.php
@@ -47,12 +50,27 @@ public class AssetFilter extends PersistedFilter {
 	
 	public interface Tokenizer extends PersistedFilter.Tokenizer {
 		DynamicOrderBy.Tokenizer dynamicOrderBy();
+		RequestBuilder.ListTokenizer<BaseAssetOrder.Tokenizer> orderingParameters();
+		String trendingDaysEqual();
+		String shouldApplyPriorityGroupsEqual();
 	}
 
 	/**
 	 * dynamicOrderBy - order by Meta
 	 */
 	private DynamicOrderBy dynamicOrderBy;
+	/**
+	 * Parameters for asset list sorting.
+	 */
+	private List<BaseAssetOrder> orderingParameters;
+	/**
+	 * Trending Days Equal
+	 */
+	private Integer trendingDaysEqual;
+	/**
+	 * Should apply priority groups filter or not.
+	 */
+	private Boolean shouldApplyPriorityGroupsEqual;
 
 	// dynamicOrderBy:
 	public DynamicOrderBy getDynamicOrderBy(){
@@ -60,6 +78,38 @@ public class AssetFilter extends PersistedFilter {
 	}
 	public void setDynamicOrderBy(DynamicOrderBy dynamicOrderBy){
 		this.dynamicOrderBy = dynamicOrderBy;
+	}
+
+	// orderingParameters:
+	public List<BaseAssetOrder> getOrderingParameters(){
+		return this.orderingParameters;
+	}
+	public void setOrderingParameters(List<BaseAssetOrder> orderingParameters){
+		this.orderingParameters = orderingParameters;
+	}
+
+	// trendingDaysEqual:
+	public Integer getTrendingDaysEqual(){
+		return this.trendingDaysEqual;
+	}
+	public void setTrendingDaysEqual(Integer trendingDaysEqual){
+		this.trendingDaysEqual = trendingDaysEqual;
+	}
+
+	public void trendingDaysEqual(String multirequestToken){
+		setToken("trendingDaysEqual", multirequestToken);
+	}
+
+	// shouldApplyPriorityGroupsEqual:
+	public Boolean getShouldApplyPriorityGroupsEqual(){
+		return this.shouldApplyPriorityGroupsEqual;
+	}
+	public void setShouldApplyPriorityGroupsEqual(Boolean shouldApplyPriorityGroupsEqual){
+		this.shouldApplyPriorityGroupsEqual = shouldApplyPriorityGroupsEqual;
+	}
+
+	public void shouldApplyPriorityGroupsEqual(String multirequestToken){
+		setToken("shouldApplyPriorityGroupsEqual", multirequestToken);
 	}
 
 
@@ -74,6 +124,9 @@ public class AssetFilter extends PersistedFilter {
 
 		// set members values:
 		dynamicOrderBy = GsonParser.parseObject(jsonObject.getAsJsonObject("dynamicOrderBy"), DynamicOrderBy.class);
+		orderingParameters = GsonParser.parseArray(jsonObject.getAsJsonArray("orderingParameters"), BaseAssetOrder.class);
+		trendingDaysEqual = GsonParser.parseInt(jsonObject.get("trendingDaysEqual"));
+		shouldApplyPriorityGroupsEqual = GsonParser.parseBoolean(jsonObject.get("shouldApplyPriorityGroupsEqual"));
 
 	}
 
@@ -81,6 +134,9 @@ public class AssetFilter extends PersistedFilter {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaAssetFilter");
 		kparams.add("dynamicOrderBy", this.dynamicOrderBy);
+		kparams.add("orderingParameters", this.orderingParameters);
+		kparams.add("trendingDaysEqual", this.trendingDaysEqual);
+		kparams.add("shouldApplyPriorityGroupsEqual", this.shouldApplyPriorityGroupsEqual);
 		return kparams;
 	}
 
@@ -101,11 +157,26 @@ public class AssetFilter extends PersistedFilter {
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeParcelable(this.dynamicOrderBy, flags);
+        if(this.orderingParameters != null) {
+            dest.writeInt(this.orderingParameters.size());
+            dest.writeList(this.orderingParameters);
+        } else {
+            dest.writeInt(-1);
+        }
+        dest.writeValue(this.trendingDaysEqual);
+        dest.writeValue(this.shouldApplyPriorityGroupsEqual);
     }
 
     public AssetFilter(Parcel in) {
         super(in);
         this.dynamicOrderBy = in.readParcelable(DynamicOrderBy.class.getClassLoader());
+        int orderingParametersSize = in.readInt();
+        if( orderingParametersSize > -1) {
+            this.orderingParameters = new ArrayList<>();
+            in.readList(this.orderingParameters, BaseAssetOrder.class.getClassLoader());
+        }
+        this.trendingDaysEqual = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.shouldApplyPriorityGroupsEqual = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
 

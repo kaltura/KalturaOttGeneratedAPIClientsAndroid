@@ -60,6 +60,14 @@ public class Discount extends Price {
 	public Integer getPercentage(){
 		return this.percentage;
 	}
+	public void setPercentage(Integer percentage){
+		this.percentage = percentage;
+	}
+
+	public void percentage(String multirequestToken){
+		setToken("percentage", multirequestToken);
+	}
+
 
 	public Discount() {
 		super();
@@ -78,6 +86,7 @@ public class Discount extends Price {
 	public Params toParams() {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaDiscount");
+		kparams.add("percentage", this.percentage);
 		return kparams;
 	}
 

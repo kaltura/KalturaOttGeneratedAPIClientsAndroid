@@ -30,6 +30,7 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
+import com.kaltura.client.types.BusinessModuleDetails;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
@@ -52,6 +53,7 @@ public class MediaFile extends AssetFile {
 		String id();
 		String type();
 		String typeId();
+		String altUrl();
 		String duration();
 		String externalId();
 		String altExternalId();
@@ -69,6 +71,9 @@ public class MediaFile extends AssetFile {
 		String cdnAdapaterProfileId();
 		String status();
 		String catalogEndDate();
+		String opl();
+		BusinessModuleDetails.Tokenizer businessModuleDetails();
+		String labels();
 	}
 
 	/**
@@ -87,6 +92,10 @@ public class MediaFile extends AssetFile {
 	 * Device types identifier as defined in the system
 	 */
 	private Integer typeId;
+	/**
+	 * URL of the media file to be played
+	 */
+	private String altUrl;
 	/**
 	 * Duration of the media file
 	 */
@@ -155,6 +164,18 @@ public class MediaFile extends AssetFile {
 	 * Catalog end date
 	 */
 	private Long catalogEndDate;
+	/**
+	 * OPL
+	 */
+	private String opl;
+	/**
+	 * businessModuleDetails
+	 */
+	private BusinessModuleDetails businessModuleDetails;
+	/**
+	 * Labels associated with the media file
+	 */
+	private String labels;
 
 	// assetId:
 	public Integer getAssetId(){
@@ -186,6 +207,18 @@ public class MediaFile extends AssetFile {
 
 	public void typeId(String multirequestToken){
 		setToken("typeId", multirequestToken);
+	}
+
+	// altUrl:
+	public String getAltUrl(){
+		return this.altUrl;
+	}
+	public void setAltUrl(String altUrl){
+		this.altUrl = altUrl;
+	}
+
+	public void altUrl(String multirequestToken){
+		setToken("altUrl", multirequestToken);
 	}
 
 	// duration:
@@ -392,6 +425,38 @@ public class MediaFile extends AssetFile {
 		setToken("catalogEndDate", multirequestToken);
 	}
 
+	// opl:
+	public String getOpl(){
+		return this.opl;
+	}
+	public void setOpl(String opl){
+		this.opl = opl;
+	}
+
+	public void opl(String multirequestToken){
+		setToken("opl", multirequestToken);
+	}
+
+	// businessModuleDetails:
+	public BusinessModuleDetails getBusinessModuleDetails(){
+		return this.businessModuleDetails;
+	}
+	public void setBusinessModuleDetails(BusinessModuleDetails businessModuleDetails){
+		this.businessModuleDetails = businessModuleDetails;
+	}
+
+	// labels:
+	public String getLabels(){
+		return this.labels;
+	}
+	public void setLabels(String labels){
+		this.labels = labels;
+	}
+
+	public void labels(String multirequestToken){
+		setToken("labels", multirequestToken);
+	}
+
 
 	public MediaFile() {
 		super();
@@ -407,6 +472,7 @@ public class MediaFile extends AssetFile {
 		id = GsonParser.parseInt(jsonObject.get("id"));
 		type = GsonParser.parseString(jsonObject.get("type"));
 		typeId = GsonParser.parseInt(jsonObject.get("typeId"));
+		altUrl = GsonParser.parseString(jsonObject.get("altUrl"));
 		duration = GsonParser.parseLong(jsonObject.get("duration"));
 		externalId = GsonParser.parseString(jsonObject.get("externalId"));
 		altExternalId = GsonParser.parseString(jsonObject.get("altExternalId"));
@@ -424,6 +490,9 @@ public class MediaFile extends AssetFile {
 		cdnAdapaterProfileId = GsonParser.parseLong(jsonObject.get("cdnAdapaterProfileId"));
 		status = GsonParser.parseBoolean(jsonObject.get("status"));
 		catalogEndDate = GsonParser.parseLong(jsonObject.get("catalogEndDate"));
+		opl = GsonParser.parseString(jsonObject.get("opl"));
+		businessModuleDetails = GsonParser.parseObject(jsonObject.getAsJsonObject("businessModuleDetails"), BusinessModuleDetails.class);
+		labels = GsonParser.parseString(jsonObject.get("labels"));
 
 	}
 
@@ -432,6 +501,7 @@ public class MediaFile extends AssetFile {
 		kparams.add("objectType", "KalturaMediaFile");
 		kparams.add("assetId", this.assetId);
 		kparams.add("typeId", this.typeId);
+		kparams.add("altUrl", this.altUrl);
 		kparams.add("duration", this.duration);
 		kparams.add("externalId", this.externalId);
 		kparams.add("altExternalId", this.altExternalId);
@@ -449,6 +519,9 @@ public class MediaFile extends AssetFile {
 		kparams.add("cdnAdapaterProfileId", this.cdnAdapaterProfileId);
 		kparams.add("status", this.status);
 		kparams.add("catalogEndDate", this.catalogEndDate);
+		kparams.add("opl", this.opl);
+		kparams.add("businessModuleDetails", this.businessModuleDetails);
+		kparams.add("labels", this.labels);
 		return kparams;
 	}
 
@@ -472,6 +545,7 @@ public class MediaFile extends AssetFile {
         dest.writeValue(this.id);
         dest.writeString(this.type);
         dest.writeValue(this.typeId);
+        dest.writeString(this.altUrl);
         dest.writeValue(this.duration);
         dest.writeString(this.externalId);
         dest.writeString(this.altExternalId);
@@ -489,6 +563,9 @@ public class MediaFile extends AssetFile {
         dest.writeValue(this.cdnAdapaterProfileId);
         dest.writeValue(this.status);
         dest.writeValue(this.catalogEndDate);
+        dest.writeString(this.opl);
+        dest.writeParcelable(this.businessModuleDetails, flags);
+        dest.writeString(this.labels);
     }
 
     public MediaFile(Parcel in) {
@@ -497,6 +574,7 @@ public class MediaFile extends AssetFile {
         this.id = (Integer)in.readValue(Integer.class.getClassLoader());
         this.type = in.readString();
         this.typeId = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.altUrl = in.readString();
         this.duration = (Long)in.readValue(Long.class.getClassLoader());
         this.externalId = in.readString();
         this.altExternalId = in.readString();
@@ -514,6 +592,9 @@ public class MediaFile extends AssetFile {
         this.cdnAdapaterProfileId = (Long)in.readValue(Long.class.getClassLoader());
         this.status = (Boolean)in.readValue(Boolean.class.getClassLoader());
         this.catalogEndDate = (Long)in.readValue(Long.class.getClassLoader());
+        this.opl = in.readString();
+        this.businessModuleDetails = in.readParcelable(BusinessModuleDetails.class.getClassLoader());
+        this.labels = in.readString();
     }
 }
 

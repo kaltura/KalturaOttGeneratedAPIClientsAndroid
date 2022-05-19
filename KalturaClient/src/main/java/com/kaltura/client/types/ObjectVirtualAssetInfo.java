@@ -34,6 +34,9 @@ import com.kaltura.client.enums.ObjectVirtualAssetInfoType;
 import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.utils.request.RequestBuilder;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class was generated using exec.php
@@ -50,6 +53,7 @@ public class ObjectVirtualAssetInfo extends ObjectBase {
 		String assetStructId();
 		String metaId();
 		String type();
+		RequestBuilder.MapTokenizer<LongValue.Tokenizer> extendedTypes();
 	}
 
 	/**
@@ -64,6 +68,10 @@ public class ObjectVirtualAssetInfo extends ObjectBase {
 	 * Object virtual asset info type
 	 */
 	private ObjectVirtualAssetInfoType type;
+	/**
+	 * Extended types mapping
+	 */
+	private Map<String, LongValue> extendedTypes;
 
 	// assetStructId:
 	public Integer getAssetStructId(){
@@ -101,6 +109,14 @@ public class ObjectVirtualAssetInfo extends ObjectBase {
 		setToken("type", multirequestToken);
 	}
 
+	// extendedTypes:
+	public Map<String, LongValue> getExtendedTypes(){
+		return this.extendedTypes;
+	}
+	public void setExtendedTypes(Map<String, LongValue> extendedTypes){
+		this.extendedTypes = extendedTypes;
+	}
+
 
 	public ObjectVirtualAssetInfo() {
 		super();
@@ -115,6 +131,7 @@ public class ObjectVirtualAssetInfo extends ObjectBase {
 		assetStructId = GsonParser.parseInt(jsonObject.get("assetStructId"));
 		metaId = GsonParser.parseInt(jsonObject.get("metaId"));
 		type = ObjectVirtualAssetInfoType.get(GsonParser.parseString(jsonObject.get("type")));
+		extendedTypes = GsonParser.parseMap(jsonObject.getAsJsonObject("extendedTypes"), LongValue.class);
 
 	}
 
@@ -124,6 +141,7 @@ public class ObjectVirtualAssetInfo extends ObjectBase {
 		kparams.add("assetStructId", this.assetStructId);
 		kparams.add("metaId", this.metaId);
 		kparams.add("type", this.type);
+		kparams.add("extendedTypes", this.extendedTypes);
 		return kparams;
 	}
 
@@ -146,6 +164,15 @@ public class ObjectVirtualAssetInfo extends ObjectBase {
         dest.writeValue(this.assetStructId);
         dest.writeValue(this.metaId);
         dest.writeInt(this.type == null ? -1 : this.type.ordinal());
+        if(this.extendedTypes != null) {
+            dest.writeInt(this.extendedTypes.size());
+            for (Map.Entry<String, LongValue> entry : this.extendedTypes.entrySet()) {
+                dest.writeString(entry.getKey());
+                dest.writeParcelable(entry.getValue(), flags);
+            }
+        } else {
+            dest.writeInt(-1);
+        }
     }
 
     public ObjectVirtualAssetInfo(Parcel in) {
@@ -154,6 +181,15 @@ public class ObjectVirtualAssetInfo extends ObjectBase {
         this.metaId = (Integer)in.readValue(Integer.class.getClassLoader());
         int tmpType = in.readInt();
         this.type = tmpType == -1 ? null : ObjectVirtualAssetInfoType.values()[tmpType];
+        int extendedTypesSize = in.readInt();
+        if( extendedTypesSize > -1) {
+            this.extendedTypes = new HashMap<>();
+            for (int i = 0; i < extendedTypesSize; i++) {
+                String key = in.readString();
+                LongValue value = in.readParcelable(LongValue.class.getClassLoader());
+                this.extendedTypes.put(key, value);
+            }
+        }
     }
 }
 

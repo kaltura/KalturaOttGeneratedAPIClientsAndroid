@@ -64,6 +64,7 @@ public class Entitlement extends ObjectBase {
 		String maxUses();
 		String userId();
 		String householdId();
+		String isPending();
 	}
 
 	/**
@@ -123,6 +124,10 @@ public class Entitlement extends ObjectBase {
 	 * The Identifier of the purchasing household
 	 */
 	private Long householdId;
+	/**
+	 * Indicates whether the asynchronous purchase is pending
+	 */
+	private Boolean isPending;
 
 	// id:
 	public Integer getId(){
@@ -140,6 +145,14 @@ public class Entitlement extends ObjectBase {
 	public Long getEndDate(){
 		return this.endDate;
 	}
+	public void setEndDate(Long endDate){
+		this.endDate = endDate;
+	}
+
+	public void endDate(String multirequestToken){
+		setToken("endDate", multirequestToken);
+	}
+
 	// currentDate:
 	public Long getCurrentDate(){
 		return this.currentDate;
@@ -180,6 +193,18 @@ public class Entitlement extends ObjectBase {
 	public Long getHouseholdId(){
 		return this.householdId;
 	}
+	// isPending:
+	public Boolean getIsPending(){
+		return this.isPending;
+	}
+	public void setIsPending(Boolean isPending){
+		this.isPending = isPending;
+	}
+
+	public void isPending(String multirequestToken){
+		setToken("isPending", multirequestToken);
+	}
+
 
 	public Entitlement() {
 		super();
@@ -205,12 +230,15 @@ public class Entitlement extends ObjectBase {
 		maxUses = GsonParser.parseInt(jsonObject.get("maxUses"));
 		userId = GsonParser.parseString(jsonObject.get("userId"));
 		householdId = GsonParser.parseLong(jsonObject.get("householdId"));
+		isPending = GsonParser.parseBoolean(jsonObject.get("isPending"));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaEntitlement");
+		kparams.add("endDate", this.endDate);
+		kparams.add("isPending", this.isPending);
 		return kparams;
 	}
 
@@ -244,6 +272,7 @@ public class Entitlement extends ObjectBase {
         dest.writeValue(this.maxUses);
         dest.writeString(this.userId);
         dest.writeValue(this.householdId);
+        dest.writeValue(this.isPending);
     }
 
     public Entitlement(Parcel in) {
@@ -263,6 +292,7 @@ public class Entitlement extends ObjectBase {
         this.maxUses = (Integer)in.readValue(Integer.class.getClassLoader());
         this.userId = in.readString();
         this.householdId = (Long)in.readValue(Long.class.getClassLoader());
+        this.isPending = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
 

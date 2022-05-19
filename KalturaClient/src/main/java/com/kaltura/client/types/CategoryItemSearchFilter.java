@@ -47,6 +47,7 @@ public class CategoryItemSearchFilter extends CategoryItemFilter {
 	public interface Tokenizer extends CategoryItemFilter.Tokenizer {
 		String kSql();
 		String rootOnly();
+		String typeEqual();
 	}
 
 	/**
@@ -57,6 +58,10 @@ public class CategoryItemSearchFilter extends CategoryItemFilter {
 	 * Root only
 	 */
 	private Boolean rootOnly;
+	/**
+	 * Indicates which category to return by their type.
+	 */
+	private String typeEqual;
 
 	// kSql:
 	public String getKSql(){
@@ -82,6 +87,18 @@ public class CategoryItemSearchFilter extends CategoryItemFilter {
 		setToken("rootOnly", multirequestToken);
 	}
 
+	// typeEqual:
+	public String getTypeEqual(){
+		return this.typeEqual;
+	}
+	public void setTypeEqual(String typeEqual){
+		this.typeEqual = typeEqual;
+	}
+
+	public void typeEqual(String multirequestToken){
+		setToken("typeEqual", multirequestToken);
+	}
+
 
 	public CategoryItemSearchFilter() {
 		super();
@@ -95,6 +112,7 @@ public class CategoryItemSearchFilter extends CategoryItemFilter {
 		// set members values:
 		kSql = GsonParser.parseString(jsonObject.get("kSql"));
 		rootOnly = GsonParser.parseBoolean(jsonObject.get("rootOnly"));
+		typeEqual = GsonParser.parseString(jsonObject.get("typeEqual"));
 
 	}
 
@@ -103,6 +121,7 @@ public class CategoryItemSearchFilter extends CategoryItemFilter {
 		kparams.add("objectType", "KalturaCategoryItemSearchFilter");
 		kparams.add("kSql", this.kSql);
 		kparams.add("rootOnly", this.rootOnly);
+		kparams.add("typeEqual", this.typeEqual);
 		return kparams;
 	}
 
@@ -124,12 +143,14 @@ public class CategoryItemSearchFilter extends CategoryItemFilter {
         super.writeToParcel(dest, flags);
         dest.writeString(this.kSql);
         dest.writeValue(this.rootOnly);
+        dest.writeString(this.typeEqual);
     }
 
     public CategoryItemSearchFilter(Parcel in) {
         super(in);
         this.kSql = in.readString();
         this.rootOnly = (Boolean)in.readValue(Boolean.class.getClassLoader());
+        this.typeEqual = in.readString();
     }
 }
 

@@ -56,6 +56,8 @@ public class MediaImage extends ObjectBase {
 		String version();
 		String id();
 		String isDefault();
+		String imageTypeId();
+		String imageTypeName();
 	}
 
 	/**
@@ -86,6 +88,14 @@ public class MediaImage extends ObjectBase {
 	 * Determined whether image was taken from default configuration or not
 	 */
 	private Boolean isDefault;
+	/**
+	 * Image type identifier
+	 */
+	private Long imageTypeId;
+	/**
+	 * Image type Name
+	 */
+	private String imageTypeName;
 
 	// ratio:
 	public String getRatio(){
@@ -163,6 +173,30 @@ public class MediaImage extends ObjectBase {
 		setToken("isDefault", multirequestToken);
 	}
 
+	// imageTypeId:
+	public Long getImageTypeId(){
+		return this.imageTypeId;
+	}
+	public void setImageTypeId(Long imageTypeId){
+		this.imageTypeId = imageTypeId;
+	}
+
+	public void imageTypeId(String multirequestToken){
+		setToken("imageTypeId", multirequestToken);
+	}
+
+	// imageTypeName:
+	public String getImageTypeName(){
+		return this.imageTypeName;
+	}
+	public void setImageTypeName(String imageTypeName){
+		this.imageTypeName = imageTypeName;
+	}
+
+	public void imageTypeName(String multirequestToken){
+		setToken("imageTypeName", multirequestToken);
+	}
+
 
 	public MediaImage() {
 		super();
@@ -181,6 +215,8 @@ public class MediaImage extends ObjectBase {
 		version = GsonParser.parseInt(jsonObject.get("version"));
 		id = GsonParser.parseString(jsonObject.get("id"));
 		isDefault = GsonParser.parseBoolean(jsonObject.get("isDefault"));
+		imageTypeId = GsonParser.parseLong(jsonObject.get("imageTypeId"));
+		imageTypeName = GsonParser.parseString(jsonObject.get("imageTypeName"));
 
 	}
 
@@ -193,6 +229,8 @@ public class MediaImage extends ObjectBase {
 		kparams.add("url", this.url);
 		kparams.add("version", this.version);
 		kparams.add("isDefault", this.isDefault);
+		kparams.add("imageTypeId", this.imageTypeId);
+		kparams.add("imageTypeName", this.imageTypeName);
 		return kparams;
 	}
 
@@ -219,6 +257,8 @@ public class MediaImage extends ObjectBase {
         dest.writeValue(this.version);
         dest.writeString(this.id);
         dest.writeValue(this.isDefault);
+        dest.writeValue(this.imageTypeId);
+        dest.writeString(this.imageTypeName);
     }
 
     public MediaImage(Parcel in) {
@@ -230,6 +270,8 @@ public class MediaImage extends ObjectBase {
         this.version = (Integer)in.readValue(Integer.class.getClassLoader());
         this.id = in.readString();
         this.isDefault = (Boolean)in.readValue(Boolean.class.getClassLoader());
+        this.imageTypeId = (Long)in.readValue(Long.class.getClassLoader());
+        this.imageTypeName = in.readString();
     }
 }
 

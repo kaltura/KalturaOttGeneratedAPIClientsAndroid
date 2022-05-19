@@ -50,6 +50,7 @@ public class PpvFilter extends Filter {
 	public interface Tokenizer extends Filter.Tokenizer {
 		String idIn();
 		String couponGroupIdEqual();
+		String alsoInactive();
 	}
 
 	/**
@@ -60,6 +61,10 @@ public class PpvFilter extends Filter {
 	 * couponGroupIdEqual
 	 */
 	private Integer couponGroupIdEqual;
+	/**
+	 * return also inactive
+	 */
+	private Boolean alsoInactive;
 
 	// idIn:
 	public String getIdIn(){
@@ -85,6 +90,18 @@ public class PpvFilter extends Filter {
 		setToken("couponGroupIdEqual", multirequestToken);
 	}
 
+	// alsoInactive:
+	public Boolean getAlsoInactive(){
+		return this.alsoInactive;
+	}
+	public void setAlsoInactive(Boolean alsoInactive){
+		this.alsoInactive = alsoInactive;
+	}
+
+	public void alsoInactive(String multirequestToken){
+		setToken("alsoInactive", multirequestToken);
+	}
+
 
 	public PpvFilter() {
 		super();
@@ -98,6 +115,7 @@ public class PpvFilter extends Filter {
 		// set members values:
 		idIn = GsonParser.parseString(jsonObject.get("idIn"));
 		couponGroupIdEqual = GsonParser.parseInt(jsonObject.get("couponGroupIdEqual"));
+		alsoInactive = GsonParser.parseBoolean(jsonObject.get("alsoInactive"));
 
 	}
 
@@ -106,6 +124,7 @@ public class PpvFilter extends Filter {
 		kparams.add("objectType", "KalturaPpvFilter");
 		kparams.add("idIn", this.idIn);
 		kparams.add("couponGroupIdEqual", this.couponGroupIdEqual);
+		kparams.add("alsoInactive", this.alsoInactive);
 		return kparams;
 	}
 
@@ -127,12 +146,14 @@ public class PpvFilter extends Filter {
         super.writeToParcel(dest, flags);
         dest.writeString(this.idIn);
         dest.writeValue(this.couponGroupIdEqual);
+        dest.writeValue(this.alsoInactive);
     }
 
     public PpvFilter(Parcel in) {
         super(in);
         this.idIn = in.readString();
         this.couponGroupIdEqual = (Integer)in.readValue(Integer.class.getClassLoader());
+        this.alsoInactive = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
 
