@@ -52,7 +52,7 @@ public class DeviceBrand extends ObjectBase {
 	public interface Tokenizer extends ObjectBase.Tokenizer {
 		String id();
 		String name();
-		String deviceFamilyId();
+		String deviceFamilyid();
 		String type();
 	}
 
@@ -67,7 +67,7 @@ public class DeviceBrand extends ObjectBase {
 	/**
 	 * Device family identifier
 	 */
-	private Long deviceFamilyId;
+	private Long deviceFamilyid;
 	/**
 	 * Type of device family.               if this device family belongs only to this
 	  group,               otherwise.
@@ -98,16 +98,16 @@ public class DeviceBrand extends ObjectBase {
 		setToken("name", multirequestToken);
 	}
 
-	// deviceFamilyId:
-	public Long getDeviceFamilyId(){
-		return this.deviceFamilyId;
+	// deviceFamilyid:
+	public Long getDeviceFamilyid(){
+		return this.deviceFamilyid;
 	}
-	public void setDeviceFamilyId(Long deviceFamilyId){
-		this.deviceFamilyId = deviceFamilyId;
+	public void setDeviceFamilyid(Long deviceFamilyid){
+		this.deviceFamilyid = deviceFamilyid;
 	}
 
-	public void deviceFamilyId(String multirequestToken){
-		setToken("deviceFamilyId", multirequestToken);
+	public void deviceFamilyid(String multirequestToken){
+		setToken("deviceFamilyid", multirequestToken);
 	}
 
 	// type:
@@ -127,7 +127,7 @@ public class DeviceBrand extends ObjectBase {
 		// set members values:
 		id = GsonParser.parseLong(jsonObject.get("id"));
 		name = GsonParser.parseString(jsonObject.get("name"));
-		deviceFamilyId = GsonParser.parseLong(jsonObject.get("deviceFamilyId"));
+		deviceFamilyid = GsonParser.parseLong(jsonObject.get("deviceFamilyid"));
 		type = DeviceBrandType.get(GsonParser.parseString(jsonObject.get("type")));
 
 	}
@@ -137,7 +137,7 @@ public class DeviceBrand extends ObjectBase {
 		kparams.add("objectType", "KalturaDeviceBrand");
 		kparams.add("id", this.id);
 		kparams.add("name", this.name);
-		kparams.add("deviceFamilyId", this.deviceFamilyId);
+		kparams.add("deviceFamilyid", this.deviceFamilyid);
 		return kparams;
 	}
 
@@ -159,7 +159,7 @@ public class DeviceBrand extends ObjectBase {
         super.writeToParcel(dest, flags);
         dest.writeValue(this.id);
         dest.writeString(this.name);
-        dest.writeValue(this.deviceFamilyId);
+        dest.writeValue(this.deviceFamilyid);
         dest.writeInt(this.type == null ? -1 : this.type.ordinal());
     }
 
@@ -167,7 +167,7 @@ public class DeviceBrand extends ObjectBase {
         super(in);
         this.id = (Long)in.readValue(Long.class.getClassLoader());
         this.name = in.readString();
-        this.deviceFamilyId = (Long)in.readValue(Long.class.getClassLoader());
+        this.deviceFamilyid = (Long)in.readValue(Long.class.getClassLoader());
         int tmpType = in.readInt();
         this.type = tmpType == -1 ? null : DeviceBrandType.values()[tmpType];
     }
