@@ -1,12 +1,13 @@
 apply plugin: 'com.android.library'
-apply from: '../version.gradle'
+apply plugin: 'kotlin-android'
+apply from: 'version.gradle'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 31
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 28
+        targetSdkVersion 30
         versionName kalturaClientVersion
     }
 
@@ -22,11 +23,24 @@ android {
     }
 }
 
-tasks.withType(Javadoc) {
-    options.addBooleanOption('Xdoclint:none', true)
-}
+//tasks.withType(Javadoc) {
+//    options.addBooleanOption('Xdoclint:none', true)
+//}
+
+//task createJavadocs (type: Javadoc) {
+//    source = project.android.sourceSets.main.java.srcDirs
+//    options.linkSource true
+//    classpath += project.files(project.android.getBootClasspath().join(File.pathSeparator))
+//    failOnError false
+//}
 
 dependencies {
-    implementation 'com.google.code.gson:gson:2.8.2'
-    implementation 'com.squareup.okhttp3:okhttp:3.12.1'
+    implementation 'com.google.code.gson:gson:2.8.9'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.2'
+}
+
+if (!ext.kalturaClientVersion.contains('dev')) {
+    apply from: './gradle-mvn-push.gradle'
+} else {
+    apply from: './gradle-mvn-push.gradle'
 }
