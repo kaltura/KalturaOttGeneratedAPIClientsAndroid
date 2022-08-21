@@ -30,11 +30,12 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.types.CognitoUserPool;
-import com.kaltura.client.types.CredentialsProvider;
 import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
+import com.kaltura.client.utils.request.RequestBuilder;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class was generated using exec.php
@@ -51,84 +52,241 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
 public class IotClientConfiguration extends ObjectBase {
 	
 	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String announcementTopic();
-		CredentialsProvider.Tokenizer credentialsProvider();
-		CognitoUserPool.Tokenizer cognitoUserPool();
-		String json();
-		String topics();
+		String identityPoolId();
+		String userPoolId();
+		String awsRegion();
+		String appClientId();
+		String legacyEndPoint();
+		String endPoint();
+		String thingName();
+		String thingArn();
+		String thingId();
+		String username();
+		String password();
+		RequestBuilder.ListTokenizer<StringValue.Tokenizer> topics();
+		String status();
+		String message();
 	}
 
 	/**
-	 * announcementTopic
+	 * IdentityPoolId
 	 */
-	private String announcementTopic;
+	private String identityPoolId;
 	/**
-	 * KalturaCredentialsProvider
+	 * UserPoolId
 	 */
-	private CredentialsProvider credentialsProvider;
+	private String userPoolId;
 	/**
-	 * CognitoUserPool
+	 * AwsRegion
 	 */
-	private CognitoUserPool cognitoUserPool;
+	private String awsRegion;
 	/**
-	 * json
+	 * appClientId
 	 */
-	private String json;
+	private String appClientId;
+	/**
+	 * legacyEndPoint
+	 */
+	private String legacyEndPoint;
+	/**
+	 * endPoint
+	 */
+	private String endPoint;
+	/**
+	 * thingName
+	 */
+	private String thingName;
+	/**
+	 * thingArn
+	 */
+	private String thingArn;
+	/**
+	 * thingId
+	 */
+	private String thingId;
+	/**
+	 * username
+	 */
+	private String username;
+	/**
+	 * password
+	 */
+	private String password;
 	/**
 	 * topics
 	 */
-	private String topics;
+	private List<StringValue> topics;
+	/**
+	 * status
+	 */
+	private String status;
+	/**
+	 * message
+	 */
+	private String message;
 
-	// announcementTopic:
-	public String getAnnouncementTopic(){
-		return this.announcementTopic;
+	// identityPoolId:
+	public String getIdentityPoolId(){
+		return this.identityPoolId;
 	}
-	public void setAnnouncementTopic(String announcementTopic){
-		this.announcementTopic = announcementTopic;
-	}
-
-	public void announcementTopic(String multirequestToken){
-		setToken("announcementTopic", multirequestToken);
-	}
-
-	// credentialsProvider:
-	public CredentialsProvider getCredentialsProvider(){
-		return this.credentialsProvider;
-	}
-	public void setCredentialsProvider(CredentialsProvider credentialsProvider){
-		this.credentialsProvider = credentialsProvider;
+	public void setIdentityPoolId(String identityPoolId){
+		this.identityPoolId = identityPoolId;
 	}
 
-	// cognitoUserPool:
-	public CognitoUserPool getCognitoUserPool(){
-		return this.cognitoUserPool;
-	}
-	public void setCognitoUserPool(CognitoUserPool cognitoUserPool){
-		this.cognitoUserPool = cognitoUserPool;
+	public void identityPoolId(String multirequestToken){
+		setToken("identityPoolId", multirequestToken);
 	}
 
-	// json:
-	public String getJson(){
-		return this.json;
+	// userPoolId:
+	public String getUserPoolId(){
+		return this.userPoolId;
 	}
-	public void setJson(String json){
-		this.json = json;
+	public void setUserPoolId(String userPoolId){
+		this.userPoolId = userPoolId;
 	}
 
-	public void json(String multirequestToken){
-		setToken("json", multirequestToken);
+	public void userPoolId(String multirequestToken){
+		setToken("userPoolId", multirequestToken);
+	}
+
+	// awsRegion:
+	public String getAwsRegion(){
+		return this.awsRegion;
+	}
+	public void setAwsRegion(String awsRegion){
+		this.awsRegion = awsRegion;
+	}
+
+	public void awsRegion(String multirequestToken){
+		setToken("awsRegion", multirequestToken);
+	}
+
+	// appClientId:
+	public String getAppClientId(){
+		return this.appClientId;
+	}
+	public void setAppClientId(String appClientId){
+		this.appClientId = appClientId;
+	}
+
+	public void appClientId(String multirequestToken){
+		setToken("appClientId", multirequestToken);
+	}
+
+	// legacyEndPoint:
+	public String getLegacyEndPoint(){
+		return this.legacyEndPoint;
+	}
+	public void setLegacyEndPoint(String legacyEndPoint){
+		this.legacyEndPoint = legacyEndPoint;
+	}
+
+	public void legacyEndPoint(String multirequestToken){
+		setToken("legacyEndPoint", multirequestToken);
+	}
+
+	// endPoint:
+	public String getEndPoint(){
+		return this.endPoint;
+	}
+	public void setEndPoint(String endPoint){
+		this.endPoint = endPoint;
+	}
+
+	public void endPoint(String multirequestToken){
+		setToken("endPoint", multirequestToken);
+	}
+
+	// thingName:
+	public String getThingName(){
+		return this.thingName;
+	}
+	public void setThingName(String thingName){
+		this.thingName = thingName;
+	}
+
+	public void thingName(String multirequestToken){
+		setToken("thingName", multirequestToken);
+	}
+
+	// thingArn:
+	public String getThingArn(){
+		return this.thingArn;
+	}
+	public void setThingArn(String thingArn){
+		this.thingArn = thingArn;
+	}
+
+	public void thingArn(String multirequestToken){
+		setToken("thingArn", multirequestToken);
+	}
+
+	// thingId:
+	public String getThingId(){
+		return this.thingId;
+	}
+	public void setThingId(String thingId){
+		this.thingId = thingId;
+	}
+
+	public void thingId(String multirequestToken){
+		setToken("thingId", multirequestToken);
+	}
+
+	// username:
+	public String getUsername(){
+		return this.username;
+	}
+	public void setUsername(String username){
+		this.username = username;
+	}
+
+	public void username(String multirequestToken){
+		setToken("username", multirequestToken);
+	}
+
+	// password:
+	public String getPassword(){
+		return this.password;
+	}
+	public void setPassword(String password){
+		this.password = password;
+	}
+
+	public void password(String multirequestToken){
+		setToken("password", multirequestToken);
 	}
 
 	// topics:
-	public String getTopics(){
+	public List<StringValue> getTopics(){
 		return this.topics;
 	}
-	public void setTopics(String topics){
+	public void setTopics(List<StringValue> topics){
 		this.topics = topics;
 	}
 
-	public void topics(String multirequestToken){
-		setToken("topics", multirequestToken);
+	// status:
+	public String getStatus(){
+		return this.status;
+	}
+	public void setStatus(String status){
+		this.status = status;
+	}
+
+	public void status(String multirequestToken){
+		setToken("status", multirequestToken);
+	}
+
+	// message:
+	public String getMessage(){
+		return this.message;
+	}
+	public void setMessage(String message){
+		this.message = message;
+	}
+
+	public void message(String multirequestToken){
+		setToken("message", multirequestToken);
 	}
 
 
@@ -142,22 +300,40 @@ public class IotClientConfiguration extends ObjectBase {
 		if(jsonObject == null) return;
 
 		// set members values:
-		announcementTopic = GsonParser.parseString(jsonObject.get("announcementTopic"));
-		credentialsProvider = GsonParser.parseObject(jsonObject.getAsJsonObject("credentialsProvider"), CredentialsProvider.class);
-		cognitoUserPool = GsonParser.parseObject(jsonObject.getAsJsonObject("cognitoUserPool"), CognitoUserPool.class);
-		json = GsonParser.parseString(jsonObject.get("json"));
-		topics = GsonParser.parseString(jsonObject.get("topics"));
+		identityPoolId = GsonParser.parseString(jsonObject.get("identityPoolId"));
+		userPoolId = GsonParser.parseString(jsonObject.get("userPoolId"));
+		awsRegion = GsonParser.parseString(jsonObject.get("awsRegion"));
+		appClientId = GsonParser.parseString(jsonObject.get("appClientId"));
+		legacyEndPoint = GsonParser.parseString(jsonObject.get("legacyEndPoint"));
+		endPoint = GsonParser.parseString(jsonObject.get("endPoint"));
+		thingName = GsonParser.parseString(jsonObject.get("thingName"));
+		thingArn = GsonParser.parseString(jsonObject.get("thingArn"));
+		thingId = GsonParser.parseString(jsonObject.get("thingId"));
+		username = GsonParser.parseString(jsonObject.get("username"));
+		password = GsonParser.parseString(jsonObject.get("password"));
+		topics = GsonParser.parseArray(jsonObject.getAsJsonArray("topics"), StringValue.class);
+		status = GsonParser.parseString(jsonObject.get("status"));
+		message = GsonParser.parseString(jsonObject.get("message"));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaIotClientConfiguration");
-		kparams.add("announcementTopic", this.announcementTopic);
-		kparams.add("credentialsProvider", this.credentialsProvider);
-		kparams.add("cognitoUserPool", this.cognitoUserPool);
-		kparams.add("json", this.json);
+		kparams.add("identityPoolId", this.identityPoolId);
+		kparams.add("userPoolId", this.userPoolId);
+		kparams.add("awsRegion", this.awsRegion);
+		kparams.add("appClientId", this.appClientId);
+		kparams.add("legacyEndPoint", this.legacyEndPoint);
+		kparams.add("endPoint", this.endPoint);
+		kparams.add("thingName", this.thingName);
+		kparams.add("thingArn", this.thingArn);
+		kparams.add("thingId", this.thingId);
+		kparams.add("username", this.username);
+		kparams.add("password", this.password);
 		kparams.add("topics", this.topics);
+		kparams.add("status", this.status);
+		kparams.add("message", this.message);
 		return kparams;
 	}
 
@@ -177,20 +353,47 @@ public class IotClientConfiguration extends ObjectBase {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeString(this.announcementTopic);
-        dest.writeParcelable(this.credentialsProvider, flags);
-        dest.writeParcelable(this.cognitoUserPool, flags);
-        dest.writeString(this.json);
-        dest.writeString(this.topics);
+        dest.writeString(this.identityPoolId);
+        dest.writeString(this.userPoolId);
+        dest.writeString(this.awsRegion);
+        dest.writeString(this.appClientId);
+        dest.writeString(this.legacyEndPoint);
+        dest.writeString(this.endPoint);
+        dest.writeString(this.thingName);
+        dest.writeString(this.thingArn);
+        dest.writeString(this.thingId);
+        dest.writeString(this.username);
+        dest.writeString(this.password);
+        if(this.topics != null) {
+            dest.writeInt(this.topics.size());
+            dest.writeList(this.topics);
+        } else {
+            dest.writeInt(-1);
+        }
+        dest.writeString(this.status);
+        dest.writeString(this.message);
     }
 
     public IotClientConfiguration(Parcel in) {
         super(in);
-        this.announcementTopic = in.readString();
-        this.credentialsProvider = in.readParcelable(CredentialsProvider.class.getClassLoader());
-        this.cognitoUserPool = in.readParcelable(CognitoUserPool.class.getClassLoader());
-        this.json = in.readString();
-        this.topics = in.readString();
+        this.identityPoolId = in.readString();
+        this.userPoolId = in.readString();
+        this.awsRegion = in.readString();
+        this.appClientId = in.readString();
+        this.legacyEndPoint = in.readString();
+        this.endPoint = in.readString();
+        this.thingName = in.readString();
+        this.thingArn = in.readString();
+        this.thingId = in.readString();
+        this.username = in.readString();
+        this.password = in.readString();
+        int topicsSize = in.readInt();
+        if( topicsSize > -1) {
+            this.topics = new ArrayList<>();
+            in.readList(this.topics, StringValue.class.getClassLoader());
+        }
+        this.status = in.readString();
+        this.message = in.readString();
     }
 }
 
