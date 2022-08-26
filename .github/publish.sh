@@ -12,4 +12,4 @@ fail() {
 ./gradlew KalturaClient:publishReleasePublicationToMavenLocal
 
 # Upload
-./gradlew KalturaClient:bintrayUpload -PdryRun=false -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY
+./gradlew publishReleasePublicationToSonatypeRepository --max-workers 1 #closeAndReleaseSonatypeStagingRepository
