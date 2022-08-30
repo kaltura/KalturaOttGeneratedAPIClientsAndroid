@@ -5,10 +5,10 @@ fail() {
   exit 1
 }
 
- chmod +x gradlew
+chmod +x gradlew
  
  # Create javadoc jar, sources jar, pom
 ./gradlew KalturaClient:build
 
 # Upload
-./gradlew KalturaClient:publishReleasePublicationToSonatypeRepository --max-workers 1 #closeAndReleaseSonatypeStagingRepository
+./gradlew KalturaClient:publishToSonatype #closeAndReleaseSonatypeStagingRepository
