@@ -25,9 +25,9 @@ jobs:
         distribution: 'temurin' 
         java-version: '11'
         cache: 'gradle'
-#    - name: Tag
-#      run: |
-#        GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} bash .github/tag.sh
+    - name: Tag
+      run: |
+        GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} bash .github/tag.sh
     - name: Copy and Decode
       run: |
         mkdir $PWD/.kltrenv && echo "${{ secrets.SIGNING_KEY }}" > $PWD/.kltrenv/secring.gpg.b64

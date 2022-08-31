@@ -7,11 +7,8 @@ fail() {
 
 chmod +x gradlew
  
- # Create javadoc jar, sources jar, pom
-#./gradlew KalturaClient:build
-
-ls $PWD
-#ls "$PWD/.kltrenv"
+# Create javadoc jar, sources jar, pom
+./gradlew KalturaClient:build
 
 # Upload
-#./gradlew KalturaClient:publishToSonatype #closeAndReleaseSonatypeStagingRepository
+./gradlew KalturaClient:publishToSonatype #closeAndReleaseSonatypeStagingRepository
