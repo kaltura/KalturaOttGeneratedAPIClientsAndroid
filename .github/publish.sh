@@ -11,7 +11,7 @@ chmod +x gradlew
 #./gradlew KalturaClient:build
 
 ls $PWD
-ls "$PWD/.kltrenv"
+#ls "$PWD/.kltrenv"
 
 # Upload
 #./gradlew KalturaClient:publishToSonatype #closeAndReleaseSonatypeStagingRepository
