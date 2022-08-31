@@ -3,7 +3,7 @@ name: Tag and publish
 on:
   push:
     branches:
-      - '[0-9]+_[0-9]+_[0-9]+'
+      - 'test_[0-9]+_[0-9]+_[0-9]+'
 
 env:
   NEXUS_USERNAME: ${{ secrets.OSSRH_USERNAME }}
@@ -30,8 +30,8 @@ jobs:
         GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} bash .github/tag.sh
     - name: Copy and Decode
       run: |
-        mkdir $PWD/KalturaClient/.kltrenv && cd $PWD/KalturaClient/.kltrenv && echo "${{ secrets.SIGNING_KEY }}" > secring.gpg.b64
-        base64 -d secring.gpg.b64 > secring.gpg
+        mkdir $PWD/.kltrenv && echo "${{ secrets.SIGNING_KEY }}" > $PWD/.kltrenv/secring.gpg.b64
+        base64 -d $PWD/.kltrenv/secring.gpg.b64 > $PWD/.kltrenv/secring.gpg
     - name: Build and Publish
       run: |
         bash .github/publish.sh
