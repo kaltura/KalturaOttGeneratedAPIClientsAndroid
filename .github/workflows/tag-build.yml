@@ -35,3 +35,6 @@ jobs:
       - name: Build and Publish
         run: |
           bash .github/publish.sh
+      - name: Delete secring file
+        run: |
+          rm -rf $PWD/.kltrenv
