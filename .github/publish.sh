@@ -5,11 +5,10 @@ fail() {
   exit 1
 }
 
- chmod +x gradlew
+chmod +x gradlew
  
  # Create javadoc jar, sources jar, pom
 ./gradlew KalturaClient:build
-./gradlew KalturaClient:publishReleasePublicationToMavenLocal
 
 # Upload
-./gradlew KalturaClient:bintrayUpload -PdryRun=false -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY
+./gradlew KalturaClient:publishToSonatype #closeAndReleaseSonatypeStagingRepository
