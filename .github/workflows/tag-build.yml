@@ -2,8 +2,14 @@ name: Tag and publish
 
 on:
   push:
-    branches: 
-    - '[0-9]+_[0-9]+_[0-9]+'
+    branches:
+      - '[0-9]+_[0-9]+_[0-9]+'
+
+env:
+  NEXUS_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+  NEXUS_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+  SIGNING_KEYID: ${{ secrets.SIGNING_KEY_ID }}
+  SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
 
 jobs:
   build:
@@ -11,14 +17,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: set up JDK 1.8
-      uses: actions/setup-java@v1
-      with:
-        java-version: 1.8
-    - name: Tag
-      run: |
-        GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} bash .github/tag.sh
-    - name: Build and Publish
-      run: |
-        BINTRAY_USER=${{ secrets.BINTRAY_USER }} BINTRAY_KEY=${{ secrets.BINTRAY_KEY }} bash .github/publish.sh
+      - uses: actions/checkout@v3
+      - name: set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+          cache: 'gradle'
+      - name: Tag
+        run: |
+          GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} bash .github/tag.sh
+      - name: Copy and Decode
+        run: |
+          mkdir $PWD/.kltrenv && echo "${{ secrets.SIGNING_KEY }}" > $PWD/.kltrenv/secring.gpg.b64
+          base64 -d $PWD/.kltrenv/secring.gpg.b64 > $PWD/.kltrenv/secring.gpg
+      - name: Build and Publish
+        run: |
+          bash .github/publish.sh
+      - name: Delete secring file
+        run: |
+          rm -rf $PWD/.kltrenv
