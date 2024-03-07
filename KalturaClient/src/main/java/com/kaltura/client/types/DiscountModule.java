@@ -1,0 +1,202 @@
+// ===================================================================================================
+//                           _  __     _ _
+//                          | |/ /__ _| | |_ _  _ _ _ __ _
+//                          | ' </ _` | |  _| || | '_/ _` |
+//                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
+//
+// This file is part of the Kaltura Collaborative Media Suite which allows users
+// to do with audio, video, and animation what Wiki platfroms allow them to do with
+// text.
+//
+// Copyright (C) 2006-2020  Kaltura Inc.
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as
+// published by the Free Software Foundation, either version 3 of the
+// License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
+// @ignore
+// ===================================================================================================
+package com.kaltura.client.types;
+
+import android.os.Parcel;
+import com.google.gson.JsonObject;
+import com.kaltura.client.Params;
+import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.utils.GsonParser;
+import com.kaltura.client.utils.request.MultiRequestBuilder;
+
+/**
+ * This class was generated using exec.php
+ * against an XML schema provided by Kaltura.
+ * 
+ * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
+ */
+
+/**
+ * Discount module
+ */
+@SuppressWarnings("serial")
+@MultiRequestBuilder.Tokenizer(DiscountModule.Tokenizer.class)
+public class DiscountModule extends ObjectBase {
+	
+	public interface Tokenizer extends ObjectBase.Tokenizer {
+		String id();
+		String percent();
+		String startDate();
+		String endDate();
+		String assetUserRuleId();
+	}
+
+	/**
+	 * Discount module identifier
+	 */
+	private Long id;
+	/**
+	 * The discount percentage
+	 */
+	private Double percent;
+	/**
+	 * The first date the discount is available
+	 */
+	private Long startDate;
+	/**
+	 * The last date the discount is available
+	 */
+	private Long endDate;
+	/**
+	 * Asset user rule identifier
+	 */
+	private Long assetUserRuleId;
+
+	// id:
+	public Long getId(){
+		return this.id;
+	}
+	public void setId(Long id){
+		this.id = id;
+	}
+
+	public void id(String multirequestToken){
+		setToken("id", multirequestToken);
+	}
+
+	// percent:
+	public Double getPercent(){
+		return this.percent;
+	}
+	public void setPercent(Double percent){
+		this.percent = percent;
+	}
+
+	public void percent(String multirequestToken){
+		setToken("percent", multirequestToken);
+	}
+
+	// startDate:
+	public Long getStartDate(){
+		return this.startDate;
+	}
+	public void setStartDate(Long startDate){
+		this.startDate = startDate;
+	}
+
+	public void startDate(String multirequestToken){
+		setToken("startDate", multirequestToken);
+	}
+
+	// endDate:
+	public Long getEndDate(){
+		return this.endDate;
+	}
+	public void setEndDate(Long endDate){
+		this.endDate = endDate;
+	}
+
+	public void endDate(String multirequestToken){
+		setToken("endDate", multirequestToken);
+	}
+
+	// assetUserRuleId:
+	public Long getAssetUserRuleId(){
+		return this.assetUserRuleId;
+	}
+	public void setAssetUserRuleId(Long assetUserRuleId){
+		this.assetUserRuleId = assetUserRuleId;
+	}
+
+	public void assetUserRuleId(String multirequestToken){
+		setToken("assetUserRuleId", multirequestToken);
+	}
+
+
+	public DiscountModule() {
+		super();
+	}
+
+	public DiscountModule(JsonObject jsonObject) throws APIException {
+		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		id = GsonParser.parseLong(jsonObject.get("id"));
+		percent = GsonParser.parseDouble(jsonObject.get("percent"));
+		startDate = GsonParser.parseLong(jsonObject.get("startDate"));
+		endDate = GsonParser.parseLong(jsonObject.get("endDate"));
+		assetUserRuleId = GsonParser.parseLong(jsonObject.get("assetUserRuleId"));
+
+	}
+
+	public Params toParams() {
+		Params kparams = super.toParams();
+		kparams.add("objectType", "KalturaDiscountModule");
+		kparams.add("id", this.id);
+		kparams.add("percent", this.percent);
+		kparams.add("startDate", this.startDate);
+		kparams.add("endDate", this.endDate);
+		kparams.add("assetUserRuleId", this.assetUserRuleId);
+		return kparams;
+	}
+
+
+    public static final Creator<DiscountModule> CREATOR = new Creator<DiscountModule>() {
+        @Override
+        public DiscountModule createFromParcel(Parcel source) {
+            return new DiscountModule(source);
+        }
+
+        @Override
+        public DiscountModule[] newArray(int size) {
+            return new DiscountModule[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeValue(this.id);
+        dest.writeValue(this.percent);
+        dest.writeValue(this.startDate);
+        dest.writeValue(this.endDate);
+        dest.writeValue(this.assetUserRuleId);
+    }
+
+    public DiscountModule(Parcel in) {
+        super(in);
+        this.id = (Long)in.readValue(Long.class.getClassLoader());
+        this.percent = (Double)in.readValue(Double.class.getClassLoader());
+        this.startDate = (Long)in.readValue(Long.class.getClassLoader());
+        this.endDate = (Long)in.readValue(Long.class.getClassLoader());
+        this.assetUserRuleId = (Long)in.readValue(Long.class.getClassLoader());
+    }
+}
+
