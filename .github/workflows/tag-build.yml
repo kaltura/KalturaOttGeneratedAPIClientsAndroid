@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
 
 env:
-  NEXUS_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-  NEXUS_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+  NEXUS_USERNAME: ${{ secrets.OSSRH_USERNAME_NEW }}
+  NEXUS_PASSWORD: ${{ secrets.OSSRH_PASSWORD_NEW }}
   SIGNING_KEYID: ${{ secrets.SIGNING_KEY_ID }}
   SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
 

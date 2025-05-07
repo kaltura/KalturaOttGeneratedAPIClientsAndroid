@@ -36,8 +36,8 @@ task clean(type: Delete) {
 nexusPublishing {
     repositories {
         sonaType {
-            nexusUrl.set(uri("https://oss.sonatype.org/service/local/"))
-            snapshotRepositoryUrl.set(uri("https://oss.sonatype.org/content/repositories/snapshots/"))
+            nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/")) // ⚡ Correct OSSRH URL
+            snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
             packageGroup = GROUP
             username = nexusUserName
             password = nexusPassword
