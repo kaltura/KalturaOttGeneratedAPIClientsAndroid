@@ -460,8 +460,8 @@ public class AssetService {
 	}
 
 	/**
-	 * This API provides search capabilities for assets using semantic similarity based
-	  on the provided query.
+	 * Search for assets using semantic similarity to a natural language query, with
+	  optional query refinement using LLM.
 	 * 
 	 * @param query The search query text used to find semantically similar assets
 	 * @param refineQuery When true, the search query is refined using LLM before vector search
