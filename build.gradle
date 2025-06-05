@@ -2,7 +2,6 @@ apply plugin: 'io.github.gradle-nexus.publish-plugin'
 
 ext["nexusUserName"] = System.getenv('NEXUS_USERNAME')
 ext["nexusPassword"] = System.getenv('NEXUS_PASSWORD')
-ext["signingKeyId"] = System.getenv('SIGNING_KEYID')
 ext["signingPassword"] = System.getenv('SIGNING_PASSWORD')
 ext["signingKey"] = System.getenv('SIGNING_KEY')
 ext["GROUP"] = 'com.kaltura'
