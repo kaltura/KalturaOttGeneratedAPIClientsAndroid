@@ -31,6 +31,7 @@ import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.types.TranslationToken;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
@@ -42,98 +43,95 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 /**
- * A class representing the request to upload subtitles to Kaltura.
+ * The generated sub-query and its properties.
  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(UploadSubtitles.Tokenizer.class)
-public class UploadSubtitles extends ObjectBase {
+@MultiRequestBuilder.Tokenizer(SemanticSubQuery.Tokenizer.class)
+public class SemanticSubQuery extends ObjectBase {
 	
 	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String fileName();
-		String language();
+		String text();
+		TranslationToken.Tokenizer name();
 	}
 
 	/**
-	 * Name of the subtitles file.
+	 * The text generated for the sub-query.
 	 */
-	private String fileName;
+	private String text;
 	/**
-	 * The language in which the subtitles are written.
+	 * The name generated for the sub-query, using the account&amp;#39;s Primary
+	  language.
 	 */
-	private String language;
+	private TranslationToken name;
 
-	// fileName:
-	public String getFileName(){
-		return this.fileName;
+	// text:
+	public String getText(){
+		return this.text;
 	}
-	public void setFileName(String fileName){
-		this.fileName = fileName;
-	}
-
-	public void fileName(String multirequestToken){
-		setToken("fileName", multirequestToken);
+	public void setText(String text){
+		this.text = text;
 	}
 
-	// language:
-	public String getLanguage(){
-		return this.language;
-	}
-	public void setLanguage(String language){
-		this.language = language;
+	public void text(String multirequestToken){
+		setToken("text", multirequestToken);
 	}
 
-	public void language(String multirequestToken){
-		setToken("language", multirequestToken);
+	// name:
+	public TranslationToken getName(){
+		return this.name;
+	}
+	public void setName(TranslationToken name){
+		this.name = name;
 	}
 
 
-	public UploadSubtitles() {
+	public SemanticSubQuery() {
 		super();
 	}
 
-	public UploadSubtitles(JsonObject jsonObject) throws APIException {
+	public SemanticSubQuery(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		fileName = GsonParser.parseString(jsonObject.get("fileName"));
-		language = GsonParser.parseString(jsonObject.get("language"));
+		text = GsonParser.parseString(jsonObject.get("text"));
+		name = GsonParser.parseObject(jsonObject.getAsJsonObject("name"), TranslationToken.class);
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaUploadSubtitles");
-		kparams.add("fileName", this.fileName);
-		kparams.add("language", this.language);
+		kparams.add("objectType", "KalturaSemanticSubQuery");
+		kparams.add("text", this.text);
+		kparams.add("name", this.name);
 		return kparams;
 	}
 
 
-    public static final Creator<UploadSubtitles> CREATOR = new Creator<UploadSubtitles>() {
+    public static final Creator<SemanticSubQuery> CREATOR = new Creator<SemanticSubQuery>() {
         @Override
-        public UploadSubtitles createFromParcel(Parcel source) {
-            return new UploadSubtitles(source);
+        public SemanticSubQuery createFromParcel(Parcel source) {
+            return new SemanticSubQuery(source);
         }
 
         @Override
-        public UploadSubtitles[] newArray(int size) {
-            return new UploadSubtitles[size];
+        public SemanticSubQuery[] newArray(int size) {
+            return new SemanticSubQuery[size];
         }
     };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeString(this.fileName);
-        dest.writeString(this.language);
+        dest.writeString(this.text);
+        dest.writeParcelable(this.name, flags);
     }
 
-    public UploadSubtitles(Parcel in) {
+    public SemanticSubQuery(Parcel in) {
         super(in);
-        this.fileName = in.readString();
-        this.language = in.readString();
+        this.text = in.readString();
+        this.name = in.readParcelable(TranslationToken.class.getClassLoader());
     }
 }
 
