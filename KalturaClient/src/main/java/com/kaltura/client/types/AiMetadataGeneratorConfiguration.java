@@ -64,9 +64,9 @@ public class AiMetadataGeneratorConfiguration extends ObjectBase {
 	 */
 	private Boolean isEnabled;
 	/**
-	 * A type of dictionary defined as [long,KalturaMetaFieldNameMap].              
-	  This property is used to correlate the newly generated metadata to             
-	  existing metadata IDs which are available in the asset’s struct.
+	 * A map (dictionary) to indicate to which existing metadata or tag the newly
+	  generated metadata value should be pushed, per assetStruct (per &amp;#39;asset
+	  type&amp;#39;)
 	 */
 	private Map<String, MetaFieldNameMap> assetStructMetaNameMap;
 	/**
