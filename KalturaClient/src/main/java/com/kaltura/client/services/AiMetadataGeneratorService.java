@@ -62,14 +62,10 @@ public class AiMetadataGeneratorService {
 	}
 
 	/**
-	 * Initiate the the process of metadata generation based on the subtitles file.
+	 * Start metadata generation process based on subtitles.
 	 * 
-	 * @param subtitlesFileId The subtitles file ID returned when uploaded the subtitles file by the subtitles
-	 * service.
-	 *             Represents also the job ID used by the generate metadata process
-	 * @param externalAssetIds A list of external asset IDs to be populated with the generated metadata
-	 *             Must be a valid existing KalturaLanguage systemName.\nIf not
-	 * provided then the subtitles language will be used
+	 * @param subtitlesFileId The subtitles file ID returned from subtitles.uploadFile.
+	 * @param externalAssetIds A list of external asset IDs to be populated with the generated metadata.
 	 */
     public static GenerateMetadataBySubtitlesAiMetadataGeneratorBuilder generateMetadataBySubtitles(long subtitlesFileId, List<StringValue> externalAssetIds)  {
 		return new GenerateMetadataBySubtitlesAiMetadataGeneratorBuilder(subtitlesFileId, externalAssetIds);
@@ -88,10 +84,9 @@ public class AiMetadataGeneratorService {
 	}
 
 	/**
-	 * retrieve the generated metadata
+	 * Retrieve the generated metadata
 	 * 
-	 * @param jobId The job ID (equals the subtitles file ID returned by the subtitles.uploadFile
-	 * service)
+	 * @param jobId The job ID as received from GenerateMetadataBySubtitles.
 	 */
     public static GetGeneratedMetadataAiMetadataGeneratorBuilder getGeneratedMetadata(long jobId)  {
 		return new GetGeneratedMetadataAiMetadataGeneratorBuilder(jobId);
@@ -110,10 +105,9 @@ public class AiMetadataGeneratorService {
 	}
 
 	/**
-	 * retrieve the status of the metadata generation job, identified by the subtitles
-	  file ID.
+	 * Get a metadata generation job.
 	 * 
-	 * @param id The file (job) ID as received from subtitles.uploadFile response"
+	 * @param id The job ID as received from GenerateMetadataBySubtitles.
 	 */
     public static GetGenerateMetadataJobAiMetadataGeneratorBuilder getGenerateMetadataJob(long id)  {
 		return new GetGenerateMetadataJobAiMetadataGeneratorBuilder(id);
@@ -127,7 +121,7 @@ public class AiMetadataGeneratorService {
 	}
 
 	/**
-	 * Get metadata mapping structure and available generated metadata fields
+	 * Get metadata mapping structure and available generated metadata fields.
 	 */
     public static GetMetadataFieldDefinitionsAiMetadataGeneratorBuilder getMetadataFieldDefinitions()  {
 		return new GetMetadataFieldDefinitionsAiMetadataGeneratorBuilder();
@@ -141,7 +135,7 @@ public class AiMetadataGeneratorService {
 	}
 
 	/**
-	 * retrieve feature configuration
+	 * Get the metadata generation configuration.
 	 */
     public static GetPartnerConfigurationAiMetadataGeneratorBuilder getPartnerConfiguration()  {
 		return new GetPartnerConfigurationAiMetadataGeneratorBuilder();
@@ -156,7 +150,7 @@ public class AiMetadataGeneratorService {
 	}
 
 	/**
-	 * update feature configuration
+	 * Update/set the metadata generation configuration
 	 * 
 	 * @param configuration the partner configuration to be set
 	 */
