@@ -34,8 +34,8 @@ import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 import com.kaltura.client.utils.request.RequestBuilder;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class was generated using exec.php
@@ -45,89 +45,82 @@ import java.util.Map;
  */
 
 /**
- * Metadata generation result object.
+ * Request object for bulk getPlaybackContext operation
  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(GenerateMetadataResult.Tokenizer.class)
-public class GenerateMetadataResult extends ObjectBase {
+@MultiRequestBuilder.Tokenizer(BulkPlaybackContextRequest.Tokenizer.class)
+public class BulkPlaybackContextRequest extends ObjectBase {
 	
 	public interface Tokenizer extends ObjectBase.Tokenizer {
-		RequestBuilder.MapTokenizer<TranslationToken.Tokenizer> enrichedMetadata();
+		RequestBuilder.ListTokenizer<GetPlaybackContextParams.Tokenizer> playbackContextParamSets();
 	}
 
 	/**
-	 * A dictionary/map containing the generated metadata. The map key includes the
-	  metadata name and the map value includes the generated value.
+	 * Array of request parameters for getPlaybackContext.              Each entry
+	  represents an individual playback context request.
 	 */
-	private Map<String, TranslationToken> enrichedMetadata;
+	private List<GetPlaybackContextParams> playbackContextParamSets;
 
-	// enrichedMetadata:
-	public Map<String, TranslationToken> getEnrichedMetadata(){
-		return this.enrichedMetadata;
+	// playbackContextParamSets:
+	public List<GetPlaybackContextParams> getPlaybackContextParamSets(){
+		return this.playbackContextParamSets;
 	}
-	public void setEnrichedMetadata(Map<String, TranslationToken> enrichedMetadata){
-		this.enrichedMetadata = enrichedMetadata;
+	public void setPlaybackContextParamSets(List<GetPlaybackContextParams> playbackContextParamSets){
+		this.playbackContextParamSets = playbackContextParamSets;
 	}
 
 
-	public GenerateMetadataResult() {
+	public BulkPlaybackContextRequest() {
 		super();
 	}
 
-	public GenerateMetadataResult(JsonObject jsonObject) throws APIException {
+	public BulkPlaybackContextRequest(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		enrichedMetadata = GsonParser.parseMap(jsonObject.getAsJsonObject("enrichedMetadata"), TranslationToken.class);
+		playbackContextParamSets = GsonParser.parseArray(jsonObject.getAsJsonArray("playbackContextParamSets"), GetPlaybackContextParams.class);
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaGenerateMetadataResult");
-		kparams.add("enrichedMetadata", this.enrichedMetadata);
+		kparams.add("objectType", "KalturaBulkPlaybackContextRequest");
+		kparams.add("playbackContextParamSets", this.playbackContextParamSets);
 		return kparams;
 	}
 
 
-    public static final Creator<GenerateMetadataResult> CREATOR = new Creator<GenerateMetadataResult>() {
+    public static final Creator<BulkPlaybackContextRequest> CREATOR = new Creator<BulkPlaybackContextRequest>() {
         @Override
-        public GenerateMetadataResult createFromParcel(Parcel source) {
-            return new GenerateMetadataResult(source);
+        public BulkPlaybackContextRequest createFromParcel(Parcel source) {
+            return new BulkPlaybackContextRequest(source);
         }
 
         @Override
-        public GenerateMetadataResult[] newArray(int size) {
-            return new GenerateMetadataResult[size];
+        public BulkPlaybackContextRequest[] newArray(int size) {
+            return new BulkPlaybackContextRequest[size];
         }
     };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        if(this.enrichedMetadata != null) {
-            dest.writeInt(this.enrichedMetadata.size());
-            for (Map.Entry<String, TranslationToken> entry : this.enrichedMetadata.entrySet()) {
-                dest.writeString(entry.getKey());
-                dest.writeParcelable(entry.getValue(), flags);
-            }
+        if(this.playbackContextParamSets != null) {
+            dest.writeInt(this.playbackContextParamSets.size());
+            dest.writeList(this.playbackContextParamSets);
         } else {
             dest.writeInt(-1);
         }
     }
 
-    public GenerateMetadataResult(Parcel in) {
+    public BulkPlaybackContextRequest(Parcel in) {
         super(in);
-        int enrichedMetadataSize = in.readInt();
-        if( enrichedMetadataSize > -1) {
-            this.enrichedMetadata = new HashMap<>();
-            for (int i = 0; i < enrichedMetadataSize; i++) {
-                String key = in.readString();
-                TranslationToken value = in.readParcelable(TranslationToken.class.getClassLoader());
-                this.enrichedMetadata.put(key, value);
-            }
+        int playbackContextParamSetsSize = in.readInt();
+        if( playbackContextParamSetsSize > -1) {
+            this.playbackContextParamSets = new ArrayList<>();
+            in.readList(this.playbackContextParamSets, GetPlaybackContextParams.class.getClassLoader());
         }
     }
 }

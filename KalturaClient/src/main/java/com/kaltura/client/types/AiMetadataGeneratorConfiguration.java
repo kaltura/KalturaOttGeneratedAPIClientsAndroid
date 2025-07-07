@@ -54,15 +54,10 @@ import java.util.Map;
 public class AiMetadataGeneratorConfiguration extends ObjectBase {
 	
 	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String isEnabled();
 		RequestBuilder.MapTokenizer<MetaFieldNameMap.Tokenizer> assetStructMetaNameMap();
 		RequestBuilder.ListTokenizer<StringValue.Tokenizer> supportedLanguages();
 	}
 
-	/**
-	 * Specifies if the feature is enabled or disabled.
-	 */
-	private Boolean isEnabled;
 	/**
 	 * A type of dictionary defined as [long,KalturaMetaFieldNameMap].              
 	  This property is used to correlate the newly generated metadata to             
@@ -75,18 +70,6 @@ public class AiMetadataGeneratorConfiguration extends ObjectBase {
 	  KalturaMetadataGeneratorLanguages ENUM.
 	 */
 	private List<StringValue> supportedLanguages;
-
-	// isEnabled:
-	public Boolean getIsEnabled(){
-		return this.isEnabled;
-	}
-	public void setIsEnabled(Boolean isEnabled){
-		this.isEnabled = isEnabled;
-	}
-
-	public void isEnabled(String multirequestToken){
-		setToken("isEnabled", multirequestToken);
-	}
 
 	// assetStructMetaNameMap:
 	public Map<String, MetaFieldNameMap> getAssetStructMetaNameMap(){
@@ -111,7 +94,6 @@ public class AiMetadataGeneratorConfiguration extends ObjectBase {
 		if(jsonObject == null) return;
 
 		// set members values:
-		isEnabled = GsonParser.parseBoolean(jsonObject.get("isEnabled"));
 		assetStructMetaNameMap = GsonParser.parseMap(jsonObject.getAsJsonObject("assetStructMetaNameMap"), MetaFieldNameMap.class);
 		supportedLanguages = GsonParser.parseArray(jsonObject.getAsJsonArray("supportedLanguages"), StringValue.class);
 
@@ -120,7 +102,6 @@ public class AiMetadataGeneratorConfiguration extends ObjectBase {
 	public Params toParams() {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaAiMetadataGeneratorConfiguration");
-		kparams.add("isEnabled", this.isEnabled);
 		kparams.add("assetStructMetaNameMap", this.assetStructMetaNameMap);
 		return kparams;
 	}
@@ -141,7 +122,6 @@ public class AiMetadataGeneratorConfiguration extends ObjectBase {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeValue(this.isEnabled);
         if(this.assetStructMetaNameMap != null) {
             dest.writeInt(this.assetStructMetaNameMap.size());
             for (Map.Entry<String, MetaFieldNameMap> entry : this.assetStructMetaNameMap.entrySet()) {
@@ -161,7 +141,6 @@ public class AiMetadataGeneratorConfiguration extends ObjectBase {
 
     public AiMetadataGeneratorConfiguration(Parcel in) {
         super(in);
-        this.isEnabled = (Boolean)in.readValue(Boolean.class.getClassLoader());
         int assetStructMetaNameMapSize = in.readInt();
         if( assetStructMetaNameMapSize > -1) {
             this.assetStructMetaNameMap = new HashMap<>();

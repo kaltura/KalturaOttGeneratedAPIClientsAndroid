@@ -45,61 +45,83 @@ import java.util.List;
  */
 
 /**
- * Container for searchable attributes configuration
+ * Response object for bulk getPlaybackContext operation.              Each item in
+  the objects array corresponds to the request at the same index.
  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(SearchableAttributes.Tokenizer.class)
-public class SearchableAttributes extends ObjectBase {
+@MultiRequestBuilder.Tokenizer(BulkPlaybackContextResponse.Tokenizer.class)
+public class BulkPlaybackContextResponse extends ObjectBase {
 	
 	public interface Tokenizer extends ObjectBase.Tokenizer {
-		RequestBuilder.ListTokenizer<SearchableAttribute.Tokenizer> items();
+		RequestBuilder.ListTokenizer<BulkResponseItem.Tokenizer> items();
+		String totalCount();
 	}
 
 	/**
-	 * A list of searchable attributes.
+	 * Array of playback contexts or errors.              Each item corresponds to the
+	  request at the same index in the request array.              Items can be either
+	  KalturaPlaybackContext (success) or KalturaBulkPlaybackContextError (error).
 	 */
-	private List<SearchableAttribute> items;
+	private List<BulkResponseItem> items;
+	/**
+	 * Total items
+	 */
+	private Integer totalCount;
 
 	// items:
-	public List<SearchableAttribute> getItems(){
+	public List<BulkResponseItem> getItems(){
 		return this.items;
 	}
-	public void setItems(List<SearchableAttribute> items){
+	public void setItems(List<BulkResponseItem> items){
 		this.items = items;
 	}
 
+	// totalCount:
+	public Integer getTotalCount(){
+		return this.totalCount;
+	}
+	public void setTotalCount(Integer totalCount){
+		this.totalCount = totalCount;
+	}
 
-	public SearchableAttributes() {
+	public void totalCount(String multirequestToken){
+		setToken("totalCount", multirequestToken);
+	}
+
+
+	public BulkPlaybackContextResponse() {
 		super();
 	}
 
-	public SearchableAttributes(JsonObject jsonObject) throws APIException {
+	public BulkPlaybackContextResponse(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		items = GsonParser.parseArray(jsonObject.getAsJsonArray("items"), SearchableAttribute.class);
+		items = GsonParser.parseArray(jsonObject.getAsJsonArray("items"), BulkResponseItem.class);
+		totalCount = GsonParser.parseInt(jsonObject.get("totalCount"));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaSearchableAttributes");
+		kparams.add("objectType", "KalturaBulkPlaybackContextResponse");
 		kparams.add("items", this.items);
+		kparams.add("totalCount", this.totalCount);
 		return kparams;
 	}
 
 
-    public static final Creator<SearchableAttributes> CREATOR = new Creator<SearchableAttributes>() {
+    public static final Creator<BulkPlaybackContextResponse> CREATOR = new Creator<BulkPlaybackContextResponse>() {
         @Override
-        public SearchableAttributes createFromParcel(Parcel source) {
-            return new SearchableAttributes(source);
+        public BulkPlaybackContextResponse createFromParcel(Parcel source) {
+            return new BulkPlaybackContextResponse(source);
         }
 
         @Override
-        public SearchableAttributes[] newArray(int size) {
-            return new SearchableAttributes[size];
+        public BulkPlaybackContextResponse[] newArray(int size) {
+            return new BulkPlaybackContextResponse[size];
         }
     };
 
@@ -112,15 +134,17 @@ public class SearchableAttributes extends ObjectBase {
         } else {
             dest.writeInt(-1);
         }
+        dest.writeValue(this.totalCount);
     }
 
-    public SearchableAttributes(Parcel in) {
+    public BulkPlaybackContextResponse(Parcel in) {
         super(in);
         int itemsSize = in.readInt();
         if( itemsSize > -1) {
             this.items = new ArrayList<>();
-            in.readList(this.items, SearchableAttribute.class.getClassLoader());
+            in.readList(this.items, BulkResponseItem.class.getClassLoader());
         }
+        this.totalCount = (Integer)in.readValue(Integer.class.getClassLoader());
     }
 }
 
