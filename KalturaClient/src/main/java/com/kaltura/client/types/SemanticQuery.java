@@ -34,8 +34,8 @@ import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 import com.kaltura.client.utils.request.RequestBuilder;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class was generated using exec.php
@@ -45,90 +45,103 @@ import java.util.Map;
  */
 
 /**
- * Metadata generation result object.
+ * The result of semantic query generation.
  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(GenerateMetadataResult.Tokenizer.class)
-public class GenerateMetadataResult extends ObjectBase {
+@MultiRequestBuilder.Tokenizer(SemanticQuery.Tokenizer.class)
+public class SemanticQuery extends ObjectBase {
 	
 	public interface Tokenizer extends ObjectBase.Tokenizer {
-		RequestBuilder.MapTokenizer<TranslationToken.Tokenizer> enrichedMetadata();
+		RequestBuilder.ListTokenizer<SemanticSubQuery.Tokenizer> subQueries();
+		String title();
 	}
 
 	/**
-	 * A dictionary/map containing the generated metadata. The map key includes the
-	  metadata name and the map value includes the generated value.
+	 * A list of generated sub-queries.
 	 */
-	private Map<String, TranslationToken> enrichedMetadata;
+	private List<SemanticSubQuery> subQueries;
+	/**
+	 * A title generated for the entire queries&amp;#39; generation.
+	 */
+	private String title;
 
-	// enrichedMetadata:
-	public Map<String, TranslationToken> getEnrichedMetadata(){
-		return this.enrichedMetadata;
+	// subQueries:
+	public List<SemanticSubQuery> getSubQueries(){
+		return this.subQueries;
 	}
-	public void setEnrichedMetadata(Map<String, TranslationToken> enrichedMetadata){
-		this.enrichedMetadata = enrichedMetadata;
+	public void setSubQueries(List<SemanticSubQuery> subQueries){
+		this.subQueries = subQueries;
+	}
+
+	// title:
+	public String getTitle(){
+		return this.title;
+	}
+	public void setTitle(String title){
+		this.title = title;
+	}
+
+	public void title(String multirequestToken){
+		setToken("title", multirequestToken);
 	}
 
 
-	public GenerateMetadataResult() {
+	public SemanticQuery() {
 		super();
 	}
 
-	public GenerateMetadataResult(JsonObject jsonObject) throws APIException {
+	public SemanticQuery(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		enrichedMetadata = GsonParser.parseMap(jsonObject.getAsJsonObject("enrichedMetadata"), TranslationToken.class);
+		subQueries = GsonParser.parseArray(jsonObject.getAsJsonArray("subQueries"), SemanticSubQuery.class);
+		title = GsonParser.parseString(jsonObject.get("title"));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaGenerateMetadataResult");
-		kparams.add("enrichedMetadata", this.enrichedMetadata);
+		kparams.add("objectType", "KalturaSemanticQuery");
+		kparams.add("subQueries", this.subQueries);
+		kparams.add("title", this.title);
 		return kparams;
 	}
 
 
-    public static final Creator<GenerateMetadataResult> CREATOR = new Creator<GenerateMetadataResult>() {
+    public static final Creator<SemanticQuery> CREATOR = new Creator<SemanticQuery>() {
         @Override
-        public GenerateMetadataResult createFromParcel(Parcel source) {
-            return new GenerateMetadataResult(source);
+        public SemanticQuery createFromParcel(Parcel source) {
+            return new SemanticQuery(source);
         }
 
         @Override
-        public GenerateMetadataResult[] newArray(int size) {
-            return new GenerateMetadataResult[size];
+        public SemanticQuery[] newArray(int size) {
+            return new SemanticQuery[size];
         }
     };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        if(this.enrichedMetadata != null) {
-            dest.writeInt(this.enrichedMetadata.size());
-            for (Map.Entry<String, TranslationToken> entry : this.enrichedMetadata.entrySet()) {
-                dest.writeString(entry.getKey());
-                dest.writeParcelable(entry.getValue(), flags);
-            }
+        if(this.subQueries != null) {
+            dest.writeInt(this.subQueries.size());
+            dest.writeList(this.subQueries);
         } else {
             dest.writeInt(-1);
         }
+        dest.writeString(this.title);
     }
 
-    public GenerateMetadataResult(Parcel in) {
+    public SemanticQuery(Parcel in) {
         super(in);
-        int enrichedMetadataSize = in.readInt();
-        if( enrichedMetadataSize > -1) {
-            this.enrichedMetadata = new HashMap<>();
-            for (int i = 0; i < enrichedMetadataSize; i++) {
-                String key = in.readString();
-                TranslationToken value = in.readParcelable(TranslationToken.class.getClassLoader());
-                this.enrichedMetadata.put(key, value);
-            }
+        int subQueriesSize = in.readInt();
+        if( subQueriesSize > -1) {
+            this.subQueries = new ArrayList<>();
+            in.readList(this.subQueries, SemanticSubQuery.class.getClassLoader());
         }
+        this.title = in.readString();
     }
 }
 

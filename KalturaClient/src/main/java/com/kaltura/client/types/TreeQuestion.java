@@ -42,98 +42,119 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 /**
- * A class representing the request to upload subtitles to Kaltura.
+ * A class representing a question in the decision tree.
  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(UploadSubtitles.Tokenizer.class)
-public class UploadSubtitles extends ObjectBase {
+@MultiRequestBuilder.Tokenizer(TreeQuestion.Tokenizer.class)
+public class TreeQuestion extends ObjectBase {
 	
 	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String fileName();
-		String language();
+		String questionId();
+		String text();
+		String level();
 	}
 
 	/**
-	 * Name of the subtitles file.
+	 * Unique identifier for the question.
 	 */
-	private String fileName;
+	private String questionId;
 	/**
-	 * The language in which the subtitles are written.
+	 * The question text to display to the user.
 	 */
-	private String language;
+	private String text;
+	/**
+	 * The depth level in the tree (1 for top-level).
+	 */
+	private Integer level;
 
-	// fileName:
-	public String getFileName(){
-		return this.fileName;
+	// questionId:
+	public String getQuestionId(){
+		return this.questionId;
 	}
-	public void setFileName(String fileName){
-		this.fileName = fileName;
-	}
-
-	public void fileName(String multirequestToken){
-		setToken("fileName", multirequestToken);
-	}
-
-	// language:
-	public String getLanguage(){
-		return this.language;
-	}
-	public void setLanguage(String language){
-		this.language = language;
+	public void setQuestionId(String questionId){
+		this.questionId = questionId;
 	}
 
-	public void language(String multirequestToken){
-		setToken("language", multirequestToken);
+	public void questionId(String multirequestToken){
+		setToken("questionId", multirequestToken);
+	}
+
+	// text:
+	public String getText(){
+		return this.text;
+	}
+	public void setText(String text){
+		this.text = text;
+	}
+
+	public void text(String multirequestToken){
+		setToken("text", multirequestToken);
+	}
+
+	// level:
+	public Integer getLevel(){
+		return this.level;
+	}
+	public void setLevel(Integer level){
+		this.level = level;
+	}
+
+	public void level(String multirequestToken){
+		setToken("level", multirequestToken);
 	}
 
 
-	public UploadSubtitles() {
+	public TreeQuestion() {
 		super();
 	}
 
-	public UploadSubtitles(JsonObject jsonObject) throws APIException {
+	public TreeQuestion(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		fileName = GsonParser.parseString(jsonObject.get("fileName"));
-		language = GsonParser.parseString(jsonObject.get("language"));
+		questionId = GsonParser.parseString(jsonObject.get("questionId"));
+		text = GsonParser.parseString(jsonObject.get("text"));
+		level = GsonParser.parseInt(jsonObject.get("level"));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaUploadSubtitles");
-		kparams.add("fileName", this.fileName);
-		kparams.add("language", this.language);
+		kparams.add("objectType", "KalturaTreeQuestion");
+		kparams.add("questionId", this.questionId);
+		kparams.add("text", this.text);
+		kparams.add("level", this.level);
 		return kparams;
 	}
 
 
-    public static final Creator<UploadSubtitles> CREATOR = new Creator<UploadSubtitles>() {
+    public static final Creator<TreeQuestion> CREATOR = new Creator<TreeQuestion>() {
         @Override
-        public UploadSubtitles createFromParcel(Parcel source) {
-            return new UploadSubtitles(source);
+        public TreeQuestion createFromParcel(Parcel source) {
+            return new TreeQuestion(source);
         }
 
         @Override
-        public UploadSubtitles[] newArray(int size) {
-            return new UploadSubtitles[size];
+        public TreeQuestion[] newArray(int size) {
+            return new TreeQuestion[size];
         }
     };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeString(this.fileName);
-        dest.writeString(this.language);
+        dest.writeString(this.questionId);
+        dest.writeString(this.text);
+        dest.writeValue(this.level);
     }
 
-    public UploadSubtitles(Parcel in) {
+    public TreeQuestion(Parcel in) {
         super(in);
-        this.fileName = in.readString();
-        this.language = in.readString();
+        this.questionId = in.readString();
+        this.text = in.readString();
+        this.level = (Integer)in.readValue(Integer.class.getClassLoader());
     }
 }
 

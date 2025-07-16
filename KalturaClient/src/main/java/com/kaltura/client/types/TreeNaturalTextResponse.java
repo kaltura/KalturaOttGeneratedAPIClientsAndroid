@@ -31,6 +31,7 @@ import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.types.TreeRecommendations;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
@@ -42,98 +43,73 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 /**
- * A class representing the request to upload subtitles to Kaltura.
+ * A class representing the response from the getRecommendationWithNaturalText API.
  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(UploadSubtitles.Tokenizer.class)
-public class UploadSubtitles extends ObjectBase {
+@MultiRequestBuilder.Tokenizer(TreeNaturalTextResponse.Tokenizer.class)
+public class TreeNaturalTextResponse extends ObjectBase {
 	
 	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String fileName();
-		String language();
+		TreeRecommendations.Tokenizer recommendations();
 	}
 
 	/**
-	 * Name of the subtitles file.
+	 * Content recommendations based on the natural language query.
 	 */
-	private String fileName;
-	/**
-	 * The language in which the subtitles are written.
-	 */
-	private String language;
+	private TreeRecommendations recommendations;
 
-	// fileName:
-	public String getFileName(){
-		return this.fileName;
+	// recommendations:
+	public TreeRecommendations getRecommendations(){
+		return this.recommendations;
 	}
-	public void setFileName(String fileName){
-		this.fileName = fileName;
-	}
-
-	public void fileName(String multirequestToken){
-		setToken("fileName", multirequestToken);
-	}
-
-	// language:
-	public String getLanguage(){
-		return this.language;
-	}
-	public void setLanguage(String language){
-		this.language = language;
-	}
-
-	public void language(String multirequestToken){
-		setToken("language", multirequestToken);
+	public void setRecommendations(TreeRecommendations recommendations){
+		this.recommendations = recommendations;
 	}
 
 
-	public UploadSubtitles() {
+	public TreeNaturalTextResponse() {
 		super();
 	}
 
-	public UploadSubtitles(JsonObject jsonObject) throws APIException {
+	public TreeNaturalTextResponse(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		fileName = GsonParser.parseString(jsonObject.get("fileName"));
-		language = GsonParser.parseString(jsonObject.get("language"));
+		recommendations = GsonParser.parseObject(jsonObject.getAsJsonObject("recommendations"), TreeRecommendations.class);
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaUploadSubtitles");
-		kparams.add("fileName", this.fileName);
-		kparams.add("language", this.language);
+		kparams.add("objectType", "KalturaTreeNaturalTextResponse");
+		kparams.add("recommendations", this.recommendations);
 		return kparams;
 	}
 
 
-    public static final Creator<UploadSubtitles> CREATOR = new Creator<UploadSubtitles>() {
+    public static final Creator<TreeNaturalTextResponse> CREATOR = new Creator<TreeNaturalTextResponse>() {
         @Override
-        public UploadSubtitles createFromParcel(Parcel source) {
-            return new UploadSubtitles(source);
+        public TreeNaturalTextResponse createFromParcel(Parcel source) {
+            return new TreeNaturalTextResponse(source);
         }
 
         @Override
-        public UploadSubtitles[] newArray(int size) {
-            return new UploadSubtitles[size];
+        public TreeNaturalTextResponse[] newArray(int size) {
+            return new TreeNaturalTextResponse[size];
         }
     };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeString(this.fileName);
-        dest.writeString(this.language);
+        dest.writeParcelable(this.recommendations, flags);
     }
 
-    public UploadSubtitles(Parcel in) {
+    public TreeNaturalTextResponse(Parcel in) {
         super(in);
-        this.fileName = in.readString();
-        this.language = in.readString();
+        this.recommendations = in.readParcelable(TreeRecommendations.class.getClassLoader());
     }
 }
 
