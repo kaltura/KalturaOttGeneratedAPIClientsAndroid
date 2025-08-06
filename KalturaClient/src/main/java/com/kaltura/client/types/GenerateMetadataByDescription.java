@@ -41,99 +41,77 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
-/**
- * A class representing the request to upload subtitles to Kaltura.
- */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(UploadSubtitles.Tokenizer.class)
-public class UploadSubtitles extends ObjectBase {
+@MultiRequestBuilder.Tokenizer(GenerateMetadataByDescription.Tokenizer.class)
+public class GenerateMetadataByDescription extends ObjectBase {
 	
 	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String fileName();
-		String language();
+		String externalAssetId();
 	}
 
 	/**
-	 * Name of the subtitles file.
+	 * A string that uniquely identifies the asset which will be enriched and from
+	  which the description will be extracted.              This is the external asset
+	  ID set by the customer (CoGuid) and not the internal Kaltura asset ID.
 	 */
-	private String fileName;
-	/**
-	 * The language in which the subtitles are written.
-	 */
-	private String language;
+	private String externalAssetId;
 
-	// fileName:
-	public String getFileName(){
-		return this.fileName;
+	// externalAssetId:
+	public String getExternalAssetId(){
+		return this.externalAssetId;
 	}
-	public void setFileName(String fileName){
-		this.fileName = fileName;
+	public void setExternalAssetId(String externalAssetId){
+		this.externalAssetId = externalAssetId;
 	}
 
-	public void fileName(String multirequestToken){
-		setToken("fileName", multirequestToken);
-	}
-
-	// language:
-	public String getLanguage(){
-		return this.language;
-	}
-	public void setLanguage(String language){
-		this.language = language;
-	}
-
-	public void language(String multirequestToken){
-		setToken("language", multirequestToken);
+	public void externalAssetId(String multirequestToken){
+		setToken("externalAssetId", multirequestToken);
 	}
 
 
-	public UploadSubtitles() {
+	public GenerateMetadataByDescription() {
 		super();
 	}
 
-	public UploadSubtitles(JsonObject jsonObject) throws APIException {
+	public GenerateMetadataByDescription(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		fileName = GsonParser.parseString(jsonObject.get("fileName"));
-		language = GsonParser.parseString(jsonObject.get("language"));
+		externalAssetId = GsonParser.parseString(jsonObject.get("externalAssetId"));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaUploadSubtitles");
-		kparams.add("fileName", this.fileName);
-		kparams.add("language", this.language);
+		kparams.add("objectType", "KalturaGenerateMetadataByDescription");
+		kparams.add("externalAssetId", this.externalAssetId);
 		return kparams;
 	}
 
 
-    public static final Creator<UploadSubtitles> CREATOR = new Creator<UploadSubtitles>() {
+    public static final Creator<GenerateMetadataByDescription> CREATOR = new Creator<GenerateMetadataByDescription>() {
         @Override
-        public UploadSubtitles createFromParcel(Parcel source) {
-            return new UploadSubtitles(source);
+        public GenerateMetadataByDescription createFromParcel(Parcel source) {
+            return new GenerateMetadataByDescription(source);
         }
 
         @Override
-        public UploadSubtitles[] newArray(int size) {
-            return new UploadSubtitles[size];
+        public GenerateMetadataByDescription[] newArray(int size) {
+            return new GenerateMetadataByDescription[size];
         }
     };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeString(this.fileName);
-        dest.writeString(this.language);
+        dest.writeString(this.externalAssetId);
     }
 
-    public UploadSubtitles(Parcel in) {
+    public GenerateMetadataByDescription(Parcel in) {
         super(in);
-        this.fileName = in.readString();
-        this.language = in.readString();
+        this.externalAssetId = in.readString();
     }
 }
 
