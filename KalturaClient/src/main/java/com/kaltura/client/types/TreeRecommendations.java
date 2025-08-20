@@ -34,8 +34,8 @@ import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 import com.kaltura.client.utils.request.RequestBuilder;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class was generated using exec.php
@@ -45,89 +45,103 @@ import java.util.Map;
  */
 
 /**
- * Metadata generation result object.
+ * A class representing content recommendations.
  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(GenerateMetadataResult.Tokenizer.class)
-public class GenerateMetadataResult extends ObjectBase {
+@MultiRequestBuilder.Tokenizer(TreeRecommendations.Tokenizer.class)
+public class TreeRecommendations extends ObjectBase {
 	
 	public interface Tokenizer extends ObjectBase.Tokenizer {
-		RequestBuilder.MapTokenizer<TranslationToken.Tokenizer> enrichedMetadata();
+		String title();
+		RequestBuilder.ListTokenizer<Asset.Tokenizer> assets();
 	}
 
 	/**
-	 * A dictionary/map containing the generated metadata. The map key includes the
-	  metadata name and the map value includes the generated value.
+	 * Descriptive title for the recommendation set.
 	 */
-	private Map<String, TranslationToken> enrichedMetadata;
+	private String title;
+	/**
+	 * Array of content assets matching the recommendation criteria, this is
+	  essentially a KalturaAssetListResponseObject.
+	 */
+	private List<Asset> assets;
 
-	// enrichedMetadata:
-	public Map<String, TranslationToken> getEnrichedMetadata(){
-		return this.enrichedMetadata;
+	// title:
+	public String getTitle(){
+		return this.title;
 	}
-	public void setEnrichedMetadata(Map<String, TranslationToken> enrichedMetadata){
-		this.enrichedMetadata = enrichedMetadata;
+	public void setTitle(String title){
+		this.title = title;
+	}
+
+	public void title(String multirequestToken){
+		setToken("title", multirequestToken);
+	}
+
+	// assets:
+	public List<Asset> getAssets(){
+		return this.assets;
+	}
+	public void setAssets(List<Asset> assets){
+		this.assets = assets;
 	}
 
 
-	public GenerateMetadataResult() {
+	public TreeRecommendations() {
 		super();
 	}
 
-	public GenerateMetadataResult(JsonObject jsonObject) throws APIException {
+	public TreeRecommendations(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		enrichedMetadata = GsonParser.parseMap(jsonObject.getAsJsonObject("enrichedMetadata"), TranslationToken.class);
+		title = GsonParser.parseString(jsonObject.get("title"));
+		assets = GsonParser.parseArray(jsonObject.getAsJsonArray("assets"), Asset.class);
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaGenerateMetadataResult");
-		kparams.add("enrichedMetadata", this.enrichedMetadata);
+		kparams.add("objectType", "KalturaTreeRecommendations");
+		kparams.add("title", this.title);
+		kparams.add("assets", this.assets);
 		return kparams;
 	}
 
 
-    public static final Creator<GenerateMetadataResult> CREATOR = new Creator<GenerateMetadataResult>() {
+    public static final Creator<TreeRecommendations> CREATOR = new Creator<TreeRecommendations>() {
         @Override
-        public GenerateMetadataResult createFromParcel(Parcel source) {
-            return new GenerateMetadataResult(source);
+        public TreeRecommendations createFromParcel(Parcel source) {
+            return new TreeRecommendations(source);
         }
 
         @Override
-        public GenerateMetadataResult[] newArray(int size) {
-            return new GenerateMetadataResult[size];
+        public TreeRecommendations[] newArray(int size) {
+            return new TreeRecommendations[size];
         }
     };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        if(this.enrichedMetadata != null) {
-            dest.writeInt(this.enrichedMetadata.size());
-            for (Map.Entry<String, TranslationToken> entry : this.enrichedMetadata.entrySet()) {
-                dest.writeString(entry.getKey());
-                dest.writeParcelable(entry.getValue(), flags);
-            }
+        dest.writeString(this.title);
+        if(this.assets != null) {
+            dest.writeInt(this.assets.size());
+            dest.writeList(this.assets);
         } else {
             dest.writeInt(-1);
         }
     }
 
-    public GenerateMetadataResult(Parcel in) {
+    public TreeRecommendations(Parcel in) {
         super(in);
-        int enrichedMetadataSize = in.readInt();
-        if( enrichedMetadataSize > -1) {
-            this.enrichedMetadata = new HashMap<>();
-            for (int i = 0; i < enrichedMetadataSize; i++) {
-                String key = in.readString();
-                TranslationToken value = in.readParcelable(TranslationToken.class.getClassLoader());
-                this.enrichedMetadata.put(key, value);
-            }
+        this.title = in.readString();
+        int assetsSize = in.readInt();
+        if( assetsSize > -1) {
+            this.assets = new ArrayList<>();
+            in.readList(this.assets, Asset.class.getClassLoader());
         }
     }
 }
