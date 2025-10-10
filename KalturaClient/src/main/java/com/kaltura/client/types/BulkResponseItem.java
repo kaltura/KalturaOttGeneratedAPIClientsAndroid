@@ -42,98 +42,65 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 /**
- * A class representing the request to upload subtitles to Kaltura.
+ * Base class for objects that can be returned in bulk response operations
  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(UploadSubtitles.Tokenizer.class)
-public class UploadSubtitles extends ObjectBase {
+@MultiRequestBuilder.Tokenizer(BulkResponseItem.Tokenizer.class)
+public abstract class BulkResponseItem extends ObjectBase {
 	
 	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String fileName();
-		String language();
+		String isSuccess();
 	}
 
 	/**
-	 * Name of the subtitles file.
+	 * Indicates whether the bulk operation was successful
 	 */
-	private String fileName;
-	/**
-	 * The language in which the subtitles are written.
-	 */
-	private String language;
+	private Boolean isSuccess;
 
-	// fileName:
-	public String getFileName(){
-		return this.fileName;
+	// isSuccess:
+	public Boolean getIsSuccess(){
+		return this.isSuccess;
 	}
-	public void setFileName(String fileName){
-		this.fileName = fileName;
+	public void setIsSuccess(Boolean isSuccess){
+		this.isSuccess = isSuccess;
 	}
 
-	public void fileName(String multirequestToken){
-		setToken("fileName", multirequestToken);
-	}
-
-	// language:
-	public String getLanguage(){
-		return this.language;
-	}
-	public void setLanguage(String language){
-		this.language = language;
-	}
-
-	public void language(String multirequestToken){
-		setToken("language", multirequestToken);
+	public void isSuccess(String multirequestToken){
+		setToken("isSuccess", multirequestToken);
 	}
 
 
-	public UploadSubtitles() {
+	public BulkResponseItem() {
 		super();
 	}
 
-	public UploadSubtitles(JsonObject jsonObject) throws APIException {
+	public BulkResponseItem(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		fileName = GsonParser.parseString(jsonObject.get("fileName"));
-		language = GsonParser.parseString(jsonObject.get("language"));
+		isSuccess = GsonParser.parseBoolean(jsonObject.get("isSuccess"));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaUploadSubtitles");
-		kparams.add("fileName", this.fileName);
-		kparams.add("language", this.language);
+		kparams.add("objectType", "KalturaBulkResponseItem");
+		kparams.add("isSuccess", this.isSuccess);
 		return kparams;
 	}
 
 
-    public static final Creator<UploadSubtitles> CREATOR = new Creator<UploadSubtitles>() {
-        @Override
-        public UploadSubtitles createFromParcel(Parcel source) {
-            return new UploadSubtitles(source);
-        }
-
-        @Override
-        public UploadSubtitles[] newArray(int size) {
-            return new UploadSubtitles[size];
-        }
-    };
-
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeString(this.fileName);
-        dest.writeString(this.language);
+        dest.writeValue(this.isSuccess);
     }
 
-    public UploadSubtitles(Parcel in) {
+    public BulkResponseItem(Parcel in) {
         super(in);
-        this.fileName = in.readString();
-        this.language = in.readString();
+        this.isSuccess = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
 
