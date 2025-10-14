@@ -68,10 +68,12 @@ public class SubtitlesService {
 	}
 
 	/**
-	 * Upload a subtitles file for a later analysis.
+	 * Add a subtitles file to be used for generating metadata and enriching the assets
+	  using a multi-part form-data body including the JSON configuration object and
+	  the uploaded file.
 	 * 
-	 * @param subtitles Subtitle metadata
-	 * @param fileData The subtitles text file to upload. Must be in UTF-8 encoding.
+	 * @param subtitles Subtitle file metadata.
+	 * @param fileData The subtitles file to upload. The file must be in UTF-8 encoding.
 	 */
     public static UploadFileSubtitlesBuilder uploadFile(UploadSubtitles subtitles, FileHolder fileData)  {
 		return new UploadFileSubtitlesBuilder(subtitles, fileData);
