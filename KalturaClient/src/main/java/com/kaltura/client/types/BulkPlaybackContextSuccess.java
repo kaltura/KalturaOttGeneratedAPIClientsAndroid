@@ -30,7 +30,7 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.types.PlaybackContext;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
@@ -42,98 +42,74 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 /**
- * A class representing the request to upload subtitles to Kaltura.
+ * Wrapper for KalturaPlaybackContext to make it compatible with bulk response
+  operations
  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(UploadSubtitles.Tokenizer.class)
-public class UploadSubtitles extends ObjectBase {
+@MultiRequestBuilder.Tokenizer(BulkPlaybackContextSuccess.Tokenizer.class)
+public class BulkPlaybackContextSuccess extends BulkResponseItem {
 	
-	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String fileName();
-		String language();
+	public interface Tokenizer extends BulkResponseItem.Tokenizer {
+		PlaybackContext.Tokenizer playbackContext();
 	}
 
 	/**
-	 * Name of the subtitles file.
+	 * The successful playback context
 	 */
-	private String fileName;
-	/**
-	 * The language in which the subtitles are written.
-	 */
-	private String language;
+	private PlaybackContext playbackContext;
 
-	// fileName:
-	public String getFileName(){
-		return this.fileName;
+	// playbackContext:
+	public PlaybackContext getPlaybackContext(){
+		return this.playbackContext;
 	}
-	public void setFileName(String fileName){
-		this.fileName = fileName;
-	}
-
-	public void fileName(String multirequestToken){
-		setToken("fileName", multirequestToken);
-	}
-
-	// language:
-	public String getLanguage(){
-		return this.language;
-	}
-	public void setLanguage(String language){
-		this.language = language;
-	}
-
-	public void language(String multirequestToken){
-		setToken("language", multirequestToken);
+	public void setPlaybackContext(PlaybackContext playbackContext){
+		this.playbackContext = playbackContext;
 	}
 
 
-	public UploadSubtitles() {
+	public BulkPlaybackContextSuccess() {
 		super();
 	}
 
-	public UploadSubtitles(JsonObject jsonObject) throws APIException {
+	public BulkPlaybackContextSuccess(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		fileName = GsonParser.parseString(jsonObject.get("fileName"));
-		language = GsonParser.parseString(jsonObject.get("language"));
+		playbackContext = GsonParser.parseObject(jsonObject.getAsJsonObject("playbackContext"), PlaybackContext.class);
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaUploadSubtitles");
-		kparams.add("fileName", this.fileName);
-		kparams.add("language", this.language);
+		kparams.add("objectType", "KalturaBulkPlaybackContextSuccess");
+		kparams.add("playbackContext", this.playbackContext);
 		return kparams;
 	}
 
 
-    public static final Creator<UploadSubtitles> CREATOR = new Creator<UploadSubtitles>() {
+    public static final Creator<BulkPlaybackContextSuccess> CREATOR = new Creator<BulkPlaybackContextSuccess>() {
         @Override
-        public UploadSubtitles createFromParcel(Parcel source) {
-            return new UploadSubtitles(source);
+        public BulkPlaybackContextSuccess createFromParcel(Parcel source) {
+            return new BulkPlaybackContextSuccess(source);
         }
 
         @Override
-        public UploadSubtitles[] newArray(int size) {
-            return new UploadSubtitles[size];
+        public BulkPlaybackContextSuccess[] newArray(int size) {
+            return new BulkPlaybackContextSuccess[size];
         }
     };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeString(this.fileName);
-        dest.writeString(this.language);
+        dest.writeParcelable(this.playbackContext, flags);
     }
 
-    public UploadSubtitles(Parcel in) {
+    public BulkPlaybackContextSuccess(Parcel in) {
         super(in);
-        this.fileName = in.readString();
-        this.language = in.readString();
+        this.playbackContext = in.readParcelable(PlaybackContext.class.getClassLoader());
     }
 }
 
