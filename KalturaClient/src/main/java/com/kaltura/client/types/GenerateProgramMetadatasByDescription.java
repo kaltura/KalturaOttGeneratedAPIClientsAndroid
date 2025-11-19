@@ -30,7 +30,6 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
-import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
@@ -41,99 +40,78 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  * MANUAL CHANGES TO THIS CLASS WILL BE OVERWRITTEN.
  */
 
-/**
- * A class representing the request to upload subtitles to Kaltura.
- */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(UploadSubtitles.Tokenizer.class)
-public class UploadSubtitles extends ObjectBase {
+@MultiRequestBuilder.Tokenizer(GenerateProgramMetadatasByDescription.Tokenizer.class)
+public class GenerateProgramMetadatasByDescription extends GenerateMetadataByDescription {
 	
-	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String fileName();
-		String language();
+	public interface Tokenizer extends GenerateMetadataByDescription.Tokenizer {
+		String regenerate();
 	}
 
 	/**
-	 * Name of the subtitles file.
+	 * A boolean flag that allows the API user to force the regeneration of metadata.  
+	             If true, the service will run a new analysis even if enriched
+	  metadata already exists for the program&amp;#39;s CRID.              If false
+	  (default), the service will reuse existing metadata if available for the CRID.
 	 */
-	private String fileName;
-	/**
-	 * The language in which the subtitles are written.
-	 */
-	private String language;
+	private Boolean regenerate;
 
-	// fileName:
-	public String getFileName(){
-		return this.fileName;
+	// regenerate:
+	public Boolean getRegenerate(){
+		return this.regenerate;
 	}
-	public void setFileName(String fileName){
-		this.fileName = fileName;
+	public void setRegenerate(Boolean regenerate){
+		this.regenerate = regenerate;
 	}
 
-	public void fileName(String multirequestToken){
-		setToken("fileName", multirequestToken);
-	}
-
-	// language:
-	public String getLanguage(){
-		return this.language;
-	}
-	public void setLanguage(String language){
-		this.language = language;
-	}
-
-	public void language(String multirequestToken){
-		setToken("language", multirequestToken);
+	public void regenerate(String multirequestToken){
+		setToken("regenerate", multirequestToken);
 	}
 
 
-	public UploadSubtitles() {
+	public GenerateProgramMetadatasByDescription() {
 		super();
 	}
 
-	public UploadSubtitles(JsonObject jsonObject) throws APIException {
+	public GenerateProgramMetadatasByDescription(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		fileName = GsonParser.parseString(jsonObject.get("fileName"));
-		language = GsonParser.parseString(jsonObject.get("language"));
+		regenerate = GsonParser.parseBoolean(jsonObject.get("regenerate"));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaUploadSubtitles");
-		kparams.add("fileName", this.fileName);
-		kparams.add("language", this.language);
+		kparams.add("objectType", "KalturaGenerateProgramMetadatasByDescription");
+		kparams.add("regenerate", this.regenerate);
 		return kparams;
 	}
 
 
-    public static final Creator<UploadSubtitles> CREATOR = new Creator<UploadSubtitles>() {
+    public static final Creator<GenerateProgramMetadatasByDescription> CREATOR = new Creator<GenerateProgramMetadatasByDescription>() {
         @Override
-        public UploadSubtitles createFromParcel(Parcel source) {
-            return new UploadSubtitles(source);
+        public GenerateProgramMetadatasByDescription createFromParcel(Parcel source) {
+            return new GenerateProgramMetadatasByDescription(source);
         }
 
         @Override
-        public UploadSubtitles[] newArray(int size) {
-            return new UploadSubtitles[size];
+        public GenerateProgramMetadatasByDescription[] newArray(int size) {
+            return new GenerateProgramMetadatasByDescription[size];
         }
     };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeString(this.fileName);
-        dest.writeString(this.language);
+        dest.writeValue(this.regenerate);
     }
 
-    public UploadSubtitles(Parcel in) {
+    public GenerateProgramMetadatasByDescription(Parcel in) {
         super(in);
-        this.fileName = in.readString();
-        this.language = in.readString();
+        this.regenerate = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
 

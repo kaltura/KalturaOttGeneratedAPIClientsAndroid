@@ -30,6 +30,7 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
+import com.kaltura.client.enums.MetadataUpdateOperation;
 import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
@@ -42,98 +43,100 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 /**
- * A class representing the request to upload subtitles to Kaltura.
+ * Configuration for a specific metadata field including system name and update
+  operation.
  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(UploadSubtitles.Tokenizer.class)
-public class UploadSubtitles extends ObjectBase {
+@MultiRequestBuilder.Tokenizer(MetadataFieldConfig.Tokenizer.class)
+public class MetadataFieldConfig extends ObjectBase {
 	
 	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String fileName();
-		String language();
+		String systemName();
+		String operation();
 	}
 
 	/**
-	 * Name of the subtitles file.
+	 * The system name of the metadata field in the asset struct.
 	 */
-	private String fileName;
+	private String systemName;
 	/**
-	 * The language in which the subtitles are written.
+	 * The update operation to be performed on this metadata field.
 	 */
-	private String language;
+	private MetadataUpdateOperation operation;
 
-	// fileName:
-	public String getFileName(){
-		return this.fileName;
+	// systemName:
+	public String getSystemName(){
+		return this.systemName;
 	}
-	public void setFileName(String fileName){
-		this.fileName = fileName;
-	}
-
-	public void fileName(String multirequestToken){
-		setToken("fileName", multirequestToken);
+	public void setSystemName(String systemName){
+		this.systemName = systemName;
 	}
 
-	// language:
-	public String getLanguage(){
-		return this.language;
-	}
-	public void setLanguage(String language){
-		this.language = language;
+	public void systemName(String multirequestToken){
+		setToken("systemName", multirequestToken);
 	}
 
-	public void language(String multirequestToken){
-		setToken("language", multirequestToken);
+	// operation:
+	public MetadataUpdateOperation getOperation(){
+		return this.operation;
+	}
+	public void setOperation(MetadataUpdateOperation operation){
+		this.operation = operation;
+	}
+
+	public void operation(String multirequestToken){
+		setToken("operation", multirequestToken);
 	}
 
 
-	public UploadSubtitles() {
+	public MetadataFieldConfig() {
 		super();
 	}
 
-	public UploadSubtitles(JsonObject jsonObject) throws APIException {
+	public MetadataFieldConfig(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		fileName = GsonParser.parseString(jsonObject.get("fileName"));
-		language = GsonParser.parseString(jsonObject.get("language"));
+		systemName = GsonParser.parseString(jsonObject.get("systemName"));
+		operation = MetadataUpdateOperation.get(GsonParser.parseString(jsonObject.get("operation")));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaUploadSubtitles");
-		kparams.add("fileName", this.fileName);
-		kparams.add("language", this.language);
+		kparams.add("objectType", "KalturaMetadataFieldConfig");
+		kparams.add("systemName", this.systemName);
+		kparams.add("operation", this.operation);
 		return kparams;
 	}
 
 
-    public static final Creator<UploadSubtitles> CREATOR = new Creator<UploadSubtitles>() {
+    public static final Creator<MetadataFieldConfig> CREATOR = new Creator<MetadataFieldConfig>() {
         @Override
-        public UploadSubtitles createFromParcel(Parcel source) {
-            return new UploadSubtitles(source);
+        public MetadataFieldConfig createFromParcel(Parcel source) {
+            return new MetadataFieldConfig(source);
         }
 
         @Override
-        public UploadSubtitles[] newArray(int size) {
-            return new UploadSubtitles[size];
+        public MetadataFieldConfig[] newArray(int size) {
+            return new MetadataFieldConfig[size];
         }
     };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeString(this.fileName);
-        dest.writeString(this.language);
+        dest.writeString(this.systemName);
+        dest.writeInt(this.operation == null ? -1 : this.operation.ordinal());
     }
 
-    public UploadSubtitles(Parcel in) {
+    public MetadataFieldConfig(Parcel in) {
         super(in);
-        this.fileName = in.readString();
-        this.language = in.readString();
+        this.systemName = in.readString();
+        int tmpOperation = in.readInt();
+        this.operation = tmpOperation == -1 ? null : MetadataUpdateOperation.values()[tmpOperation];
     }
 }
 

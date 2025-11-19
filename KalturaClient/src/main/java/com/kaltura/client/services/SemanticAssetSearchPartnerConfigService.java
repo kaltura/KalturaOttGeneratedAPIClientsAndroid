@@ -48,7 +48,7 @@ public class SemanticAssetSearchPartnerConfigService {
 	}
 
 	/**
-	 * Retrieves the filtering condition applied to asset searches.
+	 * Retrieve the filtering condition configuration for the partner.
 	 */
     public static GetFilteringConditionSemanticAssetSearchPartnerConfigBuilder getFilteringCondition()  {
 		return new GetFilteringConditionSemanticAssetSearchPartnerConfigBuilder();
@@ -67,9 +67,9 @@ public class SemanticAssetSearchPartnerConfigService {
 	}
 
 	/**
-	 * Retrieves the searchable attributes associated with a specific asset structure.
+	 * Retrieve the current field configurations for semantic search.
 	 * 
-	 * @param assetStructId The unique identifier of the asset structure.
+	 * @param assetStructId Asset structure ID to filter configurations.
 	 */
     public static GetSearchableAttributesSemanticAssetSearchPartnerConfigBuilder getSearchableAttributes(int assetStructId)  {
 		return new GetSearchableAttributesSemanticAssetSearchPartnerConfigBuilder(assetStructId);
@@ -84,9 +84,9 @@ public class SemanticAssetSearchPartnerConfigService {
 	}
 
 	/**
-	 * Adds or updates a filtering condition for asset searches.
+	 * Update rule that controls embedding generation and search behavior.
 	 * 
-	 * @param filteringCondition The filtering condition to be applied to asset searches.
+	 * @param filteringCondition Rule configuration parameters.
 	 */
     public static UpsertFilteringConditionSemanticAssetSearchPartnerConfigBuilder upsertFilteringCondition(FilteringCondition filteringCondition)  {
 		return new UpsertFilteringConditionSemanticAssetSearchPartnerConfigBuilder(filteringCondition);
@@ -101,9 +101,10 @@ public class SemanticAssetSearchPartnerConfigService {
 	}
 
 	/**
-	 * Adds or updates searchable attributes for a given asset structure.
+	 * Update which fields should be included in semantic search for specific asset
+	  types.
 	 * 
-	 * @param attributes The searchable attributes to be added or updated.
+	 * @param attributes Fields configuration parameters.
 	 */
     public static UpsertSearchableAttributesSemanticAssetSearchPartnerConfigBuilder upsertSearchableAttributes(SearchableAttributes attributes)  {
 		return new UpsertSearchableAttributesSemanticAssetSearchPartnerConfigBuilder(attributes);
