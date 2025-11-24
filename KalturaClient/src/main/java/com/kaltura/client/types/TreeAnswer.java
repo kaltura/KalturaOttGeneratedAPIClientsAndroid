@@ -42,98 +42,98 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 /**
- * A class representing the request to upload subtitles to Kaltura.
+ * A class representing a possible response to a question.
  */
 @SuppressWarnings("serial")
-@MultiRequestBuilder.Tokenizer(UploadSubtitles.Tokenizer.class)
-public class UploadSubtitles extends ObjectBase {
+@MultiRequestBuilder.Tokenizer(TreeAnswer.Tokenizer.class)
+public class TreeAnswer extends ObjectBase {
 	
 	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String fileName();
-		String language();
+		String answerId();
+		String text();
 	}
 
 	/**
-	 * Name of the subtitles file.
+	 * Unique identifier for the answer.
 	 */
-	private String fileName;
+	private String answerId;
 	/**
-	 * The language in which the subtitles are written.
+	 * The answer text to display to the user.
 	 */
-	private String language;
+	private String text;
 
-	// fileName:
-	public String getFileName(){
-		return this.fileName;
+	// answerId:
+	public String getAnswerId(){
+		return this.answerId;
 	}
-	public void setFileName(String fileName){
-		this.fileName = fileName;
-	}
-
-	public void fileName(String multirequestToken){
-		setToken("fileName", multirequestToken);
+	public void setAnswerId(String answerId){
+		this.answerId = answerId;
 	}
 
-	// language:
-	public String getLanguage(){
-		return this.language;
-	}
-	public void setLanguage(String language){
-		this.language = language;
+	public void answerId(String multirequestToken){
+		setToken("answerId", multirequestToken);
 	}
 
-	public void language(String multirequestToken){
-		setToken("language", multirequestToken);
+	// text:
+	public String getText(){
+		return this.text;
+	}
+	public void setText(String text){
+		this.text = text;
+	}
+
+	public void text(String multirequestToken){
+		setToken("text", multirequestToken);
 	}
 
 
-	public UploadSubtitles() {
+	public TreeAnswer() {
 		super();
 	}
 
-	public UploadSubtitles(JsonObject jsonObject) throws APIException {
+	public TreeAnswer(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
 
 		if(jsonObject == null) return;
 
 		// set members values:
-		fileName = GsonParser.parseString(jsonObject.get("fileName"));
-		language = GsonParser.parseString(jsonObject.get("language"));
+		answerId = GsonParser.parseString(jsonObject.get("answerId"));
+		text = GsonParser.parseString(jsonObject.get("text"));
 
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
-		kparams.add("objectType", "KalturaUploadSubtitles");
-		kparams.add("fileName", this.fileName);
-		kparams.add("language", this.language);
+		kparams.add("objectType", "KalturaTreeAnswer");
+		kparams.add("answerId", this.answerId);
+		kparams.add("text", this.text);
 		return kparams;
 	}
 
 
-    public static final Creator<UploadSubtitles> CREATOR = new Creator<UploadSubtitles>() {
+    public static final Creator<TreeAnswer> CREATOR = new Creator<TreeAnswer>() {
         @Override
-        public UploadSubtitles createFromParcel(Parcel source) {
-            return new UploadSubtitles(source);
+        public TreeAnswer createFromParcel(Parcel source) {
+            return new TreeAnswer(source);
         }
 
         @Override
-        public UploadSubtitles[] newArray(int size) {
-            return new UploadSubtitles[size];
+        public TreeAnswer[] newArray(int size) {
+            return new TreeAnswer[size];
         }
     };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeString(this.fileName);
-        dest.writeString(this.language);
+        dest.writeString(this.answerId);
+        dest.writeString(this.text);
     }
 
-    public UploadSubtitles(Parcel in) {
+    public TreeAnswer(Parcel in) {
         super(in);
-        this.fileName = in.readString();
-        this.language = in.readString();
+        this.answerId = in.readString();
+        this.text = in.readString();
     }
 }
 

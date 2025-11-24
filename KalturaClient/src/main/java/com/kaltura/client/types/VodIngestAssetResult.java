@@ -58,6 +58,9 @@ public class VodIngestAssetResult extends ObjectBase {
 		String vodTypeSystemName();
 		RequestBuilder.ListTokenizer<VodIngestAssetResultErrorMessage.Tokenizer> errors();
 		RequestBuilder.ListTokenizer<VodIngestAssetResultErrorMessage.Tokenizer> warnings();
+		String fileUploadDate();
+		String processingStartDate();
+		String processingCompletionDate();
 	}
 
 	/**
@@ -98,6 +101,21 @@ public class VodIngestAssetResult extends ObjectBase {
 	 * Errors which do not prevent the asset from being ingested
 	 */
 	private List<VodIngestAssetResultErrorMessage> warnings;
+	/**
+	 * The date and time for which the ingest file was uploaded to the remote file
+	  server. Expressed in milliseconds EPOCH time.
+	 */
+	private Long fileUploadDate;
+	/**
+	 * The date and time for which the ingest file moved to in progress folder and
+	  started processing. Expressed in milliseconds EPOCH time.
+	 */
+	private Long processingStartDate;
+	/**
+	 * The date and time for which the ingest file completed the ingest process.
+	  Expressed in milliseconds EPOCH time.
+	 */
+	private Long processingCompletionDate;
 
 	// assetName:
 	public String getAssetName(){
@@ -187,6 +205,42 @@ public class VodIngestAssetResult extends ObjectBase {
 		this.warnings = warnings;
 	}
 
+	// fileUploadDate:
+	public Long getFileUploadDate(){
+		return this.fileUploadDate;
+	}
+	public void setFileUploadDate(Long fileUploadDate){
+		this.fileUploadDate = fileUploadDate;
+	}
+
+	public void fileUploadDate(String multirequestToken){
+		setToken("fileUploadDate", multirequestToken);
+	}
+
+	// processingStartDate:
+	public Long getProcessingStartDate(){
+		return this.processingStartDate;
+	}
+	public void setProcessingStartDate(Long processingStartDate){
+		this.processingStartDate = processingStartDate;
+	}
+
+	public void processingStartDate(String multirequestToken){
+		setToken("processingStartDate", multirequestToken);
+	}
+
+	// processingCompletionDate:
+	public Long getProcessingCompletionDate(){
+		return this.processingCompletionDate;
+	}
+	public void setProcessingCompletionDate(Long processingCompletionDate){
+		this.processingCompletionDate = processingCompletionDate;
+	}
+
+	public void processingCompletionDate(String multirequestToken){
+		setToken("processingCompletionDate", multirequestToken);
+	}
+
 
 	public VodIngestAssetResult() {
 		super();
@@ -206,6 +260,9 @@ public class VodIngestAssetResult extends ObjectBase {
 		vodTypeSystemName = GsonParser.parseString(jsonObject.get("vodTypeSystemName"));
 		errors = GsonParser.parseArray(jsonObject.getAsJsonArray("errors"), VodIngestAssetResultErrorMessage.class);
 		warnings = GsonParser.parseArray(jsonObject.getAsJsonArray("warnings"), VodIngestAssetResultErrorMessage.class);
+		fileUploadDate = GsonParser.parseLong(jsonObject.get("fileUploadDate"));
+		processingStartDate = GsonParser.parseLong(jsonObject.get("processingStartDate"));
+		processingCompletionDate = GsonParser.parseLong(jsonObject.get("processingCompletionDate"));
 
 	}
 
@@ -220,6 +277,9 @@ public class VodIngestAssetResult extends ObjectBase {
 		kparams.add("vodTypeSystemName", this.vodTypeSystemName);
 		kparams.add("errors", this.errors);
 		kparams.add("warnings", this.warnings);
+		kparams.add("fileUploadDate", this.fileUploadDate);
+		kparams.add("processingStartDate", this.processingStartDate);
+		kparams.add("processingCompletionDate", this.processingCompletionDate);
 		return kparams;
 	}
 
@@ -257,6 +317,9 @@ public class VodIngestAssetResult extends ObjectBase {
         } else {
             dest.writeInt(-1);
         }
+        dest.writeValue(this.fileUploadDate);
+        dest.writeValue(this.processingStartDate);
+        dest.writeValue(this.processingCompletionDate);
     }
 
     public VodIngestAssetResult(Parcel in) {
@@ -278,6 +341,9 @@ public class VodIngestAssetResult extends ObjectBase {
             this.warnings = new ArrayList<>();
             in.readList(this.warnings, VodIngestAssetResultErrorMessage.class.getClassLoader());
         }
+        this.fileUploadDate = (Long)in.readValue(Long.class.getClassLoader());
+        this.processingStartDate = (Long)in.readValue(Long.class.getClassLoader());
+        this.processingCompletionDate = (Long)in.readValue(Long.class.getClassLoader());
     }
 }
 
