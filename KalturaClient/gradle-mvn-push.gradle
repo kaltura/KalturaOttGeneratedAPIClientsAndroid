@@ -52,9 +52,10 @@ afterEvaluate { project ->
     }
 
     signing {
-        allprojects { ext."signing.keyId" = rootProject.ext["signingKeyId"] }
-        allprojects { ext."signing.password" = rootProject.ext["signingPassword"] }
-        allprojects { ext."signing.secretKeyRingFile" = SECRING_PATH }
+        useInMemoryPgpKeys(
+            rootProject.ext["signingKey"],
+            rootProject.ext["signingPassword"]
+        )
         sign publishing.publications
     }
 }
