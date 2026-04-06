@@ -30,7 +30,9 @@ package com.kaltura.client.types;
 import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
+import com.kaltura.client.enums.ConditionScope;
 import com.kaltura.client.types.ObjectBase;
+import com.kaltura.client.utils.GsonParser;
 import com.kaltura.client.utils.request.MultiRequestBuilder;
 
 /**
@@ -41,15 +43,32 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 /**
- * Base class that defines segment condition
+ * Base class that defines a segment condition.
  */
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(BaseSegmentCondition.Tokenizer.class)
 public class BaseSegmentCondition extends ObjectBase {
 	
 	public interface Tokenizer extends ObjectBase.Tokenizer {
+		String scope();
 	}
 
+	/**
+	 * Defines the scope of the condition evaluation.
+	 */
+	private ConditionScope scope;
+
+	// scope:
+	public ConditionScope getScope(){
+		return this.scope;
+	}
+	public void setScope(ConditionScope scope){
+		this.scope = scope;
+	}
+
+	public void scope(String multirequestToken){
+		setToken("scope", multirequestToken);
+	}
 
 
 	public BaseSegmentCondition() {
@@ -58,11 +77,18 @@ public class BaseSegmentCondition extends ObjectBase {
 
 	public BaseSegmentCondition(JsonObject jsonObject) throws APIException {
 		super(jsonObject);
+
+		if(jsonObject == null) return;
+
+		// set members values:
+		scope = ConditionScope.get(GsonParser.parseString(jsonObject.get("scope")));
+
 	}
 
 	public Params toParams() {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaBaseSegmentCondition");
+		kparams.add("scope", this.scope);
 		return kparams;
 	}
 
@@ -79,8 +105,16 @@ public class BaseSegmentCondition extends ObjectBase {
         }
     };
 
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeInt(this.scope == null ? -1 : this.scope.ordinal());
+    }
+
     public BaseSegmentCondition(Parcel in) {
         super(in);
+        int tmpScope = in.readInt();
+        this.scope = tmpScope == -1 ? null : ConditionScope.values()[tmpScope];
     }
 }
 
