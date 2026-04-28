@@ -42,7 +42,8 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 /**
- * For each metadata type, defines its system name in the partner
+ * Map a newly generated metadata field to an existing meta field on the
+  assetStruct
  */
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(MetaFieldNameMap.Tokenizer.class)
@@ -60,35 +61,43 @@ public class MetaFieldNameMap extends ObjectBase {
 	}
 
 	/**
-	 * Genre
+	 * map &amp;#39;genre&amp;#39; AI generated metadata name to assetStruct&amp;#39;s
+	  meta systemName
 	 */
 	private String genre;
 	/**
-	 * Sub-Genre
+	 * map &amp;#39;subGenre&amp;#39; AI generated metadata name to
+	  assetStruct&amp;#39;s meta systemName
 	 */
 	private String subGenre;
 	/**
-	 * Sentiment
+	 * map &amp;#39;sentiment&amp;#39; AI generated metadata name to
+	  assetStruct&amp;#39;s meta systemName
 	 */
 	private String sentiment;
 	/**
-	 * Suggested Title
+	 * map &amp;#39;suggestedTitle&amp;#39; AI generated metadata name to
+	  assetStruct&amp;#39;s meta systemName
 	 */
 	private String suggestedTitle;
 	/**
-	 * Description
+	 * map &amp;#39;Description&amp;#39; AI generated metadata name to
+	  assetStruct&amp;#39;s meta systemName
 	 */
 	private String description;
 	/**
-	 * One Liner
+	 * map &amp;#39;oneLiner&amp;#39; AI generated metadata name to
+	  assetStruct&amp;#39;s meta systemName
 	 */
 	private String oneLiner;
 	/**
-	 * Keywords
+	 * map &amp;#39;Keywords&amp;#39; AI generated metadata name to
+	  assetStruct&amp;#39;s meta systemName
 	 */
 	private String keywords;
 	/**
-	 * Sensitive Content
+	 * map &amp;#39;sensitiveContent&amp;#39; AI generated metadata name to
+	  assetStruct&amp;#39;s meta systemName
 	 */
 	private String sensitiveContent;
 
