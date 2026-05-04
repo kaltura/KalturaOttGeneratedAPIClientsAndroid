@@ -41,7 +41,7 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 /**
- * Base class that defines segment condition
+ * Base class that defines a segment condition.
  */
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(BaseSegmentCondition.Tokenizer.class)
