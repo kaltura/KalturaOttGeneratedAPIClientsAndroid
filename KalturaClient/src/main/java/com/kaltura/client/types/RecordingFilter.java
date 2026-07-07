@@ -49,14 +49,20 @@ public class RecordingFilter extends Filter {
 	
 	public interface Tokenizer extends Filter.Tokenizer {
 		String statusIn();
+		String assetIdIn();
 		String externalRecordingIdIn();
 		String kSql();
+		String contentFilteringEnforced();
 	}
 
 	/**
 	 * Recording Statuses
 	 */
 	private String statusIn;
+	/**
+	 * Comma separated list of assets identifiers
+	 */
+	private String assetIdIn;
 	/**
 	 * Comma separated external identifiers
 	 */
@@ -65,6 +71,10 @@ public class RecordingFilter extends Filter {
 	 * KSQL expression
 	 */
 	private String kSql;
+	/**
+	 * Enforce content filtering
+	 */
+	private Boolean contentFilteringEnforced;
 
 	// statusIn:
 	public String getStatusIn(){
@@ -76,6 +86,18 @@ public class RecordingFilter extends Filter {
 
 	public void statusIn(String multirequestToken){
 		setToken("statusIn", multirequestToken);
+	}
+
+	// assetIdIn:
+	public String getAssetIdIn(){
+		return this.assetIdIn;
+	}
+	public void setAssetIdIn(String assetIdIn){
+		this.assetIdIn = assetIdIn;
+	}
+
+	public void assetIdIn(String multirequestToken){
+		setToken("assetIdIn", multirequestToken);
 	}
 
 	// externalRecordingIdIn:
@@ -102,6 +124,18 @@ public class RecordingFilter extends Filter {
 		setToken("kSql", multirequestToken);
 	}
 
+	// contentFilteringEnforced:
+	public Boolean getContentFilteringEnforced(){
+		return this.contentFilteringEnforced;
+	}
+	public void setContentFilteringEnforced(Boolean contentFilteringEnforced){
+		this.contentFilteringEnforced = contentFilteringEnforced;
+	}
+
+	public void contentFilteringEnforced(String multirequestToken){
+		setToken("contentFilteringEnforced", multirequestToken);
+	}
+
 
 	public RecordingFilter() {
 		super();
@@ -114,8 +148,10 @@ public class RecordingFilter extends Filter {
 
 		// set members values:
 		statusIn = GsonParser.parseString(jsonObject.get("statusIn"));
+		assetIdIn = GsonParser.parseString(jsonObject.get("assetIdIn"));
 		externalRecordingIdIn = GsonParser.parseString(jsonObject.get("externalRecordingIdIn"));
 		kSql = GsonParser.parseString(jsonObject.get("kSql"));
+		contentFilteringEnforced = GsonParser.parseBoolean(jsonObject.get("contentFilteringEnforced"));
 
 	}
 
@@ -123,8 +159,10 @@ public class RecordingFilter extends Filter {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaRecordingFilter");
 		kparams.add("statusIn", this.statusIn);
+		kparams.add("assetIdIn", this.assetIdIn);
 		kparams.add("externalRecordingIdIn", this.externalRecordingIdIn);
 		kparams.add("kSql", this.kSql);
+		kparams.add("contentFilteringEnforced", this.contentFilteringEnforced);
 		return kparams;
 	}
 
@@ -145,15 +183,19 @@ public class RecordingFilter extends Filter {
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeString(this.statusIn);
+        dest.writeString(this.assetIdIn);
         dest.writeString(this.externalRecordingIdIn);
         dest.writeString(this.kSql);
+        dest.writeValue(this.contentFilteringEnforced);
     }
 
     public RecordingFilter(Parcel in) {
         super(in);
         this.statusIn = in.readString();
+        this.assetIdIn = in.readString();
         this.externalRecordingIdIn = in.readString();
         this.kSql = in.readString();
+        this.contentFilteringEnforced = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
 
