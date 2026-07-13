@@ -42,9 +42,7 @@ import com.kaltura.client.utils.request.MultiRequestBuilder;
  */
 
 /**
- * Represents a single searchable attribute for a given asset structure.           
-    This class extends KalturaOTTObject and contains details such as the asset
-  structure ID and its associated attributes.
+ * Configuration for semantic search attributes for a specific asset type
  */
 @SuppressWarnings("serial")
 @MultiRequestBuilder.Tokenizer(SearchableAttribute.Tokenizer.class)
@@ -56,12 +54,11 @@ public class SearchableAttribute extends ObjectBase {
 	}
 
 	/**
-	 * The unique identifier for the asset structure associated with the searchable
-	  attribute.
+	 * The unique identifier of the asset structure.
 	 */
 	private Integer assetStructId;
 	/**
-	 * The specific attributes that define the searchable aspect of the asset.
+	 * Comma-separated list of field names to include in embedding.
 	 */
 	private String attributes;
 
