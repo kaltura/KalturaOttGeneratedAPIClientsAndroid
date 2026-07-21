@@ -54,12 +54,11 @@ public class UploadSubtitles extends ObjectBase {
 	}
 
 	/**
-	 * Mandatory. The name that will be associated with the uploaded file.
+	 * Name of the subtitles file.
 	 */
 	private String fileName;
 	/**
-	 * Mandatory. The language in which the subtitles are written.              It is
-	  used in the LLM prompt to inform it what language it needs to analyze.
+	 * The language in which the subtitles are written.
 	 */
 	private String language;
 
