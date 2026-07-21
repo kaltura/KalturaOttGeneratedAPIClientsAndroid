@@ -31,6 +31,7 @@ import android.os.Parcel;
 import com.google.gson.JsonObject;
 import com.kaltura.client.Params;
 import com.kaltura.client.enums.BooleanOperator;
+import com.kaltura.client.enums.ConditionScope;
 import com.kaltura.client.types.BaseSegmentValue;
 import com.kaltura.client.types.ObjectBase;
 import com.kaltura.client.utils.GsonParser;
@@ -66,6 +67,7 @@ public class SegmentationType extends ObjectBase {
 		String executeDate();
 		String version();
 		String assetUserRuleId();
+		String scope();
 	}
 
 	/**
@@ -117,6 +119,10 @@ public class SegmentationType extends ObjectBase {
 	 * Asset User Rule Id
 	 */
 	private Long assetUserRuleId;
+	/**
+	 * Defines whether segments are applied to users or households
+	 */
+	private ConditionScope scope;
 
 	// id:
 	public Long getId(){
@@ -210,6 +216,18 @@ public class SegmentationType extends ObjectBase {
 		setToken("assetUserRuleId", multirequestToken);
 	}
 
+	// scope:
+	public ConditionScope getScope(){
+		return this.scope;
+	}
+	public void setScope(ConditionScope scope){
+		this.scope = scope;
+	}
+
+	public void scope(String multirequestToken){
+		setToken("scope", multirequestToken);
+	}
+
 
 	public SegmentationType() {
 		super();
@@ -233,6 +251,7 @@ public class SegmentationType extends ObjectBase {
 		executeDate = GsonParser.parseLong(jsonObject.get("executeDate"));
 		version = GsonParser.parseLong(jsonObject.get("version"));
 		assetUserRuleId = GsonParser.parseLong(jsonObject.get("assetUserRuleId"));
+		scope = ConditionScope.get(GsonParser.parseString(jsonObject.get("scope")));
 
 	}
 
@@ -246,6 +265,7 @@ public class SegmentationType extends ObjectBase {
 		kparams.add("actions", this.actions);
 		kparams.add("value", this.value);
 		kparams.add("assetUserRuleId", this.assetUserRuleId);
+		kparams.add("scope", this.scope);
 		return kparams;
 	}
 
@@ -287,6 +307,7 @@ public class SegmentationType extends ObjectBase {
         dest.writeValue(this.executeDate);
         dest.writeValue(this.version);
         dest.writeValue(this.assetUserRuleId);
+        dest.writeInt(this.scope == null ? -1 : this.scope.ordinal());
     }
 
     public SegmentationType(Parcel in) {
@@ -312,6 +333,8 @@ public class SegmentationType extends ObjectBase {
         this.executeDate = (Long)in.readValue(Long.class.getClassLoader());
         this.version = (Long)in.readValue(Long.class.getClassLoader());
         this.assetUserRuleId = (Long)in.readValue(Long.class.getClassLoader());
+        int tmpScope = in.readInt();
+        this.scope = tmpScope == -1 ? null : ConditionScope.values()[tmpScope];
     }
 }
 
