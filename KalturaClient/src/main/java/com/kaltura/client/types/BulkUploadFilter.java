@@ -52,6 +52,7 @@ public class BulkUploadFilter extends Filter {
 		String createDateGreaterThanOrEqual();
 		String uploadedByUserIdEqualCurrent();
 		String statusIn();
+		String includeResultsEqual();
 	}
 
 	/**
@@ -71,6 +72,13 @@ public class BulkUploadFilter extends Filter {
 	 * Comma separated list of BulkUpload Statuses to search\filter
 	 */
 	private String statusIn;
+	/**
+	 * Indicates whether to include detailed results data (from Couchbase) in the
+	  response.              When false, only lightweight metadata (status, fileName,
+	  dates, etc.) is returned.              Default is true for backward
+	  compatibility.
+	 */
+	private Boolean includeResultsEqual;
 
 	// bulkObjectTypeEqual:
 	public String getBulkObjectTypeEqual(){
@@ -120,6 +128,18 @@ public class BulkUploadFilter extends Filter {
 		setToken("statusIn", multirequestToken);
 	}
 
+	// includeResultsEqual:
+	public Boolean getIncludeResultsEqual(){
+		return this.includeResultsEqual;
+	}
+	public void setIncludeResultsEqual(Boolean includeResultsEqual){
+		this.includeResultsEqual = includeResultsEqual;
+	}
+
+	public void includeResultsEqual(String multirequestToken){
+		setToken("includeResultsEqual", multirequestToken);
+	}
+
 
 	public BulkUploadFilter() {
 		super();
@@ -135,6 +155,7 @@ public class BulkUploadFilter extends Filter {
 		createDateGreaterThanOrEqual = GsonParser.parseLong(jsonObject.get("createDateGreaterThanOrEqual"));
 		uploadedByUserIdEqualCurrent = GsonParser.parseBoolean(jsonObject.get("uploadedByUserIdEqualCurrent"));
 		statusIn = GsonParser.parseString(jsonObject.get("statusIn"));
+		includeResultsEqual = GsonParser.parseBoolean(jsonObject.get("includeResultsEqual"));
 
 	}
 
@@ -145,6 +166,7 @@ public class BulkUploadFilter extends Filter {
 		kparams.add("createDateGreaterThanOrEqual", this.createDateGreaterThanOrEqual);
 		kparams.add("uploadedByUserIdEqualCurrent", this.uploadedByUserIdEqualCurrent);
 		kparams.add("statusIn", this.statusIn);
+		kparams.add("includeResultsEqual", this.includeResultsEqual);
 		return kparams;
 	}
 
@@ -168,6 +190,7 @@ public class BulkUploadFilter extends Filter {
         dest.writeValue(this.createDateGreaterThanOrEqual);
         dest.writeValue(this.uploadedByUserIdEqualCurrent);
         dest.writeString(this.statusIn);
+        dest.writeValue(this.includeResultsEqual);
     }
 
     public BulkUploadFilter(Parcel in) {
@@ -176,6 +199,7 @@ public class BulkUploadFilter extends Filter {
         this.createDateGreaterThanOrEqual = (Long)in.readValue(Long.class.getClassLoader());
         this.uploadedByUserIdEqualCurrent = (Boolean)in.readValue(Boolean.class.getClassLoader());
         this.statusIn = in.readString();
+        this.includeResultsEqual = (Boolean)in.readValue(Boolean.class.getClassLoader());
     }
 }
 
