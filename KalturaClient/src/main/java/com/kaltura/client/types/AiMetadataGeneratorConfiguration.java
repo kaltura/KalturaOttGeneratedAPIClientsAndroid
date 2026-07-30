@@ -54,21 +54,17 @@ import java.util.Map;
 public class AiMetadataGeneratorConfiguration extends ObjectBase {
 	
 	public interface Tokenizer extends ObjectBase.Tokenizer {
-		String isEnabled();
-		RequestBuilder.MapTokenizer<MetaFieldNameMap.Tokenizer> assetStructMetaNameMap();
+		RequestBuilder.MapTokenizer<MetadataFieldConfigurationMap.Tokenizer> assetStructConfigMap();
 		RequestBuilder.ListTokenizer<StringValue.Tokenizer> supportedLanguages();
 	}
 
 	/**
-	 * Specifies if the feature is enabled or disabled.
+	 * A type of dictionary defined as [string,KalturaMetadataFieldConfigurationMap].  
+	             This property is used to correlate the newly generated metadata to   
+	            existing metadata IDs which are available in the asset&amp;#39;s
+	  struct with configuration.
 	 */
-	private Boolean isEnabled;
-	/**
-	 * A type of dictionary defined as [long,KalturaMetaFieldNameMap].              
-	  This property is used to correlate the newly generated metadata to             
-	  existing metadata IDs which are available in the asset’s struct.
-	 */
-	private Map<String, MetaFieldNameMap> assetStructMetaNameMap;
+	private Map<String, MetadataFieldConfigurationMap> assetStructConfigMap;
 	/**
 	 * A read only array to list the set of languages which can be used with the
 	  service.              In practice it is populated with the values set in
@@ -76,24 +72,12 @@ public class AiMetadataGeneratorConfiguration extends ObjectBase {
 	 */
 	private List<StringValue> supportedLanguages;
 
-	// isEnabled:
-	public Boolean getIsEnabled(){
-		return this.isEnabled;
+	// assetStructConfigMap:
+	public Map<String, MetadataFieldConfigurationMap> getAssetStructConfigMap(){
+		return this.assetStructConfigMap;
 	}
-	public void setIsEnabled(Boolean isEnabled){
-		this.isEnabled = isEnabled;
-	}
-
-	public void isEnabled(String multirequestToken){
-		setToken("isEnabled", multirequestToken);
-	}
-
-	// assetStructMetaNameMap:
-	public Map<String, MetaFieldNameMap> getAssetStructMetaNameMap(){
-		return this.assetStructMetaNameMap;
-	}
-	public void setAssetStructMetaNameMap(Map<String, MetaFieldNameMap> assetStructMetaNameMap){
-		this.assetStructMetaNameMap = assetStructMetaNameMap;
+	public void setAssetStructConfigMap(Map<String, MetadataFieldConfigurationMap> assetStructConfigMap){
+		this.assetStructConfigMap = assetStructConfigMap;
 	}
 
 	// supportedLanguages:
@@ -111,8 +95,7 @@ public class AiMetadataGeneratorConfiguration extends ObjectBase {
 		if(jsonObject == null) return;
 
 		// set members values:
-		isEnabled = GsonParser.parseBoolean(jsonObject.get("isEnabled"));
-		assetStructMetaNameMap = GsonParser.parseMap(jsonObject.getAsJsonObject("assetStructMetaNameMap"), MetaFieldNameMap.class);
+		assetStructConfigMap = GsonParser.parseMap(jsonObject.getAsJsonObject("assetStructConfigMap"), MetadataFieldConfigurationMap.class);
 		supportedLanguages = GsonParser.parseArray(jsonObject.getAsJsonArray("supportedLanguages"), StringValue.class);
 
 	}
@@ -120,8 +103,7 @@ public class AiMetadataGeneratorConfiguration extends ObjectBase {
 	public Params toParams() {
 		Params kparams = super.toParams();
 		kparams.add("objectType", "KalturaAiMetadataGeneratorConfiguration");
-		kparams.add("isEnabled", this.isEnabled);
-		kparams.add("assetStructMetaNameMap", this.assetStructMetaNameMap);
+		kparams.add("assetStructConfigMap", this.assetStructConfigMap);
 		return kparams;
 	}
 
@@ -141,10 +123,9 @@ public class AiMetadataGeneratorConfiguration extends ObjectBase {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeValue(this.isEnabled);
-        if(this.assetStructMetaNameMap != null) {
-            dest.writeInt(this.assetStructMetaNameMap.size());
-            for (Map.Entry<String, MetaFieldNameMap> entry : this.assetStructMetaNameMap.entrySet()) {
+        if(this.assetStructConfigMap != null) {
+            dest.writeInt(this.assetStructConfigMap.size());
+            for (Map.Entry<String, MetadataFieldConfigurationMap> entry : this.assetStructConfigMap.entrySet()) {
                 dest.writeString(entry.getKey());
                 dest.writeParcelable(entry.getValue(), flags);
             }
@@ -161,14 +142,13 @@ public class AiMetadataGeneratorConfiguration extends ObjectBase {
 
     public AiMetadataGeneratorConfiguration(Parcel in) {
         super(in);
-        this.isEnabled = (Boolean)in.readValue(Boolean.class.getClassLoader());
-        int assetStructMetaNameMapSize = in.readInt();
-        if( assetStructMetaNameMapSize > -1) {
-            this.assetStructMetaNameMap = new HashMap<>();
-            for (int i = 0; i < assetStructMetaNameMapSize; i++) {
+        int assetStructConfigMapSize = in.readInt();
+        if( assetStructConfigMapSize > -1) {
+            this.assetStructConfigMap = new HashMap<>();
+            for (int i = 0; i < assetStructConfigMapSize; i++) {
                 String key = in.readString();
-                MetaFieldNameMap value = in.readParcelable(MetaFieldNameMap.class.getClassLoader());
-                this.assetStructMetaNameMap.put(key, value);
+                MetadataFieldConfigurationMap value = in.readParcelable(MetadataFieldConfigurationMap.class.getClassLoader());
+                this.assetStructConfigMap.put(key, value);
             }
         }
         int supportedLanguagesSize = in.readInt();
