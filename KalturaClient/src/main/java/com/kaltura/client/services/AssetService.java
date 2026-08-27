@@ -38,6 +38,8 @@ import com.kaltura.client.types.AssetCount;
 import com.kaltura.client.types.AssetFilter;
 import com.kaltura.client.types.AssetGroupBy;
 import com.kaltura.client.types.BaseAssetOrder;
+import com.kaltura.client.types.BulkPlaybackContextRequest;
+import com.kaltura.client.types.BulkPlaybackContextResponse;
 import com.kaltura.client.types.BulkUpload;
 import com.kaltura.client.types.BulkUploadAssetData;
 import com.kaltura.client.types.BulkUploadJobData;
@@ -48,6 +50,7 @@ import com.kaltura.client.types.PlaybackContext;
 import com.kaltura.client.types.PlaybackContextOptions;
 import com.kaltura.client.types.RepresentativeSelectionPolicy;
 import com.kaltura.client.types.SearchAssetFilter;
+import com.kaltura.client.types.SemanticSearchParams;
 import com.kaltura.client.utils.request.ListResponseRequestBuilder;
 import com.kaltura.client.utils.request.RequestBuilder;
 import java.io.File;
@@ -115,6 +118,23 @@ public class AssetService {
 	 */
     public static AddFromBulkUploadAssetBuilder addFromBulkUpload(FileHolder fileData, BulkUploadJobData bulkUploadJobData, BulkUploadAssetData bulkUploadAssetData)  {
 		return new AddFromBulkUploadAssetBuilder(fileData, bulkUploadJobData, bulkUploadAssetData);
+	}
+	
+	public static class BulkGetPlaybackContextAssetBuilder extends RequestBuilder<BulkPlaybackContextResponse, BulkPlaybackContextResponse.Tokenizer, BulkGetPlaybackContextAssetBuilder> {
+		
+		public BulkGetPlaybackContextAssetBuilder(BulkPlaybackContextRequest request) {
+			super(BulkPlaybackContextResponse.class, "asset", "bulkGetPlaybackContext");
+			params.add("request", request);
+		}
+	}
+
+	/**
+	 * Returns playback contexts for multiple assets in a single request
+	 * 
+	 * @param request Bulk request containing array of playback context parameters
+	 */
+    public static BulkGetPlaybackContextAssetBuilder bulkGetPlaybackContext(BulkPlaybackContextRequest request)  {
+		return new BulkGetPlaybackContextAssetBuilder(request);
 	}
 	
 	public static class CountAssetBuilder extends RequestBuilder<AssetCount, AssetCount.Tokenizer, CountAssetBuilder> {
@@ -431,44 +451,22 @@ public class AssetService {
 	
 	public static class SemanticSearchAssetBuilder extends ListResponseRequestBuilder<Asset, Asset.Tokenizer, SemanticSearchAssetBuilder> {
 		
-		public SemanticSearchAssetBuilder(String query, boolean refineQuery, int size) {
+		public SemanticSearchAssetBuilder(SemanticSearchParams searchParams) {
 			super(Asset.class, "asset", "semanticSearch");
-			params.add("query", query);
-			params.add("refineQuery", refineQuery);
-			params.add("size", size);
+			params.add("searchParams", searchParams);
 		}
-		
-		public void query(String multirequestToken) {
-			params.add("query", multirequestToken);
-		}
-		
-		public void refineQuery(String multirequestToken) {
-			params.add("refineQuery", multirequestToken);
-		}
-		
-		public void size(String multirequestToken) {
-			params.add("size", multirequestToken);
-		}
-	}
-
-	public static SemanticSearchAssetBuilder semanticSearch(String query)  {
-		return semanticSearch(query, false);
-	}
-
-	public static SemanticSearchAssetBuilder semanticSearch(String query, boolean refineQuery)  {
-		return semanticSearch(query, refineQuery, 10);
 	}
 
 	/**
-	 * This API provides search capabilities for assets using semantic similarity based
-	  on the provided query.
+	 * Search for assets using semantic similarity to a natural language query.        
+	       Supports unified search across both media/VOD assets and programs/EPG with
+	  optional type-specific filters.
 	 * 
-	 * @param query The search query text used to find semantically similar assets
-	 * @param refineQuery When true, the search query is refined using LLM before vector search
-	 * @param size The maximum number of results to return. Must be between 1 and 100
+	 * @param searchParams Search parameters including query text, content type filters, and optional
+	 * type-specific filters
 	 */
-    public static SemanticSearchAssetBuilder semanticSearch(String query, boolean refineQuery, int size)  {
-		return new SemanticSearchAssetBuilder(query, refineQuery, size);
+    public static SemanticSearchAssetBuilder semanticSearch(SemanticSearchParams searchParams)  {
+		return new SemanticSearchAssetBuilder(searchParams);
 	}
 	
 	public static class UpdateAssetBuilder extends RequestBuilder<Asset, Asset.Tokenizer, UpdateAssetBuilder> {
